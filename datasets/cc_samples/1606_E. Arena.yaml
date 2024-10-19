@@ -1,0 +1,1455 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nVasya goes\
+  \ to visit his classmate Petya. Vasya knows that Petya's apartment number is n.\
+  \ \n\nThere is only one entrance in Petya's house and the distribution of apartments\
+  \ is the following: the first floor contains 2 apartments, every other floor contains\
+  \ x apartments each. Apartments are numbered starting from one, from the first floor.\
+  \ I.e. apartments on the first floor have numbers 1 and 2, apartments on the second\
+  \ floor have numbers from 3 to (x + 2), apartments on the third floor have numbers\
+  \ from (x + 3) to (2 \u22C5 x + 2), and so on.\n\nYour task is to find the number\
+  \ of floor on which Petya lives. Assume that the house is always high enough to\
+  \ fit at least n apartments.\n\nYou have to answer t independent test cases.\n\n\
+  Input\n\nThe first line of the input contains one integer t (1 \u2264 t \u2264 1000)\
+  \ \u2014 the number of test cases. Then t test cases follow.\n\nThe only line of\
+  \ the test case contains two integers n and x (1 \u2264 n, x \u2264 1000) \u2014\
+  \ the number of Petya's apartment and the number of apartments on each floor of\
+  \ the house except the first one (there are two apartments on the first floor).\n\
+  \nOutput\n\nFor each test case, print the answer: the number of floor on which Petya\
+  \ lives.\n\nExample\n\nInput\n\n\n4\n7 3\n1 5\n22 5\n987 13\n\n\nOutput\n\n\n3\n\
+  1\n5\n77\n\nNote\n\nConsider the first test case of the example: the first floor\
+  \ contains apartments with numbers 1 and 2, the second one contains apartments with\
+  \ numbers 3, 4 and 5, the third one contains apartments with numbers 6, 7 and 8.\
+  \ Therefore, Petya lives on the third floor.\n\nIn the second test case of the example,\
+  \ Petya lives in the apartment 1 which is on the first floor.\nA: ```from functools\
+  \ import reduce\nimport os\nimport sys\nfrom collections import *\n#from fractions\
+  \ import *\nfrom math import *\nfrom bisect import *\nfrom heapq import *\nfrom\
+  \ io import BytesIO, IOBase\ninput = lambda: sys.stdin.readline().rstrip(\"\\r\\\
+  n\")\ndef value(): return tuple(map(int, input().split())) # multiple values\ndef\
+  \ arr(): return [int(i) for i in input().split()] # array input\ndef sarr(): return\
+  \ [int(i) for i in input()] #array from string\ndef starr(): return [str(x) for\
+  \ x in input().split()] #string array\ndef inn(): return int(input()) # integer\
+  \ input\ndef svalue(): return tuple(map(str, input().split())) #multiple string\
+  \ values\ndef parr(): return [(value()) for i in range(n)] # array of pairs\nmo\
+  \ = 1000000007\ninf=1e18\ndiv=998244353\n#print(\"Case #{}:\".format(_+1),end=\"\
+  \ \")\n# ----------------------------CODE------------------------------#\nfor _\
+  \ in range(inn()):\n    n,k=value()\n    if(n<=2):\n        print(1)\n    else:\n\
+  \        n-=2\n        res=ceil(n/k)\n        print(res+1)```\nQ: Write python code\
+  \ to solve the following coding problem that obeys the constraints and passes the\
+  \ example test cases. The output code needs to read from and write to standard IO.\
+  \ Please wrap your code answer using ```:\nThis is the hard version of the problem.\
+  \ The difference between the versions is the constraint on n and the required number\
+  \ of operations. You can make hacks only if all versions of the problem are solved.\n\
+  \nThere are two binary strings a and b of length n (a binary string is a string\
+  \ consisting of symbols 0 and 1). In an operation, you select a prefix of a, and\
+  \ simultaneously invert the bits in the prefix (0 changes to 1 and 1 changes to\
+  \ 0) and reverse the order of the bits in the prefix.\n\nFor example, if a=001011\
+  \ and you select the prefix of length 3, it becomes 011011. Then if you select the\
+  \ entire string, it becomes 001001.\n\nYour task is to transform the string a into\
+  \ b in at most 2n operations. It can be proved that it is always possible.\n\nInput\n\
+  \nThe first line contains a single integer t (1\u2264 t\u2264 1000) \u2014 the number\
+  \ of test cases. Next 3t lines contain descriptions of test cases.\n\nThe first\
+  \ line of each test case contains a single integer n (1\u2264 n\u2264 10^5) \u2014\
+  \ the length of the binary strings.\n\nThe next two lines contain two binary strings\
+  \ a and b of length n.\n\nIt is guaranteed that the sum of n across all test cases\
+  \ does not exceed 10^5.\n\nOutput\n\nFor each test case, output an integer k (0\u2264\
+  \ k\u2264 2n), followed by k integers p_1,\u2026,p_k (1\u2264 p_i\u2264 n). Here\
+  \ k is the number of operations you use and p_i is the length of the prefix you\
+  \ flip in the i-th operation.\n\nExample\n\nInput\n\n\n5\n2\n01\n10\n5\n01011\n\
+  11100\n2\n01\n01\n10\n0110011011\n1000110100\n1\n0\n1\n\n\nOutput\n\n\n3 1 2 1\n\
+  6 5 2 5 3 1 2\n0\n9 4 1 2 10 4 1 2 1 5\n1 1\n\nNote\n\nIn the first test case, we\
+  \ have 01\u2192 11\u2192 00\u2192 10.\n\nIn the second test case, we have 01011\u2192\
+  \ 00101\u2192 11101\u2192 01000\u2192 10100\u2192 00100\u2192 11100.\n\nIn the third\
+  \ test case, the strings are already the same. Another solution is to flip the prefix\
+  \ of length 2, which will leave a unchanged.\nA: ```import sys\nimport math\nimport\
+  \ bisect\nfrom sys import stdin, stdout\nfrom math import gcd, floor, sqrt, log2,\
+  \ ceil\nfrom collections import defaultdict\nfrom bisect import bisect_left as bl,\
+  \ bisect_right as br\nfrom collections import Counter\nfrom collections import deque\n\
+  \ \nip = lambda : int(stdin.readline())\ninp = lambda: map(int,stdin.readline().split())\n\
+  ips = lambda: stdin.readline().rstrip()\n\n\n\nt = ip()\nfor _ in range(t):\n  \
+  \  n = ip()\n    a = ips()\n    b = ips()\n    ch1 = []\n    ch2 = []\n    a +=\
+  \ '0'\n    b += '0'\n    for i in range(1,n+1):\n        if a[i-1] != a[i]:\n  \
+  \          ch1.append(i)\n        if b[i-1] != b[i]:\n            ch2.append(i)\n\
+  \    ch2 = ch2[::-1]\n    ans = ch1+ch2\n    ans = [len(ans)]+ans\n    print(*ans)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nThere are n heroes fighting\
+  \ in the arena. Initially, the i-th hero has a_i health points.\n\nThe fight in\
+  \ the arena takes place in several rounds. At the beginning of each round, each\
+  \ alive hero deals 1 damage to all other heroes. Hits of all heroes occur simultaneously.\
+  \ Heroes whose health is less than 1 at the end of the round are considered killed.\n\
+  \nIf exactly 1 hero remains alive after a certain round, then he is declared the\
+  \ winner. Otherwise, there is no winner.\n\nYour task is to calculate the number\
+  \ of ways to choose the initial health points for each hero a_i, where 1 \u2264\
+  \ a_i \u2264 x, so that there is no winner of the fight. The number of ways can\
+  \ be very large, so print it modulo 998244353. Two ways are considered different\
+  \ if at least one hero has a different amount of health. For example, [1, 2, 1]\
+  \ and [2, 1, 1] are different.\n\nInput\n\nThe only line contains two integers n\
+  \ and x (2 \u2264 n \u2264 500; 1 \u2264 x \u2264 500).\n\nOutput\n\nPrint one integer\
+  \ \u2014 the number of ways to choose the initial health points for each hero a_i,\
+  \ where 1 \u2264 a_i \u2264 x, so that there is no winner of the fight, taken modulo\
+  \ 998244353. \n\nExamples\n\nInput\n\n\n2 5\n\n\nOutput\n\n\n5\n\n\nInput\n\n\n\
+  3 3\n\n\nOutput\n\n\n15\n\n\nInput\n\n\n5 4\n\n\nOutput\n\n\n1024\n\n\nInput\n\n\
+  \n13 37\n\n\nOutput\n\n\n976890680\nA:"
+question: "There are n heroes fighting in the arena. Initially, the i-th hero has\
+  \ a_i health points.\n\nThe fight in the arena takes place in several rounds. At\
+  \ the beginning of each round, each alive hero deals 1 damage to all other heroes.\
+  \ Hits of all heroes occur simultaneously. Heroes whose health is less than 1 at\
+  \ the end of the round are considered killed.\n\nIf exactly 1 hero remains alive\
+  \ after a certain round, then he is declared the winner. Otherwise, there is no\
+  \ winner.\n\nYour task is to calculate the number of ways to choose the initial\
+  \ health points for each hero a_i, where 1 \u2264 a_i \u2264 x, so that there is\
+  \ no winner of the fight. The number of ways can be very large, so print it modulo\
+  \ 998244353. Two ways are considered different if at least one hero has a different\
+  \ amount of health. For example, [1, 2, 1] and [2, 1, 1] are different.\n\nInput\n\
+  \nThe only line contains two integers n and x (2 \u2264 n \u2264 500; 1 \u2264 x\
+  \ \u2264 500).\n\nOutput\n\nPrint one integer \u2014 the number of ways to choose\
+  \ the initial health points for each hero a_i, where 1 \u2264 a_i \u2264 x, so that\
+  \ there is no winner of the fight, taken modulo 998244353. \n\nExamples\n\nInput\n\
+  \n\n2 5\n\n\nOutput\n\n\n5\n\n\nInput\n\n\n3 3\n\n\nOutput\n\n\n15\n\n\nInput\n\n\
+  \n5 4\n\n\nOutput\n\n\n1024\n\n\nInput\n\n\n13 37\n\n\nOutput\n\n\n976890680"
+samples:
+- " ```from functools import reduce\nimport os\nimport sys\nfrom collections import\
+  \ *\n#from fractions import *\nfrom math import *\nfrom bisect import *\nfrom heapq\
+  \ import *\nfrom io import BytesIO, IOBase\ninput = lambda: sys.stdin.readline().rstrip(\"\
+  \\r\\n\")\ndef value(): return tuple(map(int, input().split())) # multiple values\n\
+  def arr(): return [int(i) for i in input().split()] # array input\ndef sarr(): return\
+  \ [int(i) for i in input()] #array from string\ndef starr(): return [str(x) for\
+  \ x in input().split()] #string array\ndef inn(): return int(input()) # integer\
+  \ input\ndef svalue(): return tuple(map(str, input().split())) #multiple string\
+  \ values\ndef parr(): return [(value()) for i in range(n)] # array of pairs\nmo\
+  \ = 1000000007\ninf=1e18\ndiv=998244353\n#print(\"Case #{}:\".format(_+1),end=\"\
+  \ \")\n# ----------------------------CODE------------------------------#\nn,x=value()\n\
+  res=1\nfor i in range(1,n):\n    res=(res*(x-i+1))%div\nprint(res)```\nQ:"
+- " ```from math import gcd\nfrom functools import reduce\nimport os\nimport sys\n\
+  from collections import *\nfrom math import *\nfrom bisect import *\nfrom heapq\
+  \ import *\nfrom io import BytesIO, IOBase\ninput = lambda: sys.stdin.readline().rstrip(\"\
+  \\r\\n\")\ndef value(): return tuple(map(int, input().split())) # multiple values\n\
+  def arr(): return [int(i) for i in input().split()] # array input\ndef sarr(): return\
+  \ [int(i) for i in input()] #array from string\ndef starr(): return [str(x) for\
+  \ x in input().split()] #string array\ndef inn(): return int(input()) # integer\
+  \ input\ndef svalue(): return tuple(map(str, input().split())) #multiple string\
+  \ values\ndef parr(): return [(value()) for i in range(n)] # array of pairs\nmo\
+  \ = 998244353\ninf=1e18\ndiv=998244353\n#print(\"Case #{}:\".format(_+1),end=\"\
+  \ \")\n# ----------------------------CODE------------------------------#\nn,x=value()\n\
+  f=1\nfor i in range(1,n+1):\n    f=(f*2)%mo\nprint(f)\n```\nQ:"
+test_cases:
+  input:
+  - '5 4
+
+    '
+  - '2 5
+
+    '
+  - '13 37
+
+    '
+  - '3 3
+
+    '
+  - '3 500
+
+    '
+  - '371 306
+
+    '
+  - '222 500
+
+    '
+  - '421 44
+
+    '
+  - '124 212
+
+    '
+  - '300 500
+
+    '
+  - '271 208
+
+    '
+  - '99 333
+
+    '
+  - '224 375
+
+    '
+  - '5 40
+
+    '
+  - '365 500
+
+    '
+  - '444 500
+
+    '
+  - '499 499
+
+    '
+  - '92 270
+
+    '
+  - '6 26
+
+    '
+  - '13 337
+
+    '
+  - '71 439
+
+    '
+  - '171 489
+
+    '
+  - '298 51
+
+    '
+  - '2 500
+
+    '
+  - '164 500
+
+    '
+  - '249 320
+
+    '
+  - '10 500
+
+    '
+  - '357 328
+
+    '
+  - '369 404
+
+    '
+  - '8 333
+
+    '
+  - '459 365
+
+    '
+  - '26 178
+
+    '
+  - '311 33
+
+    '
+  - '246 348
+
+    '
+  - '350 463
+
+    '
+  - '39 78
+
+    '
+  - '390 208
+
+    '
+  - '123 433
+
+    '
+  - '4 33
+
+    '
+  - '7 22
+
+    '
+  - '465 367
+
+    '
+  - '411 77
+
+    '
+  - '154 500
+
+    '
+  - '6 478
+
+    '
+  - '11 345
+
+    '
+  - '460 235
+
+    '
+  - '161 37
+
+    '
+  - '200 500
+
+    '
+  - '91 367
+
+    '
+  - '195 15
+
+    '
+  - '499 500
+
+    '
+  - '500 500
+
+    '
+  - '289 466
+
+    '
+  - '189 92
+
+    '
+  - '13 93
+
+    '
+  - '291 150
+
+    '
+  - '99 500
+
+    '
+  - '251 203
+
+    '
+  - '99 499
+
+    '
+  - '198 236
+
+    '
+  - '246 389
+
+    '
+  - '383 477
+
+    '
+  - '265 181
+
+    '
+  - '222 422
+
+    '
+  - '111 500
+
+    '
+  - '49 499
+
+    '
+  - '193 402
+
+    '
+  - '34 177
+
+    '
+  - '500 1
+
+    '
+  - '438 46
+
+    '
+  - '111 222
+
+    '
+  - '10 15
+
+    '
+  - '484 497
+
+    '
+  - '25 500
+
+    '
+  - '119 371
+
+    '
+  - '500 333
+
+    '
+  - '376 314
+
+    '
+  - '384 467
+
+    '
+  - '5 500
+
+    '
+  - '162 427
+
+    '
+  - '444 499
+
+    '
+  - '4 500
+
+    '
+  - '191 22
+
+    '
+  - '15 255
+
+    '
+  - '285 499
+
+    '
+  - '50 500
+
+    '
+  - '222 193
+
+    '
+  - '352 44
+
+    '
+  - '242 212
+
+    '
+  - '448 500
+
+    '
+  - '271 160
+
+    '
+  - '166 333
+
+    '
+  - '378 375
+
+    '
+  - '5 71
+
+    '
+  - '244 500
+
+    '
+  - '444 370
+
+    '
+  - '251 499
+
+    '
+  - '78 270
+
+    '
+  - '11 26
+
+    '
+  - '17 337
+
+    '
+  - '71 196
+
+    '
+  - '233 489
+
+    '
+  - '298 26
+
+    '
+  - '114 500
+
+    '
+  - '249 389
+
+    '
+  - '357 403
+
+    '
+  - '369 475
+
+    '
+  - '8 381
+
+    '
+  - '459 118
+
+    '
+  - '42 178
+
+    '
+  - '319 33
+
+    '
+  - '18 348
+
+    '
+  - '28 463
+
+    '
+  - '39 47
+
+    '
+  - '390 353
+
+    '
+  - '161 433
+
+    '
+  - '3 33
+
+    '
+  - '7 4
+
+    '
+  - '465 449
+
+    '
+  - '303 77
+
+    '
+  - '298 500
+
+    '
+  - '9 478
+
+    '
+  - '22 345
+
+    '
+  - '460 390
+
+    '
+  - '248 37
+
+    '
+  - '200 134
+
+    '
+  - '91 107
+
+    '
+  - '286 15
+
+    '
+  - '289 402
+
+    '
+  - '189 142
+
+    '
+  - '6 93
+
+    '
+  - '291 168
+
+    '
+  - '123 500
+
+    '
+  - '171 203
+
+    '
+  - '32 499
+
+    '
+  - '198 247
+
+    '
+  - '246 468
+
+    '
+  - '265 149
+
+    '
+  - '178 422
+
+    '
+  - '94 499
+
+    '
+  - '102 402
+
+    '
+  - '30 177
+
+    '
+  - '230 46
+
+    '
+  - '111 40
+
+    '
+  - '17 15
+
+    '
+  - '25 131
+
+    '
+  - '149 371
+
+    '
+  - '500 391
+
+    '
+  - '384 472
+
+    '
+  - '5 21
+
+    '
+  - '315 427
+
+    '
+  - '7 500
+
+    '
+  - '191 12
+
+    '
+  - '15 213
+
+    '
+  - '285 450
+
+    '
+  - '87 500
+
+    '
+  - '6 4
+
+    '
+  - '4 5
+
+    '
+  - '13 7
+
+    '
+  - '3 1
+
+    '
+  - '100 193
+
+    '
+  - '242 143
+
+    '
+  - '448 317
+
+    '
+  - '178 333
+
+    '
+  - '378 429
+
+    '
+  - '5 8
+
+    '
+  - '244 473
+
+    '
+  - '46 370
+
+    '
+  - '17 270
+
+    '
+  - '11 34
+
+    '
+  - '17 142
+
+    '
+  - '65 196
+
+    '
+  - '264 489
+
+    '
+  - '36 26
+
+    '
+  - '114 274
+
+    '
+  - '45 389
+
+    '
+  - '357 206
+
+    '
+  - '8 20
+
+    '
+  - '57 118
+
+    '
+  - '78 178
+
+    '
+  - '19 348
+
+    '
+  - '39 463
+
+    '
+  - '39 76
+
+    '
+  - '390 144
+
+    '
+  - '4 4
+
+    '
+  - '303 140
+
+    '
+  - '298 435
+
+    '
+  - '36 345
+
+    '
+  - '460 290
+
+    '
+  - '248 60
+
+    '
+  - '200 197
+
+    '
+  - '91 105
+
+    '
+  - '14 15
+
+    '
+  - '179 402
+
+    '
+  - '100 142
+
+    '
+  - '6 78
+
+    '
+  - '291 223
+
+    '
+  - '123 62
+
+    '
+  - '171 3
+
+    '
+  - '27 499
+
+    '
+  - '76 247
+
+    '
+  - '265 252
+
+    '
+  - '245 422
+
+    '
+  - '6 402
+
+    '
+  - '30 103
+
+    '
+  - '120 46
+
+    '
+  - '111 54
+
+    '
+  - '7 15
+
+    '
+  - '5 131
+
+    '
+  - '149 393
+
+    '
+  - '500 397
+
+    '
+  - '301 472
+
+    '
+  - '4 21
+
+    '
+  - '42 427
+
+    '
+  - '191 10
+
+    '
+  - '23 213
+
+    '
+  - '165 450
+
+    '
+  - '6 8
+
+    '
+  - '4 8
+
+    '
+  - '13 10
+
+    '
+  - '100 226
+
+    '
+  - '334 143
+
+    '
+  - '68 317
+
+    '
+  - '178 298
+
+    '
+  - '77 429
+
+    '
+  - '2 8
+
+    '
+  - '159 473
+
+    '
+  - '42 370
+
+    '
+  - '17 327
+
+    '
+  - '9 34
+
+    '
+  - '3 142
+
+    '
+  - '35 196
+
+    '
+  - '407 489
+
+    '
+  - '36 5
+
+    '
+  - '114 222
+
+    '
+  - '45 312
+
+    '
+  - '357 28
+
+    '
+  - '8 7
+
+    '
+  - '54 118
+
+    '
+  - '78 126
+
+    '
+  - '19 429
+
+    '
+  - '39 274
+
+    '
+  - '39 135
+
+    '
+  - '423 144
+
+    '
+  - '4 7
+
+    '
+  - '337 140
+
+    '
+  - '21 345
+
+    '
+  - '75 290
+
+    '
+  - '422 60
+
+    '
+  - '200 242
+
+    '
+  - '91 207
+
+    '
+  - '25 15
+
+    '
+  - '100 225
+
+    '
+  - '11 78
+
+    '
+  - '291 69
+
+    '
+  - '123 5
+
+    '
+  - '223 3
+
+    '
+  - '42 499
+
+    '
+  - '245 204
+
+    '
+  - '5 402
+
+    '
+  - '30 83
+
+    '
+  - '215 46
+
+    '
+  - '111 56
+
+    '
+  - '7 24
+
+    '
+  - '9 131
+
+    '
+  - '272 393
+
+    '
+  - '55 472
+
+    '
+  - '4 17
+
+    '
+  - '7 427
+
+    '
+  - '42 213
+
+    '
+  - '121 450
+
+    '
+  - '8 8
+
+    '
+  - '4 12
+
+    '
+  - '25 10
+
+    '
+  - '100 284
+
+    '
+  - '334 136
+
+    '
+  - '281 298
+
+    '
+  - '47 429
+
+    '
+  - '159 169
+
+    '
+  - '37 370
+
+    '
+  - '17 353
+
+    '
+  - '11 40
+
+    '
+  - '3 253
+
+    '
+  - '2 196
+
+    '
+  - '407 166
+
+    '
+  - '54 5
+
+    '
+  output:
+  - '1024
+
+    '
+  - '5
+
+    '
+  - '976890680
+
+    '
+  - '15
+
+    '
+  - '375500
+
+    '
+  - '512015273
+
+    '
+  - '382157018
+
+    '
+  - '312830719
+
+    '
+  - '806210307
+
+    '
+  - '567125736
+
+    '
+  - '80367024
+
+    '
+  - '897436821
+
+    '
+  - '555865043
+
+    '
+  - '6613840
+
+    '
+  - '552203508
+
+    '
+  - '563065086
+
+    '
+  - '772771385
+
+    '
+  - '125864547
+
+    '
+  - '37929526
+
+    '
+  - '434551606
+
+    '
+  - '299896905
+
+    '
+  - '316053655
+
+    '
+  - '631137022
+
+    '
+  - '500
+
+    '
+  - '411608690
+
+    '
+  - '405917309
+
+    '
+  - '263020220
+
+    '
+  - '186454845
+
+    '
+  - '345642117
+
+    '
+  - '97191222
+
+    '
+  - '266156666
+
+    '
+  - '373528200
+
+    '
+  - '836810892
+
+    '
+  - '875068738
+
+    '
+  - '580010430
+
+    '
+  - '146956559
+
+    '
+  - '709071139
+
+    '
+  - '632273638
+
+    '
+  - '74061
+
+    '
+  - '433133716
+
+    '
+  - '135201268
+
+    '
+  - '525290835
+
+    '
+  - '924911664
+
+    '
+  - '28573939
+
+    '
+  - '932713620
+
+    '
+  - '27900542
+
+    '
+  - '141211019
+
+    '
+  - '458968932
+
+    '
+  - '369540872
+
+    '
+  - '518355052
+
+    '
+  - '724043052
+
+    '
+  - '587613361
+
+    '
+  - '807999264
+
+    '
+  - '283119998
+
+    '
+  - '962803010
+
+    '
+  - '491847623
+
+    '
+  - '424278934
+
+    '
+  - '921135826
+
+    '
+  - '796227309
+
+    '
+  - '93097976
+
+    '
+  - '778435960
+
+    '
+  - '158983764
+
+    '
+  - '178439722
+
+    '
+  - '858431457
+
+    '
+  - '802132036
+
+    '
+  - '816854007
+
+    '
+  - '490804249
+
+    '
+  - '771060153
+
+    '
+  - '1
+
+    '
+  - '312807374
+
+    '
+  - '460833105
+
+    '
+  - '801988713
+
+    '
+  - '320480021
+
+    '
+  - '571274201
+
+    '
+  - '207908744
+
+    '
+  - '736893443
+
+    '
+  - '795015160
+
+    '
+  - '946997121
+
+    '
+  - '940552292
+
+    '
+  - '10603436
+
+    '
+  - '835857576
+
+    '
+  - '250499992
+
+    '
+  - '285057520
+
+    '
+  - '259067064
+
+    '
+  - '987275082
+
+    '
+  - '165073862
+
+    '
+  - '897504418'
+  - '876501030'
+  - '504833829'
+  - '267315236'
+  - '791657199'
+  - '149495700'
+  - '488002183'
+  - '64721831'
+  - '540914468'
+  - '638959512'
+  - '137464457'
+  - '682755253'
+  - '843999559'
+  - '173979883'
+  - '95378195'
+  - '803750570'
+  - '490247673'
+  - '661196131'
+  - '498953621'
+  - '995724703'
+  - '64506459'
+  - '562168953'
+  - '575316684'
+  - '373866776'
+  - '640679454'
+  - '568337438'
+  - '109819036'
+  - '443238646'
+  - '808236238'
+  - '619346648'
+  - '1665'
+  - '16384'
+  - '736747072'
+  - '391670058'
+  - '876865706'
+  - '313223120'
+  - '843890256'
+  - '431300307'
+  - '283987445'
+  - '378958161'
+  - '871937671'
+  - '770621352'
+  - '671160183'
+  - '839930968'
+  - '281606736'
+  - '937576587'
+  - '405198151'
+  - '606154060'
+  - '194860487'
+  - '928396549'
+  - '844981442'
+  - '935892404'
+  - '584699873'
+  - '878283999'
+  - '995202369'
+  - '500224670'
+  - '453525543'
+  - '721361102'
+  - '883723219'
+  - '132969800'
+  - '803507719'
+  - '665148250'
+  - '647276222'
+  - '516821'
+  - '621479972'
+  - '166166211'
+  - '273014244'
+  - '698221673'
+  - '168960556'
+  - '932532809'
+  - '4096'
+  - '301'
+  - '59308166'
+  - '1'
+  - '477054338'
+  - '617624268'
+  - '594706361'
+  - '335955529'
+  - '633685640'
+  - '12048'
+  - '244758729'
+  - '275985499'
+  - '618732865'
+  - '359861787'
+  - '19059357'
+  - '876282529'
+  - '857598819'
+  - '493294780'
+  - '936885576'
+  - '834485879'
+  - '477974609'
+  - '728360643'
+  - '197462756'
+  - '285313463'
+  - '490969332'
+  - '455345922'
+  - '340923533'
+  - '823557935'
+  - '148'
+  - '545543198'
+  - '284398357'
+  - '382636630'
+  - '901140841'
+  - '702238488'
+  - '705751862'
+  - '466482970'
+  - '727209226'
+  - '537378352'
+  - '993373680'
+  - '860669330'
+  - '21765688'
+  - '768276974'
+  - '241115523'
+  - '633518034'
+  - '721164542'
+  - '22534231'
+  - '868617289'
+  - '919260571'
+  - '60097927'
+  - '518039195'
+  - '893944051'
+  - '45258543'
+  - '743742691'
+  - '40763230'
+  - '680854556'
+  - '644661466'
+  - '19413'
+  - '425219573'
+  - '432012738'
+  - '457644017'
+  - '362210746'
+  - '119644'
+  - '1144'
+  - '586315999'
+  - '620566455'
+  - '286008197'
+  - '967845025'
+  - '317173233'
+  - '67123672'
+  - '8'
+  - '309238116'
+  - '973582701'
+  - '974933009'
+  - '185408724'
+  - '30388'
+  - '757960012'
+  - '748446831'
+  - '730085294'
+  - '946108603'
+  - '918938606'
+  - '387253424'
+  - '5764801'
+  - '259542913'
+  - '925229402'
+  - '735340945'
+  - '813233586'
+  - '563961050'
+  - '386093569'
+  - '781'
+  - '914263810'
+  - '292182521'
+  - '333577934'
+  - '664242822'
+  - '713840703'
+  - '487765888'
+  - '625279917'
+  - '296360602'
+  - '221812761'
+  - '349155536'
+  - '167796369'
+  - '945616399'
+  - '74032638'
+  - '137557708'
+  - '620302127'
+  - '105544787'
+  - '536635313'
+  - '442426526'
+  - '724865004'
+  - '26246132'
+  - '607060404'
+  - '163234124'
+  - '10405'
+  - '384628009'
+  - '364731992'
+  - '1302796'
+  - '10188872'
+  - '3744'
+  - '766136394'
+  - '458026742'
+  - '248328528'
+  - '419999780'
+  - '221033988'
+  - '375377590'
+  - '756084764'
+  - '663511313'
+  - '616547212'
+  - '96265'
+  - '196'
+  - '593011922'
+  - '252127661'
+timeout: 3.0

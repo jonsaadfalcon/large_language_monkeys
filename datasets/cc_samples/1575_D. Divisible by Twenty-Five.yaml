@@ -1,0 +1,1807 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nProblem Statement\n\
+  \nOne day, you found an old scroll with strange texts on it.\n\nYou revealed that\
+  \ the text was actually an expression denoting the position of treasure. The expression\
+  \ consists of following three operations:\n\n* From two points, yield a line on\
+  \ which the points lie.\n* From a point and a line, yield a point that is symmetric\
+  \ to the given point with respect to the line.\n* From two lines, yield a point\
+  \ that is the intersection of the lines.\n\n\n\nThe syntax of the expression is\
+  \ denoted by following BNF:\n\n\n<expression>      ::= <point>\n<point>       \t\
+  \  ::= <point-factor> | <line> \"@\" <line-factor> | <line> \"@\" <point-factor>\
+  \ | <point> \"@\" <line-factor>\n<point-factor>    ::= \"(\" <number> \",\" <number>\
+  \ \")\" | \"(\" <point> \")\"\n<line>            ::= <line-factor> | <point> \"\
+  @\" <point-factor>\n<line-factor>     ::= \"(\" <line> \")\"\n<number>         \
+  \ ::= <zero-digit> | <positive-number> | <negative-number>\n<positive-number> ::=\
+  \ <nonzero-digit> | <positive-number> <digit>\n<negative-number> ::= \"-\" <positive-number>\n\
+  <digit>           ::= <zero-digit> | <nonzero-digit>\n<zero-digit>      ::= \"0\"\
+  \n<nonzero-digit>   ::= \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" |\
+  \ \"8\" | \"9\"\n\nEach <point> or <point-factor> denotes a point, whereas each\
+  \ <line> or <line-factor> denotes a line. The former notion of <point-factor> $(X,Y)$\
+  \ represents a point which has $X$ for $x$-coordinate and $Y$ for $y$-coordinate\
+  \ on the $2$-dimensional plane. \"@\" indicates the operations on two operands.\
+  \ Since each operation is distinguishable from others by its operands' types (i.e.\
+  \ a point or a line), all of these operations are denoted by the same character\
+  \ \"@\". Note that \"@\" is left-associative, as can be seen from the BNF.\n\nYour\
+  \ task is to determine where the treasure is placed.\n\nInput\n\nThe input consists\
+  \ of multiple datasets. Each dataset is a single line which contains an expression\
+  \ denoting the position of treasure.\n\nIt is guaranteed that each dataset satisfies\
+  \ the following conditions:\n\n* The length of the string never exceeds $10^2$.\n\
+  * If both operands of \"@\" are points, their distance is greater than $1$.\n* If\
+  \ both operands of \"@\" are lines, they are never parallel.\n* The absolute values\
+  \ of points' coordinates never exceed $10^2$ at any point of evaluation.\n\n\n\n\
+  You can also assume that there are at most $100$ datasets.\n\nThe input ends with\
+  \ a line that contains only a single \"#\".\n\nOutput\n\nFor each dataset, print\
+  \ the $X$ and $Y$ coordinates of the point, denoted by the expression, in this order.\n\
+  \nThe output will be considered correct if its absolute or relative error is at\
+  \ most $10^{-2}$.\n\nSample Input\n\n\n((0,0)@(1,1))@((4,1)@(2,5))\n((0,0)@(3,1))@((1,-3)@(2,-1))\n\
+  (0,0)@(1,1)@(4,1)\n(0,0)@((1,1)@(4,1))\n(((0,0)@((10,20)@(((30,40))))))\n((0,0)@(3,1))@((1,-3)@(2,-1))@(100,-100)@(100,100)\n\
+  \n\nOutput for the Sample Input\n\n\n3.00000000 3.00000000\n3.00000000 1.00000000\n\
+  1.00000000 4.00000000\n0.00000000 2.00000000\n-10.00000000 10.00000000\n-99.83681795\
+  \ -91.92248853\n\n\n\n\n\nExample\n\nInput\n\n((0,0)@(1,1))@((4,1)@(2,5))\n((0,0)@(3,1))@((1,-3)@(2,-1))\n\
+  (0,0)@(1,1)@(4,1)\n(0,0)@((1,1)@(4,1))\n(((0,0)@((10,20)@(((30,40))))))\n((0,0)@(3,1))@((1,-3)@(2,-1))@(100,-100)@(100,100)\n\
+  #\n\n\nOutput\n\n3.00000000 3.00000000\n3.00000000 1.00000000\n1.00000000 4.00000000\n\
+  0.00000000 2.00000000\n-10.00000000 10.00000000\n-99.83681795 -91.92248853\nA: ```digits\
+  \ = \"-0123456789\"\ndef cross_point(P, Q):\n    x0, y0, x1, y1 = P\n    x2, y2,\
+  \ x3, y3 = Q\n    dx0 = x1 - x0; dy0 = y1 - y0\n    dx1 = x3 - x2; dy1 = y3 - y2\n\
+  \n    s = (y0-y2)*dx1 - (x0-x2)*dy1\n    sm = dx0*dy1 - dy0*dx1\n    if s < 0:\n\
+  \        s = -s\n        sm = -sm\n    if s == 0:\n        x = x0\n        y = y0\n\
+  \    else:\n        x = x0 + s*dx0/sm\n        y = y0 + s*dy0/sm\n    return x,\
+  \ y\ndef reflection(line, point):\n    x0, y0, x1, y1 = line\n    p, q = point\n\
+  \    x1 -= x0; y1 -= y0\n    p -= x0; q -= y0\n    cv = p*x1 + q*y1\n    sv = p*y1\
+  \ - q*x1\n    cv2 = cv**2 - sv**2\n    sv2 = 2*cv*sv\n    dd = (p**2 + q**2)*(x1**2\
+  \ + y1**2)\n    if dd == 0:\n        return x0 + p, y0 + q\n    return x0 + (cv2\
+  \ * p - sv2 * q) / dd, y0 + (sv2 * p + cv2 * q) / dd\n\ndef parse(S):\n    S = S\
+  \ + \"$\"\n    cur = 0\n    def expr():\n        nonlocal cur\n        res = None\n\
+  \        while S[cur] == '(':\n            cur += 1 # '('\n            if S[cur]\
+  \ in digits:\n                x = number()\n                cur += 1 # ','\n   \
+  \             y = number()\n                r = (0, x, y)\n            else:\n \
+  \               r = expr()\n            cur += 1 # ')'\n            if res is None:\n\
+  \                res = r\n            else:\n                if res[0] == r[0] ==\
+  \ 0:\n                    # (point)@(point)\n                    res = (1, res[1],\
+  \ res[2], r[1], r[2])\n                elif res[0] == r[0] == 1:\n             \
+  \       # (line)@(line)\n                    x, y = cross_point(res[1:], r[1:])\n\
+  \                    res = (0, x, y)\n                else:\n                  \
+  \  # (line)@(point) or (point)@(line)\n                    point, line = (res, r)\
+  \ if r[0] else (r, res)\n                    x, y = reflection(line[1:], point[1:])\n\
+  \                    res = (0, x, y)\n            if S[cur] != '@':\n          \
+  \      break\n            cur += 1 # '@'\n        return res\n\n    def number():\n\
+  \        nonlocal cur\n        v = 0; mns = 0\n        if S[cur] == '-':\n     \
+  \       mns = 1\n            cur += 1 # '-'\n        while S[cur] in digits:\n \
+  \           v = 10*v + int(S[cur])\n            cur += 1\n        return -v if mns\
+  \ else v\n\n    return expr()\n\ndef solve():\n    s = input()\n    if s == '#':\n\
+  \        return False\n    res = parse(s)\n    print(\"%.16f %.16f\" % res[1:])\n\
+  \    return True\nwhile solve():\n    ...```\nQ: Write python code to solve the\
+  \ following coding problem that obeys the constraints and passes the example test\
+  \ cases. The output code needs to read from and write to standard IO. Please wrap\
+  \ your code answer using ```:\nBob has a permutation of integers from 1 to n. Denote\
+  \ this permutation as p. The i-th element of p will be denoted as pi. For all pairs\
+  \ of distinct integers i, j between 1 and n, he wrote the number ai, j = min(pi,\
+  \ pj). He writes ai, i = 0 for all integer i from 1 to n.\n\nBob gave you all the\
+  \ values of ai, j that he wrote down. Your job is to reconstruct any permutation\
+  \ that could have generated these values. The input will be formed so that it is\
+  \ guaranteed that there is at least one solution that is consistent with the information\
+  \ given.\n\nInput\n\nThe first line of the input will contain a single integer n\
+  \ (2 \u2264 n \u2264 50).\n\nThe next n lines will contain the values of ai, j.\
+  \ The j-th number on the i-th line will represent ai, j. The i-th number on the\
+  \ i-th line will be 0. It's guaranteed that ai, j = aj, i and there is at least\
+  \ one solution consistent with the information given.\n\nOutput\n\nPrint n space\
+  \ separated integers, which represents a permutation that could have generated these\
+  \ values. If there are multiple possible solutions, print any of them.\n\nExamples\n\
+  \nInput\n\n2\n0 1\n1 0\n\n\nOutput\n\n2 1\n\n\nInput\n\n5\n0 2 2 1 2\n2 0 4 1 3\n\
+  2 4 0 1 3\n1 1 1 0 1\n2 3 3 1 0\n\n\nOutput\n\n2 5 4 1 3\n\nNote\n\nIn the first\
+  \ case, the answer can be {1, 2} or {2, 1}.\n\nIn the second case, another possible\
+  \ answer is {2, 4, 5, 1, 3}.\nA: ```# from pprint import pprint\n\nn = int(input())\n\
+  a = []\nfor i in range(n):\n    row = [int(k) for k in input().split()]\n    a.append(row)\n\
+  \nresult = [0] * n\nfor k in range(1, n):\n    # print('k=', k)\n    for i in range(n):\n\
+  \        countK = 0\n        countNonK = 0\n        for j in range(n):\n       \
+  \     if a[i][j] == k:\n                countK += 1\n            elif a[i][j] !=\
+  \ 0:\n                countNonK += 1\n        # print('@', countK, countNonK)\n\
+  \        if countK > 0 and countNonK == 0:\n            # print('j', j)\n      \
+  \      result[i] = k\n            for j in range(n):\n                a[i][j] =\
+  \ 0\n                a[j][i] = 0\n            continue\n\n        countK = 0\n \
+  \       countNonK = 0\n        for j in range(n):\n            if a[j][i] == k:\n\
+  \                countK += 1\n            elif a[j][i] != 0:\n                countNonK\
+  \ += 1\n        if countK > 0 and countNonK == 0:\n            # print('j#', j)\n\
+  \            result[i] = k\n            for j in range(n):\n                a[j][i]\
+  \ = 0\n                a[i][j] = 0\n    # pprint(a)\nresult[result.index(0)] = n\n\
+  \nprint(' '.join(str(i) for i in result))```\nQ: Write python code to solve the\
+  \ following coding problem that obeys the constraints and passes the example test\
+  \ cases. The output code needs to read from and write to standard IO. Please wrap\
+  \ your code answer using ```:\nMr. Chanek has an integer represented by a string\
+  \ s. Zero or more digits have been erased and are denoted by the character _. There\
+  \ are also zero or more digits marked by the character X, meaning they're the same\
+  \ digit.\n\nMr. Chanek wants to count the number of possible integer s, where s\
+  \ is divisible by 25. Of course, s must not contain any leading zero. He can replace\
+  \ the character _ with any digit. He can also replace the character X with any digit,\
+  \ but it must be the same for every character X.\n\nAs a note, a leading zero is\
+  \ any 0 digit that comes before the first nonzero digit in a number string in positional\
+  \ notation. For example, 0025 has two leading zeroes. An exception is the integer\
+  \ zero, (0 has no leading zero, but 0000 has three leading zeroes).\n\nInput\n\n\
+  One line containing the string s (1 \u2264 |s| \u2264 8). The string s consists\
+  \ of the characters 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, _, and X.\n\nOutput\n\nOutput\
+  \ an integer denoting the number of possible integer s.\n\nExamples\n\nInput\n\n\
+  \n25\n\n\nOutput\n\n\n1\n\n\nInput\n\n\n_00\n\n\nOutput\n\n\n9\n\n\nInput\n\n\n\
+  _XX\n\n\nOutput\n\n\n9\n\n\nInput\n\n\n0\n\n\nOutput\n\n\n1\n\n\nInput\n\n\n0_25\n\
+  \n\nOutput\n\n\n0\n\nNote\n\nIn the first example, the only possible s is 25.\n\n\
+  In the second and third example, s \u2208 \\{100, 200,300,400,500,600,700,800,900\\\
+  }.\n\nIn the fifth example, all possible s will have at least one leading zero.\n\
+  A:"
+question: "Mr. Chanek has an integer represented by a string s. Zero or more digits\
+  \ have been erased and are denoted by the character _. There are also zero or more\
+  \ digits marked by the character X, meaning they're the same digit.\n\nMr. Chanek\
+  \ wants to count the number of possible integer s, where s is divisible by 25. Of\
+  \ course, s must not contain any leading zero. He can replace the character _ with\
+  \ any digit. He can also replace the character X with any digit, but it must be\
+  \ the same for every character X.\n\nAs a note, a leading zero is any 0 digit that\
+  \ comes before the first nonzero digit in a number string in positional notation.\
+  \ For example, 0025 has two leading zeroes. An exception is the integer zero, (0\
+  \ has no leading zero, but 0000 has three leading zeroes).\n\nInput\n\nOne line\
+  \ containing the string s (1 \u2264 |s| \u2264 8). The string s consists of the\
+  \ characters 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, _, and X.\n\nOutput\n\nOutput an integer\
+  \ denoting the number of possible integer s.\n\nExamples\n\nInput\n\n\n25\n\n\n\
+  Output\n\n\n1\n\n\nInput\n\n\n_00\n\n\nOutput\n\n\n9\n\n\nInput\n\n\n_XX\n\n\nOutput\n\
+  \n\n9\n\n\nInput\n\n\n0\n\n\nOutput\n\n\n1\n\n\nInput\n\n\n0_25\n\n\nOutput\n\n\n\
+  0\n\nNote\n\nIn the first example, the only possible s is 25.\n\nIn the second and\
+  \ third example, s \u2208 \\{100, 200,300,400,500,600,700,800,900\\}.\n\nIn the\
+  \ fifth example, all possible s will have at least one leading zero."
+samples:
+- " ```# from itertools import product\n\ns = input()\nn = s.count('_')\nx = s.count('X')\n\
+  if n + x == 0:\n    print(1)\nelif n + x == 1:\n    if s[0] == '_':\n        print(9)\n\
+  \    else:\n        print(1)\nelse:\n    if s[0] == '_':\n        if x == 0:\n \
+  \           print(9 * 10**(n-1))\n        else:\n            print(9 * 10**(n-1))\n\
+  \    else:\n        print(1)\n```\nQ:"
+- " ```# from math import gcd\nfrom functools import reduce\nfrom operator import\
+  \ mul\n\ndef count_ways(s):\n    s = s.replace('X', '0')\n    s = s.replace('_',\
+  \ '0')\n    s = s.lstrip('0')\n    if s == '':\n        return 0\n    if s[0] ==\
+  \ '0':\n        return 0\n    n = len(s)\n    ways = 1\n    for i in range(n):\n\
+  \        if s[i] != '0':\n            ways *= (int(s[i]) + 1)\n    return ways\n\
+  \nn = int(input())\nprint(count_ways(input()))```\nQ:"
+test_cases:
+  input:
+  - '0
+
+    '
+  - '_XX
+
+    '
+  - '_00
+
+    '
+  - '0_25
+
+    '
+  - '25
+
+    '
+  - 'X
+
+    '
+  - '6X
+
+    '
+  - '585X27X5
+
+    '
+  - 'XX_X_3_X
+
+    '
+  - '_5
+
+    '
+  - '050
+
+    '
+  - '0X5
+
+    '
+  - 'XX5_
+
+    '
+  - 'X1_9_0X5
+
+    '
+  - '___X_X25
+
+    '
+  - '0_5
+
+    '
+  - '5537___5
+
+    '
+  - '85X1X525
+
+    '
+  - '__X___X_
+
+    '
+  - '_3472XXX
+
+    '
+  - '_X_X_3_X
+
+    '
+  - '79XX_925
+
+    '
+  - '_4_7XXXX
+
+    '
+  - 'X_1X56_5
+
+    '
+  - '_X0
+
+    '
+  - 'X2XXX9X_
+
+    '
+  - '8_XX2_00
+
+    '
+  - '_
+
+    '
+  - '5
+
+    '
+  - '_X_X_X__
+
+    '
+  - '_87_8XXX
+
+    '
+  - '0025
+
+    '
+  - '0_____
+
+    '
+  - '__
+
+    '
+  - '0___
+
+    '
+  - '0____
+
+    '
+  - 'X2
+
+    '
+  - '58994_00
+
+    '
+  - '________
+
+    '
+  - '0__
+
+    '
+  - 'XX
+
+    '
+  - '_____X__
+
+    '
+  - '_11X__XX
+
+    '
+  - 'X5
+
+    '
+  - 'X6
+
+    '
+  - '6_76_000
+
+    '
+  - '_206_2_X
+
+    '
+  - '_X8__725
+
+    '
+  - 'X_
+
+    '
+  - '53X_94_X
+
+    '
+  - 'X14___X5
+
+    '
+  - '__X__X__
+
+    '
+  - '1XXX9___
+
+    '
+  - '362__6__
+
+    '
+  - '_7XX16X_
+
+    '
+  - '0075
+
+    '
+  - '00
+
+    '
+  - 'XX_2
+
+    '
+  - 'X_X2___5
+
+    '
+  - '2X3X7___
+
+    '
+  - 'X01_X___
+
+    '
+  - '4_3X__00
+
+    '
+  - 'XXXX3XXX
+
+    '
+  - '_XXXXXX
+
+    '
+  - '_X
+
+    '
+  - 'X_______
+
+    '
+  - '92_6X8X5
+
+    '
+  - 'XX9_X_X_
+
+    '
+  - '1_07XXX_
+
+    '
+  - '_______X
+
+    '
+  - 'XX_289_X
+
+    '
+  - '2___2__X
+
+    '
+  - '_X_X_X_X
+
+    '
+  - 'X5__X1_5
+
+    '
+  - '558X27X5
+
+    '
+  - '_4
+
+    '
+  - '_5XX
+
+    '
+  - '52X_X___
+
+    '
+  - '85X5X125
+
+    '
+  - '_X___X__
+
+    '
+  - 'X_3_X_X_
+
+    '
+  - '_4_8XXXX
+
+    '
+  - '5_65X1_X
+
+    '
+  - '__X_X_X_
+
+    '
+  - '___0
+
+    '
+  - '____0
+
+    '
+  - '_11_X_XX
+
+    '
+  - '_20_62_X
+
+    '
+  - '527__8X_
+
+    '
+  - 'X13___X5
+
+    '
+  - '_76X1XX_
+
+    '
+  - 'X_X1___5
+
+    '
+  - '92_6X7X5
+
+    '
+  - '1___2__X
+
+    '
+  - '79XX_825
+
+    '
+  - '1X_
+
+    '
+  - '11__X_XX
+
+    '
+  - '5437___5
+
+    '
+  - '__X_____
+
+    '
+  - '_X7__725
+
+    '
+  - '_01_X__X
+
+    '
+  - '5_3X__00
+
+    '
+  - 'XXXXXX_
+
+    '
+  - 'XX_289X_
+
+    '
+  - 'X__1__X5
+
+    '
+  - '558X562X
+
+    '
+  - '3
+
+    '
+  - '_3X72XX4
+
+    '
+  - '529_XX97
+
+    '
+  - '_X1
+
+    '
+  - '00_2XX_8
+
+    '
+  - '4
+
+    '
+  - '_88_8XXX
+
+    '
+  - '7
+
+    '
+  - '5248156
+
+    '
+  - 'X4
+
+    '
+  - '1169683
+
+    '
+  - '53X_84_X
+
+    '
+  - '263__6__
+
+    '
+  - '___7X3X2
+
+    '
+  - 'XXX3XXXX
+
+    '
+  - '_X_X_9XX
+
+    '
+  - 'X_982_XX
+
+    '
+  - '1
+
+    '
+  - '00_
+
+    '
+  - '558X57X2
+
+    '
+  - '4_
+
+    '
+  - '_6XX
+
+    '
+  - '6
+
+    '
+  - '85XX5125
+
+    '
+  - '_4X72XX3
+
+    '
+  - 'X_1X46_5
+
+    '
+  - '00_28X_X
+
+    '
+  - '4771318
+
+    '
+  - '1023497
+
+    '
+  - '220_6__X
+
+    '
+  - '572__8X_
+
+    '
+  - '53X_83_X
+
+    '
+  - '5X___41X
+
+    '
+  - '263__7__
+
+    '
+  - '5___1X_X
+
+    '
+  - '__7_X3X2
+
+    '
+  - '5X7X6_29
+
+    '
+  - 'XX_28X_9
+
+    '
+  - 'X__2___1
+
+    '
+  - '01_
+
+    '
+  - '2X75X855
+
+    '
+  - 'XX6_
+
+    '
+  - '79XX_826
+
+    '
+  - 'X_X82_00
+
+    '
+  - '702531
+
+    '
+  - '1334765
+
+    '
+  - '120_6__X
+
+    '
+  - '572__8_X
+
+    '
+  - '54___X1X
+
+    '
+  - 'X_X0___5
+
+    '
+  - '2X3X_7__
+
+    '
+  - 'XX_2X8_9
+
+    '
+  - 'X__3___1
+
+    '
+  - '_10
+
+    '
+  - '2X75X585
+
+    '
+  - '6XX_
+
+    '
+  - '79XX8_26
+
+    '
+  - '10_28X_X
+
+    '
+  - '602812
+
+    '
+  - '1406466
+
+    '
+  - 'X20_6__1
+
+    '
+  - '54_X__1X
+
+    '
+  - '_X_2X8X9
+
+    '
+  - 'X__3___2
+
+    '
+  - '_20
+
+    '
+  - '2X85X575
+
+    '
+  - '7XX_
+
+    '
+  - 'X_X82_01
+
+    '
+  - '819438
+
+    '
+  - '484022
+
+    '
+  - '1__6_02X
+
+    '
+  - '2___3__X
+
+    '
+  - '_11
+
+    '
+  - '2X85X585
+
+    '
+  - '_XX7
+
+    '
+  - 'X_X82_10
+
+    '
+  - '121160
+
+    '
+  - '294762
+
+    '
+  - '11_
+
+    '
+  - '585X58X2
+
+    '
+  - '8_XX2_10
+
+    '
+  - '145508
+
+    '
+  - '226338
+
+    '
+  - '_12
+
+    '
+  - '3X85X585
+
+    '
+  - '188263
+
+    '
+  - '30022
+
+    '
+  - '21_
+
+    '
+  - '16703
+
+    '
+  - '48343
+
+    '
+  - '1_1
+
+    '
+  - '5832
+
+    '
+  - '92233
+
+    '
+  - '2
+
+    '
+  - '1702
+
+    '
+  - '65640
+
+    '
+  - '8
+
+    '
+  - '721
+
+    '
+  - '48110
+
+    '
+  - '9
+
+    '
+  - '669
+
+    '
+  - '11043
+
+    '
+  - '19913
+
+    '
+  - '1199
+
+    '
+  - '1962
+
+    '
+  - '1503
+
+    '
+  - '1555
+
+    '
+  - '1337
+
+    '
+  - '253
+
+    '
+  - '193
+
+    '
+  - 'X7
+
+    '
+  - '585X27X6
+
+    '
+  - 'X_3_X_XX
+
+    '
+  - '1X5
+
+    '
+  - '5X0_9_1X
+
+    '
+  - '___X_X24
+
+    '
+  - '_X4723XX
+
+    '
+  - 'X_X_3_X_
+
+    '
+  - '79XX592_
+
+    '
+  - '_7_4XXXX
+
+    '
+  - '_86_8XXX
+
+    '
+  - '_____0
+
+    '
+  - '_0__
+
+    '
+  - '2126256
+
+    '
+  - '_11XX__X
+
+    '
+  - '468093
+
+    '
+  - '35X_94_X
+
+    '
+  - '__X____X
+
+    '
+  - '1XXX__9_
+
+    '
+  - '361__6__
+
+    '
+  - '_X______
+
+    '
+  - '5X8X6_29
+
+    '
+  - '558X37X5
+
+    '
+  - '_3X82XX4
+
+    '
+  - '429_XX97
+
+    '
+  - '5_55X1_X
+
+    '
+  - '_1X
+
+    '
+  - '0X_20X_8
+
+    '
+  - '_78_8XXX
+
+    '
+  - '_0___
+
+    '
+  - '8574389
+
+    '
+  - 'X3
+
+    '
+  - '2115087
+
+    '
+  - '_20_63_X
+
+    '
+  - '63X_84_X
+
+    '
+  - '5X___31X
+
+    '
+  - '___6X3X2
+
+    '
+  - '92_6X7X4
+
+    '
+  - 'X_98_2XX
+
+    '
+  - '0_0
+
+    '
+  - '558X56X2
+
+    '
+  - '3_
+
+    '
+  - 'X6_X
+
+    '
+  - '5215XX58
+
+    '
+  - '79XX_725
+
+    '
+  - '5_64X1_X
+
+    '
+  - '1_X
+
+    '
+  - '2822368
+
+    '
+  - 'XX_X__11
+
+    '
+  - '324362
+
+    '
+  - '_X8__275
+
+    '
+  - '__7__362
+
+    '
+  - '__7_X3X3
+
+    '
+  - '6X7X6_29
+
+    '
+  - '9_X82_XX
+
+    '
+  - '555X87X2
+
+    '
+  - 'X_6X
+
+    '
+  - '628_XX97
+
+    '
+  output:
+  - '1
+
+    '
+  - '9
+
+    '
+  - '9
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '200
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '9
+
+    '
+  - '200
+
+    '
+  - '90000
+
+    '
+  - '0
+
+    '
+  - '200
+
+    '
+  - '10
+
+    '
+  - '360000
+
+    '
+  - '9
+
+    '
+  - '3600
+
+    '
+  - '100
+
+    '
+  - '90
+
+    '
+  - '180
+
+    '
+  - '18
+
+    '
+  - '3
+
+    '
+  - '1000
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '36000
+
+    '
+  - '90
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '10
+
+    '
+  - '3600000
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '3600000
+
+    '
+  - '900
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '100
+
+    '
+  - '360
+
+    '
+  - '9000
+
+    '
+  - '3
+
+    '
+  - '40
+
+    '
+  - '2000
+
+    '
+  - '360000
+
+    '
+  - '400
+
+    '
+  - '400
+
+    '
+  - '36
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '18000
+
+    '
+  - '400
+
+    '
+  - '3600
+
+    '
+  - '10000
+
+    '
+  - '0
+
+    '
+  - '9
+
+    '
+  - '3
+
+    '
+  - '3600000
+
+    '
+  - '20
+
+    '
+  - '300
+
+    '
+  - '40
+
+    '
+  - '3600000
+
+    '
+  - '20
+
+    '
+  - '40000
+
+    '
+  - '3600
+
+    '
+  - '1800
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '9
+
+    '
+  - '4000
+
+    '
+  - '10
+
+    '
+  - '360000
+
+    '
+  - '3000
+
+    '
+  - '90
+
+    '
+  - '40
+
+    '
+  - '36000
+
+    '
+  - '180
+
+    '
+  - '1800
+
+    '
+  - '900
+
+    '
+  - '360
+
+    '
+  - '400
+
+    '
+  - '2000
+
+    '
+  - '36
+
+    '
+  - '18000
+
+    '
+  - '20
+
+    '
+  - '40000
+
+    '
+  - '100
+
+    '
+  - '4
+
+    '
+  - '1000
+
+    '
+  - '200
+
+    '
+  - '3600000
+
+    '
+  - '9000
+
+    '
+  - '3600
+
+    '
+  - '10000
+
+    '
+  - '3
+
+    '
+  - '30
+
+    '
+  - '20000
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '90
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '40
+
+    '
+  - '400
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '900
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '9
+
+    '
+  - '0
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '180
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '400
+
+    '
+  - '400
+
+    '
+  - '40
+
+    '
+  - '0
+
+    '
+  - '400
+
+    '
+  - '4000
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '900
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '400
+
+    '
+  - '400
+
+    '
+  - '0
+
+    '
+  - '18000
+
+    '
+  - '400
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '4
+
+    '
+  - '0
+
+    '
+  - '40
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '10
+
+    '
+  - '4
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1000
+
+    '
+  - '40000
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '9
+
+    '
+  - '3000
+
+    '
+  - '10
+
+    '
+  - '90
+
+    '
+  - '90
+
+    '
+  - '18000
+
+    '
+  - '36
+
+    '
+  - '0
+
+    '
+  - '360
+
+    '
+  - '0
+
+    '
+  - '40
+
+    '
+  - '360000
+
+    '
+  - '0
+
+    '
+  - '400
+
+    '
+  - '3600000
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '40
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '90
+
+    '
+  - '360
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '360
+
+    '
+  - '40
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '100
+
+    '
+  - '40
+
+    '
+  - '4
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '9000
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '100
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+timeout: 2.0

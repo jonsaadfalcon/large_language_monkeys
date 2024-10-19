@@ -1,0 +1,3595 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nTakahashi has\
+  \ N blue cards and M red cards. A string is written on each card. The string written\
+  \ on the i-th blue card is s_i, and the string written on the i-th red card is t_i.\n\
+  \nTakahashi will now announce a string, and then check every card. Each time he\
+  \ finds a blue card with the string announced by him, he will earn 1 yen (the currency\
+  \ of Japan); each time he finds a red card with that string, he will lose 1 yen.\n\
+  \nHere, we only consider the case where the string announced by Takahashi and the\
+  \ string on the card are exactly the same. For example, if he announces `atcoder`,\
+  \ he will not earn money even if there are blue cards with `atcoderr`, `atcode`,\
+  \ `btcoder`, and so on. (On the other hand, he will not lose money even if there\
+  \ are red cards with such strings, either.)\n\nAt most how much can he earn on balance?\n\
+  \nNote that the same string may be written on multiple cards.\n\nConstraints\n\n\
+  * N and M are integers.\n* 1 \\leq N, M \\leq 100\n* s_1, s_2, ..., s_N, t_1, t_2,\
+  \ ..., t_M are all strings of lengths between 1 and 10 (inclusive) consisting of\
+  \ lowercase English letters.\n\nInput\n\nInput is given from Standard Input in the\
+  \ following format:\n\n\nN\ns_1\ns_2\n:\ns_N\nM\nt_1\nt_2\n:\nt_M\n\n\nOutput\n\n\
+  If Takahashi can earn at most X yen on balance, print X.\n\nExamples\n\nInput\n\n\
+  3\napple\norange\napple\n1\ngrape\n\n\nOutput\n\n2\n\n\nInput\n\n3\napple\norange\n\
+  apple\n5\napple\napple\napple\napple\napple\n\n\nOutput\n\n1\n\n\nInput\n\n1\nvoldemort\n\
+  10\nvoldemort\nvoldemort\nvoldemort\nvoldemort\nvoldemort\nvoldemort\nvoldemort\n\
+  voldemort\nvoldemort\nvoldemort\n\n\nOutput\n\n0\n\n\nInput\n\n6\nred\nred\nblue\n\
+  yellow\nyellow\nred\n5\nred\nred\nyellow\ngreen\nblue\n\n\nOutput\n\n1\nA: ```from\
+  \ collections import*\nn,*a=open(0).read().split()\nblue=a[0:int(n)]\nred=a[int(n)+1:]\n\
+  print(max(0,max(v-Counter(red)[k] for k,v in Counter(blue).items())))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nYou are playing a game of\
+  \ Jongmah. You don't need to know the rules to solve this problem. You have n tiles\
+  \ in your hand. Each tile has an integer between 1 and m written on it.\n\nTo win\
+  \ the game, you will need to form some number of triples. Each triple consists of\
+  \ three tiles, such that the numbers written on the tiles are either all the same\
+  \ or consecutive. For example, 7, 7, 7 is a valid triple, and so is 12, 13, 14,\
+  \ but 2,2,3 or 2,4,6 are not. You can only use the tiles in your hand to form triples.\
+  \ Each tile can be used in at most one triple.\n\nTo determine how close you are\
+  \ to the win, you want to know the maximum number of triples you can form from the\
+  \ tiles in your hand.\n\nInput\n\nThe first line contains two integers integer n\
+  \ and m (1 \u2264 n, m \u2264 10^6) \u2014 the number of tiles in your hand and\
+  \ the number of tiles types.\n\nThe second line contains integers a_1, a_2, \u2026\
+  , a_n (1 \u2264 a_i \u2264 m), where a_i denotes the number written on the i-th\
+  \ tile.\n\nOutput\n\nPrint one integer: the maximum number of triples you can form.\n\
+  \nExamples\n\nInput\n\n10 6\n2 3 3 3 4 4 4 5 5 6\n\n\nOutput\n\n3\n\n\nInput\n\n\
+  12 6\n1 5 3 3 3 4 3 5 3 2 3 3\n\n\nOutput\n\n3\n\n\nInput\n\n13 5\n1 1 5 1 2 3 3\
+  \ 2 4 2 3 4 5\n\n\nOutput\n\n4\n\nNote\n\nIn the first example, we have tiles 2,\
+  \ 3, 3, 3, 4, 4, 4, 5, 5, 6. We can form three triples in the following way: 2,\
+  \ 3, 4; 3, 4, 5; 4, 5, 6. Since there are only 10 tiles, there is no way we could\
+  \ form 4 triples, so the answer is 3.\n\nIn the second example, we have tiles 1,\
+  \ 2, 3 (7 times), 4, 5 (2 times). We can form 3 triples as follows: 1, 2, 3; 3,\
+  \ 3, 3; 3, 4, 5. One can show that forming 4 triples is not possible.\nA: ```from\
+  \ collections import Counter\nn, m = map(int, input().split())\nB = list(map(int,\
+  \ input().split()))\ncnt = Counter(B)\nA = sorted(cnt.keys())\nn = len(A)\ndp =\
+  \ [[0] * 3 for _ in range(3)]\nfor i, a in enumerate(A):\n    dp2 = [[0] * 3 for\
+  \ _ in range(3)]\n    for x in range(1 if i >= 2 and a - 2 != A[i - 2] else 3):\n\
+  \        for y in range(1 if i >= 1 and a - 1 != A[i - 1] else 3):\n           \
+  \ for z in range(3):\n                if x + y + z <= cnt[a]:\n                \
+  \    dp2[y][z] = max(dp2[y][z], dp[x][y] + z + (cnt[a] - x - y - z) // 3)\n    dp\
+  \ = dp2\nprint (dp[0][0])```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nYou are given an array a of length n.\n\nLet's define the eversion\
+  \ operation. Let x = a_n. Then array a is partitioned into two parts: left and right.\
+  \ The left part contains the elements of a that are not greater than x (\u2264 x).\
+  \ The right part contains the elements of a that are strictly greater than x (>\
+  \ x). The order of elements in each part is kept the same as before the operation,\
+  \ i. e. the partition is stable. Then the array is replaced with the concatenation\
+  \ of the left and the right parts.\n\nFor example, if the array a is [2, 4, 1, 5,\
+  \ 3], the eversion goes like this: [2, 4, 1, 5, 3] \u2192 [2, 1, 3], [4, 5] \u2192\
+  \ [2, 1, 3, 4, 5].\n\nWe start with the array a and perform eversions on this array.\
+  \ We can prove that after several eversions the array a stops changing. Output the\
+  \ minimum number k such that the array stops changing after k eversions.\n\nInput\n\
+  \nEach test contains multiple test cases. The first line contains the number of\
+  \ test cases t (1 \u2264 t \u2264 100). Description of the test cases follows.\n\
+  \nThe first line contains a single integer n (1 \u2264 n \u2264 2 \u22C5 10^5).\n\
+  \nThe second line contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^9).\n\
+  \nIt is guaranteed that the sum of n over all test cases does not exceed 2 \u22C5\
+  \ 10^5.\n\nOutput\n\nFor each test case print a single integer k \u2014 the number\
+  \ of eversions after which the array stops changing.\n\nExample\n\nInput\n\n\n3\n\
+  5\n2 4 1 5 3\n5\n5 3 2 4 1\n4\n1 1 1 1\n\n\nOutput\n\n\n1\n2\n0\n\nNote\n\nConsider\
+  \ the fist example.\n\n  * The first eversion: a = [1, 4, 2, 5, 3], x = 3. [2, 4,\
+  \ 1, 5, 3] \u2192 [2, 1, 3], [4, 5] \u2192 [2, 1, 3, 4, 5]. \n  * The second and\
+  \ following eversions: a = [2, 1, 3, 4, 5], x = 5. [2, 1, 3, 4, 5] \u2192 [2, 1,\
+  \ 3, 4, 5], [] \u2192 [2, 1, 3, 4, 5]. This eversion does not change the array,\
+  \ so the answer is 1. \n\n\n\nConsider the second example. \n\n  * The first eversion:\
+  \ a = [5, 3, 2, 4, 1], x = 1. [5, 3, 2, 4, 1] \u2192 [1], [5, 3, 2, 4] \u2192 [1,\
+  \ 5, 3, 2, 4]. \n  * The second eversion: a = [1, 5, 3, 2, 4], x = 4. [1, 5, 3,\
+  \ 2, 4] \u2192 [1, 3, 2, 4], [5] \u2192 [1, 3, 2, 4, 5]. \n  * The third and following\
+  \ eversions: a = [1, 3, 2, 4, 5], x = 5. [1, 3, 2, 4, 5] \u2192 [1, 3, 2, 4, 5],\
+  \ [] \u2192 [1, 3, 2, 4, 5]. This eversion does not change the array, so the answer\
+  \ is 2. \nA:"
+question: "You are given an array a of length n.\n\nLet's define the eversion operation.\
+  \ Let x = a_n. Then array a is partitioned into two parts: left and right. The left\
+  \ part contains the elements of a that are not greater than x (\u2264 x). The right\
+  \ part contains the elements of a that are strictly greater than x (> x). The order\
+  \ of elements in each part is kept the same as before the operation, i. e. the partition\
+  \ is stable. Then the array is replaced with the concatenation of the left and the\
+  \ right parts.\n\nFor example, if the array a is [2, 4, 1, 5, 3], the eversion goes\
+  \ like this: [2, 4, 1, 5, 3] \u2192 [2, 1, 3], [4, 5] \u2192 [2, 1, 3, 4, 5].\n\n\
+  We start with the array a and perform eversions on this array. We can prove that\
+  \ after several eversions the array a stops changing. Output the minimum number\
+  \ k such that the array stops changing after k eversions.\n\nInput\n\nEach test\
+  \ contains multiple test cases. The first line contains the number of test cases\
+  \ t (1 \u2264 t \u2264 100). Description of the test cases follows.\n\nThe first\
+  \ line contains a single integer n (1 \u2264 n \u2264 2 \u22C5 10^5).\n\nThe second\
+  \ line contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^9).\n\nIt\
+  \ is guaranteed that the sum of n over all test cases does not exceed 2 \u22C5 10^5.\n\
+  \nOutput\n\nFor each test case print a single integer k \u2014 the number of eversions\
+  \ after which the array stops changing.\n\nExample\n\nInput\n\n\n3\n5\n2 4 1 5 3\n\
+  5\n5 3 2 4 1\n4\n1 1 1 1\n\n\nOutput\n\n\n1\n2\n0\n\nNote\n\nConsider the fist example.\n\
+  \n  * The first eversion: a = [1, 4, 2, 5, 3], x = 3. [2, 4, 1, 5, 3] \u2192 [2,\
+  \ 1, 3], [4, 5] \u2192 [2, 1, 3, 4, 5]. \n  * The second and following eversions:\
+  \ a = [2, 1, 3, 4, 5], x = 5. [2, 1, 3, 4, 5] \u2192 [2, 1, 3, 4, 5], [] \u2192\
+  \ [2, 1, 3, 4, 5]. This eversion does not change the array, so the answer is 1.\
+  \ \n\n\n\nConsider the second example. \n\n  * The first eversion: a = [5, 3, 2,\
+  \ 4, 1], x = 1. [5, 3, 2, 4, 1] \u2192 [1], [5, 3, 2, 4] \u2192 [1, 5, 3, 2, 4].\
+  \ \n  * The second eversion: a = [1, 5, 3, 2, 4], x = 4. [1, 5, 3, 2, 4] \u2192\
+  \ [1, 3, 2, 4], [5] \u2192 [1, 3, 2, 4, 5]. \n  * The third and following eversions:\
+  \ a = [1, 3, 2, 4, 5], x = 5. [1, 3, 2, 4, 5] \u2192 [1, 3, 2, 4, 5], [] \u2192\
+  \ [1, 3, 2, 4, 5]. This eversion does not change the array, so the answer is 2. "
+samples:
+- " ```from collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-1]:]\n        eversion_count += 1\n    print(eversion_count)```\
+  \  ```python\nfrom collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   eversion_count = 0\n    while True:\n        if a == a[::-1]:\n            break\n\
+  \        a = a[:a[-1]] + a[a[-"
+- " ```from collections import defaultdict\nt = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    a.sort()\n \
+  \   count = defaultdict(int)\n    for i in a:\n        count[i] += 1\n    k = 0\n\
+  \    while True:\n        changed = False\n        for i in sorted(count.keys()):\n\
+  \            if count[i] > 0:\n                x = i\n                break\n  \
+  \      for i in range(x):\n            count[i] -= 1\n        count[x] -= 1\n  \
+  \      for i in range(x + 1, max(count.keys()) + 1):\n            count[i] -= 1\n\
+  \        k += 1\n        if all(count[i] == 0 for i in count):\n            break\n\
+  \    print(k)````\nQ:"
+test_cases:
+  input:
+  - '3
+
+    5
+
+    2 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    998244353
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 1 2 3
+
+    '
+  - '3
+
+    5
+
+    2 4 1 5 3
+
+    5
+
+    5 3 2 0 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '3
+
+    5
+
+    2 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    4 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    4 2 2 1
+
+    '
+  - '3
+
+    5
+
+    2 4 1 2 3
+
+    5
+
+    5 3 2 8 2
+
+    2
+
+    1 1 1 1
+
+    '
+  - '3
+
+    5
+
+    2 8 1 4 3
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '3
+
+    5
+
+    2 1 1 5 6
+
+    5
+
+    5 3 4 4 1
+
+    2
+
+    0 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 1 2 4
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 1 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 1 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 2 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 4 2 5
+
+    '
+  - '2
+
+    1
+
+    998244353
+
+    4
+
+    1 0 2 3
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 2 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 2 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 4 2 4
+
+    '
+  - '3
+
+    5
+
+    2 4 1 5 3
+
+    5
+
+    5 3 2 4 2
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 2 2 5
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    4 2 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 2 0 5
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 2 5
+
+    '
+  - '2
+
+    1
+
+    27909634
+
+    4
+
+    2 2 0 5
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 3 5
+
+    '
+  - '3
+
+    5
+
+    3 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    624918540
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    551353738
+
+    4
+
+    2 1 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 2 2 2
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 2 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 2 2 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 4 2 7
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 2 0 5
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 2 0 2
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 2 4
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 0 5
+
+    '
+  - '3
+
+    5
+
+    3 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    1 1 3 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 1 3 3
+
+    '
+  - '2
+
+    1
+
+    802364611
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    551353738
+
+    4
+
+    2 1 4 5
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    4 2 2 2
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 3 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 3 2 5
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    3 2 2 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 2 1 2
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    0 2 0 5
+
+    '
+  - '3
+
+    5
+
+    4 4 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    1 1 6 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 1 4 3
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    4 2 1 2
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 3 3 3
+
+    '
+  - '2
+
+    1
+
+    41454457
+
+    4
+
+    4 2 2 5
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    3 2 2 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 2 2 2
+
+    '
+  - '2
+
+    1
+
+    68829976
+
+    4
+
+    0 2 0 5
+
+    '
+  - '3
+
+    5
+
+    4 4 1 5 3
+
+    5
+
+    5 3 2 3 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    2 1 6 3
+
+    '
+  - '2
+
+    1
+
+    41454457
+
+    4
+
+    4 2 2 10
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    5 2 2 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 4 0 2
+
+    '
+  - '2
+
+    1
+
+    93788297
+
+    4
+
+    0 2 0 5
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    2 1 2 3
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    0 2 2 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 3 0 2
+
+    '
+  - '2
+
+    1
+
+    93788297
+
+    4
+
+    0 2 0 3
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    2 2 2 3
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    0 1 2 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 3 0 2
+
+    '
+  - '2
+
+    1
+
+    998244353
+
+    4
+
+    1 1 0 3
+
+    '
+  - '3
+
+    5
+
+    2 4 2 5 3
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 1 2 2
+
+    '
+  - '3
+
+    5
+
+    2 4 1 5 3
+
+    5
+
+    5 3 2 0 1
+
+    4
+
+    1 1 0 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 1 1 3
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 0 2 4
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 1 1 3
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    2 1 2 1
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    0 1 2 5
+
+    '
+  - '2
+
+    1
+
+    56749180
+
+    4
+
+    2 4 2 4
+
+    '
+  - '2
+
+    1
+
+    998244353
+
+    4
+
+    1 0 2 6
+
+    '
+  - '3
+
+    5
+
+    2 1 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    1528037704
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 1 4 3
+
+    '
+  - '3
+
+    5
+
+    2 4 1 2 3
+
+    5
+
+    5 3 2 4 2
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    0 2 2 5
+
+    '
+  - '2
+
+    1
+
+    494500097
+
+    4
+
+    4 2 2 3
+
+    '
+  - '2
+
+    1
+
+    627592454
+
+    4
+
+    2 2 2 5
+
+    '
+  - '2
+
+    1
+
+    27909634
+
+    4
+
+    2 1 0 5
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 3 6
+
+    '
+  - '3
+
+    5
+
+    3 4 1 1 3
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    0 1 2 3
+
+    '
+  - '2
+
+    1
+
+    624918540
+
+    4
+
+    2 1 1 3
+
+    '
+  - '2
+
+    1
+
+    551353738
+
+    4
+
+    2 1 2 2
+
+    '
+  - '2
+
+    1
+
+    37862951
+
+    4
+
+    2 2 2 2
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    5 3 0 4 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 4 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    1 2 2 5
+
+    '
+  - '2
+
+    1
+
+    134212618
+
+    4
+
+    2 4 2 7
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 2 0 1
+
+    '
+  - '2
+
+    1
+
+    13173955
+
+    4
+
+    2 2 0 2
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 1 0 5
+
+    '
+  - '2
+
+    1
+
+    314070686
+
+    4
+
+    1 1 3 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 1 6 3
+
+    '
+  - '2
+
+    1
+
+    802364611
+
+    4
+
+    2 1 3 3
+
+    '
+  - '2
+
+    1
+
+    551353738
+
+    4
+
+    4 1 4 5
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    7 3 2 4 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 3 1 5
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    3 2 1 1
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    7 2 1 2
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 6 3 3
+
+    '
+  - '2
+
+    1
+
+    53238141
+
+    4
+
+    4 2 2 5
+
+    '
+  - '2
+
+    1
+
+    517602066
+
+    4
+
+    3 2 2 1
+
+    '
+  - '2
+
+    1
+
+    41454457
+
+    4
+
+    4 0 2 10
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    5 2 0 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 4 0 2
+
+    '
+  - '2
+
+    1
+
+    176445854
+
+    4
+
+    0 2 0 5
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    4 1 2 3
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    0 2 1 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 3 -1 2
+
+    '
+  - '2
+
+    1
+
+    323915514
+
+    4
+
+    0 1 2 1
+
+    '
+  - '3
+
+    5
+
+    2 4 2 5 4
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    1 1 4 2
+
+    '
+  - '2
+
+    1
+
+    993551853
+
+    4
+
+    2 1 1 3
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    3 0 2 4
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 1 0 3
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    3 1 2 1
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    0 1 2 10
+
+    '
+  - '2
+
+    1
+
+    998244353
+
+    4
+
+    2 0 2 6
+
+    '
+  - '3
+
+    5
+
+    2 1 1 5 3
+
+    5
+
+    5 3 2 4 1
+
+    2
+
+    0 1 1 1
+
+    '
+  - '2
+
+    1
+
+    1981447801
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 2 4 3
+
+    '
+  - '3
+
+    5
+
+    2 8 1 2 3
+
+    5
+
+    5 3 2 4 2
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    0 4 2 5
+
+    '
+  - '2
+
+    1
+
+    494500097
+
+    4
+
+    4 0 2 3
+
+    '
+  - '2
+
+    1
+
+    627592454
+
+    4
+
+    3 2 2 5
+
+    '
+  - '2
+
+    1
+
+    27909634
+
+    4
+
+    2 1 0 10
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 2 6 6
+
+    '
+  - '3
+
+    5
+
+    3 4 1 1 3
+
+    5
+
+    5 5 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    -1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    624918540
+
+    4
+
+    2 0 1 3
+
+    '
+  - '2
+
+    1
+
+    29355313
+
+    4
+
+    2 2 2 2
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    10 3 0 4 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 7 2 3
+
+    '
+  - '2
+
+    1
+
+    134212618
+
+    4
+
+    4 4 2 7
+
+    '
+  - '2
+
+    1
+
+    626625781
+
+    4
+
+    1 2 0 1
+
+    '
+  - '2
+
+    1
+
+    6643808
+
+    4
+
+    2 2 0 2
+
+    '
+  - '2
+
+    1
+
+    535334137
+
+    4
+
+    1 1 3 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 2 6 3
+
+    '
+  - '3
+
+    5
+
+    0 4 0 5 3
+
+    5
+
+    7 3 2 4 1
+
+    3
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    3 3 1 1
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    7 2 2 2
+
+    '
+  - '2
+
+    1
+
+    144612869
+
+    4
+
+    1 6 2 3
+
+    '
+  - '2
+
+    1
+
+    53238141
+
+    4
+
+    4 2 0 5
+
+    '
+  - '2
+
+    1
+
+    517602066
+
+    4
+
+    3 2 4 1
+
+    '
+  - '2
+
+    1
+
+    41454457
+
+    4
+
+    5 0 2 10
+
+    '
+  - '2
+
+    1
+
+    381715760
+
+    4
+
+    5 1 0 1
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    4 7 0 2
+
+    '
+  - '2
+
+    1
+
+    316067198
+
+    4
+
+    0 2 0 5
+
+    '
+  - '2
+
+    1
+
+    556389862
+
+    4
+
+    4 2 2 3
+
+    '
+  - '2
+
+    1
+
+    23458602
+
+    4
+
+    2 4 -1 2
+
+    '
+  - '2
+
+    1
+
+    323915514
+
+    4
+
+    1 1 2 1
+
+    '
+  - '3
+
+    5
+
+    2 4 2 5 2
+
+    5
+
+    5 3 2 4 1
+
+    4
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    993551853
+
+    4
+
+    3 1 1 3
+
+    '
+  - '2
+
+    1
+
+    1258355607
+
+    4
+
+    3 0 2 4
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    3 1 2 2
+
+    '
+  - '2
+
+    1
+
+    1961051652
+
+    4
+
+    1 0 2 6
+
+    '
+  - '3
+
+    5
+
+    2 1 1 5 3
+
+    5
+
+    5 5 2 4 1
+
+    2
+
+    0 1 1 1
+
+    '
+  - '2
+
+    1
+
+    75994590
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 0 4 3
+
+    '
+  - '3
+
+    5
+
+    2 8 0 2 3
+
+    5
+
+    5 3 2 4 2
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    533265820
+
+    4
+
+    0 4 2 5
+
+    '
+  - '2
+
+    1
+
+    494500097
+
+    4
+
+    4 0 2 5
+
+    '
+  - '2
+
+    1
+
+    627592454
+
+    4
+
+    1 2 2 5
+
+    '
+  - '2
+
+    1
+
+    27909634
+
+    4
+
+    4 1 0 10
+
+    '
+  - '2
+
+    1
+
+    925217660
+
+    4
+
+    2 4 6 6
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    -1 1 2 5
+
+    '
+  - '2
+
+    1
+
+    29355313
+
+    4
+
+    1 2 2 2
+
+    '
+  - '3
+
+    5
+
+    0 4 1 5 3
+
+    5
+
+    10 3 0 5 1
+
+    2
+
+    1 1 1 1
+
+    '
+  - '2
+
+    1
+
+    134212618
+
+    4
+
+    1 4 2 7
+
+    '
+  - '2
+
+    1
+
+    7874846
+
+    4
+
+    2 2 0 2
+
+    '
+  - '2
+
+    1
+
+    535334137
+
+    3
+
+    1 1 3 3
+
+    '
+  - '2
+
+    1
+
+    1746739171
+
+    4
+
+    2 2 12 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    3 3 1 2
+
+    '
+  - '2
+
+    1
+
+    7680692
+
+    4
+
+    7 2 2 2
+
+    '
+  - '2
+
+    1
+
+    3713787
+
+    4
+
+    4 2 0 5
+
+    '
+  - '2
+
+    1
+
+    41454457
+
+    4
+
+    5 0 2 5
+
+    '
+  - '2
+
+    1
+
+    316067198
+
+    4
+
+    -1 2 0 5
+
+    '
+  - '2
+
+    1
+
+    711911604
+
+    4
+
+    4 2 2 3
+
+    '
+  - '2
+
+    1
+
+    39720822
+
+    4
+
+    2 4 -1 2
+
+    '
+  - '2
+
+    1
+
+    323915514
+
+    4
+
+    1 0 2 1
+
+    '
+  - '2
+
+    1
+
+    1258355607
+
+    4
+
+    6 0 2 4
+
+    '
+  - '2
+
+    1
+
+    94783419
+
+    4
+
+    6 1 2 2
+
+    '
+  - '3
+
+    5
+
+    2 1 1 5 3
+
+    5
+
+    5 0 2 4 1
+
+    2
+
+    0 1 1 1
+
+    '
+  - '2
+
+    1
+
+    112473576
+
+    4
+
+    1 1 2 3
+
+    '
+  - '2
+
+    1
+
+    313193651
+
+    4
+
+    2 0 0 3
+
+    '
+  output:
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    3
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    2
+
+    '
+  - '1
+
+    1
+
+    0
+
+    '
+  - '2
+
+    2
+
+    0
+
+    '
+  - '0
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    3
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '0
+
+    1
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    '
+timeout: 1.0

@@ -1,0 +1,1886 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nConsider the\
+  \ set of all nonnegative integers: {0, 1, 2, ...}. Given two integers a and b (1\
+  \ \u2264 a, b \u2264 10^4). We paint all the numbers in increasing number first\
+  \ we paint 0, then we paint 1, then 2 and so on.\n\nEach number is painted white\
+  \ or black. We paint a number i according to the following rules: \n\n  * if i =\
+  \ 0, it is colored white; \n  * if i \u2265 a and i - a is colored white, i is also\
+  \ colored white; \n  * if i \u2265 b and i - b is colored white, i is also colored\
+  \ white; \n  * if i is still not colored white, it is colored black. \n\n\n\nIn\
+  \ this way, each nonnegative integer gets one of two colors.\n\nFor example, if\
+  \ a=3, b=5, then the colors of the numbers (in the order from 0) are: white (0),\
+  \ black (1), black (2), white (3), black (4), white (5), white (6), black (7), white\
+  \ (8), white (9), ...\n\nNote that: \n\n  * It is possible that there are infinitely\
+  \ many nonnegative integers colored black. For example, if a = 10 and b = 10, then\
+  \ only 0, 10, 20, 30 and any other nonnegative integers that end in 0 when written\
+  \ in base 10 are white. The other integers are colored black. \n  * It is also possible\
+  \ that there are only finitely many nonnegative integers colored black. For example,\
+  \ when a = 1 and b = 10, then there is no nonnegative integer colored black at all.\
+  \ \n\n\n\nYour task is to determine whether or not the number of nonnegative integers\
+  \ colored black is infinite.\n\nIf there are infinitely many nonnegative integers\
+  \ colored black, simply print a line containing \"Infinite\" (without the quotes).\
+  \ Otherwise, print \"Finite\" (without the quotes).\n\nInput\n\nThe first line of\
+  \ input contains a single integer t (1 \u2264 t \u2264 100) \u2014 the number of\
+  \ test cases in the input. Then t lines follow, each line contains two space-separated\
+  \ integers a and b (1 \u2264 a, b \u2264 10^4).\n\nOutput\n\nFor each test case,\
+  \ print one line containing either \"Infinite\" or \"Finite\" (without the quotes).\
+  \ Output is case-insensitive (i.e. \"infinite\", \"inFiNite\" or \"finiTE\" are\
+  \ all valid answers).\n\nExample\n\nInput\n\n\n4\n10 10\n1 10\n6 9\n7 3\n\n\nOutput\n\
+  \n\nInfinite\nFinite\nInfinite\nFinite\nA: ```def gcd(a,b):\n    if a==0:\n    \
+  \    return b\n    elif b==0:\n        return a\n    elif a>=b:\n        return\
+  \ gcd(a%b,b)\n    else:\n        return gcd(a,b%a)\nt=int(input())\nfor i in range(t):\n\
+  \    a,b=input().strip().split(\" \")\n    a,b=[int(a),int(b)]\n    if gcd(a,b)==1:\n\
+  \        print(\"Finite\")\n    else:\n        print(\"Infinite\")```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nThere are N holes in a two-dimensional\
+  \ plane. The coordinates of the i-th hole are (x_i,y_i).\n\nLet R=10^{10^{10^{10}}}.\
+  \ Ringo performs the following operation:\n\n* Randomly choose a point from the\
+  \ interior of a circle of radius R centered at the origin, and put Snuke there.\
+  \ Snuke will move to the hole with the smallest Euclidean distance from the point,\
+  \ and fall into that hole. If there are multiple such holes, the hole with the smallest\
+  \ index will be chosen.\n\n\n\nFor every i (1 \\leq i \\leq N), find the probability\
+  \ that Snuke falls into the i-th hole.\n\nHere, the operation of randomly choosing\
+  \ a point from the interior of a circle of radius R is defined as follows:\n\n*\
+  \ Pick two real numbers x and y independently according to uniform distribution\
+  \ on [-R,R].\n* If x^2+y^2\\leq R^2, the point (x,y) is chosen. Otherwise, repeat\
+  \ picking the real numbers x,y until the condition is met.\n\nConstraints\n\n* 2\
+  \ \\leq N \\leq 100\n* |x_i|,|y_i| \\leq 10^6(1\\leq i\\leq N)\n* All given points\
+  \ are pairwise distinct.\n* All input values are integers.\n\nInput\n\nInput is\
+  \ given from Standard Input in the following format:\n\n\nN\nx_1 y_1\n:\nx_N y_N\n\
+  \n\nOutput\n\nPrint N real numbers. The i-th real number must represent the probability\
+  \ that Snuke falls into the i-th hole.\n\nThe output will be judged correct when,\
+  \ for all output values, the absolute or relative error is at most 10^{-5}.\n\n\
+  Examples\n\nInput\n\n2\n0 0\n1 1\n\n\nOutput\n\n0.5\n0.5\n\n\nInput\n\n5\n0 0\n\
+  2 8\n4 5\n2 6\n3 10\n\n\nOutput\n\n0.43160120892732328768\n0.03480224363653196956\n\
+  0.13880483535586193855\n0.00000000000000000000\n0.39479171208028279727\nA: ```import\
+  \ math\nimport cmath\n\ndef arg(center, point):\n\treturn cmath.phase(complex(point[0]\
+  \ - center[0], point[1] - center[1]))\n\nn = int(input())\ndots = [list(map(int,\
+  \ input().split())) for _ in range(n)]\n\nif n == 2:\n\tprint(0.5)\n\tprint(0.5)\n\
+  else:\n\tans = []\n\tfor d in dots:\n\t\targ_list = []\n\t\tfor e in dots:\n\t\t\
+  \tif d == e:\n\t\t\t\tcontinue\n\t\t\telse:\n\t\t\t\targ_list.append(arg(d, e))\n\
+  \t\targ_list.sort()\n\t\tconvex = False\n\t\tif arg_list[-1] - arg_list[0] <= math.pi:\n\
+  \t\t\tconvex = True\n\t\t\ttheta = arg_list[-1] - arg_list[0]\n\t\t\tans.append(0.5\
+  \ - theta / (2 * math.pi))\n\t\telse:\n\t\t\tfor i in range(len(arg_list) - 1):\n\
+  \t\t\t\tif arg_list[i + 1] - arg_list[i] >= math.pi:\n\t\t\t\t\tconvex = True\n\t\
+  \t\t\t\ttheta = arg_list[i + 1] - arg_list[i]\n\t\t\t\t\tans.append(theta / (2 *\
+  \ math.pi) - 0.5)\n\t\t\tif convex == False:\n\t\t\t\tans.append(0)\n\n\tfor a in\
+  \ ans:\n\t\tprint(a)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nYou are given two positive integers x and y. You can perform the following\
+  \ operation with x: write it in its binary form without leading zeros, add 0 or\
+  \ 1 to the right of it, reverse the binary form and turn it into a decimal number\
+  \ which is assigned as the new value of x.\n\nFor example: \n\n  * 34 can be turned\
+  \ into 81 via one operation: the binary form of 34 is 100010, if you add 1, reverse\
+  \ it and remove leading zeros, you will get 1010001, which is the binary form of\
+  \ 81. \n  * 34 can be turned into 17 via one operation: the binary form of 34 is\
+  \ 100010, if you add 0, reverse it and remove leading zeros, you will get 10001,\
+  \ which is the binary form of 17. \n  * 81 can be turned into 69 via one operation:\
+  \ the binary form of 81 is 1010001, if you add 0, reverse it and remove leading\
+  \ zeros, you will get 1000101, which is the binary form of 69. \n  * 34 can be turned\
+  \ into 69 via two operations: first you turn 34 into 81 and then 81 into 69. \n\n\
+  \n\nYour task is to find out whether x can be turned into y after a certain number\
+  \ of operations (possibly zero).\n\nInput\n\nThe only line of the input contains\
+  \ two integers x and y (1 \u2264 x, y \u2264 10^{18}).\n\nOutput\n\nPrint YES if\
+  \ you can make x equal to y and NO if you can't.\n\nExamples\n\nInput\n\n\n3 3\n\
+  \n\nOutput\n\n\nYES\n\n\nInput\n\n\n7 4\n\n\nOutput\n\n\nNO\n\n\nInput\n\n\n2 8\n\
+  \n\nOutput\n\n\nNO\n\n\nInput\n\n\n34 69\n\n\nOutput\n\n\nYES\n\n\nInput\n\n\n8935891487501725\
+  \ 71487131900013807\n\n\nOutput\n\n\nYES\n\nNote\n\nIn the first example, you don't\
+  \ even need to do anything.\n\nThe fourth example is described in the statement.\n\
+  A:"
+question: "You are given two positive integers x and y. You can perform the following\
+  \ operation with x: write it in its binary form without leading zeros, add 0 or\
+  \ 1 to the right of it, reverse the binary form and turn it into a decimal number\
+  \ which is assigned as the new value of x.\n\nFor example: \n\n  * 34 can be turned\
+  \ into 81 via one operation: the binary form of 34 is 100010, if you add 1, reverse\
+  \ it and remove leading zeros, you will get 1010001, which is the binary form of\
+  \ 81. \n  * 34 can be turned into 17 via one operation: the binary form of 34 is\
+  \ 100010, if you add 0, reverse it and remove leading zeros, you will get 10001,\
+  \ which is the binary form of 17. \n  * 81 can be turned into 69 via one operation:\
+  \ the binary form of 81 is 1010001, if you add 0, reverse it and remove leading\
+  \ zeros, you will get 1000101, which is the binary form of 69. \n  * 34 can be turned\
+  \ into 69 via two operations: first you turn 34 into 81 and then 81 into 69. \n\n\
+  \n\nYour task is to find out whether x can be turned into y after a certain number\
+  \ of operations (possibly zero).\n\nInput\n\nThe only line of the input contains\
+  \ two integers x and y (1 \u2264 x, y \u2264 10^{18}).\n\nOutput\n\nPrint YES if\
+  \ you can make x equal to y and NO if you can't.\n\nExamples\n\nInput\n\n\n3 3\n\
+  \n\nOutput\n\n\nYES\n\n\nInput\n\n\n7 4\n\n\nOutput\n\n\nNO\n\n\nInput\n\n\n2 8\n\
+  \n\nOutput\n\n\nNO\n\n\nInput\n\n\n34 69\n\n\nOutput\n\n\nYES\n\n\nInput\n\n\n8935891487501725\
+  \ 71487131900013807\n\n\nOutput\n\n\nYES\n\nNote\n\nIn the first example, you don't\
+  \ even need to do anything.\n\nThe fourth example is described in the statement."
+samples:
+- " ```def gcd(a, b):\n    if a == 0:\n        return b\n    elif b == 0:\n      \
+  \  return a\n    elif a >= b:\n        return gcd(a % b, b)\n    else:\n       \
+  \ return gcd(a, b % a)\n\ndef binary_to_decimal(binary):\n    decimal = 0\n    for\
+  \ bit in binary:\n        decimal = decimal * 2 + int(bit)\n    return decimal\n\
+  \ndef decimal_to_binary(decimal):\n    binary = ''\n    while decimal > 0:\n   \
+  \     binary = str(decimal % 2) + binary\n        decimal = decimal // 2\n    return\
+  \ binary\n\ndef reverse_binary(binary):\n    return binary[::-1]\n\ndef is_divisible_by(a,\
+  \ b):\n    return a % b == 0\n\nt = int(input())\nfor _ in range(t):\n    a, b =\
+  \ map(int, input().split())\n    if a == b:\n        print(\"YES\")\n    else:\n\
+  \        for _ in range(100):\n            if a == b:\n                print(\"\
+  YES\")\n                break\n            elif is_divisible_by(a, 2):\n       \
+  \         a = binary_to_decimal(reverse_binary(decimal_to_binary(a) + '0'))\n  \
+  \          else:\n                a = binary_to_decimal(reverse_binary(decimal_to_binary(a)\
+  \ + '1'))\n        else:\n            print(\"NO\")```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n\
+  ```python\n"
+- " ```def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return\
+  \ gcd(b, a % b)\n\ndef binary(x):\n    return bin(x)[2:]\n\ndef reverse_binary(s):\n\
+  \    return s[::-1]\n\ndef decimal(s):\n    return int(s, 2)\n\ndef can_turn(x,\
+  \ y):\n    while x != y:\n        if x > y:\n            x = decimal(reverse_binary(binary(x)[::-1]))\n\
+  \        else:\n            x = decimal(reverse_binary(binary(x)[::-1] + '1' if\
+  \ binary(x).count('1') % 2 else '0'))\n    return 'YES'\n\nx, y = map(int, input().split())\n\
+  print(can_turn(x, y))```\n\n\n\n## 2020-10-26 17:39:38\nQ:"
+test_cases:
+  input:
+  - '2 8
+
+    '
+  - '7 4
+
+    '
+  - '8935891487501725 71487131900013807
+
+    '
+  - '3 3
+
+    '
+  - '34 69
+
+    '
+  - '470060730774588924 727173667167621133
+
+    '
+  - '23654897456254158 36584562123658749
+
+    '
+  - '100 100
+
+    '
+  - '1048576 1048576
+
+    '
+  - '3165137368662540 34690334760256012
+
+    '
+  - '2963671906804332 23709375254434663
+
+    '
+  - '2 2
+
+    '
+  - '469234491891472796 290944711594072288
+
+    '
+  - '10 5
+
+    '
+  - '662695912942035259 813128064161
+
+    '
+  - '10 576460752303423487
+
+    '
+  - '9762130370617853 135862919936991741
+
+    '
+  - '407 113
+
+    '
+  - '88888888888888888 99999999999999999
+
+    '
+  - '20 607
+
+    '
+  - '968503512949840 70798422886785671
+
+    '
+  - '4997 4748
+
+    '
+  - '20 20
+
+    '
+  - '11 27
+
+    '
+  - '2651 1994
+
+    '
+  - '114514 114514
+
+    '
+  - '642061520256 807582787377560508
+
+    '
+  - '100 403
+
+    '
+  - '95 427
+
+    '
+  - '4 4
+
+    '
+  - '98376470102098 8668311108715159
+
+    '
+  - '2 6
+
+    '
+  - '8935891487501725 71986286270688669
+
+    '
+  - '6 1
+
+    '
+  - '90 180
+
+    '
+  - '5 55
+
+    '
+  - '8 1
+
+    '
+  - '11 13
+
+    '
+  - '4529535624500812 36236284996006503
+
+    '
+  - '1717 879
+
+    '
+  - '54043195528445952 3
+
+    '
+  - '32 457
+
+    '
+  - '12312 12312
+
+    '
+  - '1579442997370991 12635543978967935
+
+    '
+  - '41 119
+
+    '
+  - '272137586985970 17939699391684503
+
+    '
+  - '8 8
+
+    '
+  - '32 32
+
+    '
+  - '2651 21215
+
+    '
+  - '592255623895602343 956231061252005500
+
+    '
+  - '22 107
+
+    '
+  - '1 576460752303423487
+
+    '
+  - '1 67108863
+
+    '
+  - '470886973952672348 163402627036137273
+
+    '
+  - '3991380546745964 35516577938339436
+
+    '
+  - '435 1515
+
+    '
+  - '4997 39983
+
+    '
+  - '18014398509481984 54043195528445952
+
+    '
+  - '6261 668
+
+    '
+  - '45454 45454
+
+    '
+  - '1 1125899906842623
+
+    '
+  - '3145302420099927 25162419360799423
+
+    '
+  - '26 47
+
+    '
+  - '25 19
+
+    '
+  - '999999999999999999 864691128455135231
+
+    '
+  - '10 10
+
+    '
+  - '1 2147483647
+
+    '
+  - '4 5
+
+    '
+  - '44 44
+
+    '
+  - '22 11
+
+    '
+  - '985 1653
+
+    '
+  - '794746691033263 69408368311453055
+
+    '
+  - '100 201
+
+    '
+  - '10 11
+
+    '
+  - '13 11
+
+    '
+  - '753 271
+
+    '
+  - '16 16
+
+    '
+  - '2 1
+
+    '
+  - '942220828365 412458936303
+
+    '
+  - '407 3263
+
+    '
+  - '5 10
+
+    '
+  - '34 17
+
+    '
+  - '44 29
+
+    '
+  - '42 2193386110975
+
+    '
+  - '753 6031
+
+    '
+  - '470060730774588924 479633775787794970
+
+    '
+  - '20 5
+
+    '
+  - '23654897456254158 72641428976946930
+
+    '
+  - '100 110
+
+    '
+  - '1048576 789536
+
+    '
+  - '3165137368662540 9604050757244072
+
+    '
+  - '2963671906804332 4280522231335805
+
+    '
+  - '665294461673783252 290944711594072288
+
+    '
+  - '1207415953255249872 813128064161
+
+    '
+  - '9762130370617853 30797614928785941
+
+    '
+  - '436 113
+
+    '
+  - '88888888888888888 23097413784567719
+
+    '
+  - '18 607
+
+    '
+  - '819127444649234 70798422886785671
+
+    '
+  - '2304 4748
+
+    '
+  - '10 27
+
+    '
+  - '1446 1994
+
+    '
+  - '196876 114514
+
+    '
+  - '642061520256 584574780769952997
+
+    '
+  - '110 403
+
+    '
+  - '95 385
+
+    '
+  - '13118250983333 8668311108715159
+
+    '
+  - '2 3
+
+    '
+  - '8935891487501725 60633576000093991
+
+    '
+  - '6 2
+
+    '
+  - '90 64
+
+    '
+  - '6 55
+
+    '
+  - '12 1
+
+    '
+  - '11 10
+
+    '
+  - '4529535624500812 29727735441574578
+
+    '
+  - '1717 1210
+
+    '
+  - '100788548188936343 3
+
+    '
+  - '32 638
+
+    '
+  - '5320 12312
+
+    '
+  - '1579442997370991 8509590902998152
+
+    '
+  - '41 26
+
+    '
+  - '272137586985970 17791023523528033
+
+    '
+  - '8 11
+
+    '
+  - '32 40
+
+    '
+  - '2651 37932
+
+    '
+  - '616543106594181990 956231061252005500
+
+    '
+  - '7 107
+
+    '
+  - '1 138497628967694444
+
+    '
+  - '1 17047594
+
+    '
+  - '470886973952672348 277475460072048899
+
+    '
+  - '3991380546745964 38886055430960660
+
+    '
+  - '559 1515
+
+    '
+  - '4997 31317
+
+    '
+  - '1932444964891065 54043195528445952
+
+    '
+  - '11002 668
+
+    '
+  - '90689 45454
+
+    '
+  - '1 1154599538860327
+
+    '
+  - '2914042593732069 25162419360799423
+
+    '
+  - '17 47
+
+    '
+  - '25 33
+
+    '
+  - '999999999999999999 1636173592742219971
+
+    '
+  - '10 9
+
+    '
+  - '1 1433434096
+
+    '
+  - '1 5
+
+    '
+  - '44 52
+
+    '
+  - '40 11
+
+    '
+  - '985 3118
+
+    '
+  - '794746691033263 43539385861609969
+
+    '
+  - '100 373
+
+    '
+  - '13 8
+
+    '
+  - '584 271
+
+    '
+  - '16 11
+
+    '
+  - '3 2
+
+    '
+  - '799161907755 412458936303
+
+    '
+  - '407 918
+
+    '
+  - '5 17
+
+    '
+  - '56 17
+
+    '
+  - '8 29
+
+    '
+  - '42 2660294320930
+
+    '
+  - '656 6031
+
+    '
+  - '2 15
+
+    '
+  - '13 4
+
+    '
+  - '6957245383792482 71487131900013807
+
+    '
+  - '3 1
+
+    '
+  - '34 106
+
+    '
+  - '470060730774588924 651599284278313908
+
+    '
+  - '23654897456254158 47160499523846510
+
+    '
+  - '101 110
+
+    '
+  - '1048576 965660
+
+    '
+  - '3165137368662540 16123697546775061
+
+    '
+  - '2963671906804332 475645465333126
+
+    '
+  - '665294461673783252 206093184471255182
+
+    '
+  - '20 9
+
+    '
+  - '1689056997316408143 813128064161
+
+    '
+  - '9762130370617853 47946133654817267
+
+    '
+  - '436 212
+
+    '
+  - '69947339403945723 23097413784567719
+
+    '
+  - '31 607
+
+    '
+  - '1622307385871305 70798422886785671
+
+    '
+  - '2304 1749
+
+    '
+  - '10 41
+
+    '
+  - '1903 1994
+
+    '
+  - '44595 114514
+
+    '
+  - '1095185554048 584574780769952997
+
+    '
+  - '100 272
+
+    '
+  - '146 385
+
+    '
+  - '24416460990100 8668311108715159
+
+    '
+  - '1 3
+
+    '
+  - '8935891487501725 79538601507548757
+
+    '
+  - '6 3
+
+    '
+  - '90 34
+
+    '
+  - '8 55
+
+    '
+  - '18 1
+
+    '
+  - '12 10
+
+    '
+  - '4529535624500812 7117674329395861
+
+    '
+  - '1786 1210
+
+    '
+  - '100788548188936343 5
+
+    '
+  - '32 981
+
+    '
+  - '6665 12312
+
+    '
+  - '1579442997370991 13888790805388531
+
+    '
+  - '64 26
+
+    '
+  - '283122128236273 17791023523528033
+
+    '
+  - '8 15
+
+    '
+  - '51 40
+
+    '
+  - '2651 8819
+
+    '
+  - '616543106594181990 1600944574522397396
+
+    '
+  - '11 107
+
+    '
+  - '692588221214615422 277475460072048899
+
+    '
+  - '3991380546745964 44821905418095832
+
+    '
+  - '1118 1515
+
+    '
+  - '4997 56390
+
+    '
+  - '1932444964891065 34564411639064772
+
+    '
+  - '5430 668
+
+    '
+  - '16600 45454
+
+    '
+  - '1 1772258382554137
+
+    '
+  - '496097421826178 25162419360799423
+
+    '
+  - '17 91
+
+    '
+  - '4 33
+
+    '
+  - '1740680371580423905 1636173592742219971
+
+    '
+  - '6 9
+
+    '
+  - '1 8
+
+    '
+  - '44 55
+
+    '
+  - '40 12
+
+    '
+  - '1602 3118
+
+    '
+  - '1489739604340661 43539385861609969
+
+    '
+  - '13 3
+
+    '
+  - '584 323
+
+    '
+  - '16 15
+
+    '
+  - '799161907755 465074519777
+
+    '
+  - '407 365
+
+    '
+  - '1 17
+
+    '
+  - '10 17
+
+    '
+  - '5 29
+
+    '
+  - '656 281
+
+    '
+  - '2 24
+
+    '
+  - '13 5
+
+    '
+  - '8023565867332127 71487131900013807
+
+    '
+  - '1 2
+
+    '
+  - '4 106
+
+    '
+  - '470060730774588924 1202400343260876277
+
+    '
+  - '23654897456254158 41932515879947979
+
+    '
+  - '111 110
+
+    '
+  - '1174657 965660
+
+    '
+  - '3165137368662540 27809385113223479
+
+    '
+  - '2963671906804332 74055286370818
+
+    '
+  - '129797078767490383 206093184471255182
+
+    '
+  - '20 13
+
+    '
+  - '1689056997316408143 841674705493
+
+    '
+  - '9762130370617853 12760979153890950
+
+    '
+  - '91 212
+
+    '
+  - '36546287089664421 23097413784567719
+
+    '
+  - '20 1100
+
+    '
+  - '1622307385871305 134806962613210849
+
+    '
+  - '2304 3442
+
+    '
+  - '10 31
+
+    '
+  - '1903 2311
+
+    '
+  - '22133 114514
+
+    '
+  - '264788006981 584574780769952997
+
+    '
+  - '100 365
+
+    '
+  - '220 385
+
+    '
+  - '24416460990100 13121901850061254
+
+    '
+  - '8935891487501725 88641540914620579
+
+    '
+  - '7 3
+
+    '
+  - '146 34
+
+    '
+  - '8 13
+
+    '
+  - '18 2
+
+    '
+  - '24 10
+
+    '
+  - '4529535624500812 3772245625956345
+
+    '
+  - '3297 1210
+
+    '
+  - '86605949491798208 5
+
+    '
+  - '13 981
+
+    '
+  - '623 12312
+
+    '
+  - '939400986071330 13888790805388531
+
+    '
+  - '64 2
+
+    '
+  - '370930125030700 17791023523528033
+
+    '
+  - '14 15
+
+    '
+  - '56 40
+
+    '
+  - '1491 8819
+
+    '
+  - '616543106594181990 1937362944649237729
+
+    '
+  - '19 107
+
+    '
+  - '692588221214615422 448846085262864460
+
+    '
+  - '1189252640054132 44821905418095832
+
+    '
+  - '1118 1813
+
+    '
+  - '4997 22783
+
+    '
+  - '1932444964891065 32180526281011865
+
+    '
+  output:
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+timeout: 2.0

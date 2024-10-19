@@ -1,0 +1,3327 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nExample\n\n\
+  Input\n\n201\n\n\nOutput\n\n701\nA: ```import math,string,itertools,fractions,heapq,collections,re,array,bisect,sys,random,time,copy,functools\n\
+  \nsys.setrecursionlimit(10**7)\ninf = 10**20\neps = 1.0 / 10**10\nmod = 998244353\n\
+  dd = [(0,-1),(1,0),(0,1),(-1,0)]\nddn = [(0,-1),(1,-1),(1,0),(1,1),(0,1),(-1,-1),(-1,0),(-1,1)]\n\
+  \ndef LI(): return [int(x) for x in sys.stdin.readline().split()]\ndef LI_(): return\
+  \ [int(x)-1 for x in sys.stdin.readline().split()]\ndef LF(): return [float(x) for\
+  \ x in sys.stdin.readline().split()]\ndef LS(): return sys.stdin.readline().split()\n\
+  def I(): return int(sys.stdin.readline())\ndef F(): return float(sys.stdin.readline())\n\
+  def S(): return input()\ndef pf(s): return print(s, flush=True)\n\n\ndef main():\n\
+  \    s = S()\n    l = len(s)\n    n = int(s)\n    m = inf\n    r = 0\n    t = 10**l\n\
+  \    for a in itertools.permutations(range(10), l):\n        b = 0\n        for\
+  \ c in a:\n            b = b * 10 + c\n        tm = max(abs(n-b),t-abs(n-b))\n \
+  \       if m > tm:\n            m = tm\n            r = ''.join(map(str,a))\n\n\
+  \    return r\n\n\nprint(main())```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nMr. Endo wanted to write the code that performs breadth-first\
+  \ search (BFS), which is a search algorithm to explore all vertices on an undirected\
+  \ graph. An example of pseudo code of BFS is as follows:\n\n\n1: $current \\leftarrow\
+  \ \\{start\\_vertex\\}$\n2: $visited \\leftarrow current$\n3: while $visited \\\
+  ne $ the set of all the vertices\n4:   $found \\leftarrow \\{\\}$\n5:   for $v$\
+  \ in $current$\n6:     for each $u$ adjacent to $v$\n7:       $found \\leftarrow\
+  \ found \\cup\\{u\\}$\n8:   $current \\leftarrow found \\setminus visited$\n9: \
+  \  $visited \\leftarrow visited \\cup found$\n\n\nHowever, Mr. Endo apparently forgot\
+  \ to manage visited vertices in his code. More precisely, he wrote the following\
+  \ code:\n\n\n1: $current \\leftarrow \\{start\\_vertex\\}$\n2: while $current \\\
+  ne $ the set of all the vertices\n3:   $found \\leftarrow \\{\\}$\n4:   for $v$\
+  \ in $current$\n5:     for each $u$ adjacent to $v$\n6:       $found \\leftarrow\
+  \ found \\cup \\{u\\}$\n7:   $current \\leftarrow found$\n\n\nYou may notice that\
+  \ for some graphs, Mr. Endo's program will not stop because it keeps running infinitely.\
+  \ Notice that it does not necessarily mean the program cannot explore all the vertices\
+  \ within finite steps. See example 2 below for more details.Your task here is to\
+  \ make a program that determines whether Mr. Endo's program will stop within finite\
+  \ steps for a given graph in order to point out the bug to him. Also, calculate\
+  \ the minimum number of loop iterations required for the program to stop if it is\
+  \ finite.\n\n\n\nInput\n\nThe input consists of a single test case formatted as\
+  \ follows.\n\n\n$N$ $M$\n$U_1$ $V_1$\n...\n$U_M$ $V_M$\n\n\nThe first line consists\
+  \ of two integers $N$ ($2 \\leq N \\leq 100,000$) and $M$ ($1 \\leq M \\leq 100,000$),\
+  \ where $N$ is the number of vertices and $M$ is the number of edges in a given\
+  \ undirected graph, respectively. The $i$-th line of the following $M$ lines consists\
+  \ of two integers $U_i$ and $V_i$ ($1 \\leq U_i, V_i \\leq N$), which means the\
+  \ vertices $U_i$ and $V_i$ are adjacent in the given graph. The vertex 1 is the\
+  \ start vertex, i.e. $start\\\\_vertex$ in the pseudo codes. You can assume that\
+  \ the given graph also meets the following conditions.\n\n* The graph has no self-loop,\
+  \ i.e., $U_i \\ne V_i$ for all $1 \\leq i \\leq M$.\n* The graph has no multi-edge,\
+  \ i.e., $\\\\{Ui,Vi\\\\} \\ne \\\\{U_j,V_j\\\\}$ for all $1 \\leq i < j \\leq M$.\n\
+  * The graph is connected, i.e., there is at least one path from $U$ to $V$ (and\
+  \ vice versa) for all vertices $1 \\leq U, V \\leq N$\n\nOutput\n\nIf Mr. Endo's\
+  \ wrong BFS code cannot stop within finite steps for the given input graph, print\
+  \ -1 in a line. Otherwise, print the minimum number of loop iterations required\
+  \ to stop.\n\nExamples\n\nInput\n\n3 3\n1 2\n1 3\n2 3\n\n\nOutput\n\n2\n\n\nInput\n\
+  \n4 3\n1 2\n2 3\n3 4\n\n\nOutput\n\n-1\n\n\nInput\n\n4 4\n1 2\n2 3\n3 4\n4 1\n\n\
+  \nOutput\n\n-1\n\n\nInput\n\n8 9\n2 1\n3 5\n1 6\n2 5\n3 1\n8 4\n2 7\n7 1\n7 4\n\n\
+  \nOutput\n\n3\nA: ```from collections import deque\nimport sys\nreadline = sys.stdin.readline\n\
+  write = sys.stdout.write\ndef solve():\n    N, M = map(int, readline().split())\n\
+  \    G = [[] for i in range(N)]\n    for i in range(M):\n        u, v = map(int,\
+  \ readline().split())\n        G[u-1].append(v-1)\n        G[v-1].append(u-1)\n\
+  \    cnts = [1, 0]\n    dist = [[-1]*N for i in range(2)]\n    dist[0][0] = 0\n\
+  \    que = deque([(0, 0)])\n    while que:\n        v, t = que.popleft()\n     \
+  \   t1 = t^1\n        dist1 = dist[t^1]\n        d1 = dist[t][v]+1\n        for\
+  \ w in G[v]:\n            if dist1[w] != -1:\n                continue\n       \
+  \     dist1[w] = d1\n            que.append((w, t1))\n            cnts[t1] += 1\n\
+  \            if cnts[t1] == N:\n                write(\"%d\\n\" % d1)\n        \
+  \        break\n        else:\n            continue\n        break\n    else:\n\
+  \        write(\"-1\\n\")\nsolve()```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nTheofanis really likes sequences of positive integers, thus\
+  \ his teacher (Yeltsa Kcir) gave him a problem about a sequence that consists of\
+  \ only special numbers.\n\nLet's call a positive number special if it can be written\
+  \ as a sum of different non-negative powers of n. For example, for n = 4 number\
+  \ 17 is special, because it can be written as 4^0 + 4^2 = 1 + 16 = 17, but 9 is\
+  \ not.\n\nTheofanis asks you to help him find the k-th special number if they are\
+  \ sorted in increasing order. Since this number may be too large, output it modulo\
+  \ 10^9+7.\n\nInput\n\nThe first line contains a single integer t (1 \u2264 t \u2264\
+  \ 10^4) \u2014 the number of test cases.\n\nThe first and only line of each test\
+  \ case contains two integers n and k (2 \u2264 n \u2264 10^9; 1 \u2264 k \u2264\
+  \ 10^9).\n\nOutput\n\nFor each test case, print one integer \u2014 the k-th special\
+  \ number in increasing order modulo 10^9+7.\n\nExample\n\nInput\n\n\n3\n3 4\n2 12\n\
+  105 564\n\n\nOutput\n\n\n9\n12\n3595374\n\nNote\n\nFor n = 3 the sequence is [1,3,4,9...]\n\
+  A:"
+question: "Theofanis really likes sequences of positive integers, thus his teacher\
+  \ (Yeltsa Kcir) gave him a problem about a sequence that consists of only special\
+  \ numbers.\n\nLet's call a positive number special if it can be written as a sum\
+  \ of different non-negative powers of n. For example, for n = 4 number 17 is special,\
+  \ because it can be written as 4^0 + 4^2 = 1 + 16 = 17, but 9 is not.\n\nTheofanis\
+  \ asks you to help him find the k-th special number if they are sorted in increasing\
+  \ order. Since this number may be too large, output it modulo 10^9+7.\n\nInput\n\
+  \nThe first line contains a single integer t (1 \u2264 t \u2264 10^4) \u2014 the\
+  \ number of test cases.\n\nThe first and only line of each test case contains two\
+  \ integers n and k (2 \u2264 n \u2264 10^9; 1 \u2264 k \u2264 10^9).\n\nOutput\n\
+  \nFor each test case, print one integer \u2014 the k-th special number in increasing\
+  \ order modulo 10^9+7.\n\nExample\n\nInput\n\n\n3\n3 4\n2 12\n105 564\n\n\nOutput\n\
+  \n\n9\n12\n3595374\n\nNote\n\nFor n = 3 the sequence is [1,3,4,9...]"
+samples:
+- " ```import math\n\ndef solve():\n    t = int(input())\n    for _ in range(t):\n\
+  \        n, k = map(int, input().split())\n        k -= 1\n        mod = 10**9 +\
+  \ 7\n        ans = 0\n        pow_n = 1\n        while True:\n            ans +=\
+  \ pow_n\n            if ans >= k:\n                break\n            pow_n = (pow_n\
+  \ * n) % mod\n        print(ans % mod)\n\nsolve()```\n\n\n```python\n```\nQ:"
+- " ```import heapq\nimport sys\nreadline = sys.stdin.readline\nwrite = sys.stdout.write\n\
+  def solve():\n    t = int(readline())\n    for _ in range(t):\n        n, k = map(int,\
+  \ readline().split())\n        s = 0\n        i = 0\n        while True:\n     \
+  \       s += n**i\n            if s >= k:\n                write(\"%d\\n\" % (s\
+  \ % (10**9+7)))\n                break\n            i += 1\nsolve()```\nQ:"
+test_cases:
+  input:
+  - '3
+
+    3 4
+
+    2 12
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    2 6
+
+    105 564
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    105 564
+
+    '
+  - '3
+
+    0 4
+
+    2 6
+
+    105 564
+
+    '
+  - '3
+
+    0 8
+
+    0 6
+
+    105 564
+
+    '
+  - '3
+
+    1 8
+
+    0 6
+
+    105 564
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    105 564
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    105 984
+
+    '
+  - '3
+
+    1 10
+
+    0 6
+
+    105 984
+
+    '
+  - '3
+
+    6 4
+
+    2 12
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    2 1
+
+    105 564
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    105 571
+
+    '
+  - '3
+
+    0 4
+
+    2 6
+
+    39 564
+
+    '
+  - '3
+
+    0 8
+
+    2 6
+
+    105 713
+
+    '
+  - '3
+
+    0 8
+
+    0 6
+
+    105 46
+
+    '
+  - '3
+
+    1 8
+
+    0 6
+
+    105 868
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    35 564
+
+    '
+  - '3
+
+    6 7
+
+    2 12
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    2 1
+
+    110 564
+
+    '
+  - '3
+
+    1 4
+
+    3 6
+
+    105 571
+
+    '
+  - '3
+
+    0 4
+
+    0 6
+
+    39 564
+
+    '
+  - '3
+
+    0 8
+
+    2 12
+
+    105 713
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    105 868
+
+    '
+  - '3
+
+    1 4
+
+    0 6
+
+    35 564
+
+    '
+  - '3
+
+    6 7
+
+    2 12
+
+    105 276
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    105 211
+
+    '
+  - '3
+
+    0 8
+
+    2 12
+
+    103 713
+
+    '
+  - '3
+
+    0 12
+
+    0 6
+
+    105 28
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    105 238
+
+    '
+  - '3
+
+    2 18
+
+    0 2
+
+    105 984
+
+    '
+  - '3
+
+    2 26
+
+    0 10
+
+    105 984
+
+    '
+  - '3
+
+    6 7
+
+    2 20
+
+    105 276
+
+    '
+  - '3
+
+    1 6
+
+    2 6
+
+    105 211
+
+    '
+  - '3
+
+    1 8
+
+    2 12
+
+    103 713
+
+    '
+  - '3
+
+    1 8
+
+    2 6
+
+    105 238
+
+    '
+  - '3
+
+    2 18
+
+    0 2
+
+    105 735
+
+    '
+  - '3
+
+    6 7
+
+    2 6
+
+    105 276
+
+    '
+  - '3
+
+    1 6
+
+    2 6
+
+    105 274
+
+    '
+  - '3
+
+    1 10
+
+    2 12
+
+    103 713
+
+    '
+  - '3
+
+    6 7
+
+    2 6
+
+    105 255
+
+    '
+  - '3
+
+    1 7
+
+    2 6
+
+    105 274
+
+    '
+  - '3
+
+    1 4
+
+    3 6
+
+    105 238
+
+    '
+  - '3
+
+    6 7
+
+    2 1
+
+    105 255
+
+    '
+  - '3
+
+    1 20
+
+    2 4
+
+    103 713
+
+    '
+  - '3
+
+    1 4
+
+    4 6
+
+    105 238
+
+    '
+  - '3
+
+    1 4
+
+    5 6
+
+    105 238
+
+    '
+  - '3
+
+    1 3
+
+    2 4
+
+    165 713
+
+    '
+  - '3
+
+    1 3
+
+    2 7
+
+    165 713
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    105 433
+
+    '
+  - '3
+
+    0 2
+
+    2 6
+
+    105 433
+
+    '
+  - '3
+
+    0 2
+
+    2 6
+
+    105 443
+
+    '
+  - '3
+
+    0 2
+
+    2 6
+
+    105 583
+
+    '
+  - '3
+
+    0 2
+
+    2 7
+
+    105 583
+
+    '
+  - '3
+
+    0 2
+
+    2 12
+
+    105 583
+
+    '
+  - '3
+
+    0 2
+
+    2 12
+
+    23 583
+
+    '
+  - '3
+
+    1 2
+
+    2 12
+
+    23 583
+
+    '
+  - '3
+
+    1 2
+
+    2 12
+
+    23 476
+
+    '
+  - '3
+
+    1 2
+
+    3 12
+
+    23 476
+
+    '
+  - '3
+
+    1 2
+
+    3 12
+
+    15 476
+
+    '
+  - '3
+
+    1 2
+
+    3 12
+
+    15 714
+
+    '
+  - '3
+
+    1 2
+
+    3 12
+
+    15 657
+
+    '
+  - '3
+
+    1 2
+
+    3 8
+
+    15 657
+
+    '
+  - '3
+
+    1 2
+
+    3 8
+
+    15 224
+
+    '
+  - '3
+
+    1 3
+
+    3 8
+
+    15 224
+
+    '
+  - '3
+
+    1 3
+
+    1 8
+
+    15 224
+
+    '
+  - '3
+
+    1 3
+
+    1 8
+
+    15 250
+
+    '
+  - '3
+
+    3 4
+
+    2 17
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    2 6
+
+    88 564
+
+    '
+  - '3
+
+    1 4
+
+    3 6
+
+    105 564
+
+    '
+  - '3
+
+    0 4
+
+    2 6
+
+    105 549
+
+    '
+  - '3
+
+    0 8
+
+    1 6
+
+    105 564
+
+    '
+  - '3
+
+    1 5
+
+    0 6
+
+    105 564
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    16 564
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    109 984
+
+    '
+  - '3
+
+    1 10
+
+    0 10
+
+    137 984
+
+    '
+  - '3
+
+    6 4
+
+    2 12
+
+    151 564
+
+    '
+  - '3
+
+    3 4
+
+    2 1
+
+    89 564
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    105 290
+
+    '
+  - '3
+
+    0 4
+
+    2 6
+
+    39 1030
+
+    '
+  - '3
+
+    0 8
+
+    0 6
+
+    105 75
+
+    '
+  - '3
+
+    0 10
+
+    0 2
+
+    105 984
+
+    '
+  - '3
+
+    6 7
+
+    2 22
+
+    105 564
+
+    '
+  - '3
+
+    1 8
+
+    2 12
+
+    105 713
+
+    '
+  - '3
+
+    0 12
+
+    0 6
+
+    209 46
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    80 868
+
+    '
+  - '3
+
+    1 6
+
+    0 6
+
+    35 564
+
+    '
+  - '3
+
+    1 26
+
+    0 10
+
+    105 1003
+
+    '
+  - '3
+
+    6 7
+
+    2 17
+
+    105 276
+
+    '
+  - '3
+
+    3 3
+
+    4 1
+
+    110 564
+
+    '
+  - '3
+
+    0 8
+
+    2 16
+
+    103 713
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    201 238
+
+    '
+  - '3
+
+    2 18
+
+    1 2
+
+    105 984
+
+    '
+  - '3
+
+    2 26
+
+    1 10
+
+    105 984
+
+    '
+  - '3
+
+    6 7
+
+    4 20
+
+    105 276
+
+    '
+  - '3
+
+    1 15
+
+    2 12
+
+    103 713
+
+    '
+  - '3
+
+    1 8
+
+    2 4
+
+    105 238
+
+    '
+  - '3
+
+    6 7
+
+    0 6
+
+    105 276
+
+    '
+  - '3
+
+    1 6
+
+    2 6
+
+    105 176
+
+    '
+  - '3
+
+    1 10
+
+    2 12
+
+    50 713
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    60 238
+
+    '
+  - '3
+
+    6 7
+
+    2 6
+
+    9 255
+
+    '
+  - '3
+
+    1 7
+
+    2 6
+
+    93 274
+
+    '
+  - '3
+
+    1 20
+
+    2 12
+
+    132 713
+
+    '
+  - '3
+
+    2 4
+
+    3 6
+
+    105 238
+
+    '
+  - '3
+
+    1 20
+
+    2 1
+
+    103 713
+
+    '
+  - '3
+
+    1 7
+
+    4 6
+
+    105 238
+
+    '
+  - '3
+
+    6 7
+
+    3 1
+
+    105 389
+
+    '
+  - '3
+
+    1 3
+
+    2 4
+
+    103 863
+
+    '
+  - '3
+
+    1 3
+
+    2 4
+
+    165 330
+
+    '
+  - '3
+
+    2 3
+
+    2 7
+
+    165 713
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    192 238
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    7 433
+
+    '
+  - '3
+
+    0 2
+
+    2 6
+
+    134 433
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    105 583
+
+    '
+  - '3
+
+    1 2
+
+    2 7
+
+    105 583
+
+    '
+  - '3
+
+    0 2
+
+    2 12
+
+    105 433
+
+    '
+  - '3
+
+    1 2
+
+    2 12
+
+    39 583
+
+    '
+  - '3
+
+    1 2
+
+    4 12
+
+    23 476
+
+    '
+  - '3
+
+    2 2
+
+    3 12
+
+    23 476
+
+    '
+  - '3
+
+    1 2
+
+    4 12
+
+    15 476
+
+    '
+  - '3
+
+    1 2
+
+    3 12
+
+    15 156
+
+    '
+  - '3
+
+    1 2
+
+    3 16
+
+    15 657
+
+    '
+  - '3
+
+    1 2
+
+    5 8
+
+    15 657
+
+    '
+  - '3
+
+    1 3
+
+    3 8
+
+    15 216
+
+    '
+  - '3
+
+    1 3
+
+    2 8
+
+    15 224
+
+    '
+  - '3
+
+    1 1
+
+    1 8
+
+    15 250
+
+    '
+  - '3
+
+    3 4
+
+    2 17
+
+    105 515
+
+    '
+  - '3
+
+    3 2
+
+    2 6
+
+    88 564
+
+    '
+  - '3
+
+    1 4
+
+    3 6
+
+    27 564
+
+    '
+  - '3
+
+    0 4
+
+    3 6
+
+    105 549
+
+    '
+  - '3
+
+    0 8
+
+    1 6
+
+    110 564
+
+    '
+  - '3
+
+    0 2
+
+    0 6
+
+    105 68
+
+    '
+  - '3
+
+    1 5
+
+    0 6
+
+    105 1004
+
+    '
+  - '3
+
+    1 7
+
+    0 6
+
+    21 564
+
+    '
+  - '3
+
+    1 10
+
+    0 8
+
+    105 1410
+
+    '
+  - '3
+
+    6 4
+
+    2 12
+
+    244 564
+
+    '
+  - '3
+
+    3 2
+
+    2 1
+
+    89 564
+
+    '
+  - '3
+
+    1 4
+
+    2 6
+
+    105 385
+
+    '
+  - '3
+
+    0 8
+
+    3 8
+
+    105 713
+
+    '
+  - '3
+
+    0 18
+
+    1 10
+
+    105 984
+
+    '
+  - '3
+
+    6 4
+
+    2 22
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    3 1
+
+    110 923
+
+    '
+  - '3
+
+    1 2
+
+    6 6
+
+    105 571
+
+    '
+  - '3
+
+    1 8
+
+    2 15
+
+    105 713
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    80 798
+
+    '
+  - '3
+
+    0 18
+
+    0 2
+
+    136 984
+
+    '
+  - '3
+
+    1 26
+
+    1 10
+
+    105 1003
+
+    '
+  - '3
+
+    6 7
+
+    2 17
+
+    105 194
+
+    '
+  - '3
+
+    1 1
+
+    2 6
+
+    105 81
+
+    '
+  - '3
+
+    0 8
+
+    2 16
+
+    103 658
+
+    '
+  - '3
+
+    1 8
+
+    1 6
+
+    201 445
+
+    '
+  - '3
+
+    2 18
+
+    1 3
+
+    105 984
+
+    '
+  - '3
+
+    6 10
+
+    4 20
+
+    105 276
+
+    '
+  - '3
+
+    1 9
+
+    2 6
+
+    74 211
+
+    '
+  - '3
+
+    1 19
+
+    2 12
+
+    103 713
+
+    '
+  - '3
+
+    1 8
+
+    4 4
+
+    105 238
+
+    '
+  - '3
+
+    9 7
+
+    0 6
+
+    105 276
+
+    '
+  - '3
+
+    1 6
+
+    2 2
+
+    105 176
+
+    '
+  - '3
+
+    1 10
+
+    0 12
+
+    50 713
+
+    '
+  - '3
+
+    1 4
+
+    2 3
+
+    60 238
+
+    '
+  - '3
+
+    6 7
+
+    2 6
+
+    9 205
+
+    '
+  - '3
+
+    1 7
+
+    3 6
+
+    93 274
+
+    '
+  - '3
+
+    1 20
+
+    2 12
+
+    132 818
+
+    '
+  - '3
+
+    4 4
+
+    3 6
+
+    105 238
+
+    '
+  - '3
+
+    1 20
+
+    2 1
+
+    103 372
+
+    '
+  - '3
+
+    1 7
+
+    4 6
+
+    105 182
+
+    '
+  - '3
+
+    1 3
+
+    2 2
+
+    165 330
+
+    '
+  - '3
+
+    1 1
+
+    5 6
+
+    198 238
+
+    '
+  - '3
+
+    2 3
+
+    3 7
+
+    165 713
+
+    '
+  - '3
+
+    1 2
+
+    1 6
+
+    192 238
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    7 749
+
+    '
+  - '3
+
+    0 2
+
+    2 6
+
+    268 433
+
+    '
+  - '3
+
+    1 2
+
+    2 6
+
+    192 583
+
+    '
+  - '3
+
+    1 2
+
+    2 7
+
+    114 583
+
+    '
+  - '3
+
+    1 2
+
+    1 12
+
+    39 583
+
+    '
+  - '3
+
+    2 2
+
+    3 4
+
+    23 476
+
+    '
+  - '3
+
+    1 2
+
+    4 12
+
+    16 476
+
+    '
+  - '3
+
+    1 2
+
+    2 12
+
+    15 156
+
+    '
+  - '3
+
+    1 2
+
+    3 16
+
+    6 657
+
+    '
+  - '3
+
+    1 2
+
+    5 11
+
+    15 657
+
+    '
+  - '3
+
+    0 4
+
+    3 8
+
+    15 224
+
+    '
+  - '3
+
+    1 3
+
+    6 8
+
+    15 216
+
+    '
+  - '3
+
+    1 3
+
+    2 8
+
+    15 378
+
+    '
+  - '3
+
+    3 7
+
+    2 17
+
+    105 515
+
+    '
+  - '3
+
+    3 2
+
+    2 6
+
+    88 962
+
+    '
+  - '3
+
+    1 4
+
+    3 6
+
+    27 107
+
+    '
+  - '3
+
+    0 4
+
+    4 6
+
+    105 549
+
+    '
+  - '3
+
+    1 2
+
+    0 6
+
+    105 68
+
+    '
+  - '3
+
+    2 5
+
+    0 6
+
+    105 1004
+
+    '
+  - '3
+
+    4 4
+
+    2 12
+
+    244 564
+
+    '
+  - '3
+
+    1 4
+
+    2 4
+
+    105 385
+
+    '
+  - '3
+
+    0 2
+
+    0 6
+
+    39 1030
+
+    '
+  - '3
+
+    0 8
+
+    3 8
+
+    105 437
+
+    '
+  - '3
+
+    1 4
+
+    0 2
+
+    105 984
+
+    '
+  - '3
+
+    6 4
+
+    0 22
+
+    105 564
+
+    '
+  - '3
+
+    3 4
+
+    3 1
+
+    110 1290
+
+    '
+  - '3
+
+    1 2
+
+    10 6
+
+    105 571
+
+    '
+  - '3
+
+    1 14
+
+    2 15
+
+    105 713
+
+    '
+  - '3
+
+    1 26
+
+    1 10
+
+    129 1003
+
+    '
+  - '3
+
+    6 11
+
+    2 17
+
+    105 194
+
+    '
+  - '3
+
+    1 1
+
+    0 6
+
+    105 81
+
+    '
+  output:
+  - '9
+
+    12
+
+    3595374
+
+    '
+  - '9
+
+    6
+
+    3595374
+
+    '
+  - '1
+
+    6
+
+    3595374
+
+    '
+  - '0
+
+    6
+
+    3595374
+
+    '
+  - '0
+
+    0
+
+    3595374
+
+    '
+  - '1
+
+    0
+
+    3595374
+
+    '
+  - '3
+
+    0
+
+    3595374
+
+    '
+  - '3
+
+    0
+
+    713307087
+
+    '
+  - '2
+
+    0
+
+    713307087
+
+    '
+  - '36
+
+    12
+
+    3595374
+
+    '
+  - '9
+
+    1
+
+    3595374
+
+    '
+  - '1
+
+    6
+
+    4742080
+
+    '
+  - '0
+
+    6
+
+    452236824
+
+    '
+  - '0
+
+    6
+
+    257287716
+
+    '
+  - '0
+
+    0
+
+    763984296
+
+    '
+  - '1
+
+    0
+
+    312144741
+
+    '
+  - '3
+
+    0
+
+    692143895
+
+    '
+  - '43
+
+    12
+
+    3595374
+
+    '
+  - '9
+
+    1
+
+    745888270
+
+    '
+  - '1
+
+    12
+
+    4742080
+
+    '
+  - '0
+
+    0
+
+    452236824
+
+    '
+  - '0
+
+    12
+
+    257287716
+
+    '
+  - '1
+
+    2
+
+    312144741
+
+    '
+  - '1
+
+    0
+
+    692143895
+
+    '
+  - '43
+
+    12
+
+    456030397
+
+    '
+  - '1
+
+    6
+
+    258462631
+
+    '
+  - '0
+
+    12
+
+    134894835
+
+    '
+  - '0
+
+    0
+
+    122719275
+
+    '
+  - '1
+
+    2
+
+    900896196
+
+    '
+  - '18
+
+    0
+
+    713307087
+
+    '
+  - '26
+
+    0
+
+    713307087
+
+    '
+  - '43
+
+    20
+
+    456030397
+
+    '
+  - '2
+
+    6
+
+    258462631
+
+    '
+  - '1
+
+    12
+
+    134894835
+
+    '
+  - '1
+
+    6
+
+    900896196
+
+    '
+  - '18
+
+    0
+
+    378849471
+
+    '
+  - '43
+
+    6
+
+    456030397
+
+    '
+  - '2
+
+    6
+
+    456019477
+
+    '
+  - '2
+
+    12
+
+    134894835
+
+    '
+  - '43
+
+    6
+
+    22446815
+
+    '
+  - '3
+
+    6
+
+    456019477
+
+    '
+  - '1
+
+    12
+
+    900896196
+
+    '
+  - '43
+
+    1
+
+    22446815
+
+    '
+  - '2
+
+    4
+
+    134894835
+
+    '
+  - '1
+
+    20
+
+    900896196
+
+    '
+  - '1
+
+    30
+
+    900896196
+
+    '
+  - '2
+
+    4
+
+    58081920
+
+    '
+  - '2
+
+    7
+
+    58081920
+
+    '
+  - '1
+
+    6
+
+    260115562
+
+    '
+  - '0
+
+    6
+
+    260115562
+
+    '
+  - '0
+
+    6
+
+    261273292
+
+    '
+  - '0
+
+    6
+
+    214860566
+
+    '
+  - '0
+
+    7
+
+    214860566
+
+    '
+  - '0
+
+    12
+
+    214860566
+
+    '
+  - '0
+
+    12
+
+    300685298
+
+    '
+  - '1
+
+    12
+
+    300685298
+
+    '
+  - '1
+
+    12
+
+    864138587
+
+    '
+  - '1
+
+    36
+
+    864138587
+
+    '
+  - '1
+
+    36
+
+    745194836
+
+    '
+  - '1
+
+    36
+
+    625612499
+
+    '
+  - '1
+
+    36
+
+    614269110
+
+    '
+  - '1
+
+    27
+
+    614269110
+
+    '
+  - '1
+
+    27
+
+    183009375
+
+    '
+  - '2
+
+    27
+
+    183009375
+
+    '
+  - '2
+
+    1
+
+    183009375
+
+    '
+  - '2
+
+    1
+
+    183063390
+
+    '
+  - '9
+
+    17
+
+    3595374
+
+    '
+  - '9
+
+    6
+
+    950813808
+
+    '
+  - '1
+
+    12
+
+    3595374
+
+    '
+  - '0
+
+    6
+
+    882044757
+
+    '
+  - '0
+
+    2
+
+    3595374
+
+    '
+  - '2
+
+    0
+
+    3595374
+
+    '
+  - '3
+
+    0
+
+    720590628
+
+    '
+  - '3
+
+    0
+
+    669833413
+
+    '
+  - '2
+
+    0
+
+    172328490
+
+    '
+  - '36
+
+    12
+
+    532389654
+
+    '
+  - '9
+
+    1
+
+    901799978
+
+    '
+  - '1
+
+    6
+
+    97284386
+
+    '
+  - '0
+
+    6
+
+    28210319
+
+    '
+  - '0
+
+    0
+
+    96788976
+
+    '
+  - '0
+
+    0
+
+    713307087
+
+    '
+  - '43
+
+    22
+
+    3595374
+
+    '
+  - '1
+
+    12
+
+    257287716
+
+    '
+  - '0
+
+    0
+
+    787390482
+
+    '
+  - '1
+
+    2
+
+    69536402
+
+    '
+  - '2
+
+    0
+
+    692143895
+
+    '
+  - '3
+
+    0
+
+    354572102
+
+    '
+  - '43
+
+    17
+
+    456030397
+
+    '
+  - '4
+
+    1
+
+    745888270
+
+    '
+  - '0
+
+    16
+
+    134894835
+
+    '
+  - '1
+
+    2
+
+    436757470
+
+    '
+  - '18
+
+    1
+
+    713307087
+
+    '
+  - '26
+
+    2
+
+    713307087
+
+    '
+  - '43
+
+    272
+
+    456030397
+
+    '
+  - '4
+
+    12
+
+    134894835
+
+    '
+  - '1
+
+    4
+
+    900896196
+
+    '
+  - '43
+
+    0
+
+    456030397
+
+    '
+  - '2
+
+    6
+
+    925646821
+
+    '
+  - '2
+
+    12
+
+    861447554
+
+    '
+  - '1
+
+    6
+
+    793799738
+
+    '
+  - '43
+
+    6
+
+    5380840
+
+    '
+  - '3
+
+    6
+
+    132284969
+
+    '
+  - '2
+
+    12
+
+    320033969
+
+    '
+  - '4
+
+    12
+
+    900896196
+
+    '
+  - '2
+
+    1
+
+    134894835
+
+    '
+  - '3
+
+    20
+
+    900896196
+
+    '
+  - '43
+
+    1
+
+    375760428
+
+    '
+  - '2
+
+    4
+
+    586977111
+
+    '
+  - '2
+
+    4
+
+    846108753
+
+    '
+  - '3
+
+    7
+
+    58081920
+
+    '
+  - '1
+
+    6
+
+    77020973
+
+    '
+  - '1
+
+    6
+
+    6607553
+
+    '
+  - '0
+
+    6
+
+    333298828
+
+    '
+  - '1
+
+    6
+
+    214860566
+
+    '
+  - '1
+
+    7
+
+    214860566
+
+    '
+  - '0
+
+    12
+
+    260115562
+
+    '
+  - '1
+
+    12
+
+    878442964
+
+    '
+  - '1
+
+    80
+
+    864138587
+
+    '
+  - '2
+
+    36
+
+    864138587
+
+    '
+  - '1
+
+    80
+
+    745194836
+
+    '
+  - '1
+
+    36
+
+    170913600
+
+    '
+  - '1
+
+    81
+
+    614269110
+
+    '
+  - '1
+
+    125
+
+    614269110
+
+    '
+  - '2
+
+    27
+
+    182304000
+
+    '
+  - '2
+
+    8
+
+    183009375
+
+    '
+  - '1
+
+    1
+
+    183063390
+
+    '
+  - '9
+
+    17
+
+    119218296
+
+    '
+  - '3
+
+    6
+
+    950813808
+
+    '
+  - '1
+
+    12
+
+    612312689
+
+    '
+  - '0
+
+    12
+
+    882044757
+
+    '
+  - '0
+
+    2
+
+    745888270
+
+    '
+  - '0
+
+    0
+
+    95642270
+
+    '
+  - '2
+
+    0
+
+    354583021
+
+    '
+  - '3
+
+    0
+
+    284320046
+
+    '
+  - '2
+
+    0
+
+    893659373
+
+    '
+  - '36
+
+    12
+
+    472775977
+
+    '
+  - '3
+
+    1
+
+    901799978
+
+    '
+  - '1
+
+    6
+
+    375749403
+
+    '
+  - '0
+
+    27
+
+    257287716
+
+    '
+  - '0
+
+    2
+
+    713307087
+
+    '
+  - '36
+
+    22
+
+    3595374
+
+    '
+  - '9
+
+    1
+
+    300692073
+
+    '
+  - '1
+
+    42
+
+    4742080
+
+    '
+  - '1
+
+    15
+
+    257287716
+
+    '
+  - '1
+
+    2
+
+    690210344
+
+    '
+  - '0
+
+    0
+
+    313996483
+
+    '
+  - '3
+
+    2
+
+    354572102
+
+    '
+  - '43
+
+    17
+
+    136912005
+
+    '
+  - '1
+
+    6
+
+    217181871
+
+    '
+  - '0
+
+    16
+
+    194064920
+
+    '
+  - '1
+
+    2
+
+    708509974
+
+    '
+  - '18
+
+    2
+
+    713307087
+
+    '
+  - '222
+
+    272
+
+    456030397
+
+    '
+  - '2
+
+    6
+
+    516663646
+
+    '
+  - '3
+
+    12
+
+    134894835
+
+    '
+  - '1
+
+    16
+
+    900896196
+
+    '
+  - '91
+
+    0
+
+    456030397
+
+    '
+  - '2
+
+    2
+
+    925646821
+
+    '
+  - '2
+
+    0
+
+    861447554
+
+    '
+  - '1
+
+    3
+
+    793799738
+
+    '
+  - '43
+
+    6
+
+    5315221
+
+    '
+  - '3
+
+    12
+
+    132284969
+
+    '
+  - '2
+
+    12
+
+    838210136
+
+    '
+  - '16
+
+    12
+
+    900896196
+
+    '
+  - '2
+
+    1
+
+    482792581
+
+    '
+  - '3
+
+    20
+
+    925657951
+
+    '
+  - '2
+
+    2
+
+    846108753
+
+    '
+  - '1
+
+    30
+
+    423451933
+
+    '
+  - '3
+
+    13
+
+    58081920
+
+    '
+  - '1
+
+    2
+
+    77020973
+
+    '
+  - '1
+
+    6
+
+    41311999
+
+    '
+  - '0
+
+    6
+
+    974641
+
+    '
+  - '1
+
+    6
+
+    590294341
+
+    '
+  - '1
+
+    7
+
+    365619380
+
+    '
+  - '1
+
+    2
+
+    878442964
+
+    '
+  - '2
+
+    9
+
+    864138587
+
+    '
+  - '1
+
+    80
+
+    580249828
+
+    '
+  - '1
+
+    12
+
+    170913600
+
+    '
+  - '1
+
+    81
+
+    10358929
+
+    '
+  - '1
+
+    131
+
+    614269110
+
+    '
+  - '0
+
+    27
+
+    183009375
+
+    '
+  - '2
+
+    216
+
+    182304000
+
+    '
+  - '2
+
+    8
+
+    575094626
+
+    '
+  - '13
+
+    17
+
+    119218296
+
+    '
+  - '3
+
+    6
+
+    799832816
+
+    '
+  - '1
+
+    12
+
+    401789107
+
+    '
+  - '0
+
+    20
+
+    882044757
+
+    '
+  - '1
+
+    0
+
+    95642270
+
+    '
+  - '5
+
+    0
+
+    354583021
+
+    '
+  - '16
+
+    12
+
+    472775977
+
+    '
+  - '1
+
+    4
+
+    375749403
+
+    '
+  - '0
+
+    0
+
+    28210319
+
+    '
+  - '0
+
+    27
+
+    260126587
+
+    '
+  - '1
+
+    0
+
+    713307087
+
+    '
+  - '36
+
+    0
+
+    3595374
+
+    '
+  - '9
+
+    1
+
+    331570536
+
+    '
+  - '1
+
+    110
+
+    4742080
+
+    '
+  - '3
+
+    15
+
+    257287716
+
+    '
+  - '3
+
+    2
+
+    286863200
+
+    '
+  - '223
+
+    17
+
+    136912005
+
+    '
+  - '1
+
+    0
+
+    217181871
+
+    '
+timeout: 2.0

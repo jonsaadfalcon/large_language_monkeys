@@ -1,0 +1,9006 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThere are n\
+  \ candies in a row, they are numbered from left to right from 1 to n. The size of\
+  \ the i-th candy is a_i.\n\nAlice and Bob play an interesting and tasty game: they\
+  \ eat candy. Alice will eat candy from left to right, and Bob \u2014 from right\
+  \ to left. The game ends if all the candies are eaten.\n\nThe process consists of\
+  \ moves. During a move, the player eats one or more sweets from her/his side (Alice\
+  \ eats from the left, Bob \u2014 from the right).\n\nAlice makes the first move.\
+  \ During the first move, she will eat 1 candy (its size is a_1). Then, each successive\
+  \ move the players alternate \u2014 that is, Bob makes the second move, then Alice,\
+  \ then again Bob and so on.\n\nOn each move, a player counts the total size of candies\
+  \ eaten during the current move. Once this number becomes strictly greater than\
+  \ the total size of candies eaten by the other player on their previous move, the\
+  \ current player stops eating and the move ends. In other words, on a move, a player\
+  \ eats the smallest possible number of candies such that the sum of the sizes of\
+  \ candies eaten on this move is strictly greater than the sum of the sizes of candies\
+  \ that the other player ate on the previous move. If there are not enough candies\
+  \ to make a move this way, then the player eats up all the remaining candies and\
+  \ the game ends.\n\nFor example, if n=11 and a=[3,1,4,1,5,9,2,6,5,3,5], then:\n\n\
+  \  * move 1: Alice eats one candy of size 3 and the sequence of candies becomes\
+  \ [1,4,1,5,9,2,6,5,3,5]. \n  * move 2: Alice ate 3 on the previous move, which means\
+  \ Bob must eat 4 or more. Bob eats one candy of size 5 and the sequence of candies\
+  \ becomes [1,4,1,5,9,2,6,5,3]. \n  * move 3: Bob ate 5 on the previous move, which\
+  \ means Alice must eat 6 or more. Alice eats three candies with the total size of\
+  \ 1+4+1=6 and the sequence of candies becomes [5,9,2,6,5,3]. \n  * move 4: Alice\
+  \ ate 6 on the previous move, which means Bob must eat 7 or more. Bob eats two candies\
+  \ with the total size of 3+5=8 and the sequence of candies becomes [5,9,2,6]. \n\
+  \  * move 5: Bob ate 8 on the previous move, which means Alice must eat 9 or more.\
+  \ Alice eats two candies with the total size of 5+9=14 and the sequence of candies\
+  \ becomes [2,6]. \n  * move 6 (the last): Alice ate 14 on the previous move, which\
+  \ means Bob must eat 15 or more. It is impossible, so Bob eats the two remaining\
+  \ candies and the game ends. \n\n\n\nPrint the number of moves in the game and two\
+  \ numbers:\n\n  * a \u2014 the total size of all sweets eaten by Alice during the\
+  \ game; \n  * b \u2014 the total size of all sweets eaten by Bob during the game.\
+  \ \n\nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 5000) \u2014\
+  \ the number of test cases in the input. The following are descriptions of the t\
+  \ test cases.\n\nEach test case consists of two lines. The first line contains an\
+  \ integer n (1 \u2264 n \u2264 1000) \u2014 the number of candies. The second line\
+  \ contains a sequence of integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 1000)\
+  \ \u2014 the sizes of candies in the order they are arranged from left to right.\n\
+  \nIt is guaranteed that the sum of the values of n for all sets of input data in\
+  \ a test does not exceed 2\u22C510^5.\n\nOutput\n\nFor each set of input data print\
+  \ three integers \u2014 the number of moves in the game and the required values\
+  \ a and b.\n\nExample\n\nInput\n\n\n7\n11\n3 1 4 1 5 9 2 6 5 3 5\n1\n1000\n3\n1\
+  \ 1 1\n13\n1 2 3 4 5 6 7 8 9 10 11 12 13\n2\n2 1\n6\n1 1 1 1 1 1\n7\n1 1 1 1 1 1\
+  \ 1\n\n\nOutput\n\n\n6 23 21\n1 1000 0\n2 1 2\n6 45 46\n2 2 1\n3 4 2\n4 4 3\nA:\
+  \ ```from sys import stdin, stdout\nfrom collections import deque\n\n\ndef main():\n\
+  \    t = int(stdin.readline())\n    for _ in range(t):\n        n = int(stdin.readline())\n\
+  \        ar = deque(map(int, stdin.readline().split()))\n        a = 0\n       \
+  \ b = 0\n        prev = ar.popleft()\n        a += prev\n        turn = 1\n    \
+  \    move = 1\n        while ar:\n            if turn == 1:\n                curr\
+  \ = 0\n                while ar and curr <= prev:\n                    curr += ar.pop()\n\
+  \                b += curr\n                prev = curr\n                move +=\
+  \ 1\n            else:\n                curr = 0\n                while ar and curr\
+  \ <= prev:\n                    curr += ar.popleft()\n                a += curr\n\
+  \                prev = curr\n                move += 1\n            turn = 1 -\
+  \ turn\n        print(move, a, b)\n\n\nif __name__ == \"__main__\":\n    main()```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nYou are given a table\
+  \ consisting of n rows and m columns. Each cell of the table contains a number,\
+  \ 0 or 1. In one move we can choose some row of the table and cyclically shift its\
+  \ values either one cell to the left, or one cell to the right.\n\nTo cyclically\
+  \ shift a table row one cell to the right means to move the value of each cell,\
+  \ except for the last one, to the right neighboring cell, and to move the value\
+  \ of the last cell to the first cell. A cyclical shift of a row to the left is performed\
+  \ similarly, but in the other direction. For example, if we cyclically shift a row\
+  \ \"00110\" one cell to the right, we get a row \"00011\", but if we shift a row\
+  \ \"00110\" one cell to the left, we get a row \"01100\".\n\nDetermine the minimum\
+  \ number of moves needed to make some table column consist only of numbers 1.\n\n\
+  Input\n\nThe first line contains two space-separated integers: n (1 \u2264 n \u2264\
+  \ 100) \u2014 the number of rows in the table and m (1 \u2264 m \u2264 104) \u2014\
+  \ the number of columns in the table. Then n lines follow, each of them contains\
+  \ m characters \"0\" or \"1\": the j-th character of the i-th line describes the\
+  \ contents of the cell in the i-th row and in the j-th column of the table.\n\n\
+  It is guaranteed that the description of the table contains no other characters\
+  \ besides \"0\" and \"1\".\n\nOutput\n\nPrint a single number: the minimum number\
+  \ of moves needed to get only numbers 1 in some column of the table. If this is\
+  \ impossible, print -1.\n\nExamples\n\nInput\n\n3 6\n101010\n000100\n100000\n\n\n\
+  Output\n\n3\n\n\nInput\n\n2 3\n111\n000\n\n\nOutput\n\n-1\n\nNote\n\nIn the first\
+  \ sample one way to achieve the goal with the least number of moves is as follows:\
+  \ cyclically shift the second row to the right once, then shift the third row to\
+  \ the left twice. Then the table column before the last one will contain only 1s.\n\
+  \nIn the second sample one can't shift the rows to get a column containing only\
+  \ 1s.\nA: ```import sys\nn, m = map(int, input().split())\nmp = ['' for i in range(n)]\n\
+  f = [[0 for j in range(m)] for i in range(n)]\nfor i in range(n):\n\tmp[i] = input()\n\
+  \tif mp[i].find('1') == -1:\n\t\tprint(-1)\n\t\tsys.exit()\n\ttmp = mp[i][::-1].find('1')\
+  \ + 1\n\tfor j in range(m):\n\t\tif mp[i][j] == '1':\n\t\t\tf[i][j] = 0\n\t\telse:\n\
+  \t\t\tf[i][j] = f[i][j - 1] + 1 if j > 0 else tmp\n\ttmp = mp[i].find('1') + 1\n\
+  \tfor j in range(m - 1, -1, -1):\n\t\tf[i][j] = min(f[i][j], f[i][j + 1] + 1 if\
+  \ j + 1 < m else tmp)\nans = int(1e9)\nfor j in range(m):\n\tsm = 0\n\tfor i in\
+  \ range(n):\n\t\tsm += f[i][j]\n\tans = min(ans, sm)\nprint(ans);```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nPetya is a math teacher. n of his\
+  \ students has written a test consisting of m questions. For each student, it is\
+  \ known which questions he has answered correctly and which he has not.\n\nIf the\
+  \ student answers the j-th question correctly, he gets p_j points (otherwise, he\
+  \ gets 0 points). Moreover, the points for the questions are distributed in such\
+  \ a way that the array p is a permutation of numbers from 1 to m.\n\nFor the i-th\
+  \ student, Petya knows that he expects to get x_i points for the test. Petya wonders\
+  \ how unexpected the results could be. Petya believes that the surprise value of\
+  \ the results for students is equal to \u2211_{i=1}^{n} |x_i - r_i|, where r_i is\
+  \ the number of points that the i-th student has got for the test.\n\nYour task\
+  \ is to help Petya find such a permutation p for which the surprise value of the\
+  \ results is maximum possible. If there are multiple answers, print any of them.\n\
+  \nInput\n\nThe first line contains a single integer t (1 \u2264 t \u2264 10^4) \u2014\
+  \ the number of test cases.\n\nThe first line of each test case contains two integers\
+  \ n and m (1 \u2264 n \u2264 10; 1 \u2264 m \u2264 10^4) \u2014 the number of students\
+  \ and the number of questions, respectively.\n\nThe second line contains n integers\
+  \ x_1, x_2, ..., x_n (0 \u2264 x_i \u2264 (m(m+1))/(2)), where x_i is the number\
+  \ of points that the i-th student expects to get.\n\nThis is followed by n lines,\
+  \ the i-th line contains the string s_i (|s_i| = m; s_{i, j} \u2208 \\{0, 1\\}),\
+  \ where s_{i, j} is 1 if the i-th student has answered the j-th question correctly,\
+  \ and 0 otherwise.\n\nThe sum of m for all test cases does not exceed 10^4.\n\n\
+  Output\n\nFor each test case, print m integers \u2014 a permutation p for which\
+  \ the surprise value of the results is maximum possible. If there are multiple answers,\
+  \ print any of them.\n\nExample\n\nInput\n\n\n3\n4 3\n5 1 2 2\n110\n100\n101\n100\n\
+  4 4\n6 2 0 10\n1001\n0010\n0110\n0101\n3 6\n20 3 15\n010110\n000101\n111111\n\n\n\
+  Output\n\n\n3 1 2 \n2 3 4 1 \n3 1 4 5 2 6 \nA:"
+question: "Petya is a math teacher. n of his students has written a test consisting\
+  \ of m questions. For each student, it is known which questions he has answered\
+  \ correctly and which he has not.\n\nIf the student answers the j-th question correctly,\
+  \ he gets p_j points (otherwise, he gets 0 points). Moreover, the points for the\
+  \ questions are distributed in such a way that the array p is a permutation of numbers\
+  \ from 1 to m.\n\nFor the i-th student, Petya knows that he expects to get x_i points\
+  \ for the test. Petya wonders how unexpected the results could be. Petya believes\
+  \ that the surprise value of the results for students is equal to \u2211_{i=1}^{n}\
+  \ |x_i - r_i|, where r_i is the number of points that the i-th student has got for\
+  \ the test.\n\nYour task is to help Petya find such a permutation p for which the\
+  \ surprise value of the results is maximum possible. If there are multiple answers,\
+  \ print any of them.\n\nInput\n\nThe first line contains a single integer t (1 \u2264\
+  \ t \u2264 10^4) \u2014 the number of test cases.\n\nThe first line of each test\
+  \ case contains two integers n and m (1 \u2264 n \u2264 10; 1 \u2264 m \u2264 10^4)\
+  \ \u2014 the number of students and the number of questions, respectively.\n\nThe\
+  \ second line contains n integers x_1, x_2, ..., x_n (0 \u2264 x_i \u2264 (m(m+1))/(2)),\
+  \ where x_i is the number of points that the i-th student expects to get.\n\nThis\
+  \ is followed by n lines, the i-th line contains the string s_i (|s_i| = m; s_{i,\
+  \ j} \u2208 \\{0, 1\\}), where s_{i, j} is 1 if the i-th student has answered the\
+  \ j-th question correctly, and 0 otherwise.\n\nThe sum of m for all test cases does\
+  \ not exceed 10^4.\n\nOutput\n\nFor each test case, print m integers \u2014 a permutation\
+  \ p for which the surprise value of the results is maximum possible. If there are\
+  \ multiple answers, print any of them.\n\nExample\n\nInput\n\n\n3\n4 3\n5 1 2 2\n\
+  110\n100\n101\n100\n4 4\n6 2 0 10\n1001\n0010\n0110\n0101\n3 6\n20 3 15\n010110\n\
+  000101\n111111\n\n\nOutput\n\n\n3 1 2 \n2 3 4 1 \n3 1 4 5 2 6 "
+samples:
+- " ```from sys import stdin, stdout\nfrom itertools import permutations\n\n\ndef\
+  \ main():\n    t = int(stdin.readline())\n    for _ in range(t):\n        n, m =\
+  \ map(int, stdin.readline().split())\n        exp = list(map(int, stdin.readline().split()))\n\
+  \        ans = 0\n        for p in permutations(range(1, m + 1)):\n            res\
+  \ = 0\n            for i in range(n):\n                r = sum(1 for j in range(m)\
+  \ if stdin.readline().split()[j] == '1')\n                res += abs(exp[i] - r)\n\
+  \            ans = max(ans, res)\n        stdout.write(' '.join(map(str, max(permutations(range(1,\
+  \ m + 1)), key=lambda p: sum(abs(exp[i] - sum(1 for j in range(m) if stdin.readline().split()[j]\
+  \ == '1')) for i in range(n))))))\n\n\nif __name__ == \"__main__\":\n    main()```\n\
+  \n\n\nQ:"
+- " ```import sys\nfrom collections import defaultdict\nfrom itertools import permutations\n\
+  \nt = int(sys.stdin.readline())\nfor _ in range(t):\n    n, m = map(int, sys.stdin.readline().split())\n\
+  \    exp = list(map(int, sys.stdin.readline().split()))\n    s = []\n    for _ in\
+  \ range(n):\n        s.append(sys.stdin.readline().strip())\n    s = [list(map(int,\
+  \ i)) for i in s]\n    res = 0\n    for p in permutations(range(1, m + 1)):\n  \
+  \      v = sum(abs(exp[i] - sum(s[i])) for i in range(n))\n        res = max(res,\
+  \ v)\n    p = list(res)\n    print(' '.join(map(str, p)))```\nQ:"
+test_cases:
+  input:
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 15
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    8 3 2
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    8 3 2
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 2
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    101
+
+    101
+
+    000
+
+    4 4
+
+    16 1 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 2
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 15
+
+    000110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    3 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111001
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 2
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    111
+
+    000
+
+    101
+
+    010
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000001
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0111
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    2 4 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0011
+
+    0110
+
+    0001
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    001
+
+    110
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 4 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0010
+
+    0101
+
+    3 2
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    101
+
+    000
+
+    101
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    9 1 4 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000100
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    100
+
+    111
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0011
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    100
+
+    001
+
+    110
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 4 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    100
+
+    001
+
+    110
+
+    4 4
+
+    0 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 4 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 3 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 1
+
+    010110
+
+    100100
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    1 2 0 10
+
+    1101
+
+    0010
+
+    0100
+
+    0111
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 0
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0011
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    011110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    000
+
+    4 4
+
+    6 3 0 10
+
+    0001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 1
+
+    010110
+
+    100100
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 4
+
+    100
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    12 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 4
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    3 1 2 2
+
+    110
+
+    000
+
+    100
+
+    100
+
+    4 4
+
+    6 2 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 0 7
+
+    110110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    000
+
+    4 4
+
+    6 3 0 1
+
+    0001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 1
+
+    010110
+
+    100100
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    3 1 3 2
+
+    110
+
+    000
+
+    100
+
+    100
+
+    4 4
+
+    6 2 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 0 7
+
+    110110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 1
+
+    110
+
+    100
+
+    100
+
+    101
+
+    4 4
+
+    2 2 0 13
+
+    1101
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000001
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    10 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 15
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    30 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    3 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 0 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 4 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    30 0 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 3 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    101
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    30 1 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 0 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    16 1 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 2
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    111
+
+    000
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0100
+
+    0100
+
+    3 2
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000001
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    1 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0111
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    011
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    36 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 0 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    1101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 1
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 1
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    10 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 18
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 15
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010010
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 2 2
+
+    101
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 1
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 10
+
+    0001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    100
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    30 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    110110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 0
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    110110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    54 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    1 1 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 4
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 0 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    110
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 4 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    4 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    000
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    8 3 2
+
+    010110
+
+    100101
+
+    110101
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    101
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0000
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0010
+
+    0001
+
+    3 1
+
+    30 1 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 1 11
+
+    1001
+
+    0010
+
+    1110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 0 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110110
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    000
+
+    101
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    13 1 2
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    011
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    1110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 2
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    111
+
+    101
+
+    101
+
+    000
+
+    4 4
+
+    16 1 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 6 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    1110
+
+    0101
+
+    3 6
+
+    20 3 15
+
+    000110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    2 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    1 1
+
+    20 3 7
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    9 1 4 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    011
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    101
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    36 3 7
+
+    010100
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    100
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 1
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    10 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 18
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 0
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0100
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010010
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 2 2
+
+    101
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    011110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    3 1 0 10
+
+    0001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    100
+
+    100
+
+    4 4
+
+    6 2 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    30 3 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 0
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 6
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    2 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    110110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    54 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    3 1 2 2
+
+    010
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111001
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    1 2 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    1 1 2 2
+
+    110
+
+    100
+
+    111
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0111
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    2 1 2 2
+
+    111
+
+    000
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    8 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    010
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    8 3 2
+
+    010110
+
+    100101
+
+    110101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0010
+
+    0001
+
+    3 1
+
+    30 0 2
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 0 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    2 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110110
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    011
+
+    100
+
+    111
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 2
+
+    101
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    1110
+
+    0100
+
+    3 1
+
+    20 0 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 1
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 2 4 2
+
+    111
+
+    101
+
+    101
+
+    000
+
+    4 4
+
+    16 1 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111011
+
+    '
+  - '3
+
+    4 3
+
+    5 0 1 0
+
+    111
+
+    000
+
+    101
+
+    010
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    101
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 6 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    1 1
+
+    20 3 7
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    011
+
+    100
+
+    101
+
+    101
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1101
+
+    0010
+
+    0100
+
+    0111
+
+    3 6
+
+    38 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    100
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    34 3 1
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 0
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0011
+
+    0110
+
+    0001
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    10 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 18
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    20 3 0
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    4 1 2 2
+
+    101
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    011110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 4
+
+    100
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 2 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 2
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    100
+
+    100
+
+    100
+
+    4 4
+
+    6 2 1 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    4 1 2 2
+
+    111
+
+    100
+
+    000
+
+    100
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    110
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 2 0 17
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    38 3 12
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    2 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 7
+
+    110110
+
+    000100
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    0 1 2 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    4 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0001
+
+    3 1
+
+    54 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    3 1 2 2
+
+    011
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    2 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 6
+
+    38 2 8
+
+    010110
+
+    000101
+
+    111001
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    12 1 0 11
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000101
+
+    110101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    1 0 0 10
+
+    1101
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    2 1 2 2
+
+    111
+
+    000
+
+    101
+
+    000
+
+    4 4
+
+    11 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    66 3 2
+
+    010110
+
+    000111
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 3 2
+
+    111
+
+    100
+
+    101
+
+    000
+
+    4 4
+
+    6 1 0 10
+
+    1101
+
+    0010
+
+    0010
+
+    0101
+
+    3 2
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    101
+
+    100
+
+    001
+
+    100
+
+    4 4
+
+    8 1 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0100
+
+    3 1
+
+    20 6 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 4 2
+
+    101
+
+    101
+
+    000
+
+    101
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 3 7
+
+    010110
+
+    000101
+
+    111111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 1 0
+
+    011
+
+    100
+
+    111
+
+    000
+
+    4 4
+
+    20 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    3 1
+
+    34 3 2
+
+    010110
+
+    000101
+
+    110111
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    110
+
+    110
+
+    101
+
+    100
+
+    4 4
+
+    6 3 0 10
+
+    1001
+
+    0110
+
+    0110
+
+    0101
+
+    3 6
+
+    13 3 1
+
+    010110
+
+    100101
+
+    111101
+
+    '
+  - '3
+
+    4 3
+
+    4 1 1 2
+
+    101
+
+    100
+
+    000
+
+    101
+
+    4 4
+
+    6 1 0 10
+
+    1001
+
+    0010
+
+    0110
+
+    0100
+
+    3 1
+
+    20 6 7
+
+    010110
+
+    000101
+
+    111110
+
+    '
+  - '3
+
+    4 3
+
+    5 1 2 2
+
+    111
+
+    100
+
+    101
+
+    100
+
+    4 4
+
+    6 1 0 17
+
+    1001
+
+    0010
+
+    0110
+
+    0101
+
+    1 1
+
+    20 3 8
+
+    010110
+
+    010101
+
+    111111
+
+    '
+  output:
+  - "3 1 2 \n2 3 4 1 \n3 1 4 5 2 6 \n"
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1 4 2 6 3 5
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 4 1 6 2 5
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    2 1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    2 3 4 5 1 6
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    4 2 5 3 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    2 1
+
+    '
+  - '1 2 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    4 1 5 2 3 6
+
+    '
+  - '3 1 2
+
+    3 4 1 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    4 1 2 3
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    1 2 4 3
+
+    3 2 4 5 1 6
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    2 1
+
+    '
+  - '2 1 3
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    4 3 5 1 2 6
+
+    '
+  - '3 2 1
+
+    1 2 4 3
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '2 1 3
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    6 2 3 4 1 5
+
+    '
+  - '3 1 2
+
+    3 4 1 2
+
+    5 2 3 4 1 6
+
+    '
+  - '3 1 2
+
+    1 2 4 3
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    6 2 3 4 1 5
+
+    '
+  - '1 2 3
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    2 3 4 5 1 6
+
+    '
+  - '2 1 3
+
+    1 4 3 2
+
+    6 2 3 4 1 5
+
+    '
+  - '1 3 2
+
+    2 3 4 1
+
+    2 3 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    4 2 5 3 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    2 1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 4 1 6 2 5
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    2 3 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    4 2 5 3 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 4 1 6 2 5
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 2 1
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '1 2 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 4 1 2
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    1 2 4 3
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 1 4 5 2 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '1 2 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    3 2 4 5 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    4 2 5 3 1 6
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '2 1 3
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    3 1 4 2
+
+    2 1
+
+    '
+  - '3 2 1
+
+    1 3 4 2
+
+    1
+
+    '
+  - '2 1 3
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    5 2 3 4 1 6
+
+    '
+  - '3 1 2
+
+    1 3 4 2
+
+    1
+
+    '
+  - '3 1 2
+
+    2 3 4 1
+
+    1
+
+    '
+timeout: 2.0

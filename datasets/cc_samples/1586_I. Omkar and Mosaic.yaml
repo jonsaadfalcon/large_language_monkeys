@@ -1,0 +1,4903 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nIn this problem\
+  \ we consider a special type of an auction, which is called the second-price auction.\
+  \ As in regular auction n bidders place a bid which is price a bidder ready to pay.\
+  \ The auction is closed, that is, each bidder secretly informs the organizer of\
+  \ the auction price he is willing to pay. After that, the auction winner is the\
+  \ participant who offered the highest price. However, he pay not the price he offers,\
+  \ but the highest price among the offers of other participants (hence the name:\
+  \ the second-price auction).\n\nWrite a program that reads prices offered by bidders\
+  \ and finds the winner and the price he will pay. Consider that all of the offered\
+  \ prices are different.\n\nInput\n\nThe first line of the input contains n (2 \u2264\
+  \ n \u2264 1000) \u2014 number of bidders. The second line contains n distinct integer\
+  \ numbers p1, p2, ... pn, separated by single spaces (1 \u2264 pi \u2264 10000),\
+  \ where pi stands for the price offered by the i-th bidder.\n\nOutput\n\nThe single\
+  \ output line should contain two integers: index of the winner and the price he\
+  \ will pay. Indices are 1-based.\n\nExamples\n\nInput\n\n2\n5 7\n\n\nOutput\n\n\
+  2 5\n\n\nInput\n\n3\n10 2 8\n\n\nOutput\n\n1 8\n\n\nInput\n\n6\n3 8 2 9 4 14\n\n\
+  \nOutput\n\n6 9\nA: ```a=int(input())\na=list(map(int,input().split()))\nind=a.index(max(a))\n\
+  a.sort()\nprint(str(ind+1)+' '+str(a[-2]))```\nQ: Write python code to solve the\
+  \ following coding problem that obeys the constraints and passes the example test\
+  \ cases. The output code needs to read from and write to standard IO. Please wrap\
+  \ your code answer using ```:\nThere is the faculty of Computer Science in Berland.\
+  \ In the social net \"TheContact!\" for each course of this faculty there is the\
+  \ special group whose name equals the year of university entrance of corresponding\
+  \ course of students at the university. \n\nEach of students joins the group of\
+  \ his course and joins all groups for which the year of student's university entrance\
+  \ differs by no more than x from the year of university entrance of this student,\
+  \ where x \u2014 some non-negative integer. A value x is not given, but it can be\
+  \ uniquely determined from the available data. Note that students don't join other\
+  \ groups. \n\nYou are given the list of groups which the student Igor joined. According\
+  \ to this information you need to determine the year of Igor's university entrance.\n\
+  \nInput\n\nThe first line contains the positive odd integer n (1 \u2264 n \u2264\
+  \ 5) \u2014 the number of groups which Igor joined. \n\nThe next line contains n\
+  \ distinct integers a1, a2, ..., an (2010 \u2264 ai \u2264 2100) \u2014 years of\
+  \ student's university entrance for each group in which Igor is the member.\n\n\
+  It is guaranteed that the input data is correct and the answer always exists. Groups\
+  \ are given randomly.\n\nOutput\n\nPrint the year of Igor's university entrance.\
+  \ \n\nExamples\n\nInput\n\n3\n2014 2016 2015\n\n\nOutput\n\n2015\n\n\nInput\n\n\
+  1\n2050\n\n\nOutput\n\n2050\n\nNote\n\nIn the first test the value x = 1. Igor entered\
+  \ the university in 2015. So he joined groups members of which are students who\
+  \ entered the university in 2014, 2015 and 2016.\n\nIn the second test the value\
+  \ x = 0. Igor entered only the group which corresponds to the year of his university\
+  \ entrance. \nA: ```n = int(input())\na = list(map(int, input().split()))\na.sort()\n\
+  if n % 2:\n    print(a[n//2])```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nOmkar is creating a mosaic using colored square tiles, which he places\
+  \ in an n \xD7 n grid. When the mosaic is complete, each cell in the grid will have\
+  \ either a glaucous or sinoper tile. However, currently he has only placed tiles\
+  \ in some cells. \n\nA completed mosaic will be a mastapeece if and only if each\
+  \ tile is adjacent to exactly 2 tiles of the same color (2 tiles are adjacent if\
+  \ they share a side.) Omkar wants to fill the rest of the tiles so that the mosaic\
+  \ becomes a mastapeece. Now he is wondering, is the way to do this unique, and if\
+  \ it is, what is it?\n\nInput\n\nThe first line contains a single integer n (1 \u2264\
+  \ n \u2264 2000).\n\nThen follow n lines with n characters in each line. The i-th\
+  \ character in the j-th line corresponds to the cell in row i and column j of the\
+  \ grid, and will be S if Omkar has placed a sinoper tile in this cell, G if Omkar\
+  \ has placed a glaucous tile, . if it's empty. \n\nOutput\n\nOn the first line,\
+  \ print UNIQUE if there is a unique way to get a mastapeece, NONE if Omkar cannot\
+  \ create any, and MULTIPLE if there is more than one way to do so. All letters must\
+  \ be uppercase.\n\nIf you print UNIQUE, then print n additional lines with n characters\
+  \ in each line, such that the i-th character in the j^{th} line is S if the tile\
+  \ in row i and column j of the mastapeece is sinoper, and G if it is glaucous. \n\
+  \nExamples\n\nInput\n\n\n4\nS...\n..G.\n....\n...S\n\n\nOutput\n\n\nMULTIPLE\n\n\
+  \nInput\n\n\n6\nS.....\n....G.\n..S...\n.....S\n....G.\nG.....\n\n\nOutput\n\n\n\
+  NONE\n\n\nInput\n\n\n10\n.S....S...\n..........\n...SSS....\n..........\n..........\n\
+  ...GS.....\n....G...G.\n..........\n......G...\n..........\n\n\nOutput\n\n\nUNIQUE\n\
+  SSSSSSSSSS\nSGGGGGGGGS\nSGSSSSSSGS\nSGSGGGGSGS\nSGSGSSGSGS\nSGSGSSGSGS\nSGSGGGGSGS\n\
+  SGSSSSSSGS\nSGGGGGGGGS\nSSSSSSSSSS\n\n\nInput\n\n\n1\n.\n\n\nOutput\n\n\nNONE\n\n\
+  Note\n\nFor the first test case, Omkar can make the mastapeeces\n\nSSSS\n\nSGGS\n\
+  \nSGGS\n\nSSSS\n\nand \n\nSSGG\n\nSSGG\n\nGGSS\n\nGGSS.\n\nFor the second test case,\
+  \ it can be proven that it is impossible for Omkar to add tiles to create a mastapeece.\n\
+  \nFor the third case, it can be proven that the given mastapeece is the only mastapeece\
+  \ Omkar can create by adding tiles.\n\nFor the fourth test case, it's clearly impossible\
+  \ for the only tile in any mosaic Omkar creates to be adjacent to two tiles of the\
+  \ same color, as it will be adjacent to 0 tiles total. \nA:"
+question: "Omkar is creating a mosaic using colored square tiles, which he places\
+  \ in an n \xD7 n grid. When the mosaic is complete, each cell in the grid will have\
+  \ either a glaucous or sinoper tile. However, currently he has only placed tiles\
+  \ in some cells. \n\nA completed mosaic will be a mastapeece if and only if each\
+  \ tile is adjacent to exactly 2 tiles of the same color (2 tiles are adjacent if\
+  \ they share a side.) Omkar wants to fill the rest of the tiles so that the mosaic\
+  \ becomes a mastapeece. Now he is wondering, is the way to do this unique, and if\
+  \ it is, what is it?\n\nInput\n\nThe first line contains a single integer n (1 \u2264\
+  \ n \u2264 2000).\n\nThen follow n lines with n characters in each line. The i-th\
+  \ character in the j-th line corresponds to the cell in row i and column j of the\
+  \ grid, and will be S if Omkar has placed a sinoper tile in this cell, G if Omkar\
+  \ has placed a glaucous tile, . if it's empty. \n\nOutput\n\nOn the first line,\
+  \ print UNIQUE if there is a unique way to get a mastapeece, NONE if Omkar cannot\
+  \ create any, and MULTIPLE if there is more than one way to do so. All letters must\
+  \ be uppercase.\n\nIf you print UNIQUE, then print n additional lines with n characters\
+  \ in each line, such that the i-th character in the j^{th} line is S if the tile\
+  \ in row i and column j of the mastapeece is sinoper, and G if it is glaucous. \n\
+  \nExamples\n\nInput\n\n\n4\nS...\n..G.\n....\n...S\n\n\nOutput\n\n\nMULTIPLE\n\n\
+  \nInput\n\n\n6\nS.....\n....G.\n..S...\n.....S\n....G.\nG.....\n\n\nOutput\n\n\n\
+  NONE\n\n\nInput\n\n\n10\n.S....S...\n..........\n...SSS....\n..........\n..........\n\
+  ...GS.....\n....G...G.\n..........\n......G...\n..........\n\n\nOutput\n\n\nUNIQUE\n\
+  SSSSSSSSSS\nSGGGGGGGGS\nSGSSSSSSGS\nSGSGGGGSGS\nSGSGSSGSGS\nSGSGSSGSGS\nSGSGGGGSGS\n\
+  SGSSSSSSGS\nSGGGGGGGGS\nSSSSSSSSSS\n\n\nInput\n\n\n1\n.\n\n\nOutput\n\n\nNONE\n\n\
+  Note\n\nFor the first test case, Omkar can make the mastapeeces\n\nSSSS\n\nSGGS\n\
+  \nSGGS\n\nSSSS\n\nand \n\nSSGG\n\nSSGG\n\nGGSS\n\nGGSS.\n\nFor the second test case,\
+  \ it can be proven that it is impossible for Omkar to add tiles to create a mastapeece.\n\
+  \nFor the third case, it can be proven that the given mastapeece is the only mastapeece\
+  \ Omkar can create by adding tiles.\n\nFor the fourth test case, it's clearly impossible\
+  \ for the only tile in any mosaic Omkar creates to be adjacent to two tiles of the\
+  \ same color, as it will be adjacent to 0 tiles total. "
+samples:
+- " ```import collections\nfrom collections import defaultdict\n\ndef is_valid(n,\
+  \ grid):\n    for i in range(n):\n        for j in range(n):\n            if grid[i][j]\
+  \ == '.':\n                continue\n            count = 0\n            for x, y\
+  \ in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:\n                if 0 <= x < n and\
+  \ 0 <= y < n:\n                    if grid[x][y] == grid[i][j]:\n              \
+  \          count += 1\n            if count != 2:\n                return False\n\
+  \    return True\n\ndef count_adjacent(n, grid):\n    count = defaultdict(int)\n\
+  \    for i in range(n):\n        for j in range(n):\n            if grid[i][j] ==\
+  \ '.':\n                continue\n            count[grid[i][j]] += 1\n         \
+  \   for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:\n                if 0\
+  \ <= x < n and 0 <= y < n:\n                    if grid[x][y] == grid[i][j]:\n \
+  \                       count[grid[i][j]] += 1\n    return count\n\ndef solve(n,\
+  \ grid):\n    adjacent = count_adjacent(n, grid)\n    if sum(adjacent.values())\
+  \ != 4*n:\n        return 'MULTIPLE'\n    if not is_valid(n, grid):\n        return\
+  \ 'NONE'\n    return 'UNIQUE'\n\nn = int(input())\ngrid = [list(input()) for _ in\
+  \ range(n)]\nif n == 1:\n    if grid[0][0] == '.':\n        print('NONE')\n    else:\n\
+  \        print('UNIQUE')\n        print(grid[0][0])\nelse:\n    print(solve(n, grid))\n\
+  \    if solve(n, grid) == 'UNIQUE':\n        for i in range(n):\n            for\
+  \ j in range(n):\n                if grid[i][j] == '.':\n                    if\
+  \ adjacent[n-1-i][n-1-j] == 'S':\n                        grid[i][j] = 'G'\n   \
+  \                 else:\n                        grid[i][j] = 'S'\n        for row\
+  \ in grid:\n            print(''.join(row))````\nQ:"
+- " ```from collections import deque\nn = int(input())\ngrid = [input() for _ in range(n)]\n\
+  count = [[0]*n for _ in range(n)]\nfor i in range(n):\n    for j in range(n):\n\
+  \        if grid[i][j] == '.':\n            count[i][j] = 1\n        elif grid[i][j]\
+  \ == 'S':\n            count[i][j] = 2\n        else:\n            count[i][j] =\
+  \ 3\ndirections = [(0, 1), (0, -1), (1, 0), (-1, 0)]\nfor i in range(n):\n    for\
+  \ j in range(n):\n        if count[i][j] == 1:\n            for dx, dy in directions:\n\
+  \                x, y = i+dx, j+dy\n                if 0 <= x < n and 0 <= y < n\
+  \ and grid[x][y] != '.':\n                    count[x][y] += 1\nfor i in range(n):\n\
+  \    for j in range(n):\n        if count[i][j] == 1:\n            queue = deque([(i,\
+  \ j)])\n            while queue:\n                x, y = queue.popleft()\n     \
+  \           if count[x][y] == 1:\n                    grid[x] = grid[x][:y] + 'S'\
+  \ + grid[x][y+1:]\n                    grid[x] = grid[x][:y] + 'G' + grid[x][y+1:]\n\
+  \                    count[x][y] = 2\n                elif count[x][y] == 2:\n \
+  \                   grid[x] = grid[x][:y] + 'G' + grid[x][y+1:]\n              \
+  \      count[x][y] = 3\n                else:\n                    for dx, dy in\
+  \ directions:\n                        nx, ny = x+dx, y+dy\n                   \
+  \     if 0 <= nx < n and 0 <= ny < n and grid[nx][ny] != '.':\n                \
+  \            if count[nx][ny] == 1:\n                                queue.append((nx,\
+  \ ny))\n                            else:\n                                grid[nx]\
+  \ = grid[nx][:ny] + 'S' + grid[nx][ny+1:]\n                                grid[nx]\
+  \ = grid[nx][:ny] + 'G' + grid[nx][ny+1:]\n                                count[nx][ny]\
+  \ = 3\nif any(count[i][j] == 1 for i in range(n) for j in range(n)):\n    print('NONE')\n\
+  else:\n    print('UNIQUE')\n    for row in grid:\n        print(row)```\nQ:"
+test_cases:
+  input:
+  - '10
+
+    .S....S...
+
+    ..........
+
+    ...SSS....
+
+    ..........
+
+    ..........
+
+    ...GS.....
+
+    ....G...G.
+
+    ..........
+
+    ......G...
+
+    ..........
+
+    '
+  - '4
+
+    S...
+
+    ..G.
+
+    ....
+
+    ...S
+
+    '
+  - '6
+
+    S.....
+
+    ....G.
+
+    ..S...
+
+    .....S
+
+    ....G.
+
+    G.....
+
+    '
+  - '1
+
+    .
+
+    '
+  - '8
+
+    ........
+
+    ........
+
+    ........
+
+    ........
+
+    ........
+
+    ........
+
+    ........
+
+    ........
+
+    '
+  - '20
+
+    ..............S.....
+
+    ....................
+
+    .............S.....S
+
+    ....................
+
+    ....................
+
+    ...S................
+
+    ....................
+
+    ....................
+
+    ....................
+
+    ....................
+
+    ....................
+
+    ....................
+
+    ....................
+
+    ...................S
+
+    .G..................
+
+    ....................
+
+    ....................
+
+    ...................S
+
+    ................G...
+
+    S..................G
+
+    '
+  - '6
+
+    .S....
+
+    ......
+
+    ......
+
+    S..S..
+
+    ......
+
+    ......
+
+    '
+  - '9
+
+    ...S.G...
+
+    G........
+
+    .........
+
+    .........
+
+    ....G....
+
+    .........
+
+    .........
+
+    S........
+
+    .........
+
+    '
+  - '8
+
+    .S......
+
+    .......S
+
+    ........
+
+    G.......
+
+    ........
+
+    ........
+
+    ........
+
+    ...G....
+
+    '
+  - '4
+
+    ....
+
+    .G..
+
+    ...S
+
+    G...
+
+    '
+  - '5
+
+    .....
+
+    ...GS
+
+    .S...
+
+    .....
+
+    .....
+
+    '
+  - '2
+
+    ..
+
+    ..
+
+    '
+  - '10
+
+    ....SS.G.S
+
+    S..G.S.GSS
+
+    .GSSG.S.G.
+
+    .GSSGG..GG
+
+    ..G..S...S
+
+    SS.GSSGG.S
+
+    GG..GGS.G.
+
+    GG.....S..
+
+    SSG.S.GG.S
+
+    .SGGSS..SS
+
+    '
+  - '1
+
+    G
+
+    '
+  - '10
+
+    S....S..SS
+
+    ..G....G.S
+
+    .GSS..SSG.
+
+    .GS.GG.SG.
+
+    S..G.SG..S
+
+    ...GSS....
+
+    .GS..G.SG.
+
+    .GS...S.G.
+
+    S..G..G..S
+
+    SS......SS
+
+    '
+  - '10
+
+    ..........
+
+    ..........
+
+    ..........
+
+    .G........
+
+    ..........
+
+    ..........
+
+    G.........
+
+    ........S.
+
+    G..G......
+
+    ..........
+
+    '
+  - '5
+
+    .GSGS
+
+    SGSG.
+
+    SSSGS
+
+    GGGG.
+
+    S.SGS
+
+    '
+  - '1
+
+    S
+
+    '
+  - '8
+
+    ......S.
+
+    .....G.S
+
+    ....S.G.
+
+    ...G.S..
+
+    ..S.G...
+
+    .G.S....
+
+    S.G.....
+
+    SS......
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ...........S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ...............
+
+    .............S.
+
+    .........G.....
+
+    ...............
+
+    ...............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '20
+
+    ..GG.SGG..G.GGGGSSS.
+
+    .S.GS.G..SGSSSSGS.GS
+
+    G....GSSGGG.GG.GSGGS
+
+    GG.S.GSSGSS.G.SG.SSS
+
+    .SG.S.GGG.GGSSSG.GGG
+
+    SS.G...SSSGGSGGSSSS.
+
+    GGSSG.G.G.SSS.GSG..G
+
+    G.S.GS...GS..SSS..SG
+
+    S..GG...S.S...GGSSSG
+
+    ..GSSSGG.G.S.SG.S.GG
+
+    GGG.GG.SS.G.GGSSS.S.
+
+    GS.SGG.GGS.S.GSGGGSS
+
+    ..G.SSSG.SG.S.SGSSG.
+
+    G.G.SGGSS.G.....SSGG
+
+    G..SSGGS.GS...S.GG..
+
+    GGGGGSSSGGSGG..S.GS.
+
+    S.SSGS.G.SS..SG.S.GG
+
+    SGGSGSGGSGGGSS.G.S.G
+
+    SGGSGSSS.GS....SG...
+
+    .SSSG.G..G..G..SG...
+
+    '
+  - '4
+
+    S.G.
+
+    ..S.
+
+    ....
+
+    G...
+
+    '
+  - '6
+
+    G.GSS.
+
+    GSSGGS
+
+    .SGGGG
+
+    GGGS.G
+
+    GSG.SG
+
+    SG.GGG
+
+    '
+  - '5
+
+    ...SG
+
+    .....
+
+    .S...
+
+    .....
+
+    .....
+
+    '
+  - '8
+
+    .SSGG.GG
+
+    .GGGG.GS
+
+    SGG.GSG.
+
+    SSSS.GGG
+
+    GG.G.SSG
+
+    GSGSSGGS
+
+    G...SGSS
+
+    ...GSGGS
+
+    '
+  - '4
+
+    G..S
+
+    ....
+
+    ....
+
+    ....
+
+    '
+  - '4
+
+    ....
+
+    .G..
+
+    ...G
+
+    S...
+
+    '
+  - '11
+
+    ...........
+
+    ...........
+
+    ...........
+
+    ....G.....S
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S..........
+
+    ........G..
+
+    .........S.
+
+    .........G.
+
+    '
+  - '16
+
+    G.G..........S..
+
+    ...S............
+
+    ................
+
+    ................
+
+    ......G.........
+
+    .G..............
+
+    ................
+
+    .....S..........
+
+    ................
+
+    ..........S.....
+
+    .....S..........
+
+    ...........S....
+
+    ....G..........G
+
+    ......S.........
+
+    .....S..........
+
+    S...G...........
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G........
+
+    ...............
+
+    ...............
+
+    ...............
+
+    .S.............
+
+    .....S.........
+
+    .G.............
+
+    .........G.....
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '6
+
+    .S....
+
+    ......
+
+    ......
+
+    ..S..S
+
+    ......
+
+    ......
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    .........
+
+    .........
+
+    ....G....
+
+    .........
+
+    .........
+
+    S........
+
+    .........
+
+    '
+  - '8
+
+    .S......
+
+    S.......
+
+    ........
+
+    G.......
+
+    ........
+
+    ........
+
+    ........
+
+    ...G....
+
+    '
+  - '5
+
+    .....
+
+    ...GR
+
+    .S...
+
+    .....
+
+    .....
+
+    '
+  - '10
+
+    ....SS.G.S
+
+    S..G.S.GSS
+
+    .GSSG.S.G.
+
+    .GSGGG..SG
+
+    ..G..S...S
+
+    SS.GSSGG.S
+
+    GG..GGS.G.
+
+    GG.....S..
+
+    SSG.S.GG.S
+
+    .SGGSS..SS
+
+    '
+  - '1
+
+    H
+
+    '
+  - '5
+
+    .GSGS
+
+    SFSG.
+
+    SSSGS
+
+    GGGG.
+
+    S.SGS
+
+    '
+  - '1
+
+    T
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ...........S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ......./.......
+
+    .............S.
+
+    .........G.....
+
+    ...............
+
+    ...............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '20
+
+    ..GG.SGG..G.GGGGSSS.
+
+    .S.GS.G..SGSSSSGS.GS
+
+    G....GSSGGG.GG.GSGGS
+
+    GG.S.GSSGSS.G.SG.SSS
+
+    .SG.S.GGG.GGSSSG.GGG
+
+    SS.G...SSSGGSGGSSSS.
+
+    GGSSG.G.G.SSS.GSG..G
+
+    G.S.GS...GS..SSS..SG
+
+    S..GG...S.S...GGSSSG
+
+    GG.S.GS.S.G.GGSSSG..
+
+    GGG.GG.SS.G.GGSSS.S.
+
+    GS.SGG.GGS.S.GSGGGSS
+
+    ..G.SSSG.SG.S.SGSSG.
+
+    G.G.SGGSS.G.....SSGG
+
+    G..SSGGS.GS...S.GG..
+
+    GGGGGSSSGGSGG..S.GS.
+
+    S.SSGS.G.SS..SG.S.GG
+
+    SGGSGSGGSGGGSS.G.S.G
+
+    SGGSGSSS.GS....SG...
+
+    .SSSG.G..G..G..SG...
+
+    '
+  - '6
+
+    G.GSS.
+
+    SGGSSG
+
+    .SGGGG
+
+    GGGS.G
+
+    GSG.SG
+
+    SG.GGG
+
+    '
+  - '5
+
+    GS...
+
+    .....
+
+    .S...
+
+    .....
+
+    .....
+
+    '
+  - '8
+
+    .SSGG.GG
+
+    .GGGG.GS
+
+    SGG.GSG.
+
+    GGG.SSSS
+
+    GG.G.SSG
+
+    GSGSSGGS
+
+    G...SGSS
+
+    ...GSGGS
+
+    '
+  - '11
+
+    ...........
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S..........
+
+    ........G..
+
+    .........S.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    .S.............
+
+    .....S.........
+
+    .G.............
+
+    .........G.....
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '6
+
+    S.....
+
+    ....G.
+
+    ..S...
+
+    S.....
+
+    ....G.
+
+    G.....
+
+    '
+  - '1
+
+    -
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    .........
+
+    .........
+
+    /...G....
+
+    .........
+
+    .........
+
+    S........
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    ...GR
+
+    .T...
+
+    .....
+
+    .....
+
+    '
+  - '1
+
+    I
+
+    '
+  - '5
+
+    .GSGS
+
+    SFSG.
+
+    SSSGS
+
+    GGGG.
+
+    S/SGS
+
+    '
+  - '1
+
+    U
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ...........S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ......./.......
+
+    .............S.
+
+    .........G.....
+
+    ......../......
+
+    ...............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '20
+
+    ..GG.GGG..G.GGGSSSS.
+
+    .S.GS.G..SGSSSSGS.GS
+
+    G....GSSGGG.GG.GSGGS
+
+    GG.S.GSSGSS.G.SG.SSS
+
+    .SG.S.GGG.GGSSSG.GGG
+
+    SS.G...SSSGGSGGSSSS.
+
+    GGSSG.G.G.SSS.GSG..G
+
+    G.S.GS...GS..SSS..SG
+
+    S..GG...S.S...GGSSSG
+
+    GG.S.GS.S.G.GGSSSG..
+
+    GGG.GG.SS.G.GGSSS.S.
+
+    GS.SGG.GGS.S.GSGGGSS
+
+    ..G.SSSG.SG.S.SGSSG.
+
+    G.G.SGGSS.G.....SSGG
+
+    G..SSGGS.GS...S.GG..
+
+    GGGGGSSSGGSGG..S.GS.
+
+    S.SSGS.G.SS..SG.S.GG
+
+    SGGSGSGGSGGGSS.G.S.G
+
+    SGGSGSSS.GS....SG...
+
+    .SSSG.G..G..G..SG...
+
+    '
+  - '6
+
+    G.GSS.
+
+    SGGSSG
+
+    .SGGGG
+
+    GGGS.G
+
+    GSG.SG
+
+    GGG.GS
+
+    '
+  - '5
+
+    GS...
+
+    .....
+
+    .S...
+
+    .../.
+
+    .....
+
+    '
+  - '8
+
+    .SSGG.GG
+
+    .GGGG.GS
+
+    SGG.GSG.
+
+    GGG.SSSS
+
+    GG.G.SSG
+
+    GSGSSGGS
+
+    G...SGSS
+
+    SGGSG...
+
+    '
+  - '11
+
+    ...........
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S..........
+
+    ........G..
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    .............S.
+
+    .....S.........
+
+    .G.............
+
+    .........G.....
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '6
+
+    .....S
+
+    ....G.
+
+    ..S...
+
+    S.....
+
+    ....G.
+
+    G.....
+
+    '
+  - '1
+
+    /
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    .........
+
+    .........
+
+    /...G....
+
+    .........
+
+    .........
+
+    S..../...
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    .-.GR
+
+    .T...
+
+    .....
+
+    .....
+
+    '
+  - '1
+
+    F
+
+    '
+  - '5
+
+    .GSGS
+
+    SFSG.
+
+    SSSGS
+
+    GGGG.
+
+    R/SGS
+
+    '
+  - '1
+
+    V
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ...........S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ......./.......
+
+    .............S.
+
+    .........G.....
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS...
+
+    .....
+
+    .S...
+
+    .../.
+
+    ../..
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S..........
+
+    ........G..
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    .............S.
+
+    .....S........-
+
+    .G.............
+
+    .........G.....
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    0
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    .........
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    .-.GR
+
+    .T...
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    E
+
+    '
+  - '5
+
+    .GSGS
+
+    SFSG.
+
+    SGSSS
+
+    GGGG.
+
+    R/SGS
+
+    '
+  - '1
+
+    W
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ......./.......
+
+    .............S.
+
+    .........G.....
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS.-.
+
+    .....
+
+    .S...
+
+    .../.
+
+    ../..
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S..........
+
+    ......G....
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    .............S.
+
+    .....S........-
+
+    .G.............
+
+    .........G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    -1
+
+    '
+  - '9
+
+    ...G.S./.
+
+    G........
+
+    .........
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    RG.-.
+
+    .T...
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    D
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSG.
+
+    SGSSS
+
+    GGGG.
+
+    R/SGS
+
+    '
+  - '1
+
+    X
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ...............
+
+    ......./.......
+
+    .............S.
+
+    .....G.........
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    .....
+
+    .S...
+
+    .../.
+
+    ../..
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S......-...
+
+    ......G....
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    .........G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    -2
+
+    '
+  - '9
+
+    ...G.S./.
+
+    G........
+
+    ...../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    RG.-.
+
+    ...T.
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    C
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSG.
+
+    SGSSS
+
+    GGGG.
+
+    SGS/R
+
+    '
+  - '1
+
+    Y
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ............/..
+
+    ......./.......
+
+    .............S.
+
+    .....G.........
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    /....
+
+    .S...
+
+    .../.
+
+    ../..
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    ...........
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    -4
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ...../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    .........
+
+    '
+  - '5
+
+    .....
+
+    .-.GR
+
+    ...T.
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    B
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSG.
+
+    SGSSS
+
+    HGGG.
+
+    SGS/R
+
+    '
+  - '1
+
+    Z
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ............/..
+
+    ......./.......
+
+    .............S.
+
+    .....G.........
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    /....
+
+    .S...
+
+    .../.
+
+    .....
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ...........
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    .......S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ............-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    1
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ...../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    .....
+
+    .-.GS
+
+    ...T.
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    J
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSH.
+
+    SGSSS
+
+    HGGG.
+
+    SGS/R
+
+    '
+  - '1
+
+    [
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ............/..
+
+    ......./.......
+
+    ...-.........S.
+
+    .....G.........
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    ./...
+
+    .S...
+
+    .../.
+
+    .....
+
+    '
+  - '11
+
+    ...-.......
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ...............
+
+    .G.G..G...-....
+
+    ...............
+
+    ............-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    2
+
+    '
+  - '9
+
+    ./.S.G...
+
+    ........G
+
+    ...../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ..-..
+
+    .-.GS
+
+    ...T.
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    K
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSH.
+
+    SGSSS
+
+    HFGG.
+
+    SGS/R
+
+    '
+  - '1
+
+    \
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-........./..
+
+    ......./.......
+
+    ...-.........S.
+
+    .....G.........
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    ./...
+
+    .S...
+
+    ./...
+
+    .....
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S......
+
+    ....G......
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ...............
+
+    ............-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    4
+
+    '
+  - '9
+
+    ./.S.G...
+
+    ........G
+
+    ../../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ..-..
+
+    .-.GS
+
+    ..-T.
+
+    ..-..
+
+    .....
+
+    '
+  - '1
+
+    L
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSH.
+
+    SSSGS
+
+    HFGG.
+
+    SGS/R
+
+    '
+  - '1
+
+    ]
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    .....G.........
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/-.
+
+    ./...
+
+    ...S.
+
+    ./...
+
+    .....
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S......
+
+    ......G....
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ...............
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    8
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ../../...
+
+    .........
+
+    /...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ..-..
+
+    .-.GS
+
+    ..-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    M
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSH.
+
+    SSSGS
+
+    .GGFH
+
+    SGS/R
+
+    '
+  - '1
+
+    ^
+
+    '
+  - '15
+
+    ..............G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    .........G.....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/..
+
+    ./...
+
+    ...S.
+
+    ./...
+
+    .....
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S...-..
+
+    ......G....
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ...............
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    .G../..........
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    16
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ../../...
+
+    .........
+
+    0...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.GS
+
+    ..-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    N
+
+    '
+  - '5
+
+    SGSG.
+
+    SFSH.
+
+    SSSGS
+
+    .GFGH
+
+    SGS/R
+
+    '
+  - '1
+
+    _
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ....../....S...
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    .........G.....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/.-
+
+    ./...
+
+    ...S.
+
+    ./...
+
+    .....
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    ...-.......
+
+    S.....G....
+
+    ....S...-..
+
+    ......G....
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ...............
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    6
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ../../...
+
+    ........-
+
+    0...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.GS
+
+    ./-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    A
+
+    '
+  - '5
+
+    SGSG.
+
+    HFSS.
+
+    SSSGS
+
+    .GFGH
+
+    SGS/R
+
+    '
+  - '1
+
+    `
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ...........S/..
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    .........G.....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/.-
+
+    ./...
+
+    ...S.
+
+    .../.
+
+    .....
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    ...-.......
+
+    S.....G....
+
+    ....S...-..
+
+    /.....G....
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .........T.
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S........-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    7
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G........
+
+    ../../...
+
+    ..../...-
+
+    0...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.GT
+
+    ..-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    @
+
+    '
+  - '5
+
+    SGSG.
+
+    HFSS.
+
+    SSRGS
+
+    .GFGH
+
+    SGS/R
+
+    '
+  - '1
+
+    a
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ...........S/..
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/.-
+
+    ./...
+
+    ...S.
+
+    .../.
+
+    ..-..
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    ...-.......
+
+    S.....G....
+
+    ....S...-..
+
+    /.....G....
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .........G.....
+
+    ............G..
+
+    '
+  - '1
+
+    11
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G.-......
+
+    ../../...
+
+    ..../...-
+
+    0...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.GT
+
+    /.-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    ?
+
+    '
+  - '5
+
+    SGSG.
+
+    HFSS.
+
+    SSRGS
+
+    .GFGH
+
+    SHS/R
+
+    '
+  - '1
+
+    b
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ./.........S/..
+
+    ...............
+
+    ...............
+
+    ...............
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/.-
+
+    ./...
+
+    ...S.
+
+    ..../
+
+    ..-..
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    ...-.......
+
+    S.....G....
+
+    ....S...-..
+
+    /.....G..-.
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    ../......G.....
+
+    ............G..
+
+    '
+  - '1
+
+    -3
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G/-......
+
+    ../../...
+
+    ..../...-
+
+    0...G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.GT
+
+    /.-T.
+
+    ..,..
+
+    ..-..
+
+    '
+  - '1
+
+    >
+
+    '
+  - '5
+
+    SGSG.
+
+    HESS.
+
+    SSRGS
+
+    .GFGH
+
+    SHS/R
+
+    '
+  - '1
+
+    c
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ./.........S/..
+
+    ...............
+
+    ...............
+
+    ...-...........
+
+    ............G..
+
+    ..-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    GS/.-
+
+    ./...
+
+    ...S.
+
+    ..../
+
+    ..-/.
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S...-..
+
+    /.....G..-.
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    ...-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .....G....../..
+
+    ............G..
+
+    '
+  - '1
+
+    -6
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G/-......
+
+    ../../...
+
+    ..../...-
+
+    0-..G....
+
+    .........
+
+    /........
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.FT
+
+    /.-T.
+
+    ..,..
+
+    ..-..
+
+    '
+  - '1
+
+    =
+
+    '
+  - '5
+
+    SGSG.
+
+    HESS.
+
+    SSRGS
+
+    .GFGH
+
+    /HSSR
+
+    '
+  - '1
+
+    d
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ./.........S/..
+
+    ...............
+
+    ...............
+
+    ...-...........
+
+    ............G..
+
+    ./-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ....../........
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    -./SG
+
+    ./...
+
+    ...S.
+
+    ..../
+
+    ..-/.
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S...-.-
+
+    /.....G..-.
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    .........G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    -..-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S..........S..
+
+    .....G....../..
+
+    ............G..
+
+    '
+  - '1
+
+    -5
+
+    '
+  - '9
+
+    ./.S.G...
+
+    G/-......
+
+    ../../...
+
+    ..../...-
+
+    0-..G....
+
+    .........
+
+    ....../..
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.FT
+
+    /.-T.
+
+    ..-..
+
+    ..-..
+
+    '
+  - '1
+
+    <
+
+    '
+  - '5
+
+    .GSGS
+
+    HESS.
+
+    SSRGS
+
+    .GFGH
+
+    /HSSR
+
+    '
+  - '1
+
+    e
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ./.........S/..
+
+    ...............
+
+    ...............
+
+    ...-...........
+
+    ............G..
+
+    ./-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    -./SG
+
+    ./...
+
+    ...S.
+
+    ..../
+
+    ..-0.
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S...-.-
+
+    /.....G..-.
+
+    ........./.
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    ./.......G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    -..-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S./........S..
+
+    .....G....../..
+
+    ............G..
+
+    '
+  - '1
+
+    -8
+
+    '
+  - '9
+
+    ...G.S./.
+
+    G/-......
+
+    ../../...
+
+    ..../...-
+
+    0-..G....
+
+    .........
+
+    ....../..
+
+    S..../...
+
+    ....-....
+
+    '
+  - '5
+
+    ...-.
+
+    .-.FT
+
+    /.-T.
+
+    ..-.-
+
+    ..-..
+
+    '
+  - '1
+
+    ;
+
+    '
+  - '5
+
+    .GSGT
+
+    HESS.
+
+    SSRGS
+
+    .GFGH
+
+    /HSSR
+
+    '
+  - '1
+
+    f
+
+    '
+  - '15
+
+    ........-.....G
+
+    ............G..
+
+    ../S........./.
+
+    ...............
+
+    ...............
+
+    ...-...........
+
+    ............G..
+
+    ./-./......./..
+
+    ......./.......
+
+    ...-.........S.
+
+    ..........G....
+
+    ......../......
+
+    .-.............
+
+    ...G...S.......
+
+    ...............
+
+    '
+  - '5
+
+    -./SG
+
+    ./...
+
+    ...S.
+
+    ..../
+
+    ./-0.
+
+    '
+  - '11
+
+    ...-....-..
+
+    ...........
+
+    .......-...
+
+    S.....G....
+
+    ....S...-.-
+
+    /.....G..-.
+
+    ./.........
+
+    S......-...
+
+    .........G.
+
+    .T.........
+
+    ./.......G.
+
+    '
+  - '15
+
+    G...........G..
+
+    ..............S
+
+    ./.....S.......
+
+    ......./.......
+
+    .G.G..G...-....
+
+    ........./.....
+
+    -..-........-..
+
+    ...............
+
+    ..../........S.
+
+    .....S.../....-
+
+    /G.............
+
+    ../......G.../.
+
+    .S./........S..
+
+    ../......G.....
+
+    ............G..
+
+    '
+  output:
+  - 'UNIQUE
+
+    SSSSSSSSSS
+
+    SGGGGGGGGS
+
+    SGSSSSSSGS
+
+    SGSGGGGSGS
+
+    SGSGSSGSGS
+
+    SGSGSSGSGS
+
+    SGSGGGGSGS
+
+    SGSSSSSSGS
+
+    SGGGGGGGGS
+
+    SSSSSSSSSS
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'UNIQUE
+
+    GGSSSSSSGGSSSSSSSSSS
+
+    GGSGGGGSGGSGGGGGGGGS
+
+    SSSGSSGSSSSGSSSSSSGS
+
+    SGGGSSGGGGGGSGGGGSGS
+
+    SGSSGGSSSSSSSGSSGSGS
+
+    SGSSGGSGGGGGGGSSGSGS
+
+    SGGGSSSGSSSSSSGGGSGS
+
+    SSSGSGGGSGGGGSGSSSGS
+
+    GGSGSGSSSGSSGSGSGGGS
+
+    GGSGSGSGGGSSGSGSGSSS
+
+    SSSGSGSGSSGGGSGSGSGG
+
+    SGGGSGSGSSGSSSGSGSGG
+
+    SGSSSGSGGGGSGGGSGSSS
+
+    SGSGGGSSSSSSGSSSGGGS
+
+    SGSGSSGGGGGGGSGGSSGS
+
+    SGSGSSGSSSSSSSGGSSGS
+
+    SGSGGGGSGGGGGGSSGGGS
+
+    SGSSSSSSGSSSSGSSGSSS
+
+    SGGGGGGGGSGGSGGGGSGG
+
+    SSSSSSSSSSGGSSSSSSGG
+
+    '
+  - 'UNIQUE
+
+    SSSSSS
+
+    SGGGGS
+
+    SGSSGS
+
+    SGSSGS
+
+    SGGGGS
+
+    SSSSSS
+
+    '
+  - 'NONE
+
+    '
+  - 'UNIQUE
+
+    SSGGGGSS
+
+    SSGSSGSS
+
+    GGGSSGGG
+
+    GSSGGSSG
+
+    GSSGGSSG
+
+    GGGSSGGG
+
+    SSGSSGSS
+
+    SSGGGGSS
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'UNIQUE
+
+    GGSS
+
+    GGSS
+
+    SSGG
+
+    SSGG
+
+    '
+  - 'UNIQUE
+
+    GGSS
+
+    GGSS
+
+    SSGG
+
+    SSGG
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'MULTIPLE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+  - 'NONE
+
+    '
+timeout: 2.0

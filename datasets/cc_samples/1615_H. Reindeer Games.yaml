@@ -1,0 +1,7314 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nproblem\n\n\
+  There are n islands in JOI, and each island is numbered from 1 to n. Currently,\
+  \ the JOI country is developing a route network connecting each island.\n\nYou work\
+  \ at a ticket center that handles ship tickets. There are many people in JOI who\
+  \ want to travel between islands by boat, as cheaply as possible, and they fill\
+  \ out the order form with their origin and destination, and they are at your place.\
+  \ Will be sent to.\n\nYour job is to transfer several vessels as soon as you receive\
+  \ the order form from the customer, calculate the cheapest fare on the route connecting\
+  \ the departure point and the destination, and tell the customer. However, depending\
+  \ on the itinerary, it may not be possible to travel by ship. At that time, it is\
+  \ necessary to tell the customer that \"I cannot travel by ship\". Also, in JOI,\
+  \ new vessels connecting the islands are starting to operate one after another,\
+  \ and you will be informed of this information from time to time. When replying\
+  \ to customers, you must keep in mind the latest information.\n\nCreate a program\
+  \ that asks for a reply to the customer when the customer's order form or operation\
+  \ information of the newly started vessel is given as input.\n\nThe execution status\
+  \ of Input Example 1 and Output Example 1 is shown in Fig. 1.\n\n\n\ninput\n\nThe\
+  \ input consists of multiple datasets. Each dataset is given in the following format.\n\
+  \nTwo integers n, k (1 \u2264 n \u2264 100, 1 \u2264 k \u2264 5000) are written\
+  \ on the first line of the input. This means that the number of islands is n and\
+  \ the input consists of k + 1 lines. On the first line of i + (1 \u2264 i \u2264\
+  \ k), three or four integers are written separated by blanks.\n\n* When the first\
+  \ number is 0, this line represents the customer's order form.\nThree integers 0,\
+  \ a, b (1 \u2264 a \u2264 n, 1 \u2264 b \u2264 n, a \u2260 b) are written on this\
+  \ line, separated by blanks. This means that the customer has sent an order form\
+  \ with island a as the starting point and island b as the destination.\n* When the\
+  \ first number is 1, this line represents the operation information of the newly\
+  \ started vessel.\nThis line contains four integers 1, c, d, e (1 \u2264 c \u2264\
+  \ n, 1 \u2264 d \u2264 n, c \u2260 d, 1 \u2264 e \u2264 1000000).\nThis means that\
+  \ a vessel that goes back and forth between island c and island d has newly started\
+  \ operation, and the fare from island c to island d and the fare from island d to\
+  \ island c are both e.\nThe order form after this line must be answered in consideration\
+  \ of this vessel.\n\n\n\nAt the first stage, it is assumed that no vessel is in\
+  \ operation. Of the inputs, the number of lines representing ship operation information\
+  \ is 1000 or less. Also note that multiple vessels may operate between islands.\n\
+  \nWhen both n and k are 0, it indicates the end of input. The number of data sets\
+  \ does not exceed 5.\n\noutput\n\nOutput in the following format for each data set.\n\
+  \nLet m be the number of lines representing the order form in the input. The output\
+  \ of each dataset consists of m lines, and on the i-th line (1 \u2264 i \u2264 m),\
+  \ an integer representing the reply to the i-th order form is written. That is,\
+  \ if it is possible to travel between the departure point and the destination of\
+  \ the i-th order form by connecting several vessels, write the minimum value of\
+  \ the total fare. If it is impossible to travel, output -1.\n\nExamples\n\nInput\n\
+  \n3 8\n1 3 1 10\n0 2 3\n1 2 3 20\n1 1 2 5\n0 3 2\n1 1 3 7\n1 2 1 9\n0 2 3\n5 16\n\
+  1 1 2 343750\n1 1 3 3343\n1 1 4 347392\n1 1 5 5497\n1 2 3 123394\n1 2 4 545492\n\
+  1 2 5 458\n1 3 4 343983\n1 3 5 843468\n1 4 5 15934\n0 2 1\n0 4 1\n0 3 2\n0 4 2\n\
+  0 4 3\n0 5 3\n0 0\n\n\nOutput\n\n-1\n15\n12\n5955\n21431\n9298\n16392\n24774\n8840\n\
+  \n\nInput\n\nNone\n\n\nOutput\n\nNone\nA: ```# AOJ 0526: Boat Travel\n# Python3\
+  \ 2018.7.1 bal4u\n\nINF = 0x7fffffff\nwhile True:\n\tn, k = map(int, input().split())\n\
+  \tif n == 0: break\n\tfee = [[INF for j in range(101)] for i in range(101)]\n\t\
+  for i in range(n+1): fee[i][i] = 0\n\tfor i in range(k):\n\t\tv = list(map(int,\
+  \ input().split()))\n\t\ta, b = v[1], v[2]\n\t\tif v[0] == 1:\n\t\t\te = v[3]\n\t\
+  \t\tif fee[a][b] > e:\n\t\t\t\tfee[a][b], fee[b][a] = e, e\n\t\t\t\tfor c in range(1,\
+  \ n+1):\n\t\t\t\t\tfor d in range(c+1, n+1):\n\t\t\t\t\t\tt = fee[c][a] + e + fee[b][d]\n\
+  \t\t\t\t\t\tif t < fee[c][d]: fee[c][d], fee[d][c] = t, t\n\t\t\t\t\t\tt = fee[c][b]\
+  \ + e + fee[a][d]\n\t\t\t\t\t\tif t < fee[c][d]: fee[c][d], fee[d][c] = t, t;\n\t\
+  \telse:\n\t\t\te = fee[a][b]\n\t\t\tif e >= INF: e = -1\n\t\t\tprint(e)```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nFor a given weighted graph\
+  \ $G = (V, E)$, find the shortest path from a source to each vertex. For each vertex\
+  \ $u$, print the total weight of edges on the shortest path from vertex $0$ to $u$.\n\
+  \nConstraints\n\n* $1 \\leq n \\leq 10,000$\n* $0 \\leq c_i \\leq 100,000$\n* $|E|\
+  \ < 500,000$\n* All vertices are reachable from vertex $0$\n\nInput\n\nIn the first\
+  \ line, an integer $n$ denoting the number of vertices in $G$ is given. In the following\
+  \ $n$ lines, adjacency lists for each vertex $u$ are respectively given in the following\
+  \ format:\n\n$u$ $k$ $v_1$ $c_1$ $v_2$ $c_2$ ... $v_k$ $c_k$\n\nVertices in $G$\
+  \ are named with IDs $0, 1, ..., n-1$. $u$ is ID of the target vertex and $k$ denotes\
+  \ its degree. $v_i (i = 1, 2, ... k)$ denote IDs of vertices adjacent to $u$ and\
+  \ $c_i$ denotes the weight of a directed edge connecting $u$ and $v_i$ (from $u$\
+  \ to $v_i$).\n\nOutput\n\nFor each vertex, print its ID and the distance separated\
+  \ by a space character in a line respectively. Print in order of vertex IDs.\n\n\
+  Example\n\nInput\n\n5\n0 3 2 3 3 1 1 2\n1 2 0 2 3 4\n2 3 0 3 3 1 4 1\n3 4 2 1 0\
+  \ 1 1 4 4 3\n4 2 2 1 3 3\n\n\nOutput\n\n0 0\n1 2\n2 2\n3 1\n4 3\nA: ```import heapq\n\
+  \nn = int(input())\nC = [[] for _ in range(n)]\nfor _ in range(n):\n    tmp = list(map(int,input().split()))\n\
+  \    for i in range(1,tmp[1]+1):\n        C[tmp[0]].append(tuple(tmp[2*i:2*i+2]))\n\
+  \nq = []\n\ndef heap_dijkstra(start = 0):\n    visited = [False]*n\n    INF = 10000000000\n\
+  \    d = [INF]*n\n\n    d[start] = 0\n    visited[start] = True\n    add_node =\
+  \ start\n\n    for i in range(n-1):\n        for adj_weight in C[add_node]:\n  \
+  \          if visited[adj_weight[0]] == False:\n                heapq.heappush(q,(d[add_node]+adj_weight[1],adj_weight[0]))\n\
+  \n        while 1:\n            tmp = heapq.heappop(q)\n            if visited[tmp[1]]\
+  \ == False:\n                min_weight = tmp[0]\n                min_node = tmp[1]\n\
+  \                break\n        \n        add_node = min_node\n        visited[min_node]\
+  \ = True\n        d[min_node] = min_weight\n    \n    return d\n\nD = heap_dijkstra()\n\
+  \nfor i in range(n):\n    print(\"{} {}\".format(i,D[i]))```\nQ: Write python code\
+  \ to solve the following coding problem that obeys the constraints and passes the\
+  \ example test cases. The output code needs to read from and write to standard IO.\
+  \ Please wrap your code answer using ```:\nThere are n reindeer at the North Pole,\
+  \ all battling for the highest spot on the \"Top Reindeer\" leaderboard on the front\
+  \ page of CodeNorses (a popular competitive reindeer gaming website). Interestingly,\
+  \ the \"Top Reindeer\" title is just a measure of upvotes and has nothing to do\
+  \ with their skill level in the reindeer games, but they still give it the utmost\
+  \ importance.\n\nCurrently, the i-th reindeer has a score of a_i. You would like\
+  \ to influence the leaderboard with some operations. In an operation, you can choose\
+  \ a reindeer, and either increase or decrease his score by 1 unit. Negative scores\
+  \ are allowed.\n\nYou have m requirements for the resulting scores. Each requirement\
+  \ is given by an ordered pair (u, v), meaning that after all operations, the score\
+  \ of reindeer u must be less than or equal to the score of reindeer v.\n\nYour task\
+  \ is to perform the minimum number of operations so that all requirements will be\
+  \ satisfied.\n\nInput\n\nThe first line contains two integers n and m (2\u2264 n\u2264\
+  \ 1000; 1\u2264 m\u2264 1000) \u2014 the number of reindeer and requirements, respectively.\n\
+  \nThe second line contains n integers a_1,\u2026, a_n (1\u2264 a_i\u2264 10^9),\
+  \ where a_i is the current score of reindeer i.\n\nThe next m lines describe the\
+  \ requirements.\n\nThe i-th of these lines contains two integers u_i and v_i (1\u2264\
+  \ u_i, v_i\u2264 n; u_i\u2260 v_i) \u2014 the two reindeer of the i-th requirement.\n\
+  \nOutput\n\nPrint n integers b_1,\u2026, b_n (-10^{15}\u2264 b_i\u2264 10^{15}),\
+  \ where b_i is the score of the i-th reindeer after all operations.\n\nIf there\
+  \ are multiple solutions achieving the minimum number of operations, you may output\
+  \ any.\n\nWe can prove that there is always an optimal solution such that |b_i|\u2264\
+  \ 10^{15} for all i.\n\nExamples\n\nInput\n\n\n7 6\n3 1 4 9 2 5 6\n1 2\n2 3\n3 4\n\
+  4 5\n5 6\n6 7\n\n\nOutput\n\n\n1 1 4 4 4 5 6 \n\n\nInput\n\n\n4 6\n6 5 8 2\n3 1\n\
+  4 1\n3 2\n1 2\n2 3\n3 1\n\n\nOutput\n\n\n6 6 6 2 \n\n\nInput\n\n\n10 18\n214 204\
+  \ 195 182 180 176 176 172 169 167\n1 2\n3 2\n4 2\n5 2\n6 2\n7 2\n8 2\n9 2\n10 2\n\
+  6 1\n6 2\n6 3\n6 4\n6 5\n6 7\n6 8\n6 9\n6 10\n\n\nOutput\n\n\n204 204 195 182 180\
+  \ 167 176 172 169 167 \nA:"
+question: "There are n reindeer at the North Pole, all battling for the highest spot\
+  \ on the \"Top Reindeer\" leaderboard on the front page of CodeNorses (a popular\
+  \ competitive reindeer gaming website). Interestingly, the \"Top Reindeer\" title\
+  \ is just a measure of upvotes and has nothing to do with their skill level in the\
+  \ reindeer games, but they still give it the utmost importance.\n\nCurrently, the\
+  \ i-th reindeer has a score of a_i. You would like to influence the leaderboard\
+  \ with some operations. In an operation, you can choose a reindeer, and either increase\
+  \ or decrease his score by 1 unit. Negative scores are allowed.\n\nYou have m requirements\
+  \ for the resulting scores. Each requirement is given by an ordered pair (u, v),\
+  \ meaning that after all operations, the score of reindeer u must be less than or\
+  \ equal to the score of reindeer v.\n\nYour task is to perform the minimum number\
+  \ of operations so that all requirements will be satisfied.\n\nInput\n\nThe first\
+  \ line contains two integers n and m (2\u2264 n\u2264 1000; 1\u2264 m\u2264 1000)\
+  \ \u2014 the number of reindeer and requirements, respectively.\n\nThe second line\
+  \ contains n integers a_1,\u2026, a_n (1\u2264 a_i\u2264 10^9), where a_i is the\
+  \ current score of reindeer i.\n\nThe next m lines describe the requirements.\n\n\
+  The i-th of these lines contains two integers u_i and v_i (1\u2264 u_i, v_i\u2264\
+  \ n; u_i\u2260 v_i) \u2014 the two reindeer of the i-th requirement.\n\nOutput\n\
+  \nPrint n integers b_1,\u2026, b_n (-10^{15}\u2264 b_i\u2264 10^{15}), where b_i\
+  \ is the score of the i-th reindeer after all operations.\n\nIf there are multiple\
+  \ solutions achieving the minimum number of operations, you may output any.\n\n\
+  We can prove that there is always an optimal solution such that |b_i|\u2264 10^{15}\
+  \ for all i.\n\nExamples\n\nInput\n\n\n7 6\n3 1 4 9 2 5 6\n1 2\n2 3\n3 4\n4 5\n\
+  5 6\n6 7\n\n\nOutput\n\n\n1 1 4 4 4 5 6 \n\n\nInput\n\n\n4 6\n6 5 8 2\n3 1\n4 1\n\
+  3 2\n1 2\n2 3\n3 1\n\n\nOutput\n\n\n6 6 6 2 \n\n\nInput\n\n\n10 18\n214 204 195\
+  \ 182 180 176 176 172 169 167\n1 2\n3 2\n4 2\n5 2\n6 2\n7 2\n8 2\n9 2\n10 2\n6 1\n\
+  6 2\n6 3\n6 4\n6 5\n6 7\n6 8\n6 9\n6 10\n\n\nOutput\n\n\n204 204 195 182 180 167\
+  \ 176 172 169 167 "
+samples:
+- " ```# AOJ 0551: Reindeer Scores\n# Python3 2018.7.1 bal4u\n\nn, m = map(int, input().split())\n\
+  a = list(map(int, input().split()))\nb = [0] * n\n\nfor _ in range(m):\n    u, v\
+  \ = map(int, input().split())\n    if a[u-1] > a[v-1]:\n        b[u-1] += a[u-1]\
+  \ - a[v-1]\n        b[v-1] -= a[u-1] - a[v-1]\n    elif a[u-1] < a[v-1]:\n     \
+  \   b[u-1] -= a[u-1] - a[v-1]\n        b[v-1] += a[u-1] - a[v-1]\n    a[u-1] +=\
+  \ b[u-1]\n    a[v-1] += b[v-1]\n\nfor i in range(n):\n    print(a[i], end=' ')\n\
+  ``` Q:"
+- " ```# AOJ 0530: Top Reindeer\n# Python3 2018.7.1 bal4u\n\nINF = 10**15\nn, m =\
+  \ map(int, input().split())\na = list(map(int, input().split()))\nb = [a[i] for\
+  \ i in range(n)]\nfor _ in range(m):\n    u, v = map(int, input().split())\n   \
+  \ b[u] = min(b[u], b[v])\n    if b[u] < 0: b[u] += 1\n    if b[v] > 0: b[v] -= 1\n\
+  for i in range(n):\n    print(b[i])```\nQ:"
+test_cases:
+  input:
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 8 2
+
+    3 1
+
+    4 1
+
+    3 2
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '2 1
+
+    1 1000000000
+
+    1 2
+
+    '
+  - '2 1
+
+    1 1
+
+    1 2
+
+    '
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 1
+
+    2 1
+
+    1 2
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 8 2
+
+    3 2
+
+    4 1
+
+    3 2
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '7 6
+
+    3 2 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 5
+
+    4 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 1
+
+    4 5
+
+    5 3
+
+    6 7
+
+    '
+  - '7 6
+
+    3 2 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 7
+
+    4 5
+
+    4 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 111 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 0
+
+    3 1
+
+    1 2
+
+    '
+  - '4 6
+
+    6 5 13 2
+
+    3 2
+
+    4 1
+
+    3 4
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '3 0
+
+    3 1
+
+    1 2
+
+    '
+  - '3 0
+
+    3 1
+
+    2 2
+
+    '
+  - '10 18
+
+    192 204 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 0
+
+    3 1
+
+    2 2
+
+    '
+  - '4 0
+
+    3 1
+
+    4 2
+
+    '
+  - '7 6
+
+    3 1 7 9 2 5 6
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 200 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    1 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 0
+
+    2 1
+
+    1 2
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 134 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    5 5
+
+    5 3
+
+    6 7
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 326 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 1
+
+    3 2
+
+    1 2
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 111 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 0
+
+    5 1
+
+    1 2
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 14 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '3 0
+
+    6 1
+
+    1 2
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 176 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 4
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    1 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 0
+
+    6 1
+
+    4 2
+
+    '
+  - '10 18
+
+    192 30 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 7 9 2 1 6
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '7 6
+
+    1 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 2
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 1
+
+    6 8
+
+    6 9
+
+    6 7
+
+    '
+  - '7 6
+
+    3 1 4 12 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    5 5
+
+    5 3
+
+    6 7
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 326 172 169 60
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 324 137 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    2 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 2 4 12 2 5 6
+
+    1 2
+
+    2 3
+
+    3 7
+
+    4 5
+
+    4 6
+
+    6 7
+
+    '
+  - '1 0
+
+    5 1
+
+    1 2
+
+    '
+  - '3 0
+
+    5 1
+
+    1 2
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    339 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '1 0
+
+    2 1
+
+    0 2
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 4 12 2 4 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    5 5
+
+    5 3
+
+    6 7
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 326 146 169 60
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 324 137 176 176 172 17 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    2 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 111 172 169 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 5
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '1 0
+
+    9 1
+
+    1 2
+
+    '
+  - '10 18
+
+    339 204 195 182 96 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    176 204 195 182 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 204 195 182 180 176 176 113 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    7 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '1 0
+
+    1 1
+
+    0 2
+
+    '
+  - '10 18
+
+    214 204 195 324 54 176 176 172 17 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    2 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 4 10 2 1 6
+
+    1 2
+
+    2 3
+
+    3 3
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    176 204 195 182 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    8 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 204 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    7 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 60 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    78 204 93 182 180 260 14 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 46 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '7 6
+
+    3 1 4 10 2 1 6
+
+    1 2
+
+    2 3
+
+    3 3
+
+    1 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 262 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 2
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 4
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    78 204 93 182 180 260 18 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 46 172 169 167
+
+    2 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '10 3
+
+    214 69 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 46 172 169 167
+
+    2 2
+
+    3 2
+
+    4 2
+
+    2 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '10 18
+
+    339 204 195 182 96 33 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    176 204 226 356 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 2
+
+    8 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 60 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 1
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    10 5
+
+    6 7
+
+    6 8
+
+    7 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 262 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 1
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 6
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 46 172 78 167
+
+    2 2
+
+    3 2
+
+    4 2
+
+    2 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '10 3
+
+    214 69 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 3
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 4
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 262 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 1
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 6
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    8 10
+
+    '
+  - '10 18
+
+    78 204 93 182 180 260 18 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 3
+
+    10 2
+
+    3 1
+
+    6 4
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 4
+
+    '
+  - '10 18
+
+    339 204 195 182 96 33 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    9 2
+
+    6 3
+
+    6 4
+
+    1 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    78 118 93 182 180 260 18 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 3
+
+    10 2
+
+    3 1
+
+    6 4
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 4
+
+    '
+  - '10 18
+
+    214 262 143 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 1
+
+    4 2
+
+    10 1
+
+    6 2
+
+    6 6
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    8 10
+
+    '
+  - '10 3
+
+    214 131 195 182 180 227 176 113 169 149
+
+    1 4
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 2
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 4
+
+    1 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 195 182 180 227 176 113 169 149
+
+    1 1
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 2
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 4
+
+    1 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 195 182 180 227 176 61 169 149
+
+    1 1
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 8
+
+    1 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 195 182 180 227 176 61 88 149
+
+    1 1
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 8
+
+    1 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 195 182 180 328 176 61 88 149
+
+    1 1
+
+    3 3
+
+    4 2
+
+    1 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 195 182 180 328 176 61 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    10 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 3
+
+    214 131 239 182 180 328 176 61 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 0
+
+    214 131 239 182 180 328 176 61 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    6 2
+
+    7 3
+
+    14 2
+
+    9 3
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    6 4
+
+    16 5
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 6
+
+    '
+  - '10 1
+
+    214 131 239 182 180 328 275 61 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    6 3
+
+    4 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    12 4
+
+    16 7
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 4
+
+    '
+  - '10 1
+
+    214 131 239 198 180 328 275 61 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    6 3
+
+    4 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    12 4
+
+    16 7
+
+    6 12
+
+    2 8
+
+    2 9
+
+    6 4
+
+    '
+  - '10 1
+
+    214 131 239 198 180 328 275 118 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    1 2
+
+    2 3
+
+    4 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    12 4
+
+    16 7
+
+    10 12
+
+    2 8
+
+    2 9
+
+    6 4
+
+    '
+  - '10 1
+
+    214 131 239 198 180 328 275 38 88 149
+
+    1 1
+
+    1 3
+
+    4 2
+
+    0 2
+
+    2 3
+
+    4 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    18 1
+
+    2 3
+
+    12 4
+
+    16 7
+
+    10 12
+
+    2 8
+
+    2 9
+
+    6 4
+
+    '
+  - '10 1
+
+    214 131 239 198 180 328 275 38 88 34
+
+    1 1
+
+    3 3
+
+    6 1
+
+    0 2
+
+    2 3
+
+    7 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    31 1
+
+    0 3
+
+    12 4
+
+    16 11
+
+    10 12
+
+    2 8
+
+    2 9
+
+    2 8
+
+    '
+  - '10 1
+
+    214 131 239 198 180 328 275 38 90 34
+
+    1 1
+
+    3 3
+
+    6 1
+
+    0 2
+
+    2 3
+
+    7 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    31 1
+
+    0 3
+
+    12 4
+
+    16 11
+
+    10 12
+
+    4 8
+
+    2 9
+
+    2 8
+
+    '
+  - '10 1
+
+    214 131 239 198 180 72 275 38 90 34
+
+    1 1
+
+    3 3
+
+    6 1
+
+    0 4
+
+    2 3
+
+    7 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    31 1
+
+    0 3
+
+    12 4
+
+    16 11
+
+    10 12
+
+    4 8
+
+    2 9
+
+    2 8
+
+    '
+  - '10 1
+
+    214 131 239 198 180 72 275 38 90 34
+
+    1 2
+
+    3 3
+
+    6 1
+
+    0 4
+
+    2 3
+
+    8 3
+
+    14 2
+
+    9 6
+
+    4 1
+
+    6 0
+
+    31 1
+
+    0 3
+
+    12 4
+
+    16 11
+
+    10 12
+
+    4 8
+
+    2 9
+
+    2 8
+
+    '
+  - '10 1
+
+    214 131 239 198 180 72 128 38 90 34
+
+    1 2
+
+    0 3
+
+    6 1
+
+    0 5
+
+    0 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    6 1
+
+    1 0
+
+    31 0
+
+    0 3
+
+    4 0
+
+    16 11
+
+    6 12
+
+    4 8
+
+    4 9
+
+    2 6
+
+    '
+  - '10 1
+
+    214 131 239 198 73 72 128 38 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    0 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    9 1
+
+    1 0
+
+    31 0
+
+    0 3
+
+    4 0
+
+    13 11
+
+    6 12
+
+    4 8
+
+    4 9
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 73 72 128 38 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    0 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    9 1
+
+    1 0
+
+    57 0
+
+    0 3
+
+    4 0
+
+    13 11
+
+    6 12
+
+    4 8
+
+    4 9
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 72 128 38 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    1 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    1 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 8
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 72 128 27 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    1 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    1 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 8
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 61 128 27 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    1 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    1 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 8
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 61 195 27 90 34
+
+    1 2
+
+    0 3
+
+    11 1
+
+    0 7
+
+    1 3
+
+    8 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    0 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 8
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 61 195 15 90 34
+
+    1 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    1 3
+
+    5 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    0 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 11
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 131 239 198 130 61 195 15 90 47
+
+    1 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    1 3
+
+    5 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    0 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 11
+
+    4 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 97 239 198 130 61 195 15 90 47
+
+    2 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    1 3
+
+    2 2
+
+    14 2
+
+    11 6
+
+    13 1
+
+    0 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 11
+
+    3 5
+
+    2 12
+
+    '
+  - '10 0
+
+    214 97 457 198 130 61 195 15 90 47
+
+    2 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    1 3
+
+    2 2
+
+    18 2
+
+    11 6
+
+    13 2
+
+    0 0
+
+    57 0
+
+    0 5
+
+    4 0
+
+    9 11
+
+    8 12
+
+    1 11
+
+    3 5
+
+    2 12
+
+    '
+  - '8 0
+
+    214 97 457 198 130 61 195 15 90 47
+
+    2 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    1 3
+
+    2 3
+
+    18 2
+
+    11 6
+
+    13 2
+
+    -1 0
+
+    57 -1
+
+    0 5
+
+    4 0
+
+    16 14
+
+    8 12
+
+    1 11
+
+    6 5
+
+    2 12
+
+    '
+  - '8 0
+
+    214 97 457 198 99 61 195 15 90 47
+
+    1 2
+
+    0 3
+
+    13 1
+
+    0 6
+
+    0 3
+
+    2 3
+
+    18 1
+
+    11 6
+
+    13 2
+
+    -1 0
+
+    30 -1
+
+    0 5
+
+    4 -1
+
+    16 14
+
+    8 12
+
+    1 11
+
+    6 5
+
+    2 12
+
+    '
+  - '8 0
+
+    214 97 596 198 99 61 195 15 90 47
+
+    1 2
+
+    0 3
+
+    13 1
+
+    -1 0
+
+    0 3
+
+    2 6
+
+    34 1
+
+    11 3
+
+    13 1
+
+    -1 0
+
+    30 -1
+
+    0 5
+
+    4 -1
+
+    16 14
+
+    8 9
+
+    2 11
+
+    4 5
+
+    2 10
+
+    '
+  - '8 0
+
+    214 97 872 198 99 61 195 15 90 47
+
+    1 2
+
+    0 3
+
+    13 1
+
+    -1 0
+
+    0 3
+
+    2 6
+
+    34 1
+
+    11 3
+
+    13 1
+
+    -1 0
+
+    30 -1
+
+    0 5
+
+    4 -1
+
+    16 14
+
+    8 9
+
+    2 11
+
+    4 5
+
+    2 10
+
+    '
+  - '8 0
+
+    214 97 872 198 126 61 195 15 90 47
+
+    1 2
+
+    0 3
+
+    13 1
+
+    -1 -1
+
+    0 3
+
+    2 6
+
+    34 1
+
+    1 3
+
+    13 1
+
+    -1 0
+
+    30 -1
+
+    1 5
+
+    4 -1
+
+    16 14
+
+    2 9
+
+    3 11
+
+    4 5
+
+    2 10
+
+    '
+  - '8 0
+
+    214 97 1603 198 126 61 195 15 89 47
+
+    1 2
+
+    0 3
+
+    18 1
+
+    -1 -2
+
+    0 5
+
+    2 6
+
+    34 1
+
+    1 3
+
+    24 1
+
+    -1 0
+
+    35 -1
+
+    1 5
+
+    4 -1
+
+    12 14
+
+    2 9
+
+    1 11
+
+    4 5
+
+    2 10
+
+    '
+  - '8 0
+
+    214 97 1603 198 126 61 41 15 89 47
+
+    1 2
+
+    0 3
+
+    18 0
+
+    -1 -2
+
+    0 5
+
+    2 6
+
+    34 1
+
+    1 3
+
+    24 1
+
+    -1 0
+
+    35 -1
+
+    1 5
+
+    4 -1
+
+    12 14
+
+    2 9
+
+    1 11
+
+    4 5
+
+    1 10
+
+    '
+  - '4 0
+
+    214 97 1603 198 126 61 41 15 89 47
+
+    1 0
+
+    -1 3
+
+    18 0
+
+    -2 -2
+
+    0 5
+
+    2 5
+
+    34 2
+
+    1 3
+
+    24 2
+
+    -1 0
+
+    35 -1
+
+    2 5
+
+    2 -1
+
+    12 0
+
+    1 9
+
+    1 12
+
+    4 5
+
+    1 8
+
+    '
+  - '4 0
+
+    214 75 1603 198 126 61 41 15 89 7
+
+    1 -1
+
+    -1 3
+
+    18 0
+
+    -2 -2
+
+    0 5
+
+    2 1
+
+    34 2
+
+    1 3
+
+    24 2
+
+    -1 0
+
+    35 -2
+
+    2 5
+
+    0 -1
+
+    18 -1
+
+    2 8
+
+    1 12
+
+    8 5
+
+    1 8
+
+    '
+  - '4 0
+
+    214 142 1603 198 126 61 41 15 89 7
+
+    1 -1
+
+    -1 3
+
+    18 0
+
+    -2 -2
+
+    0 5
+
+    2 1
+
+    34 2
+
+    1 3
+
+    24 2
+
+    -1 0
+
+    35 -2
+
+    0 5
+
+    0 -1
+
+    18 -1
+
+    2 8
+
+    1 12
+
+    8 5
+
+    1 8
+
+    '
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 5
+
+    4 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 4 9 2 5 6
+
+    1 1
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 3
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    2 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 260 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 1
+
+    3 1
+
+    1 2
+
+    '
+  - '4 6
+
+    6 5 13 2
+
+    3 2
+
+    4 1
+
+    3 2
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 137 207 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 176 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 176 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 4
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 8 2
+
+    3 1
+
+    4 1
+
+    3 1
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 1
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    6 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 8 2
+
+    3 4
+
+    4 1
+
+    3 2
+
+    1 2
+
+    2 3
+
+    3 1
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    5 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    2 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    2 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 2 4 12 2 5 6
+
+    1 1
+
+    2 3
+
+    3 7
+
+    4 5
+
+    4 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 176 172 169 167
+
+    1 2
+
+    3 1
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 137 207 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 3
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 13 2
+
+    3 2
+
+    4 1
+
+    3 4
+
+    1 2
+
+    2 3
+
+    2 1
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 3
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    5 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 4
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 348 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 3
+
+    6 1
+
+    7 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    339 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    339 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    6 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '2 0
+
+    2 1
+
+    0 2
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 134 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    6 5 8 2
+
+    3 4
+
+    4 1
+
+    3 2
+
+    1 3
+
+    2 3
+
+    3 1
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    2 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 4
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 111 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 5
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    11 5 13 2
+
+    3 2
+
+    4 1
+
+    3 4
+
+    1 2
+
+    2 3
+
+    2 1
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 14 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    5 1
+
+    12 2
+
+    6 3
+
+    8 4
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '7 6
+
+    3 1 7 10 2 1 6
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    7 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    2 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 4
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    22 5 13 2
+
+    3 2
+
+    4 1
+
+    3 4
+
+    1 2
+
+    2 3
+
+    2 1
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 14 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '7 6
+
+    3 1 4 10 2 1 6
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    5 6
+
+    6 7
+
+    '
+  - '10 18
+
+    214 204 195 182 137 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    2 2
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 4
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '4 6
+
+    22 5 13 0
+
+    3 2
+
+    4 1
+
+    3 4
+
+    1 2
+
+    2 3
+
+    2 1
+
+    '
+  - '10 18
+
+    214 204 93 182 180 260 14 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '10 18
+
+    339 204 195 182 96 183 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '1 0
+
+    1 2
+
+    0 2
+
+    '
+  - '10 18
+
+    214 204 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 2
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 4
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    339 204 195 182 96 183 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 4
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    176 204 195 182 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 2
+
+    8 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 204 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 7
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 60 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 1
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    339 204 195 182 96 183 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    176 204 226 182 180 176 176 82 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 2
+
+    8 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 204 195 182 60 176 176 172 203 167
+
+    1 2
+
+    3 2
+
+    4 3
+
+    5 2
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 1
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 6
+
+    6 5
+
+    6 7
+
+    6 8
+
+    7 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 262 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 2
+
+    10 2
+
+    10 1
+
+    6 2
+
+    6 6
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    78 204 93 182 180 260 18 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 4
+
+    '
+  - '10 3
+
+    214 69 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 4
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    78 204 93 182 180 260 18 172 169 167
+
+    1 2
+
+    3 2
+
+    7 2
+
+    5 2
+
+    9 2
+
+    7 3
+
+    8 4
+
+    9 2
+
+    10 2
+
+    3 1
+
+    6 4
+
+    6 3
+
+    6 4
+
+    6 5
+
+    6 7
+
+    10 8
+
+    6 9
+
+    6 4
+
+    '
+  - '10 18
+
+    339 204 195 182 96 33 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    9 2
+
+    6 3
+
+    6 4
+
+    6 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 18
+
+    176 204 226 356 180 176 176 82 169 167
+
+    1 2
+
+    5 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    5 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    6 3
+
+    6 4
+
+    6 2
+
+    8 7
+
+    3 8
+
+    2 9
+
+    6 10
+
+    '
+  - '10 18
+
+    192 30 348 52 180 176 46 172 78 167
+
+    2 2
+
+    3 2
+
+    2 2
+
+    2 3
+
+    10 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    6 2
+
+    6 1
+
+    7 2
+
+    6 6
+
+    8 4
+
+    6 5
+
+    6 10
+
+    6 8
+
+    6 9
+
+    4 10
+
+    '
+  - '10 3
+
+    214 69 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 4
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  - '10 18
+
+    214 262 195 182 180 176 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 2
+
+    6 2
+
+    7 3
+
+    8 4
+
+    2 1
+
+    4 2
+
+    10 1
+
+    6 2
+
+    6 6
+
+    8 4
+
+    6 10
+
+    6 7
+
+    6 8
+
+    6 9
+
+    8 10
+
+    '
+  - '10 18
+
+    339 204 195 182 96 33 176 172 169 167
+
+    1 2
+
+    3 2
+
+    4 2
+
+    5 1
+
+    6 2
+
+    7 2
+
+    8 2
+
+    9 2
+
+    3 2
+
+    6 1
+
+    9 2
+
+    6 3
+
+    6 4
+
+    1 5
+
+    1 7
+
+    3 8
+
+    3 9
+
+    6 10
+
+    '
+  - '10 3
+
+    214 131 195 182 180 227 176 113 169 167
+
+    1 2
+
+    3 3
+
+    4 2
+
+    0 2
+
+    6 2
+
+    7 3
+
+    8 2
+
+    9 2
+
+    10 2
+
+    6 1
+
+    6 2
+
+    2 3
+
+    6 4
+
+    7 5
+
+    6 4
+
+    1 8
+
+    6 9
+
+    6 10
+
+    '
+  output:
+  - "1 1 4 4 4 5 6 \n"
+  - "204 204 195 182 180 167 176 172 169 167 \n"
+  - "6 6 6 2 \n"
+  - "1 1000000000 \n"
+  - "1 1 \n"
+  - '3 1 4 4 4 5 6 '
+  - '204 204 172 182 180 167 176 172 169 167 '
+  - '204 204 176 182 180 167 176 176 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '1 1 '
+  - '204 204 195 182 137 137 176 172 169 167 '
+  - '6 6 6 2 '
+  - '3 2 4 4 4 5 6 '
+  - '176 204 195 182 137 137 176 172 169 167 '
+  - '3 1 3 2 2 5 6 '
+  - '3 2 4 2 2 5 6 '
+  - '204 204 172 182 180 111 111 172 169 167 '
+  - '204 204 167 182 180 167 167 172 169 167 '
+  - '3 1 '
+  - '5 5 5 5 '
+  - '3 1 1 '
+  - '3 1 2 '
+  - '192 204 204 182 180 167 176 172 169 167 '
+  - '3 1 2 2 '
+  - '3 1 4 2 '
+  - '1 1 5 5 5 5 6 '
+  - '204 204 195 182 180 167 200 172 169 167 '
+  - '1 1 4 4 4 5 6 '
+  - '204 204 169 182 180 167 176 172 169 167 '
+  - '204 204 180 182 180 167 176 180 169 167 '
+  - '172 204 195 182 180 167 176 172 169 167 '
+  - '2 1 '
+  - '204 204 195 182 137 134 176 172 134 167 '
+  - '3 1 4 9 2 5 6 '
+  - '192 204 195 182 180 167 195 172 169 167 '
+  - '2 2 '
+  - '180 204 180 182 180 167 180 180 169 167 '
+  - '5 1 '
+  - '204 204 93 182 180 14 14 172 169 167 '
+  - '6 1 1 '
+  - '180 204 167 182 180 167 167 172 169 167 '
+  - '6 1 4 2 '
+  - '192 192 192 182 180 167 176 172 169 167 '
+  - '1 1 2 2 2 2 6 '
+  - '1 4 4 4 2 5 6 '
+  - '204 204 180 182 180 167 176 180 204 167 '
+  - '204 204 195 182 180 176 176 172 169 167 '
+  - '204 204 195 182 180 169 176 172 169 167 '
+  - '3 1 4 12 2 5 6 '
+  - '192 204 195 182 180 60 195 172 169 60 '
+  - '176 204 195 204 137 137 176 172 169 167 '
+  - '2 2 4 2 2 5 6 '
+  - '5 '
+  - '5 1 1 '
+  - '192 192 192 167 180 167 176 167 169 167 '
+  - '176 204 169 182 180 167 176 172 169 167 '
+  - '2 '
+  - '204 204 195 182 137 137 176 172 203 167 '
+  - '3 1 4 12 2 4 6 '
+  - '192 204 195 182 180 60 195 146 169 60 '
+  - '176 204 195 204 137 17 176 172 17 167 '
+  - '180 204 182 182 180 167 180 182 169 167 '
+  - '9 '
+  - '176 204 169 182 96 96 176 172 169 167 '
+  - '176 182 180 182 180 167 176 180 182 167 '
+  - '204 204 195 182 180 176 176 113 169 167 '
+  - '1 '
+  - '176 204 195 204 54 17 176 172 17 167 '
+  - '1 1 4 2 2 2 6 '
+  - '176 182 176 182 176 167 176 176 182 167 '
+  - '204 204 195 182 180 227 176 113 169 167 '
+  - '204 204 195 182 60 60 176 172 203 167 '
+  - '78 204 78 182 180 14 14 172 169 167 '
+  - '192 192 192 167 180 167 46 167 169 167 '
+  - '1 1 4 10 1 1 6 '
+  - '214 262 195 182 180 167 176 172 169 167 '
+  - '78 204 78 182 180 18 18 172 169 167 '
+  - '192 180 180 167 180 167 46 167 169 167 '
+  - '195 195 195 182 180 227 176 113 169 167 '
+  - '192 169 169 167 180 167 46 167 169 167 '
+  - '176 204 169 182 96 33 176 172 169 167 '
+  - '176 204 176 204 176 167 176 176 204 167 '
+  - '204 204 195 182 167 167 176 172 203 167 '
+  - '214 214 195 182 180 167 176 172 169 167 '
+  - '192 167 167 78 180 78 46 78 78 167 '
+  - '182 182 195 182 180 227 176 113 169 167 '
+  - '214 214 195 182 180 169 176 169 169 169 '
+  - '93 204 93 182 180 18 18 172 93 167 '
+  - '96 204 169 182 96 33 176 172 169 167 '
+  - '93 167 93 182 167 18 18 172 93 167 '
+  - '214 214 169 182 180 169 169 169 169 169 '
+  - '182 182 195 182 180 227 176 113 169 149 '
+  - '214 131 195 131 180 227 176 113 169 149 '
+  - '214 131 195 131 180 227 176 61 169 149 '
+  - '214 131 195 131 180 227 176 61 88 149 '
+  - '214 131 195 131 180 328 176 61 88 149 '
+  - '195 131 195 131 180 328 176 61 88 149 '
+  - '214 131 239 131 180 328 176 61 88 149 '
+  - '214 131 239 182 180 328 176 61 88 149 '
+  - '214 131 239 182 180 328 275 61 88 149 '
+  - '214 131 239 198 180 328 275 61 88 149 '
+  - '214 131 239 198 180 328 275 118 88 149 '
+  - '214 131 239 198 180 328 275 38 88 149 '
+  - '214 131 239 198 180 328 275 38 88 34 '
+  - '214 131 239 198 180 328 275 38 90 34 '
+  - '214 131 239 198 180 72 275 38 90 34 '
+  - '131 131 239 198 180 72 275 38 90 34 '
+  - '131 131 239 198 180 72 128 38 90 34 '
+  - '131 131 239 198 73 72 128 38 90 34 '
+  - '214 131 239 198 73 72 128 38 90 34 '
+  - '214 131 239 198 130 72 128 38 90 34 '
+  - '214 131 239 198 130 72 128 27 90 34 '
+  - '214 131 239 198 130 61 128 27 90 34 '
+  - '214 131 239 198 130 61 195 27 90 34 '
+  - '214 131 239 198 130 61 195 15 90 34 '
+  - '214 131 239 198 130 61 195 15 90 47 '
+  - '214 97 239 198 130 61 195 15 90 47 '
+  - '214 97 457 198 130 61 195 15 90 47 '
+  - '214 97 457 198 130 61 195 15 '
+  - '214 97 457 198 99 61 195 15 '
+  - '214 97 596 198 99 61 195 15 '
+  - '214 97 872 198 99 61 195 15 '
+  - '214 97 872 198 126 61 195 15 '
+  - '214 97 1603 198 126 61 195 15 '
+  - '214 97 1603 198 126 61 41 15 '
+  - '214 97 1603 198 '
+  - '214 75 1603 198 '
+  - '214 142 1603 198 '
+  - '3 1 4 4 4 5 6 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '3 1 4 4 4 5 6 '
+  - '204 204 176 182 180 167 176 176 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '1 1 '
+  - '6 6 6 2 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '176 204 195 182 137 137 176 172 169 167 '
+  - '204 204 167 182 180 167 167 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '204 204 167 182 180 167 167 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '192 204 204 182 180 167 176 172 169 167 '
+  - '192 204 204 182 180 167 176 172 169 167 '
+  - '6 6 6 2 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '5 5 5 5 '
+  - '204 204 176 182 180 167 176 176 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '176 204 195 182 137 137 176 172 169 167 '
+  - '3 2 4 2 2 5 6 '
+  - '204 204 167 182 180 167 167 172 169 167 '
+  - '176 204 195 182 137 137 176 172 169 167 '
+  - '5 5 5 5 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '192 204 204 182 180 167 176 172 169 167 '
+  - '192 204 204 182 180 167 176 172 169 167 '
+  - '204 204 169 182 180 167 176 172 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '2 1 '
+  - '204 204 195 182 137 134 176 172 134 167 '
+  - '5 5 5 5 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '180 204 180 182 180 167 180 180 169 167 '
+  - '5 5 5 5 '
+  - '204 204 93 182 180 14 14 172 169 167 '
+  - '192 204 195 182 180 167 176 172 169 167 '
+  - '1 1 2 2 2 2 6 '
+  - '204 204 180 182 180 167 176 180 204 167 '
+  - '204 204 195 182 180 176 176 172 169 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '5 5 5 5 '
+  - '204 204 93 182 180 14 14 172 169 167 '
+  - '192 192 192 167 180 167 176 167 169 167 '
+  - '1 1 2 2 2 2 6 '
+  - '204 204 195 182 137 137 176 172 203 167 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '5 5 5 5 '
+  - '204 204 93 182 180 14 14 172 169 167 '
+  - '192 192 192 167 180 167 176 167 169 167 '
+  - '176 204 169 182 96 96 176 172 169 167 '
+  - '1 '
+  - '204 204 195 182 180 167 176 172 169 167 '
+  - '176 204 169 182 96 96 176 172 169 167 '
+  - '176 182 176 182 176 167 176 176 182 167 '
+  - '204 204 195 182 180 227 176 113 169 167 '
+  - '204 204 195 182 60 60 176 172 203 167 '
+  - '176 204 169 182 96 96 176 172 169 167 '
+  - '176 182 176 182 176 167 176 176 182 167 '
+  - '204 204 195 182 60 60 176 172 203 167 '
+  - '214 262 195 182 180 167 176 172 169 167 '
+  - '78 204 78 182 180 18 18 172 169 167 '
+  - '195 195 195 182 180 227 176 113 169 167 '
+  - '78 204 78 182 180 18 18 172 169 167 '
+  - '176 204 169 182 96 33 176 172 169 167 '
+  - '176 204 176 204 176 167 176 176 204 167 '
+  - '192 167 167 78 180 78 46 78 78 167 '
+  - '182 182 195 182 180 227 176 113 169 167 '
+  - '214 214 195 182 180 169 176 169 169 169 '
+  - '96 204 169 182 96 33 176 172 169 167 '
+  - '182 182 195 182 180 227 176 113 169 167 '
+timeout: 2.0

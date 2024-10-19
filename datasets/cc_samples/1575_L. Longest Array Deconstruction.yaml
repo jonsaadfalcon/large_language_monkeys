@@ -1,0 +1,1756 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nAs you know,\
+  \ majority of students and teachers of Summer Informatics School live in Berland\
+  \ for the most part of the year. Since corruption there is quite widespread, the\
+  \ following story is not uncommon.\n\nElections are coming. You know the number\
+  \ of voters and the number of parties \u2014 n and m respectively. For each voter\
+  \ you know the party he is going to vote for. However, he can easily change his\
+  \ vote given a certain amount of money. In particular, if you give i-th voter c_i\
+  \ bytecoins you can ask him to vote for any other party you choose.\n\nThe United\
+  \ Party of Berland has decided to perform a statistical study \u2014 you need to\
+  \ calculate the minimum number of bytecoins the Party needs to spend to ensure its\
+  \ victory. In order for a party to win the elections, it needs to receive strictly\
+  \ more votes than any other party.\n\nInput\n\nThe first line of input contains\
+  \ two integers n and m (1 \u2264 n, m \u2264 3000) \u2014 the number of voters and\
+  \ the number of parties respectively.\n\nEach of the following n lines contains\
+  \ two integers p_i and c_i (1 \u2264 p_i \u2264 m, 1 \u2264 c_i \u2264 10^9) \u2014\
+  \ the index of this voter's preferred party and the number of bytecoins needed for\
+  \ him to reconsider his decision.\n\nThe United Party of Berland has the index 1.\n\
+  \nOutput\n\nPrint a single number \u2014 the minimum number of bytecoins needed\
+  \ for The United Party of Berland to win the elections.\n\nExamples\n\nInput\n\n\
+  1 2\n1 100\n\n\nOutput\n\n0\n\n\nInput\n\n5 5\n2 100\n3 200\n4 300\n5 400\n5 900\n\
+  \n\nOutput\n\n500\n\n\nInput\n\n5 5\n2 100\n3 200\n4 300\n5 800\n5 900\n\n\nOutput\n\
+  \n600\n\nNote\n\nIn the first sample, The United Party wins the elections even without\
+  \ buying extra votes.\n\nIn the second sample, The United Party can buy the votes\
+  \ of the first and the fourth voter. This way The Party gets two votes, while parties\
+  \ 3, 4 and 5 get one vote and party number 2 gets no votes.\n\nIn the third sample,\
+  \ The United Party can buy the votes of the first three voters and win, getting\
+  \ three votes against two votes of the fifth party.\nA: ```n, m = map(int, input().split())\n\
+  \npc = [(0, 0) for _ in range(n)]\n\nparty_votes = [0 for _ in range(m)]\n\nfor\
+  \ i in range(n):\n    p, c = map(int, input().split())\n    pc[i] = (p - 1, c)\n\
+  \    party_votes[p - 1] += 1\n\npc.sort(key=lambda x: x[1])\n\nmin_cost = 10**20\n\
+  \nfor votes in range(n + 1):\n    _party_votes = party_votes[:]\n    dangerous =\
+  \ list(map(lambda party: _party_votes[party] >= votes, range(0, m)))\n    used =\
+  \ list(map(lambda i: pc[i][0] == 0, range(n)))\n    cur_cost = 0\n    for i in range(n):\n\
+  \        if dangerous[pc[i][0]] and pc[i][0] != 0:\n            cur_cost += pc[i][1]\n\
+  \            _party_votes[0] += 1\n            _party_votes[pc[i][0]] -= 1\n   \
+  \         dangerous[pc[i][0]] = _party_votes[pc[i][0]] >= votes\n            used[i]\
+  \ = True\n    for i in range(n):\n        if _party_votes[0] >= votes:\n       \
+  \     break\n        if not used[i]:\n            _party_votes[0] += 1\n       \
+  \     cur_cost += pc[i][1]\n    min_cost = min(min_cost, cur_cost)\n\nprint(min_cost)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nTakahashi is a magician.\
+  \ He can cast a spell on an integer sequence (a_1,a_2,...,a_M) with M terms, to\
+  \ turn it into another sequence (s_1,s_2,...,s_M), where s_i is the sum of the first\
+  \ i terms in the original sequence.\n\nOne day, he received N integer sequences,\
+  \ each with M terms, and named those sequences A_1,A_2,...,A_N. He will try to cast\
+  \ the spell on those sequences so that A_1 < A_2 < ... < A_N will hold, where sequences\
+  \ are compared lexicographically. Let the action of casting the spell on a selected\
+  \ sequence be one cast of the spell. Find the minimum number of casts of the spell\
+  \ he needs to perform in order to achieve his objective.\n\nHere, for two sequences\
+  \ a = (a_1,a_2,...,a_M), b = (b_1,b_2,...,b_M) with M terms each, a < b holds lexicographically\
+  \ if and only if there exists i (1 \u2266 i \u2266 M) such that a_j = b_j (1 \u2266\
+  \ j < i) and a_i < b_i.\n\nConstraints\n\n* 1 \u2266 N \u2266 10^3\n* 1 \u2266 M\
+  \ \u2266 10^3\n* Let the j-th term in A_i be A_{(i,j)}, then 1 \u2266 A_{(i,j)}\
+  \ \u2266 10^9.\n\nInput\n\nThe input is given from Standard Input in the following\
+  \ format:\n\n\nN M\nA_{(1,1)} A_{(1,2)} \u2026 A_{(1,M)}\nA_{(2,1)} A_{(2,2)} \u2026\
+  \ A_{(2,M)}\n:\nA_{(N,1)} A_{(N,2)} \u2026 A_{(N,M)}\n\n\nOutput\n\nPrint the minimum\
+  \ number of casts of the spell Takahashi needs to perform. If he cannot achieve\
+  \ his objective, print `-1` instead.\n\nExamples\n\nInput\n\n3 3\n2 3 1\n2 1 2\n\
+  2 6 3\n\n\nOutput\n\n1\n\n\nInput\n\n3 3\n3 2 10\n10 5 4\n9 1 9\n\n\nOutput\n\n\
+  -1\n\n\nInput\n\n5 5\n2 6 5 6 9\n2 6 4 9 10\n2 6 8 6 7\n2 1 7 3 8\n2 1 4 8 3\n\n\
+  \nOutput\n\n11\nA: ```import sys\nreadline = sys.stdin.readline\nfrom math import\
+  \ log2\nfrom itertools import accumulate\nN, M = map(int, readline().split())\n\
+  A = [list(map(int, readline().split())) for i in range(N)]\nB = max(max(Ai) for\
+  \ Ai in A)\nif M == 1:\n    if N == 1 or all(A[i][0] < A[i+1][0] for i in range(N-1)):\n\
+  \        print(\"0\")\n    else:\n        print(\"-1\")\n    exit(0)\nlogB = log2(B)\n\
+  logBi = int(logB)\nINF = 10**18\nINFL = [INF]*(M - logBi-2)\ndef gen(P, t, L = min(logBi+2,\
+  \ M)):\n    if t <= logB:\n        for k in range(t):\n            P[:] = accumulate(P)\n\
+  \    else:\n        V = [1]*L\n        for k in range(1, L):\n            V[k] =\
+  \ V[k-1] * (t + k - 1)//k\n\n        for i in range(L-1, 0, -1):\n            P[i]\
+  \ += sum(P[j] * V[i-j] for j in range(i))\n        if logBi+2 < M:\n           \
+  \ P[logBi+2:] = INFL\nT = [0]*N\nans = 0\nP = [0]*M\nfor i in range(N-1):\n    a0,\
+  \ a1 = A[i][:2]\n    b0, b1 = A[i+1][:2]\n    if a0 < b0:\n        continue\n  \
+  \  if a0 > b0:\n        ans = -1\n        break\n    t0 = T[i]\n    v = max(t0*a0\
+  \ + a1 - b1, 0)\n    if v % b0 > 0:\n        T[i+1] = t1 = (v + b0-1) // b0\n  \
+  \      ans += t1\n        continue\n\n    t1 = v // b0\n    if t0 <= t1:\n     \
+  \   P[:] = A[i+1]\n        gen(P, t1 - t0)\n        if P <= A[i]:\n            t1\
+  \ += 1\n    else:\n        P[:] = A[i]\n        gen(P, t0 - t1)\n        if A[i+1]\
+  \ <= P:\n            t1 += 1\n    T[i+1] = t1\n    ans += t1\nprint(ans)```\nQ:\
+  \ Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nMr. Chanek gives you\
+  \ a sequence a indexed from 1 to n. Define f(a) as the number of indices where a_i\
+  \ = i. \n\nYou can pick an element from the current sequence and remove it, then\
+  \ concatenate the remaining elements together. For example, if you remove the 3-rd\
+  \ element from the sequence [4, 2, 3, 1], the resulting sequence will be [4, 2,\
+  \ 1]. \n\nYou want to remove some elements from a in order to maximize f(a), using\
+  \ zero or more operations. Find the largest possible f(a).\n\nInput\n\nThe first\
+  \ line contains one integer n (1 \u2264 n \u2264 2 \u22C5 10^5) \u2014 the initial\
+  \ length of the sequence.\n\nThe second line contains n integers a_1, a_2, \u2026\
+  , a_n (1 \u2264 a_i \u2264 2 \u22C5 10^5) \u2014 the initial sequence a.\n\nOutput\n\
+  \nOutput an integer denoting the largest f(a) that can be obtained by doing zero\
+  \ or more operations.\n\nExamples\n\nInput\n\n\n7\n2 1 4 2 5 3 7\n\n\nOutput\n\n\
+  \n3\n\n\nInput\n\n\n4\n4 2 3 1\n\n\nOutput\n\n\n2\n\nNote\n\nIn the first example,\
+  \ f(A) = 3 by doing the following operations.\n\n[2,1,4,2,5,3,7] \u2192 [2,1,2,5,3,7]\
+  \ \u2192 [1,2,5,3,7] \u2192 [1,2,5,3] \u2192 [1,2,3]\n\nIn the second example, f(A)\
+  \ = 2 and no additional operation is needed.\nA:"
+question: "Mr. Chanek gives you a sequence a indexed from 1 to n. Define f(a) as the\
+  \ number of indices where a_i = i. \n\nYou can pick an element from the current\
+  \ sequence and remove it, then concatenate the remaining elements together. For\
+  \ example, if you remove the 3-rd element from the sequence [4, 2, 3, 1], the resulting\
+  \ sequence will be [4, 2, 1]. \n\nYou want to remove some elements from a in order\
+  \ to maximize f(a), using zero or more operations. Find the largest possible f(a).\n\
+  \nInput\n\nThe first line contains one integer n (1 \u2264 n \u2264 2 \u22C5 10^5)\
+  \ \u2014 the initial length of the sequence.\n\nThe second line contains n integers\
+  \ a_1, a_2, \u2026, a_n (1 \u2264 a_i \u2264 2 \u22C5 10^5) \u2014 the initial sequence\
+  \ a.\n\nOutput\n\nOutput an integer denoting the largest f(a) that can be obtained\
+  \ by doing zero or more operations.\n\nExamples\n\nInput\n\n\n7\n2 1 4 2 5 3 7\n\
+  \n\nOutput\n\n\n3\n\n\nInput\n\n\n4\n4 2 3 1\n\n\nOutput\n\n\n2\n\nNote\n\nIn the\
+  \ first example, f(A) = 3 by doing the following operations.\n\n[2,1,4,2,5,3,7]\
+  \ \u2192 [2,1,2,5,3,7] \u2192 [1,2,5,3,7] \u2192 [1,2,5,3] \u2192 [1,2,3]\n\nIn\
+  \ the second example, f(A) = 2 and no additional operation is needed."
+samples:
+- " ```n = int(input())\na = list(map(int, input().split()))\nans = 0\nfor i in range(n):\n\
+  \    if a[i] == i + 1:\n        ans += 1\nprint(ans)```\n\n\nQ:"
+- " ```n = int(input())\na = list(map(int, input().split()))\nans = 0\nfor i in range(n):\n\
+  \    if a[i] == i + 1:\n        ans += 1\n    else:\n        break\nprint(ans)```\
+  \ Q:"
+test_cases:
+  input:
+  - '4
+
+    4 2 3 1
+
+    '
+  - '7
+
+    2 1 4 2 5 3 7
+
+    '
+  - '1
+
+    1
+
+    '
+  - '1
+
+    200000
+
+    '
+  - '1
+
+    2
+
+    '
+  - '1
+
+    001
+
+    '
+  - '1
+
+    69861
+
+    '
+  - '1
+
+    70524
+
+    '
+  - '1
+
+    46702
+
+    '
+  - '1
+
+    7068
+
+    '
+  - '1
+
+    10491
+
+    '
+  - '1
+
+    8373
+
+    '
+  - '1
+
+    15424
+
+    '
+  - '1
+
+    2597
+
+    '
+  - '1
+
+    2781
+
+    '
+  - '1
+
+    1895
+
+    '
+  - '1
+
+    1303
+
+    '
+  - '1
+
+    726
+
+    '
+  - '1
+
+    266
+
+    '
+  - '1
+
+    83
+
+    '
+  - '1
+
+    165
+
+    '
+  - '1
+
+    324
+
+    '
+  - '1
+
+    426
+
+    '
+  - '1
+
+    279
+
+    '
+  - '1
+
+    513
+
+    '
+  - '1
+
+    696
+
+    '
+  - '1
+
+    1014
+
+    '
+  - '1
+
+    1529
+
+    '
+  - '1
+
+    1995
+
+    '
+  - '1
+
+    530
+
+    '
+  - '1
+
+    777
+
+    '
+  - '1
+
+    270
+
+    '
+  - '1
+
+    410
+
+    '
+  - '1
+
+    481
+
+    '
+  - '1
+
+    304
+
+    '
+  - '1
+
+    566
+
+    '
+  - '1
+
+    538
+
+    '
+  - '1
+
+    728
+
+    '
+  - '1
+
+    1245
+
+    '
+  - '1
+
+    577
+
+    '
+  - '1
+
+    476
+
+    '
+  - '1
+
+    522
+
+    '
+  - '1
+
+    645
+
+    '
+  - '1
+
+    1237
+
+    '
+  - '1
+
+    2125
+
+    '
+  - '1
+
+    92
+
+    '
+  - '1
+
+    99
+
+    '
+  - '1
+
+    101
+
+    '
+  - '1
+
+    100
+
+    '
+  - '1
+
+    110
+
+    '
+  - '1
+
+    111
+
+    '
+  - '1
+
+    4
+
+    '
+  - '1
+
+    32514
+
+    '
+  - '4
+
+    4 3 3 1
+
+    '
+  - '1
+
+    69924
+
+    '
+  - '1
+
+    14148
+
+    '
+  - '1
+
+    62044
+
+    '
+  - '1
+
+    42
+
+    '
+  - '1
+
+    17875
+
+    '
+  - '1
+
+    15341
+
+    '
+  - '1
+
+    845
+
+    '
+  - '1
+
+    2393
+
+    '
+  - '1
+
+    4564
+
+    '
+  - '1
+
+    2692
+
+    '
+  - '1
+
+    2593
+
+    '
+  - '1
+
+    164
+
+    '
+  - '1
+
+    487
+
+    '
+  - '1
+
+    161
+
+    '
+  - '1
+
+    13
+
+    '
+  - '1
+
+    474
+
+    '
+  - '1
+
+    415
+
+    '
+  - '1
+
+    143
+
+    '
+  - '1
+
+    899
+
+    '
+  - '1
+
+    384
+
+    '
+  - '1
+
+    135
+
+    '
+  - '1
+
+    1340
+
+    '
+  - '1
+
+    2450
+
+    '
+  - '1
+
+    831
+
+    '
+  - '1
+
+    93
+
+    '
+  - '1
+
+    318
+
+    '
+  - '1
+
+    18
+
+    '
+  - '1
+
+    97
+
+    '
+  - '1
+
+    149
+
+    '
+  - '1
+
+    758
+
+    '
+  - '1
+
+    620
+
+    '
+  - '1
+
+    1256
+
+    '
+  - '1
+
+    586
+
+    '
+  - '1
+
+    595
+
+    '
+  - '1
+
+    490
+
+    '
+  - '1
+
+    402
+
+    '
+  - '1
+
+    608
+
+    '
+  - '1
+
+    2037
+
+    '
+  - '1
+
+    159
+
+    '
+  - '1
+
+    57
+
+    '
+  - '1
+
+    010
+
+    '
+  - '1
+
+    011
+
+    '
+  - '1
+
+    8
+
+    '
+  - '1
+
+    45174
+
+    '
+  - '1
+
+    49531
+
+    '
+  - '1
+
+    13625
+
+    '
+  - '1
+
+    44466
+
+    '
+  - '1
+
+    15
+
+    '
+  - '1
+
+    25802
+
+    '
+  - '1
+
+    22741
+
+    '
+  - '1
+
+    1575
+
+    '
+  - '1
+
+    2763
+
+    '
+  - '1
+
+    2858
+
+    '
+  - '1
+
+    4910
+
+    '
+  - '1
+
+    4474
+
+    '
+  - '1
+
+    128
+
+    '
+  - '1
+
+    176
+
+    '
+  - '1
+
+    5
+
+    '
+  - '1
+
+    733
+
+    '
+  - '1
+
+    795
+
+    '
+  - '1
+
+    276
+
+    '
+  - '1
+
+    1539
+
+    '
+  - '1
+
+    233
+
+    '
+  - '1
+
+    215
+
+    '
+  - '1
+
+    1666
+
+    '
+  - '1
+
+    1873
+
+    '
+  - '1
+
+    1587
+
+    '
+  - '1
+
+    29
+
+    '
+  - '1
+
+    40
+
+    '
+  - '1
+
+    10
+
+    '
+  - '1
+
+    84
+
+    '
+  - '1
+
+    17
+
+    '
+  - '1
+
+    376
+
+    '
+  - '1
+
+    213
+
+    '
+  - '1
+
+    824
+
+    '
+  - '1
+
+    1008
+
+    '
+  - '1
+
+    330
+
+    '
+  - '1
+
+    885
+
+    '
+  - '1
+
+    331
+
+    '
+  - '1
+
+    212
+
+    '
+  - '1
+
+    1307
+
+    '
+  - '1
+
+    81
+
+    '
+  - '1
+
+    75
+
+    '
+  - '1
+
+    24
+
+    '
+  - '1
+
+    67544
+
+    '
+  - '1
+
+    17360
+
+    '
+  - '1
+
+    19006
+
+    '
+  - '1
+
+    35921
+
+    '
+  - '1
+
+    27
+
+    '
+  - '1
+
+    448
+
+    '
+  - '1
+
+    41684
+
+    '
+  - '1
+
+    1222
+
+    '
+  - '1
+
+    4412
+
+    '
+  - '1
+
+    3367
+
+    '
+  - '1
+
+    5738
+
+    '
+  - '1
+
+    4073
+
+    '
+  - '1
+
+    339
+
+    '
+  - '1
+
+    114
+
+    '
+  - '1
+
+    7
+
+    '
+  - '1
+
+    778
+
+    '
+  - '1
+
+    1305
+
+    '
+  - '1
+
+    243
+
+    '
+  - '1
+
+    482
+
+    '
+  - '1
+
+    120
+
+    '
+  - '1
+
+    347
+
+    '
+  - '1
+
+    364
+
+    '
+  - '1
+
+    931
+
+    '
+  - '1
+
+    2256
+
+    '
+  - '1
+
+    33
+
+    '
+  - '1
+
+    65
+
+    '
+  - '1
+
+    11
+
+    '
+  - '1
+
+    41
+
+    '
+  - '1
+
+    23
+
+    '
+  - '1
+
+    109
+
+    '
+  - '1
+
+    300
+
+    '
+  - '1
+
+    1397
+
+    '
+  - '1
+
+    526
+
+    '
+  - '1
+
+    563
+
+    '
+  - '1
+
+    1193
+
+    '
+  - '1
+
+    117
+
+    '
+  - '1
+
+    2549
+
+    '
+  - '1
+
+    3
+
+    '
+  - '1
+
+    55783
+
+    '
+  - '1
+
+    19264
+
+    '
+  - '1
+
+    31342
+
+    '
+  - '1
+
+    50054
+
+    '
+  - '1
+
+    16
+
+    '
+  - '1
+
+    699
+
+    '
+  - '1
+
+    65589
+
+    '
+  - '1
+
+    518
+
+    '
+  - '1
+
+    7298
+
+    '
+  - '1
+
+    1748
+
+    '
+  - '1
+
+    2448
+
+    '
+  - '1
+
+    5036
+
+    '
+  - '1
+
+    351
+
+    '
+  - '1
+
+    148
+
+    '
+  - '1
+
+    25
+
+    '
+  - '1
+
+    142
+
+    '
+  - '1
+
+    2063
+
+    '
+  - '1
+
+    255
+
+    '
+  - '1
+
+    431
+
+    '
+  - '1
+
+    227
+
+    '
+  - '1
+
+    156
+
+    '
+  - '1
+
+    473
+
+    '
+  - '1
+
+    1698
+
+    '
+  - '1
+
+    3311
+
+    '
+  - '1
+
+    37
+
+    '
+  - '1
+
+    12
+
+    '
+  - '1
+
+    20
+
+    '
+  - '1
+
+    82
+
+    '
+  output:
+  - '2
+
+    '
+  - '3
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+timeout: 2.0

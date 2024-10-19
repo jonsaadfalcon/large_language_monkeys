@@ -1,0 +1,3540 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nMr. Kitayuta\
+  \ has kindly given you a string s consisting of lowercase English letters. You are\
+  \ asked to insert exactly n lowercase English letters into s to make it a palindrome.\
+  \ (A palindrome is a string that reads the same forward and backward. For example,\
+  \ \"noon\", \"testset\" and \"a\" are all palindromes, while \"test\" and \"kitayuta\"\
+  \ are not.) You can choose any n lowercase English letters, and insert each of them\
+  \ to any position of s, possibly to the beginning or the end of s. You have to insert\
+  \ exactly n letters even if it is possible to turn s into a palindrome by inserting\
+  \ less than n letters.\n\nFind the number of the palindromes that can be obtained\
+  \ in this way, modulo 10007.\n\nInput\n\nThe first line contains a string s (1 \u2264\
+  \ |s| \u2264 200). Each character in s is a lowercase English letter.\n\nThe second\
+  \ line contains an integer n (1 \u2264 n \u2264 109).\n\nOutput\n\nPrint the number\
+  \ of the palindromes that can be obtained, modulo 10007.\n\nExamples\n\nInput\n\n\
+  revive\n1\n\n\nOutput\n\n1\n\n\nInput\n\nadd\n2\n\n\nOutput\n\n28\n\nNote\n\nFor\
+  \ the first sample, you can obtain the palindrome \"reviver\" by inserting 'r' to\
+  \ the end of \"revive\".\n\nFor the second sample, the following 28 palindromes\
+  \ can be obtained: \"adada\", \"adbda\", ..., \"adzda\", \"dadad\" and \"ddadd\"\
+  .\nA: ```palindrom = lambda s: s == s[::-1]\nprintans = lambda l: print(''.join(l))\n\
+  s = list(input())\n\nfor i in range(len(s)+1):\n    for letter in 'abcdefghijklmnopqrstvwuxyz':\n\
+  \        tmp = s[:]\n        tmp.insert(i,letter)\n        if palindrom(tmp):\n\
+  \            printans(tmp)\n            exit()\n\nprint('NA')```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nHelen works in Metropolis airport.\
+  \ She is responsible for creating a departure schedule. There are n flights that\
+  \ must depart today, the i-th of them is planned to depart at the i-th minute of\
+  \ the day.\n\nMetropolis airport is the main transport hub of Metropolia, so it\
+  \ is difficult to keep the schedule intact. This is exactly the case today: because\
+  \ of technical issues, no flights were able to depart during the first k minutes\
+  \ of the day, so now the new departure schedule must be created.\n\nAll n scheduled\
+  \ flights must now depart at different minutes between (k + 1)-th and (k + n)-th,\
+  \ inclusive. However, it's not mandatory for the flights to depart in the same order\
+  \ they were initially scheduled to do so \u2014 their order in the new schedule\
+  \ can be different. There is only one restriction: no flight is allowed to depart\
+  \ earlier than it was supposed to depart in the initial schedule.\n\nHelen knows\
+  \ that each minute of delay of the i-th flight costs airport ci burles. Help her\
+  \ find the order for flights to depart in the new schedule that minimizes the total\
+  \ cost for the airport.\n\nInput\n\nThe first line contains two integers n and k\
+  \ (1 \u2264 k \u2264 n \u2264 300 000), here n is the number of flights, and k is\
+  \ the number of minutes in the beginning of the day that the flights did not depart.\n\
+  \nThe second line contains n integers c1, c2, ..., cn (1 \u2264 ci \u2264 107),\
+  \ here ci is the cost of delaying the i-th flight for one minute.\n\nOutput\n\n\
+  The first line must contain the minimum possible total cost of delaying the flights.\n\
+  \nThe second line must contain n different integers t1, t2, ..., tn (k + 1 \u2264\
+  \ ti \u2264 k + n), here ti is the minute when the i-th flight must depart. If there\
+  \ are several optimal schedules, print any of them.\n\nExample\n\nInput\n\n5 2\n\
+  4 2 1 10 2\n\n\nOutput\n\n20\n3 6 7 4 5 \n\nNote\n\nLet us consider sample test.\
+  \ If Helen just moves all flights 2 minutes later preserving the order, the total\
+  \ cost of delaying the flights would be (3 - 1)\xB74 + (4 - 2)\xB72 + (5 - 3)\xB7\
+  1 + (6 - 4)\xB710 + (7 - 5)\xB72 = 38 burles. \n\nHowever, the better schedule is\
+  \ shown in the sample answer, its cost is (3 - 1)\xB74 + (6 - 2)\xB72 + (7 - 3)\xB7\
+  1 + (4 - 4)\xB710 + (5 - 5)\xB72 = 20 burles.\nA: ```import heapq\nn,k = map(int,input().split())\n\
+  l = list(map(int,input().split()))\nans = [0]*n\nh = []\nfor i in range(k):\n  \
+  \  h.append((-1*l[i],i))\n\nheapq.heapify(h)\nsom = 0\nfor i in range(k,n+k):\n\
+  \    if i < n:\n        heapq.heappush(h, (-1 * l[i], i))\n\n    x = heapq.heappop(h)\n\
+  \    s = -1*x[0]*(i-x[1])\n    som += s\n    ans[x[1]] = i+1\n\nprint(som)\nprint(*ans)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nOn the great island of\
+  \ Baltia, there live N people, numbered from 1 to N. There are exactly M pairs of\
+  \ people that are friends with each other. The people of Baltia want to organize\
+  \ a successful party, but they have very strict rules on what a party is and when\
+  \ the party is successful. On the island of Baltia, a party is a gathering of exactly\
+  \ 5 people. The party is considered to be successful if either all the people at\
+  \ the party are friends with each other (so that they can all talk to each other\
+  \ without having to worry about talking to someone they are not friends with) or\
+  \ no two people at the party are friends with each other (so that everyone can just\
+  \ be on their phones without anyone else bothering them). Please help the people\
+  \ of Baltia organize a successful party or tell them that it's impossible to do\
+  \ so.\n\nInput\n\nThe first line contains two integer numbers, N (5 \u2264 N \u2264\
+  \ 2*10^5) and M (0 \u2264 M \u2264 2*10^5) \u2013 the number of people that live\
+  \ in Baltia, and the number of friendships. The next M lines each contains two integers\
+  \ U_i and V_i (1 \u2264 U_i,V_i \u2264 N) \u2013 meaning that person U_i is friends\
+  \ with person V_i. Two friends can not be in the list of friends twice (no pairs\
+  \ are repeated) and a person can be friends with themselves (U_i \u2260 V_i).\n\n\
+  Output\n\nIf it's possible to organize a successful party, print 5 numbers indicating\
+  \ which 5 people should be invited to the party. If it's not possible to organize\
+  \ a successful party, print -1 instead. If there are multiple successful parties\
+  \ possible, print any.\n\nExamples\n\nInput\n\n\n6 3\n1 4\n4 2\n5 4\n\n\nOutput\n\
+  \n\n1 2 3 5 6\n\n\nInput\n\n\n5 4\n1 2\n2 3\n3 4\n4 5\n\n\nOutput\n\n\n-1\nA:"
+question: "On the great island of Baltia, there live N people, numbered from 1 to\
+  \ N. There are exactly M pairs of people that are friends with each other. The people\
+  \ of Baltia want to organize a successful party, but they have very strict rules\
+  \ on what a party is and when the party is successful. On the island of Baltia,\
+  \ a party is a gathering of exactly 5 people. The party is considered to be successful\
+  \ if either all the people at the party are friends with each other (so that they\
+  \ can all talk to each other without having to worry about talking to someone they\
+  \ are not friends with) or no two people at the party are friends with each other\
+  \ (so that everyone can just be on their phones without anyone else bothering them).\
+  \ Please help the people of Baltia organize a successful party or tell them that\
+  \ it's impossible to do so.\n\nInput\n\nThe first line contains two integer numbers,\
+  \ N (5 \u2264 N \u2264 2*10^5) and M (0 \u2264 M \u2264 2*10^5) \u2013 the number\
+  \ of people that live in Baltia, and the number of friendships. The next M lines\
+  \ each contains two integers U_i and V_i (1 \u2264 U_i,V_i \u2264 N) \u2013 meaning\
+  \ that person U_i is friends with person V_i. Two friends can not be in the list\
+  \ of friends twice (no pairs are repeated) and a person can be friends with themselves\
+  \ (U_i \u2260 V_i).\n\nOutput\n\nIf it's possible to organize a successful party,\
+  \ print 5 numbers indicating which 5 people should be invited to the party. If it's\
+  \ not possible to organize a successful party, print -1 instead. If there are multiple\
+  \ successful parties possible, print any.\n\nExamples\n\nInput\n\n\n6 3\n1 4\n4\
+  \ 2\n5 4\n\n\nOutput\n\n\n1 2 3 5 6\n\n\nInput\n\n\n5 4\n1 2\n2 3\n3 4\n4 5\n\n\n\
+  Output\n\n\n-1"
+samples:
+- " ```from collections import defaultdict\nn,m = map(int,input().split())\ng = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int,input().split())\n    g[u].append(v)\n   \
+  \ g[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(g[i]) <= 2:\n \
+  \       ans.append(i)\n    if len(ans) == 5:\n        break\nif len(ans) < 5:\n\
+  \    print(-1)\nelse:\n    print(*ans)```\nQ:"
+- " ```from collections import defaultdict\nn,m = map(int, input().split())\ngraph\
+  \ = defaultdict(list)\nfor _ in range(m):\n    u,v = map(int, input().split())\n\
+  \    graph[u].append(v)\n    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n\
+  \    if len(graph[i]) == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\n\
+  else:\n    for _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from\
+  \ collections import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n    print(-1)\nelse:\n    for\
+  \ _ in range(5):\n        ans.pop(0)\n    print(*ans)``` A: ```from collections\
+  \ import defaultdict\nn,m = map(int, input().split())\ngraph = defaultdict(list)\n\
+  for _ in range(m):\n    u,v = map(int, input().split())\n    graph[u].append(v)\n\
+  \    graph[v].append(u)\n\nans = []\nfor i in range(1,n+1):\n    if len(graph[i])\
+  \ == 0:\n        ans.append(i)\n\nif len(ans) < 5:\n"
+test_cases:
+  input:
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    4 5
+
+    '
+  - '6 3
+
+    1 4
+
+    4 2
+
+    5 4
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 5
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '10 8
+
+    5 2
+
+    1 8
+
+    5 7
+
+    1 9
+
+    6 4
+
+    2 7
+
+    8 9
+
+    3 10
+
+    '
+  - '20 57
+
+    13 14
+
+    12 20
+
+    18 3
+
+    17 20
+
+    15 9
+
+    18 13
+
+    12 19
+
+    2 4
+
+    9 2
+
+    12 11
+
+    14 1
+
+    16 11
+
+    11 14
+
+    16 4
+
+    16 15
+
+    11 19
+
+    15 4
+
+    10 15
+
+    12 5
+
+    9 3
+
+    10 2
+
+    10 4
+
+    20 19
+
+    14 7
+
+    19 2
+
+    5 8
+
+    6 14
+
+    4 17
+
+    2 17
+
+    17 9
+
+    13 9
+
+    19 9
+
+    18 8
+
+    12 16
+
+    18 5
+
+    7 1
+
+    8 3
+
+    11 20
+
+    6 13
+
+    20 5
+
+    13 8
+
+    17 19
+
+    7 6
+
+    9 11
+
+    18 9
+
+    13 1
+
+    12 14
+
+    7 3
+
+    10 16
+
+    20 2
+
+    5 3
+
+    10 17
+
+    6 1
+
+    8 9
+
+    7 5
+
+    12 15
+
+    15 11
+
+    '
+  - '5 0
+
+    '
+  - '10 8
+
+    2 7
+
+    2 9
+
+    7 9
+
+    8 10
+
+    5 3
+
+    1 4
+
+    10 6
+
+    6 8
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    4 5
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 2
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 5
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '6 3
+
+    1 4
+
+    1 3
+
+    5 1
+
+    '
+  - '6 3
+
+    1 2
+
+    4 2
+
+    5 2
+
+    '
+  - '6 4
+
+    1 4
+
+    4 1
+
+    2 4
+
+    4 5
+
+    '
+  - '7 4
+
+    1 5
+
+    4 3
+
+    3 2
+
+    5 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    4 5
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    3 5
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    3 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '6 3
+
+    1 4
+
+    4 2
+
+    5 1
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    2 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 5
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    5 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    2 5
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 1
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    5 4
+
+    3 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    2 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 2
+
+    2 5
+
+    '
+  - '6 3
+
+    1 4
+
+    5 2
+
+    5 4
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    4 3
+
+    '
+  - '6 3
+
+    1 2
+
+    4 2
+
+    5 1
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    5 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    2 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    1 4
+
+    2 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 4
+
+    2 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 3
+
+    1 3
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 3
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 5
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    6 1
+
+    1 6
+
+    1 4
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 5
+
+    2 3
+
+    3 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    3 2
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    5 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 4
+
+    3 2
+
+    1 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 5
+
+    4 3
+
+    3 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    3 4
+
+    4 2
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 3
+
+    2 4
+
+    4 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    1 3
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    2 4
+
+    1 5
+
+    '
+  - '6 3
+
+    1 4
+
+    4 3
+
+    5 1
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    5 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    4 2
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    1 4
+
+    2 3
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    1 4
+
+    4 2
+
+    '
+  - '5 4
+
+    2 5
+
+    4 3
+
+    3 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    1 4
+
+    4 5
+
+    '
+  - '8 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    1 3
+
+    2 4
+
+    4 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    3 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    3 1
+
+    1 4
+
+    2 3
+
+    '
+  - '5 4
+
+    1 4
+
+    4 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 3
+
+    3 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 5
+
+    4 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    2 3
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    4 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 5
+
+    2 3
+
+    3 4
+
+    5 1
+
+    '
+  - '6 4
+
+    1 2
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 4
+
+    5 4
+
+    3 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 4
+
+    1 3
+
+    1 3
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    6 1
+
+    1 6
+
+    1 4
+
+    2 6
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    2 4
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    5 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    5 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 4
+
+    3 2
+
+    2 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 5
+
+    4 3
+
+    3 2
+
+    5 1
+
+    '
+  - '5 4
+
+    1 3
+
+    3 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    3 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 5
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    4 1
+
+    3 1
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    3 1
+
+    1 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 4
+
+    4 1
+
+    3 1
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    3 2
+
+    1 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    4 5
+
+    '
+  - '6 3
+
+    1 5
+
+    4 2
+
+    5 4
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    3 5
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    6 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 1
+
+    2 6
+
+    1 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 2
+
+    1 6
+
+    1 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    2 5
+
+    '
+  - '6 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    2 5
+
+    2 3
+
+    3 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    2 1
+
+    3 2
+
+    2 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    2 5
+
+    '
+  - '5 4
+
+    2 3
+
+    2 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    1 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    5 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    5 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 2
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    2 4
+
+    2 1
+
+    '
+  - '6 3
+
+    1 4
+
+    1 6
+
+    5 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    2 3
+
+    2 3
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 5
+
+    1 3
+
+    3 4
+
+    5 1
+
+    '
+  - '6 4
+
+    1 2
+
+    4 1
+
+    2 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 4
+
+    2 5
+
+    '
+  - '6 4
+
+    1 4
+
+    3 2
+
+    2 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 5
+
+    4 3
+
+    3 2
+
+    5 2
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    2 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 4
+
+    2 3
+
+    3 5
+
+    3 1
+
+    '
+  - '5 4
+
+    2 4
+
+    4 1
+
+    3 1
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    1 3
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    3 5
+
+    2 5
+
+    '
+  - '6 3
+
+    1 2
+
+    4 2
+
+    5 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    1 4
+
+    2 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    2 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    2 3
+
+    3 2
+
+    '
+  - '6 4
+
+    1 6
+
+    4 1
+
+    2 4
+
+    4 5
+
+    '
+  - '20 57
+
+    13 14
+
+    12 20
+
+    18 3
+
+    17 20
+
+    15 2
+
+    18 13
+
+    12 19
+
+    2 4
+
+    9 2
+
+    12 11
+
+    14 1
+
+    16 11
+
+    11 14
+
+    16 4
+
+    16 15
+
+    11 19
+
+    15 4
+
+    10 15
+
+    12 5
+
+    9 3
+
+    10 2
+
+    10 4
+
+    20 19
+
+    14 7
+
+    19 2
+
+    5 8
+
+    6 14
+
+    4 17
+
+    2 17
+
+    17 9
+
+    13 9
+
+    19 9
+
+    18 8
+
+    12 16
+
+    18 5
+
+    7 1
+
+    8 3
+
+    11 20
+
+    6 13
+
+    20 5
+
+    13 8
+
+    17 19
+
+    7 6
+
+    9 11
+
+    18 9
+
+    13 1
+
+    12 14
+
+    7 3
+
+    10 16
+
+    20 2
+
+    5 3
+
+    10 17
+
+    6 1
+
+    8 9
+
+    7 5
+
+    12 15
+
+    15 11
+
+    '
+  - '5 4
+
+    1 2
+
+    2 1
+
+    3 2
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 1
+
+    4 2
+
+    '
+  - '5 4
+
+    1 5
+
+    2 3
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    1 4
+
+    3 5
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    3 4
+
+    4 3
+
+    '
+  - '6 3
+
+    1 2
+
+    5 2
+
+    5 1
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 1
+
+    3 2
+
+    '
+  - '5 4
+
+    2 3
+
+    2 1
+
+    3 2
+
+    4 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    3 4
+
+    5 1
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    1 5
+
+    6 4
+
+    3 1
+
+    1 6
+
+    4 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    2 5
+
+    2 3
+
+    3 4
+
+    5 1
+
+    '
+  - '5 4
+
+    1 2
+
+    2 4
+
+    5 2
+
+    3 5
+
+    '
+  - '5 4
+
+    2 3
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    5 2
+
+    5 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    5 4
+
+    4 2
+
+    '
+  - '5 4
+
+    1 4
+
+    3 4
+
+    1 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    4 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 5
+
+    4 1
+
+    3 1
+
+    4 2
+
+    '
+  - '6 4
+
+    1 2
+
+    2 3
+
+    3 4
+
+    3 5
+
+    '
+  - '6 13
+
+    5 6
+
+    1 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 4
+
+    3 2
+
+    1 6
+
+    1 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '6 4
+
+    1 3
+
+    2 3
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 4
+
+    2 1
+
+    4 2
+
+    2 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    5 3
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    4 2
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 4
+
+    2 3
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 3
+
+    2 3
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 5
+
+    1 3
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    2 4
+
+    2 5
+
+    '
+  - '5 4
+
+    2 4
+
+    4 2
+
+    3 1
+
+    4 2
+
+    '
+  - '6 4
+
+    1 4
+
+    4 1
+
+    2 1
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    1 3
+
+    2 3
+
+    3 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    2 1
+
+    4 2
+
+    '
+  - '5 4
+
+    1 4
+
+    2 1
+
+    3 1
+
+    3 2
+
+    '
+  - '6 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    1 4
+
+    5 1
+
+    '
+  - '5 4
+
+    2 5
+
+    1 3
+
+    3 4
+
+    5 1
+
+    '
+  - '5 4
+
+    2 3
+
+    4 1
+
+    3 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    3 4
+
+    3 1
+
+    '
+  - '6 4
+
+    1 3
+
+    4 3
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 4
+
+    2 5
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 4
+
+    2 3
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    2 4
+
+    4 3
+
+    3 1
+
+    4 2
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    4 1
+
+    4 2
+
+    '
+  - '6 4
+
+    1 2
+
+    2 1
+
+    1 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    2 4
+
+    3 1
+
+    '
+  - '5 4
+
+    1 4
+
+    2 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 2
+
+    2 3
+
+    2 4
+
+    3 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 4
+
+    3 2
+
+    '
+  - '5 4
+
+    1 2
+
+    4 1
+
+    3 4
+
+    1 5
+
+    '
+  - '5 4
+
+    1 3
+
+    2 4
+
+    3 1
+
+    3 1
+
+    '
+  - '6 4
+
+    1 2
+
+    2 1
+
+    3 4
+
+    2 5
+
+    '
+  - '5 4
+
+    1 2
+
+    3 1
+
+    1 4
+
+    4 3
+
+    '
+  - '5 4
+
+    1 3
+
+    2 1
+
+    3 2
+
+    5 1
+
+    '
+  - '6 4
+
+    1 2
+
+    3 2
+
+    3 4
+
+    4 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    2 4
+
+    1 3
+
+    '
+  - '6 4
+
+    1 4
+
+    4 1
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    3 2
+
+    4 2
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    5 4
+
+    3 2
+
+    '
+  - '6 3
+
+    1 4
+
+    4 3
+
+    4 1
+
+    '
+  - '5 4
+
+    2 4
+
+    4 3
+
+    3 2
+
+    3 1
+
+    '
+  - '5 4
+
+    1 2
+
+    3 2
+
+    3 1
+
+    4 2
+
+    '
+  - '5 4
+
+    2 3
+
+    3 1
+
+    1 4
+
+    2 4
+
+    '
+  - '5 4
+
+    2 3
+
+    1 3
+
+    3 4
+
+    3 1
+
+    '
+  - '6 13
+
+    5 6
+
+    2 5
+
+    1 4
+
+    1 2
+
+    3 5
+
+    4 5
+
+    6 2
+
+    3 1
+
+    1 6
+
+    4 3
+
+    2 4
+
+    6 3
+
+    1 2
+
+    '
+  - '5 4
+
+    1 5
+
+    2 3
+
+    3 4
+
+    5 2
+
+    '
+  - '5 4
+
+    1 3
+
+    3 4
+
+    1 3
+
+    1 3
+
+    '
+  - '5 4
+
+    2 4
+
+    3 2
+
+    2 4
+
+    1 3
+
+    '
+  - '5 4
+
+    1 5
+
+    4 1
+
+    3 2
+
+    5 1
+
+    '
+  - '5 4
+
+    1 3
+
+    3 2
+
+    3 4
+
+    4 5
+
+    '
+  - '5 4
+
+    1 4
+
+    3 1
+
+    2 4
+
+    2 4
+
+    '
+  - '5 4
+
+    1 3
+
+    4 1
+
+    3 1
+
+    4 5
+
+    '
+  output:
+  - '-1
+
+    '
+  - '1 2 3 5 6
+
+    '
+  - '1 2 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 3 4 5
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 4 5 6
+
+    '
+  - '2 3 4 5 6
+
+    '
+  - '1 3 4 5 6
+
+    '
+  - '1 2 3 5 6
+
+    '
+  - '1 2 4 6 7
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '2 3 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '2 3 4 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 3 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '1 2 3 5 6
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+  - '-1
+
+    '
+timeout: 1.0

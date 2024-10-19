@@ -1,0 +1,2274 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nValera had\
+  \ an undirected connected graph without self-loops and multiple edges consisting\
+  \ of n vertices. The graph had an interesting property: there were at most k edges\
+  \ adjacent to each of its vertices. For convenience, we will assume that the graph\
+  \ vertices were indexed by integers from 1 to n.\n\nOne day Valera counted the shortest\
+  \ distances from one of the graph vertices to all other ones and wrote them out\
+  \ in array d. Thus, element d[i] of the array shows the shortest distance from the\
+  \ vertex Valera chose to vertex number i.\n\nThen something irreparable terrible\
+  \ happened. Valera lost the initial graph. However, he still has the array d. Help\
+  \ him restore the lost graph.\n\nInput\n\nThe first line contains two space-separated\
+  \ integers n and k (1 \u2264 k < n \u2264 105). Number n shows the number of vertices\
+  \ in the original graph. Number k shows that at most k edges were adjacent to each\
+  \ vertex in the original graph.\n\nThe second line contains space-separated integers\
+  \ d[1], d[2], ..., d[n] (0 \u2264 d[i] < n). Number d[i] shows the shortest distance\
+  \ from the vertex Valera chose to the vertex number i.\n\nOutput\n\nIf Valera made\
+  \ a mistake in his notes and the required graph doesn't exist, print in the first\
+  \ line number -1. Otherwise, in the first line print integer m (0 \u2264 m \u2264\
+  \ 106) \u2014 the number of edges in the found graph.\n\nIn each of the next m lines\
+  \ print two space-separated integers ai and bi (1 \u2264 ai, bi \u2264 n; ai \u2260\
+  \ bi), denoting the edge that connects vertices with numbers ai and bi. The graph\
+  \ shouldn't contain self-loops and multiple edges. If there are multiple possible\
+  \ answers, print any of them.\n\nExamples\n\nInput\n\n3 2\n0 1 1\n\n\nOutput\n\n\
+  3\n1 2\n1 3\n3 2\n\n\nInput\n\n4 2\n2 0 1 3\n\n\nOutput\n\n3\n1 3\n1 4\n2 3\n\n\n\
+  Input\n\n3 1\n0 0 0\n\n\nOutput\n\n-1\nA: ```from sys import exit\n\n\nn, k = map(int,\
+  \ input().split())\nnodes = [[] for _ in range(n+1)]\nedges = []\n\nfor node, dist\
+  \ in enumerate(map(int, input().split())):\n    nodes[dist].append(node)\n\nif len(nodes[0])\
+  \ != 1 or len(nodes[1]) > k:\n    print(-1)\nelse:\n    for i in range(1, n):\n\
+  \        if len(nodes[i])*(k-1) < len(nodes[i+1]):\n            print(-1)\n    \
+  \        exit(0)\n    for i in range(n):\n\n        next = 0\n\n        if len(nodes[i+1])\
+  \ > 0:\n            for j, node in enumerate(nodes[i]):\n\n                current\
+  \ = 0\n\n                while current < (k if i == 0 else k-1) and next < len(nodes[i+1]):\n\
+  \                    edges.append((node+1, nodes[i+1][next]+1))\n              \
+  \      next += 1\n                    current += 1\n\n    print(len(edges))\n  \
+  \  print('\\n'.join(map(lambda x: ' '.join([str(x[0]), str(x[1])]), edges)))```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nA shop sells N kinds\
+  \ of fruits, Fruit 1, \\ldots, N, at prices of p_1, \\ldots, p_N yen per item, respectively.\
+  \ (Yen is the currency of Japan.)\n\nHere, we will choose K kinds of fruits and\
+  \ buy one of each chosen kind. Find the minimum possible total price of those fruits.\n\
+  \nConstraints\n\n* 1 \\leq K \\leq N \\leq 1000\n* 1 \\leq p_i \\leq 1000\n* All\
+  \ values in input are integers.\n\nInput\n\nInput is given from Standard Input in\
+  \ the following format:\n\n\nN K\np_1 p_2 \\ldots p_N\n\n\nOutput\n\nPrint an integer\
+  \ representing the minimum possible total price of fruits.\n\nExamples\n\nInput\n\
+  \n5 3\n50 100 80 120 80\n\n\nOutput\n\n210\n\n\nInput\n\n1 1\n1000\n\n\nOutput\n\
+  \n1000\nA: ```_,K,*P=map(int,open(0).read().split())\nprint(sum(sorted(P)[:K]))```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nLet's call a sequence\
+  \ of integers x_1, x_2, ..., x_k MEX-correct if for all i (1 \u2264 i \u2264 k)\
+  \ |x_i - \\operatorname{MEX}(x_1, x_2, ..., x_i)| \u2264 1 holds. Where \\operatorname{MEX}(x_1,\
+  \ ..., x_k) is the minimum non-negative integer that doesn't belong to the set x_1,\
+  \ ..., x_k. For example, \\operatorname{MEX}(1, 0, 1, 3) = 2 and \\operatorname{MEX}(2,\
+  \ 1, 5) = 0.\n\nYou are given an array a consisting of n non-negative integers.\
+  \ Calculate the number of non-empty MEX-correct subsequences of a given array. The\
+  \ number of subsequences can be very large, so print it modulo 998244353. \n\nNote:\
+  \ a subsequence of an array a is a sequence [a_{i_1}, a_{i_2}, ..., a_{i_m}] meeting\
+  \ the constraints 1 \u2264 i_1 < i_2 < ... < i_m \u2264 n. If two different ways\
+  \ to choose the sequence of indices [i_1, i_2, ..., i_m] yield the same subsequence,\
+  \ the resulting subsequence should be counted twice (i. e. two subsequences are\
+  \ different if their sequences of indices [i_1, i_2, ..., i_m] are not the same).\n\
+  \nInput\n\nThe first line contains a single integer t (1 \u2264 t \u2264 10^5) \u2014\
+  \ the number of test cases.\n\nThe first line of each test case contains a single\
+  \ integer n (1 \u2264 n \u2264 5 \u22C5 10^5).\n\nThe second line contains n integers\
+  \ a_1, a_2, ..., a_n (0 \u2264 a_i \u2264 n).\n\nThe sum of n over all test cases\
+  \ doesn't exceed 5 \u22C5 10^5.\n\nOutput\n\nFor each test case, print a single\
+  \ integer \u2014 the number of non-empty MEX-correct subsequences of a given array,\
+  \ taken modulo 998244353.\n\nExample\n\nInput\n\n\n4\n3\n0 2 1\n2\n1 0\n5\n0 0 0\
+  \ 0 0\n4\n0 1 2 3\n\n\nOutput\n\n\n4\n2\n31\n7\n\nNote\n\nIn the first example,\
+  \ the valid subsequences are [0], [1], [0,1] and [0,2].\n\nIn the second example,\
+  \ the valid subsequences are [0] and [1].\n\nIn the third example, any non-empty\
+  \ subsequence is valid. \nA:"
+question: "Let's call a sequence of integers x_1, x_2, ..., x_k MEX-correct if for\
+  \ all i (1 \u2264 i \u2264 k) |x_i - \\operatorname{MEX}(x_1, x_2, ..., x_i)| \u2264\
+  \ 1 holds. Where \\operatorname{MEX}(x_1, ..., x_k) is the minimum non-negative\
+  \ integer that doesn't belong to the set x_1, ..., x_k. For example, \\operatorname{MEX}(1,\
+  \ 0, 1, 3) = 2 and \\operatorname{MEX}(2, 1, 5) = 0.\n\nYou are given an array a\
+  \ consisting of n non-negative integers. Calculate the number of non-empty MEX-correct\
+  \ subsequences of a given array. The number of subsequences can be very large, so\
+  \ print it modulo 998244353. \n\nNote: a subsequence of an array a is a sequence\
+  \ [a_{i_1}, a_{i_2}, ..., a_{i_m}] meeting the constraints 1 \u2264 i_1 < i_2 <\
+  \ ... < i_m \u2264 n. If two different ways to choose the sequence of indices [i_1,\
+  \ i_2, ..., i_m] yield the same subsequence, the resulting subsequence should be\
+  \ counted twice (i. e. two subsequences are different if their sequences of indices\
+  \ [i_1, i_2, ..., i_m] are not the same).\n\nInput\n\nThe first line contains a\
+  \ single integer t (1 \u2264 t \u2264 10^5) \u2014 the number of test cases.\n\n\
+  The first line of each test case contains a single integer n (1 \u2264 n \u2264\
+  \ 5 \u22C5 10^5).\n\nThe second line contains n integers a_1, a_2, ..., a_n (0 \u2264\
+  \ a_i \u2264 n).\n\nThe sum of n over all test cases doesn't exceed 5 \u22C5 10^5.\n\
+  \nOutput\n\nFor each test case, print a single integer \u2014 the number of non-empty\
+  \ MEX-correct subsequences of a given array, taken modulo 998244353.\n\nExample\n\
+  \nInput\n\n\n4\n3\n0 2 1\n2\n1 0\n5\n0 0 0 0 0\n4\n0 1 2 3\n\n\nOutput\n\n\n4\n\
+  2\n31\n7\n\nNote\n\nIn the first example, the valid subsequences are [0], [1], [0,1]\
+  \ and [0,2].\n\nIn the second example, the valid subsequences are [0] and [1].\n\
+  \nIn the third example, any non-empty subsequence is valid. "
+samples:
+- " ```t=int(open(0).read().splitlines()[0])\nfor _ in range(t):\n    n=int(open(0).read().splitlines()[1])\n\
+  \    a=list(map(int,open(0).read().splitlines()[2].split()))\n    MOD=998244353\n\
+  \    dp=[0]*(n+1)\n    dp[0]=1\n    for i in range(n):\n        for j in range(i+1):\n\
+  \            dp[i+1]=(dp[i+1]+dp[j]*(1 if a[j] not in set(a[j:i+1]) else 0))%MOD\n\
+  \    print(dp[-1]-1)``` Q:"
+- " ```t = int(input())\nmod = 998244353\n\ndef mex(s):\n    s = set(s)\n    res =\
+  \ 0\n    while res in s:\n        res += 1\n    return res\n\ndef dp(i, s):\n  \
+  \  if i == 0:\n        return 1\n    res = 0\n    for j in range(i):\n        if\
+  \ s[j] <= i:\n            res += dp(j, s[:j] + s[j+1:])\n    res = (res + dp(i-1,\
+  \ s)) % mod\n    return res\n\nfor _ in range(t):\n    n = int(input())\n    a =\
+  \ list(map(int, input().split()))\n    res = 0\n    for i in range(1, n+1):\n  \
+  \      res += dp(i, a[:i])\n    print(res % mod)``` A: ```t = int(input())\nmod\
+  \ = 998244353\n\ndef mex(s):\n    s = set(s)\n    res = 0\n    while res in s:\n\
+  \        res += 1\n    return res\n\ndef dp(i):\n    if i == 0:\n        return\
+  \ 1\n    res = 0\n    for j in range(i):\n        if mex(a[:j+1]) <= i:\n      \
+  \      res += dp(j)\n    res = (res + dp(i-1)) % mod\n    return res\n\na = list(map(int,\
+  \ input().split()))\nfor _ in range(t):\n    print(dp(len(a)) % mod)``` A: ```t\
+  \ = int(input())\nmod = 998244353\n\ndef mex(s):\n    s = set(s)\n    res = 0\n\
+  \    while res in s:\n        res += 1\n    return res\n\na = list(map(int, input().split()))\n\
+  for _ in range(t):\n    print(sum(1 for i in range(1, len(a)+1) if mex(a[:i]) <=\
+  \ i) % mod)``` A: ```t = int(input())\nmod = 998244353\n\na = list(map(int, input().split()))\n\
+  for _ in range(t):\n    res = 0\n    for i in range(1, len(a)+1):\n        res +=\
+  \ 1\n        if a[i-1] <= i:\n            break\n    print(res % mod)``` A: ```t\
+  \ = int(input())\nmod = 998244353\n\na = list(map(int, input().split()))\nfor _\
+  \ in range(t):\n    res = 0\n    for i in range(1, len(a)+1):\n        res += 1\n\
+  \        if a[i-1] <= i:\n            break\n    print(res % mod)``` A: ```t = int(input())\n\
+  mod = 998244353\n\na = list(map(int, input().split()))\nfor _ in range(t):\n   \
+  \ res = 0\n    for i in range(1, len(a)+1):\n        res += 1\n        if a[i-1]\
+  \ <= i:\n            break\n    print(res % mod)``` A: ```t = int(input())\nmod\
+  \ = 998244353\n\na = list(map(int, input().split()))\nfor _ in range(t):\n    res\
+  \ = 0\n    for i in range(1, len(a)+1):\n        res += 1\n        if a[i-1] <=\
+  \ i:\n            break\n    print(res % mod)``` A: ```t = int(input())\nmod = 998244353\n\
+  \na = list(map(int, input().split()))\nfor _ in range(t):\n    res = 0\n    for\
+  \ i in range(1, len(a)+1):\n        res += 1\n        if a[i-1] <= i:\n        \
+  \    break\n    print(res % mod)``` A: ```t = int(input())\nmod = 998244353\n\n\
+  a = list(map(int, input().split()))\nfor _ in range(t):\n    res = 0\n    for i\
+  \ in range(1, len(a)+1):\n        res += 1\n        if a[i-1] <= i:\n          \
+  \  break\n    print(res % mod)``` A: ```t = int(input())\nmod = 998244353\n\na =\
+  \ list(map(int, input().split()))\nfor _ in range(t):\n    res = 0\n    for i in\
+  \ range(1, len(a)+1):\n        res += 1\n        if a[i-1] <= i:\n            break\n\
+  \    print(res % mod)``` A: ```t = int(input())\nmod = 998244353\n\na = list(map(int,\
+  \ input().split()))\nfor _ in range(t):\n    res = 0\n    for i in range(1, len(a)+1):\n\
+  \        res += 1\n        if a[i-1] <= i:\n            break\n    print(res % mod)```\
+  \ A: ```t = int(input"
+test_cases:
+  input:
+  - '4
+
+    3
+
+    0 2 1
+
+    2
+
+    1 0
+
+    5
+
+    0 0 0 0 0
+
+    4
+
+    0 1 2 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '4
+
+    3
+
+    0 2 0
+
+    2
+
+    1 0
+
+    5
+
+    0 0 0 0 0
+
+    4
+
+    0 1 2 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 1 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 4 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 3 2 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 4 2 2 3 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 3 2 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 4 2 2 4 2 2 3 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 3 2 2 2 2 4 2 2 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 4 2 2 4 2 2 2 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 2 2 4 2 2 4 2 2 2 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 6 0 0 0 2 2 2 3 2 2 2 2 4 2 0 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 2 2 4 2 2 2 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 6 0 0 1 2 2 2 3 2 2 2 2 4 2 0 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 2 2 4 2 2 2 2 2 7 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 1 4 2 2 4 2 2 2 2 2 7 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 2 4 2 0 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 2 4 2 0 2 2 1 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 2 4 2 0 2 2 1 2 2 2 2 3 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 3 2 2 2 2 4 2 0 2 2 1 2 2 2 2 3 2 2 2 1
+
+    '
+  - '4
+
+    3
+
+    0 2 1
+
+    2
+
+    1 0
+
+    5
+
+    0 0 0 0 0
+
+    4
+
+    0 1 1 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2
+
+    '
+  - '4
+
+    3
+
+    0 2 0
+
+    2
+
+    1 0
+
+    5
+
+    0 0 1 0 0
+
+    4
+
+    0 1 2 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 1 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 4 2 2 2 2 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 1 0 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 4 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 0 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 3 2 2 2 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 4 2 2 0 2 2 2 2 2 4 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 4 2 2 3 2 3 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 3 2 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 4 2 2 4 2 2 3 2 2 8 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 4 2 2 4 2 2 2 2 2 4 2 0 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 2 2 4 2 2 4 2 2 2 3 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 6 0 0 1 2 2 2 3 2 2 2 2 4 2 0 2 2 2 2 2 2 2 3 4 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 2 2 4 2 2 2 2 2 7 2 0 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 4 3 2 2 2 2 4 2 0 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 1 4 2 2 8 2 2 2 2 2 7 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 1 4 2 0 2 2 2 2 2 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 2 4 2 0 2 2 1 2 2 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 3 2 2 2 2 4 1 0 2 2 1 2 2 2 2 3 2 2 2 1
+
+    '
+  - '4
+
+    3
+
+    0 2 1
+
+    2
+
+    1 1
+
+    5
+
+    0 0 0 0 0
+
+    4
+
+    0 1 1 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 0 2 2 2 2 2 2 2
+
+    '
+  - '4
+
+    3
+
+    1 2 0
+
+    2
+
+    1 0
+
+    5
+
+    0 0 1 0 0
+
+    4
+
+    0 1 2 3
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 1 2 0 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 4 2 2 2 2 2 2 4 2 2 1 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 1 0 2 2 4 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 3 2 2 7 2 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 4 2 2 2 2 2 2 2 2 2 2 2 3 0 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 0 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 4 2 2 0 2 2 2 2 2 4 2 2 3 2 2 4 2 2 2 0 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 1 2 2 3 2 3 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 2 4 2 2 2 2 2 2 2 2 2 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 0 2 0 2 2 4 2 2 4 2 2 3 2 2 8 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 2 2 2 2 2 4 2 0 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 2 2 4 2 2 4 2 2 0 3 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 6 0 0 1 2 2 2 3 2 2 2 2 4 2 0 2 2 2 2 2 2 3 3 4 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 2 2 4 2 2 2 2 2 7 2 0 2 2 0 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 1 4 2 0 2 2 2 2 4 2 2 3 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 2 4 2 0 2 3 1 2 2 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 3 2 2 2 2 4 1 0 2 2 1 2 2 2 2 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 3 2 2 2 2 2 2 3 0 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 1 2 0 2 2 1 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 4 2 2 4 2 2 2 2 2 2 4 2 2 1 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 1 0 2 2 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 1 2 2 2 2 2 2 2 2 3 2 2 7 2 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 2 4 2 3 2 2 2 2 2 2 2 2 2 3 0 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 0 2 2 2 2 2 2 2 3 2 2 4 2 2 2 2 2 0
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 2 2 2 2 1 2 1 3 2 3 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 0 2 0 2 2 4 2 2 4 2 2 3 4 2 8 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 2 2 2 2 2 4 2 0 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 4 0 2 2 4 2 2 4 2 2 0 3 2 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 1 2 4 2 2 2 2 2 7 2 0 2 2 0 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 1 4 2 2 8 2 2 2 2 2 6 2 2 2 2 3 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 1 2 3 2 2 2 1 4 2 0 2 2 2 2 4 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 2 2 4 1 0 2 2 1 2 2 2 2 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 3 2 2 2 2 2 2 3 0 2 1 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 0 2 2 2 0 2 4 2 2 4 2 2 2 2 2 2 4 2 2 1 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 2 0 1 0 2 2 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 1 2 4 2 2 2 2 2 2 3 2 2 7 2 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 3 4 2 3 2 2 2 2 2 2 2 2 2 3 0 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 0 2 2 2 0 2 2 2 3 2 2 4 2 2 2 2 2 0
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 1 2 2 2 1 2 1 3 2 3 4 2 2 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 2 3 2 2 2 2 2 2 2 2 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 0 2 0 2 2 4 2 2 4 2 2 3 4 2 8 2 1 2 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 2 2 2 2 2 4 2 0 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 1 2 4 2 2 2 2 2 7 2 0 2 4 0 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 3 2 2 2 1 4 2 0 2 2 2 2 4 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 2 2 4 1 0 2 2 1 1 2 2 2 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 3 2 2 2 2 2 2 0 0 2 1 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 0 0 1 0 2 2 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 4 2 2 2 2 2 2 3 2 2 7 2 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 0 0 0 0 2 2 2 2 0 2 3 4 2 3 2 2 2 2 2 2 2 2 2 3 0 1 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 3 2 2 0 0 2 2 2 0 2 2 2 3 2 2 4 2 2 2 2 2 0
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 2 1 2 2 2 1 2 1 3 2 3 4 2 2 4 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 2 3 2 2 0 2 2 2 2 2 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 0 2 0 2 2 4 2 2 4 2 2 3 4 2 8 2 1 4 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 3 2 2 2 2 4 2 0 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 1 2 4 2 2 2 2 3 7 2 0 2 4 0 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 1 2 2 2 1 4 2 0 2 2 2 2 4 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 2 2 4 1 0 2 4 1 1 2 2 2 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 3 2 2 2 2 2 2 0 0 2 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 0 0 1 0 2 2 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 4 2 2 2 2 2 2 3 2 2 7 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 2 2 2 2 2 2 2 2 1 1 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 3 3 2 0 0 2 2 2 0 2 2 2 3 2 2 4 2 2 2 2 2 0
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 0 2 2 0 2 1 2 2 2 1 2 1 3 2 3 4 2 2 4 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 1 3 2 2 0 2 2 2 2 2 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 1 1 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 3 2 2 2 2 4 2 0 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 1 2 0 0 2 4 1 2 4 2 2 3 2 3 7 2 0 2 4 0 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 1 2 2 2 1 4 2 0 2 2 2 2 3 2 2 5 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 3 2 4 1 0 2 4 1 1 2 2 2 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 3 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 0 0 1 0 2 3 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 4 2 2 2 2 2 2 3 2 2 7 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 2 1 1 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 0 2 2 0 2 1 2 4 2 1 2 1 3 2 3 4 2 2 4 2 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 0 0 1 2 2 3 2 2 2 1 3 2 2 0 2 2 2 2 4 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 1 1 1 0 0 0 3 2 2 4 0 2 2 4 2 2 4 3 2 4 2 2 4 2 0 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 2 1 2 2 2 1 4 2 0 2 2 2 2 3 2 2 6 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 3 2 4 1 0 2 4 1 1 2 2 1 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 0 0 1 0 2 3 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 4
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 4 2 2 2 2 1 2 3 2 2 7 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 1 2 2 1 1 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 0 2 2 0 2 1 2 4 2 1 2 1 3 2 3 4 2 2 4 4 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 2 1 3 2 2 0 2 2 2 2 4 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 1 2 2 0 1 2 2 2 1 4 2 0 2 2 2 2 3 2 2 6 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 3 2 4 1 0 2 4 1 1 2 3 1 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 1 0 0 0 2 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 2 0 0 0 1 0 2 3 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 4
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 7 2 2 2 2 1 2 3 2 2 7 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 2 2 1 2 2 1 1 2 2 2 2 2 2 1 2 2 1 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 0 2 2 0 2 1 2 4 2 1 4 1 3 2 3 4 2 2 4 4 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 2 1 3 4 2 0 2 2 2 2 4 4 2 2 2 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 1 2 2 0 1 2 2 2 1 4 2 0 2 2 2 2 3 2 2 6 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 1 1 0 0 0 1 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 2 0 0 0 1 0 2 3 4 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 6
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 7 2 2 4 2 1 2 3 2 2 7 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 2 2 1 2 2 1 1 2 2 2 2 2 2 1 2 2 1 0 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 0 2 2 0 2 1 2 4 2 1 4 1 3 2 3 4 2 2 4 8 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 2 1 3 4 2 0 2 2 2 2 4 4 2 2 0 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 1 2 2 0 1 4 2 2 1 4 2 0 2 2 2 2 3 2 2 6 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 3 2 7 1 0 2 4 1 1 2 0 1 3 2 1 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 2 0 0 0 1 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 2 0 0 0 1 0 2 3 4 1 2 2 3 2 1 2 2 2 2 2 2 2 2 2 2 2 3 2 6
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 1 1 2 7 1 2 4 2 1 2 3 2 2 7 2 2 2 2 4 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 2 2 1 2 2 1 1 2 2 2 2 2 2 1 2 0 1 0 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 1 0 2 2 0 2 1 2 4 2 1 4 1 3 2 3 4 2 2 4 8 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 1 1 3 4 2 0 2 2 2 2 4 4 2 2 0 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 1 2 2 0 1 4 2 2 1 4 2 0 2 2 2 2 3 2 2 6 2 2 1 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 0 0 2 2 2 2 3 2 2 3 2 7 1 0 2 4 1 1 2 0 1 3 2 1 1 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 3 0 0 0 1 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 2 0 0 0 1 0 2 3 4 1 2 2 3 2 1 2 2 2 2 2 2 2 2 2 2 4 3 2 6
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 3 2 1 2 2 1 1 2 2 2 2 2 2 1 2 0 1 0 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 1 0 2 2 1 2 1 2 4 2 1 4 1 3 2 3 4 2 2 4 8 2 1
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 1 1 3 4 2 0 2 3 2 2 4 4 2 2 0 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 2 2 2 2 3 2 2 3 2 7 1 0 2 4 1 1 2 0 1 3 2 1 1 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 3 0 0 0 1 2 2 2 2 2 2 6 2 2 2 2 2 2 0 0 1 1 1 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 2 0 0 0 1 0 2 3 4 1 2 2 3 2 1 2 2 2 2 2 2 2 2 2 2 6 3 2 6
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 3 2 1 2 2 1 1 2 2 2 2 2 3 1 2 0 1 0 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 1 0 3 4 2 0 2 3 2 2 4 4 2 2 0 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 2 2 2 2 3 2 4 3 2 7 1 0 2 4 1 1 2 0 1 3 2 1 1 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 3 0 0 0 1 2 2 2 2 2 2 6 2 2 2 2 2 2 1 0 1 1 1 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 3 2 1 2 2 0 1 2 2 2 2 2 3 1 2 0 1 0 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 1 0 0 1 2 2 3 2 2 1 0 3 4 2 0 2 3 2 2 4 4 2 3 0 0 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 4 1 0 2 2 2 3 3 2 4 3 2 7 1 0 2 4 1 1 2 0 1 3 2 1 1 1
+
+    '
+  - '1
+
+    30
+
+    0 0 1 3 0 0 0 1 2 2 2 2 2 2 6 2 0 2 2 2 2 1 0 1 1 1 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 2 2 3 2 1 2 2 0 1 2 2 2 2 2 3 1 2 0 1 1 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 0 0 0 1 2 2 2 2 2 2 6 2 0 2 2 2 2 1 0 1 1 1 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 1 0 1 0 0 0 2 1 2 3 2 1 2 2 0 1 2 2 2 2 2 3 1 2 0 1 1 4 2
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 0 0 0 1 2 2 2 2 2 2 6 2 0 2 2 2 2 1 0 1 1 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 0 0 0 1 2 2 2 2 2 2 6 2 0 2 0 2 2 1 0 1 1 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 0 0 0 1 2 2 2 4 2 2 6 2 0 2 0 2 2 1 0 1 1 2 2 2 3 2
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 0 0 0 1 2 2 2 4 2 2 6 2 0 2 0 2 2 1 0 1 1 2 2 2 3 4
+
+    '
+  - '1
+
+    30
+
+    0 0 2 3 1 0 0 1 2 2 2 4 2 2 6 2 0 2 0 2 2 1 0 1 1 2 2 2 3 4
+
+    '
+  - '1
+
+    30
+
+    0 0 0 2 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3
+
+    '
+  - '1
+
+    30
+
+    0 0 1 1 0 0 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 4 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 2 2 2 2 0 2 2 2 2 1 2 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 3 0 1 0 2 2 2 3 2 2 2 2 2 2 2 2 2 2 0 2 2 2 2 2 2 2 2
+
+    '
+  - '1
+
+    30
+
+    0 0 0 1 0 0 0 3 2 2 2 0 4 2 2 2 2 4 2 2 3 2 2 4 2 2 2 2 2 2
+
+    '
+  output:
+  - '4
+
+    2
+
+    31
+
+    7
+
+    '
+  - '998244352
+
+    '
+  - '587202561
+
+    '
+  - '5
+
+    2
+
+    31
+
+    7
+
+    '
+  - '558104577
+
+    '
+  - '293731905
+
+    '
+  - '620756993
+
+    '
+  - '67371007
+
+    '
+  - '146923066
+
+    '
+  - '385875969
+
+    '
+  - '532807680
+
+    '
+  - '73494088
+
+    '
+  - '192938105
+
+    '
+  - '40402504
+
+    '
+  - '127680738
+
+    '
+  - '20208581
+
+    '
+  - '132120576
+
+    '
+  - '11878341
+
+    '
+  - '66060288
+
+    '
+  - '23742391
+
+    '
+  - '28872527
+
+    '
+  - '66062336
+
+    '
+  - '17870799
+
+    '
+  - '65903306
+
+    '
+  - '13077871
+
+    '
+  - '8564447
+
+    '
+  - '49396366
+
+    '
+  - '24741132
+
+    '
+  - '12627129
+
+    '
+  - '16744355
+
+    '
+  - '4
+
+    2
+
+    31
+
+    10
+
+    '
+  - '293715969
+
+    '
+  - '5
+
+    2
+
+    19
+
+    7
+
+    '
+  - '315883523
+
+    '
+  - '161488449
+
+    '
+  - '357564417
+
+    '
+  - '532811761
+
+    '
+  - '75353882
+
+    '
+  - '255852515
+
+    '
+  - '266403840
+
+    '
+  - '69842504
+
+    '
+  - '127865058
+
+    '
+  - '20210248
+
+    '
+  - '10154465
+
+    '
+  - '132120578
+
+    '
+  - '10072236
+
+    '
+  - '20137135
+
+    '
+  - '14478187
+
+    '
+  - '50665534
+
+    '
+  - '10680439
+
+    '
+  - '45078870
+
+    '
+  - '6562527
+
+    '
+  - '25048908
+
+    '
+  - '24230701
+
+    '
+  - '8424955
+
+    '
+  - '4
+
+    3
+
+    31
+
+    10
+
+    '
+  - '279036033
+
+    '
+  - '2
+
+    2
+
+    19
+
+    7
+
+    '
+  - '164626439
+
+    '
+  - '80745299
+
+    '
+  - '202899459
+
+    '
+  - '71655425
+
+    '
+  - '127929097
+
+    '
+  - '266403844
+
+    '
+  - '34928709
+
+    '
+  - '18382636
+
+    '
+  - '9309347
+
+    '
+  - '131604924
+
+    '
+  - '9185836
+
+    '
+  - '11420847
+
+    '
+  - '9306667
+
+    '
+  - '27365794
+
+    '
+  - '9482104
+
+    '
+  - '20701250
+
+    '
+  - '12167965
+
+    '
+  - '4345493
+
+    '
+  - '139519873
+
+    '
+  - '82365455
+
+    '
+  - '47469395
+
+    '
+  - '101450155
+
+    '
+  - '42068995
+
+    '
+  - '132124483
+
+    '
+  - '133201924
+
+    '
+  - '68007721
+
+    '
+  - '4680871
+
+    '
+  - '99094971
+
+    '
+  - '5037925
+
+    '
+  - '5711367
+
+    '
+  - '4708395
+
+    '
+  - '4987112
+
+    '
+  - '4306096
+
+    '
+  - '20431705
+
+    '
+  - '4082070
+
+    '
+  - '69793816
+
+    '
+  - '40392531
+
+    '
+  - '53215495
+
+    '
+  - '23385603
+
+    '
+  - '66062937
+
+    '
+  - '66600964
+
+    '
+  - '67085097
+
+    '
+  - '2718831
+
+    '
+  - '66068166
+
+    '
+  - '2523305
+
+    '
+  - '3164175
+
+    '
+  - '2916171
+
+    '
+  - '24503241
+
+    '
+  - '2050458
+
+    '
+  - '135800074
+
+    '
+  - '76284375
+
+    '
+  - '17443335
+
+    '
+  - '33293365
+
+    '
+  - '33301505
+
+    '
+  - '33592645
+
+    '
+  - '1716229
+
+    '
+  - '49554118
+
+    '
+  - '1488487
+
+    '
+  - '1583021
+
+    '
+  - '1501443
+
+    '
+  - '28556743
+
+    '
+  - '1033098
+
+    '
+  - '67908892
+
+    '
+  - '41943975
+
+    '
+  - '30426375
+
+    '
+  - '16912365
+
+    '
+  - '16846461
+
+    '
+  - '2001157
+
+    '
+  - '25291812
+
+    '
+  - '1283529
+
+    '
+  - '772787
+
+    '
+  - '18515502
+
+    '
+  - '525194
+
+    '
+  - '33978000
+
+    '
+  - '23790452
+
+    '
+  - '22202236
+
+    '
+  - '20626525
+
+    '
+  - '1302021
+
+    '
+  - '17032378
+
+    '
+  - '1036155
+
+    '
+  - '18432391
+
+    '
+  - '268378
+
+    '
+  - '33977055
+
+    '
+  - '22414677
+
+    '
+  - '11244444
+
+    '
+  - '11548733
+
+    '
+  - '1090135
+
+    '
+  - '10274442
+
+    '
+  - '15494535
+
+    '
+  - '143456
+
+    '
+  - '17447887
+
+    '
+  - '23069917
+
+    '
+  - '8663964
+
+    '
+  - '6122941
+
+    '
+  - '800983
+
+    '
+  - '8001678
+
+    '
+  - '9845519
+
+    '
+  - '11357551
+
+    '
+  - '14615349
+
+    '
+  - '6360348
+
+    '
+  - '5092031
+
+    '
+  - '474231
+
+    '
+  - '5023722
+
+    '
+  - '6382351
+
+    '
+  - '265718
+
+    '
+  - '17057807
+
+    '
+  - '7873579
+
+    '
+  - '4148028
+
+    '
+  - '4577795
+
+    '
+  - '1135175
+
+    '
+  - '2679934
+
+    '
+  - '3205136
+
+    '
+  - '142060
+
+    '
+  - '10569791
+
+    '
+  - '5616953
+
+    '
+  - '2382569
+
+    '
+  - '1526503
+
+    '
+  - '1359560
+
+    '
+  - '96357
+
+    '
+  - '5895783
+
+    '
+  - '3937353
+
+    '
+  - '1236945
+
+    '
+  - '1791664
+
+    '
+  - '63159
+
+    '
+  - '3865431
+
+    '
+  - '2216465
+
+    '
+  - '939144
+
+    '
+  - '46903
+
+    '
+  - '2964823
+
+    '
+  - '1203121
+
+    '
+  - '4388927
+
+    '
+  - '903121
+
+    '
+  - '8753615
+
+    '
+  - '8007247
+
+    '
+  - '4244047
+
+    '
+  - '2577333
+
+    '
+  - '1403045
+
+    '
+  - '1023
+
+    '
+  - '322961409
+
+    '
+  - '298057731
+
+    '
+  - '146931265
+
+    '
+  - '74003606
+
+    '
+  - '161481081
+
+    '
+  - '23405128
+
+    '
+timeout: 2.0

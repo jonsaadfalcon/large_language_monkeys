@@ -1,0 +1,5100 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nOne day, Ikta,\
+  \ an elementary school student, received a piece of paper with mathematical formulas\
+  \ from his grandfather. Apparently, the grandfather will give you as much money\
+  \ as the answer to the formula. Ikta has only learned addition, subtraction, and\
+  \ multiplication, so only addition, subtraction, and multiplication are used in\
+  \ mathematical formulas. In normal calculation, multiplication must be calculated\
+  \ before addition and subtraction, but Ikta had a vague understanding of operator\
+  \ precedence, so for the time being, it is convenient to maximize the calculation\
+  \ result of the formula. I decided to consider a good priority.\n\nGiven the three\
+  \ binary operators + \u2212 \xD7 and a formula containing parentheses. Change the\
+  \ precedence of the three operators as you like and answer the calculation result\
+  \ when the formula is maximized.\n\nHowever, note the following points.\n\n* Operators\
+  \ are always left-associative. (Operators with the same precedence are always calculated\
+  \ from the left side of the formula.)\n* Different operators may have the same precedence.\n\
+  * Do not change the priority while calculating one formula.\n\n\n\nInput\n\nThe\
+  \ input is given in the following format.\nA formula consisting of numbers from\
+  \ 0 to 9 and the operators'+','-','*' and parentheses'(',')'\n\n\n* To be precise,\
+  \ the input is in the format shown in BNF below.\n\n\n\n> <expr> :: = (<expr>) |\
+  \ <number> | <expr> <op> <expr>\n> <op> :: = + |-| *\n\n<number> represents a non-negative\
+  \ integer.\n\nConstraints\n\nThe input satisfies the following constraints.\n\n\
+  * The formula is 200 characters or less.\n* No matter what priority is set, it will\
+  \ not overflow as a result of calculation or in the middle of it as a 64-bit integer\
+  \ type.\n\nOutput\n\nOutput the maximum value obtained from the formula in one line.\n\
+  \nExamples\n\nInput\n\n3-2*3\n\n\nOutput\n\n3\n\n\nInput\n\n(5-3*4)*(0-2+1)\n\n\n\
+  Output\n\n21\n\n\nInput\n\n1-2+3-4+5-6*0\n\n\nOutput\n\n3\n\n\nInput\n\n(1989967-3*1-211+4487)\n\
+  \n\nOutput\n\n8511076028\nA: ```from sys import setrecursionlimit\nsetrecursionlimit(10\
+  \ ** 8)\n\nO = {'+': lambda l, r: l + r,\n     '-': lambda l, r: l - r,\n     '*':\
+  \ lambda l, r: l * r}\n\nP = {'+': 0,\n     '-': 0,\n     '*': 0}\n\nclass Source():\n\
+  \    def __init__(self, S, i=0):\n        self.S = S\n        self.pos = i\n\ndef\
+  \ peek(S):\n    return S.S[S.pos] if S.pos < len(S.S) else 'a'\n\ndef next(S):\n\
+  \    S.pos += 1\n\ndef expr(S, i):\n    # print(S.pos)\n    if i == 0:\n       \
+  \ left = factor(S)\n    else:\n        left = expr(S, i - 1)\n\n    while peek(S)\
+  \ in O and P[peek(S)] == i:\n        ope = peek(S)\n        next(S)\n        if\
+  \ i == 0:\n            right = factor(S)\n        else:\n            right = expr(S,\
+  \ i - 1)\n            \n        left = O[ope](left, right)\n        \n    # print(left,\
+  \ i)\n    return left\n\n\ndef factor(S):\n    if peek(S) == '(':\n        next(S)\n\
+  \        res = expr(S, 2)\n        next(S)\n    else:\n        res = num(S)\n  \
+  \  return res\n\ndef num(S):\n    sign = 1\n    if peek(S) == '-':\n        sign\
+  \ = -1\n        next(S)\n    res = 0\n    while '0' <= peek(S) <= '9':\n       \
+  \ res = res * 10 + int(peek(S))\n        next(S)\n\n    return sign * res\n\nS =\
+  \ input()\nans = -int(1e19)\n\nfor plus in range(3):\n    P['+'] = plus\n    for\
+  \ minus in range(3):\n        P['-'] = minus\n        for times in range(3):\n \
+  \           P['*'] = times\n            ans = max(ans, expr(Source(S), 2))\n   \
+  \         \nprint(ans)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nIn the year of 30XX participants of some world programming championship\
+  \ live in a single large hotel. The hotel has n floors. Each floor has m sections\
+  \ with a single corridor connecting all of them. The sections are enumerated from\
+  \ 1 to m along the corridor, and all sections with equal numbers on different floors\
+  \ are located exactly one above the other. Thus, the hotel can be represented as\
+  \ a rectangle of height n and width m. We can denote sections with pairs of integers\
+  \ (i, j), where i is the floor, and j is the section number on the floor.\n\nThe\
+  \ guests can walk along the corridor on each floor, use stairs and elevators. Each\
+  \ stairs or elevator occupies all sections (1, x), (2, x), \u2026, (n, x) for some\
+  \ x between 1 and m. All sections not occupied with stairs or elevators contain\
+  \ guest rooms. It takes one time unit to move between neighboring sections on the\
+  \ same floor or to move one floor up or down using stairs. It takes one time unit\
+  \ to move up to v floors in any direction using an elevator. You can assume you\
+  \ don't have to wait for an elevator, and the time needed to enter or exit an elevator\
+  \ is negligible.\n\nYou are to process q queries. Each query is a question \"what\
+  \ is the minimum time needed to go from a room in section (x_1, y_1) to a room in\
+  \ section (x_2, y_2)?\"\n\nInput\n\nThe first line contains five integers n, m,\
+  \ c_l, c_e, v (2 \u2264 n, m \u2264 10^8, 0 \u2264 c_l, c_e \u2264 10^5, 1 \u2264\
+  \ c_l + c_e \u2264 m - 1, 1 \u2264 v \u2264 n - 1) \u2014 the number of floors and\
+  \ section on each floor, the number of stairs, the number of elevators and the maximum\
+  \ speed of an elevator, respectively.\n\nThe second line contains c_l integers l_1,\
+  \ \u2026, l_{c_l} in increasing order (1 \u2264 l_i \u2264 m), denoting the positions\
+  \ of the stairs. If c_l = 0, the second line is empty.\n\nThe third line contains\
+  \ c_e integers e_1, \u2026, e_{c_e} in increasing order, denoting the elevators\
+  \ positions in the same format. It is guaranteed that all integers l_i and e_i are\
+  \ distinct.\n\nThe fourth line contains a single integer q (1 \u2264 q \u2264 10^5)\
+  \ \u2014 the number of queries.\n\nThe next q lines describe queries. Each of these\
+  \ lines contains four integers x_1, y_1, x_2, y_2 (1 \u2264 x_1, x_2 \u2264 n, 1\
+  \ \u2264 y_1, y_2 \u2264 m) \u2014 the coordinates of starting and finishing sections\
+  \ for the query. It is guaranteed that the starting and finishing sections are distinct.\
+  \ It is also guaranteed that these sections contain guest rooms, i. e. y_1 and y_2\
+  \ are not among l_i and e_i.\n\nOutput\n\nPrint q integers, one per line \u2014\
+  \ the answers for the queries.\n\nExample\n\nInput\n\n5 6 1 1 3\n2\n5\n3\n1 1 5\
+  \ 6\n1 3 5 4\n3 3 5 3\n\n\nOutput\n\n7\n5\n4\n\nNote\n\nIn the first query the optimal\
+  \ way is to go to the elevator in the 5-th section in four time units, use it to\
+  \ go to the fifth floor in two time units and go to the destination in one more\
+  \ time unit.\n\nIn the second query it is still optimal to use the elevator, but\
+  \ in the third query it is better to use the stairs in the section 2.\nA: ```import\
+  \ bisect as bs\nimport sys\ninp = sys.stdin.readlines()\nn, m, ladders, elevators,\
+  \ v = [int(x) for x in inp[0].strip().split()]\nladders = [int(x) for x in inp[1].strip().split()]\n\
+  elevators = [int(x) for x in inp[2].strip().split()]\nq = int(inp[3].strip())\n\
+  qs = []\nfor i in range(q):\n    qs.append([int(x) for x in inp[4+i].strip().split()])\n\
+  \noutput = []\n\nfor query in qs:\n    x1, y1, x2, y2 = query\n    if x1 == x2:\n\
+  \        output.append(abs(y1-y2))\n        continue\n    cur_ld = []\n    if ladders\
+  \ and (y1 > ladders[0]):\n        cur_ld.append(ladders[bs.bisect_left(ladders,\
+  \ y1)-1])\n    if ladders and (y1 < ladders[-1]):\n        cur_ld.append(ladders[bs.bisect_right(ladders,\
+  \ y1)])\n\n    cur_elev = []\n    if elevators and (y1 > elevators[0]):\n      \
+  \  cur_elev.append(elevators[bs.bisect_left(elevators, y1)-1])\n    if elevators\
+  \ and (y1 < elevators[-1]):\n        cur_elev.append(elevators[bs.bisect_right(elevators,\
+  \ y1)])\n\n    ans = []\n    for lad in cur_ld:\n        ans.append(abs(y1 - lad)\
+  \ + abs(y2 - lad) + abs(x1 - x2))\n    for elev in cur_elev:\n        height = abs(x1-x2)\n\
+  \        elspeed = height // v\n        if height % v != 0: elspeed+=1\n       \
+  \ ans.append(abs(y1 - elev) + abs(y2 - elev) + elspeed)\n    ans = min(ans)\n  \
+  \  output.append(ans)\n\noutput = '\\n'.join(map(str, output))\nprint(output)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nDmitry has an array of\
+  \ n non-negative integers a_1, a_2, ..., a_n.\n\nIn one operation, Dmitry can choose\
+  \ any index j (1 \u2264 j \u2264 n) and increase the value of the element a_j by\
+  \ 1. He can choose the same index j multiple times.\n\nFor each i from 0 to n, determine\
+  \ whether Dmitry can make the MEX of the array equal to exactly i. If it is possible,\
+  \ then determine the minimum number of operations to do it.\n\nThe MEX of the array\
+  \ is equal to the minimum non-negative integer that is not in the array. For example,\
+  \ the MEX of the array [3, 1, 0] is equal to 2, and the array [3, 3, 1, 4] is equal\
+  \ to 0.\n\nInput\n\nThe first line of input data contains a single integer t (1\
+  \ \u2264 t \u2264 10^4) \u2014 the number of test cases in the input. \n\nThe descriptions\
+  \ of the test cases follow.\n\nThe first line of the description of each test case\
+  \ contains a single integer n (1 \u2264 n \u2264 2 \u22C5 10^5) \u2014 the length\
+  \ of the array a.\n\nThe second line of the description of each test case contains\
+  \ n integers a_1, a_2, ..., a_n (0 \u2264 a_i \u2264 n) \u2014 elements of the array\
+  \ a.\n\nIt is guaranteed that the sum of the values n over all test cases in the\
+  \ test does not exceed 2\u22C510^5.\n\nOutput\n\nFor each test case, output n +\
+  \ 1 integer \u2014 i-th number is equal to the minimum number of operations for\
+  \ which you can make the array MEX equal to i (0 \u2264 i \u2264 n), or -1 if this\
+  \ cannot be done.\n\nExample\n\nInput\n\n\n5\n3\n0 1 3\n7\n0 1 2 3 4 3 2\n4\n3 0\
+  \ 0 0\n7\n4 6 2 3 5 0 5\n5\n4 0 1 0 4\n\n\nOutput\n\n\n1 1 0 -1 \n1 1 2 2 1 0 2\
+  \ 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1 \n\nNote\n\nIn the first\
+  \ set of example inputs, n=3:\n\n  * to get MEX=0, it is enough to perform one increment:\
+  \ a_1++; \n  * to get MEX=1, it is enough to perform one increment: a_2++; \n  *\
+  \ MEX=2 for a given array, so there is no need to perform increments; \n  * it is\
+  \ impossible to get MEX=3 by performing increments. \nA:"
+question: "Dmitry has an array of n non-negative integers a_1, a_2, ..., a_n.\n\n\
+  In one operation, Dmitry can choose any index j (1 \u2264 j \u2264 n) and increase\
+  \ the value of the element a_j by 1. He can choose the same index j multiple times.\n\
+  \nFor each i from 0 to n, determine whether Dmitry can make the MEX of the array\
+  \ equal to exactly i. If it is possible, then determine the minimum number of operations\
+  \ to do it.\n\nThe MEX of the array is equal to the minimum non-negative integer\
+  \ that is not in the array. For example, the MEX of the array [3, 1, 0] is equal\
+  \ to 2, and the array [3, 3, 1, 4] is equal to 0.\n\nInput\n\nThe first line of\
+  \ input data contains a single integer t (1 \u2264 t \u2264 10^4) \u2014 the number\
+  \ of test cases in the input. \n\nThe descriptions of the test cases follow.\n\n\
+  The first line of the description of each test case contains a single integer n\
+  \ (1 \u2264 n \u2264 2 \u22C5 10^5) \u2014 the length of the array a.\n\nThe second\
+  \ line of the description of each test case contains n integers a_1, a_2, ..., a_n\
+  \ (0 \u2264 a_i \u2264 n) \u2014 elements of the array a.\n\nIt is guaranteed that\
+  \ the sum of the values n over all test cases in the test does not exceed 2\u22C5\
+  10^5.\n\nOutput\n\nFor each test case, output n + 1 integer \u2014 i-th number is\
+  \ equal to the minimum number of operations for which you can make the array MEX\
+  \ equal to i (0 \u2264 i \u2264 n), or -1 if this cannot be done.\n\nExample\n\n\
+  Input\n\n\n5\n3\n0 1 3\n7\n0 1 2 3 4 3 2\n4\n3 0 0 0\n7\n4 6 2 3 5 0 5\n5\n4 0 1\
+  \ 0 4\n\n\nOutput\n\n\n1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1\
+  \ -1 -1 \n2 1 0 2 -1 -1 \n\nNote\n\nIn the first set of example inputs, n=3:\n\n\
+  \  * to get MEX=0, it is enough to perform one increment: a_1++; \n  * to get MEX=1,\
+  \ it is enough to perform one increment: a_2++; \n  * MEX=2 for a given array, so\
+  \ there is no need to perform increments; \n  * it is impossible to get MEX=3 by\
+  \ performing increments. "
+samples:
+- " ```from collections import defaultdict\n\ndef mex(A):\n    return min(i for i\
+  \ in range(len(A)+1) if i not in A)\n\ndef solve(n, A):\n    res = [-1] * (n + 1)\n\
+  \    for i in range(n + 1):\n        for j in range(len(A)):\n            if A[j]\
+  \ == i:\n                A[j] += 1\n                break\n        res[i] = min(j\
+  \ for j in range(len(A)) if A[j] == i) + 1\n    return res\n\nt = int(input())\n\
+  for _ in range(t):\n    n = int(input())\n    A = list(map(int, input().split()))\n\
+  \    res = solve(n, A)\n    print(*res)``` A: ```from collections import defaultdict\n\
+  \ndef mex(A):\n    return min(i for i in range(len(A)+1) if i not in A)\n\ndef solve(n,\
+  \ A):\n    res = [-1] * (n + 1)\n    for i in range(n + 1):\n        for j in range(len(A)):\n\
+  \            if A[j] == i:\n                A[j] += 1\n                break\n \
+  \       res[i] = min(j for j in range(len(A)) if A[j] == i) + 1\n    return res\n\
+  \nt = int(input())\nfor _ in range(t):\n    n = int(input())\n    A = list(map(int,\
+  \ input().split()))\n    res = solve(n, A)\n    print(*res)``` A: ```from collections\
+  \ import defaultdict\n\ndef mex(A):\n    return min(i for i in range(len(A)+1) if\
+  \ i not in A)\n\ndef solve(n, A):\n    res = [-1] * (n + 1)\n    for i in range(n\
+  \ + 1):\n        for j in range(len(A)):\n            if A[j] == i:\n          \
+  \      A[j] += 1\n                break\n        res[i] = min(j for j in range(len(A))\
+  \ if A[j] == i) + 1\n    return res\n\nt = int(input())\nfor _ in range(t):\n  \
+  \  n = int(input())\n    A = list(map(int, input().split()))\n    res = solve(n,\
+  \ A)\n    print(*res)``` A: ```from collections import defaultdict\n\ndef mex(A):\n\
+  \    return min(i for i in range(len(A)+1) if i not in A)\n\ndef solve(n, A):\n\
+  \    res = [-1] * (n + 1)\n    for i in range(n + 1):\n        for j in range(len(A)):\n\
+  \            if A[j] == i:\n                A[j] += 1\n                break\n \
+  \       res[i] = min(j for j in range(len(A)) if A[j] == i) + 1\n    return res\n\
+  \nt = int(input())\nfor _ in range(t):\n    n = int(input())\n    A = list(map(int,\
+  \ input().split()))\n    res = solve(n, A)\n    print(*res)``` A: ```from collections\
+  \ import defaultdict\n\ndef mex(A):\n    return min(i for i in range(len(A)+1) if\
+  \ i not in A)\n\ndef solve(n, A):\n    res = [-1] * (n + 1)\n    for i in range(n\
+  \ + 1):\n        for j in range(len(A)):\n            if A[j] == i:\n          \
+  \      A[j] += 1\n                break\n        res[i] = min(j for j in range(len(A))\
+  \ if A[j] == i) + 1\n    return res\n\nt = int(input())\nfor _ in range(t):\n  \
+  \  n = int(input())\n    A = list(map(int, input().split()))\n    res = solve(n,\
+  \ A)\n    print(*res)``` A: ```from collections import defaultdict\n\ndef mex(A):\n\
+  \    return min(i for i in range(len(A)+1) if i not in A)\n\ndef solve(n, A):\n\
+  \    res = [-1] * (n + 1)\n    for i in range(n + 1):\n        for j in range(len(A)):\n\
+  \            if A[j] == i:\n                A[j] += 1\n                break\n \
+  \       res[i] = min(j for j in range(len(A)) if A[j] == i) + 1\n    return res\n\
+  \nt = int(input())\nfor _ in range(t):\n    n = int(input())\n    A = list(map(int,\
+  \ input().split()))\n    res = solve(n, A)\n    print(*res)``` A: ```from collections\
+  \ import defaultdict\n\ndef mex(A):\n    return min(i for i in range(len(A)+1) if\
+  \ i not in A)\n\ndef solve(n, A):\n    res = [-1] * (n + 1)\n    for i in range(n\
+  \ + 1):\n        for j in range(len(A)):\n            if A[j] == i:\n          \
+  \      A"
+- " ```import heapq\ndef mex(A):\n    return min(i for i in range(len(A)+1) if i not\
+  \ in A)\n\ndef solve(A):\n    res = [float('inf')] * (len(A) + 1)\n    res[0] =\
+  \ 0\n    heap = [(0, 0)]\n    while heap:\n        op, i = heapq.heappop(heap)\n\
+  \        if op < res[i]:\n            res[i] = op\n            for j in range(i+1,\
+  \ len(A)+1):\n                heapq.heappush(heap, (op+1, j))\n    return [res[i]\
+  \ if res[i] != float('inf') else -1 for i in range(len(A) + 1)]\n\nt = int(input())\n\
+  for _ in range(t):\n    n = int(input())\n    A = list(map(int, input().split()))\n\
+  \    res = solve(A)\n    print(' '.join(map(str, res)))``` Q:"
+test_cases:
+  input:
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 1 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    4 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 1 3 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 5 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 5 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 4 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 2 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 2
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 4 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 0 4
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 3 3 2
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    1 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 4 3 0
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    4 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 0 4
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    4 0 0 0
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    0 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 1 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 1 6 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 2 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    1 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 3
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 1 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    1 1 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 0 0
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 6 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 5 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 1
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 4 3 4 3 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    6 6 2 6 6 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 1 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 2 4 1 2
+
+    4
+
+    1 0 0 0
+
+    7
+
+    0 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    0 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    1 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 5 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 7 3 0
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    4 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 7 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 2 6 0 5
+
+    5
+
+    1 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    4 0 1 0
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 0
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 1 1
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 1 6 0 1
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 2 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 1 3 3 0 5
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 3
+
+    5
+
+    4 0 0 0 1
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    1 1 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    3 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    1 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 0 1 4 4 0 0
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 5 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    0 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 0 1 1
+
+    '
+  - '5
+
+    3
+
+    0 1 0
+
+    7
+
+    0 1 4 3 4 3 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 3 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 1 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 2 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    1 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 7 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 2 6 0 5
+
+    5
+
+    1 0 2 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 1 4 0 2
+
+    4
+
+    4 0 1 0
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 0
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    0 0 0 0
+
+    7
+
+    4 6 2 3 6 1 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    1 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 1 6 0 1
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 2 2 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 1 3 3 0 5
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 5 5 0 3
+
+    5
+
+    4 0 0 0 1
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 2 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 5 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    1 0 2 4 4 0 2
+
+    4
+
+    3 1 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    1 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 2 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 5 4 2 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    0 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 0 2 3 4 3 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 1 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 2 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    1 6 1 1 6 0 4
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 1 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 2 6 0 5
+
+    5
+
+    1 0 2 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 0 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 1 4 0 2
+
+    4
+
+    4 1 1 0
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 6
+
+    5
+
+    1 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 6 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    5 6 2 1 6 0 1
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 2 2 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 5 2 0 3
+
+    5
+
+    4 0 0 0 1
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 2 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 6 5 1 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    1 0 1 0
+
+    7
+
+    0 6 0 0 4 0 7
+
+    5
+
+    4 0 2 1 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 0 2 3 4 3 1
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 0 2 1 5 0 4
+
+    5
+
+    2 1 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    1 6 2 1 6 0 4
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 2 3 0 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 1 4 0 2
+
+    4
+
+    4 1 1 1
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 6
+
+    5
+
+    1 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 6 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    5 6 2 1 6 0 1
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 2 2 5 0 3
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 2 3 0 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 1 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 6
+
+    5
+
+    1 0 2 1 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 2 2 5 0 3
+
+    5
+
+    4 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 5 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 6
+
+    5
+
+    1 0 2 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 2 2 5 0 3
+
+    5
+
+    4 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 5 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 6
+
+    5
+
+    2 0 2 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 1 2 5 0 3
+
+    5
+
+    4 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 1 2 5 0 3
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 4 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    4 0 1 2 5 0 3
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 4 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 0 4
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 0
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    0 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 3
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    4 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 1 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 7 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 3 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 5 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 1
+
+    7
+
+    0 0 2 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 0 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 1
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 3
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    4 0 1 0 2
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 5 2
+
+    4
+
+    3 0 1 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 1 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 4 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    6 6 2 6 6 0 5
+
+    5
+
+    4 0 2 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 2 6 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 2 6 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 2
+
+    7
+
+    0 1 2 3 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 0 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 4 4 4 0 2
+
+    4
+
+    1 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 1 4 4 1 4
+
+    4
+
+    3 0 1 0
+
+    7
+
+    0 6 0 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 3 5 0 5
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 0
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 2 6 0 5
+
+    5
+
+    1 0 0 0 2
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 1 5 0 5
+
+    5
+
+    2 0 1 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 4 1 1 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    4 0 0 0
+
+    7
+
+    0 4 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 1 0 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 0
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    0 0 0 0
+
+    7
+
+    4 6 2 3 6 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 0 2 3 3 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 0 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 1 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 2 5 0 5
+
+    5
+
+    4 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 4 3 5 0 3
+
+    5
+
+    4 0 0 0 4
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 1 2 3 4 3 4
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 7 2 3 5 0 5
+
+    5
+
+    4 1 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    1 1 2 4 4 0 2
+
+    4
+
+    3 1 1 0
+
+    7
+
+    0 6 1 0 4 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 2
+
+    7
+
+    0 1 2 5 4 1 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 3 7 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 4 3 4 3 2
+
+    4
+
+    4 0 1 0
+
+    7
+
+    4 6 2 3 5 0 5
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    2 0 0 0
+
+    7
+
+    6 6 2 6 6 0 5
+
+    5
+
+    4 0 1 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 2 4 1 2
+
+    4
+
+    1 0 0 0
+
+    7
+
+    0 6 2 6 6 0 4
+
+    5
+
+    3 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 0 3 4 1 1
+
+    4
+
+    0 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 1 2
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 1 1
+
+    4
+
+    3 0 0 0
+
+    7
+
+    0 6 1 1 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 2 3
+
+    7
+
+    0 1 2 4 4 0 2
+
+    4
+
+    0 0 0 0
+
+    7
+
+    0 6 1 0 6 0 4
+
+    5
+
+    4 0 1 0 3
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 3 3 0 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 0 1 5 0 5
+
+    5
+
+    2 0 0 1 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 2 2 3 4 3 2
+
+    4
+
+    3 0 0 1
+
+    7
+
+    4 6 2 3 5 0 0
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 1 1
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    0 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 3 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 5
+
+    5
+
+    2 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 0 3
+
+    7
+
+    0 1 2 3 4 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 6 2 1 6 0 1
+
+    5
+
+    4 0 1 0 4
+
+    '
+  - '5
+
+    3
+
+    0 1 3
+
+    7
+
+    0 1 2 3 5 3 2
+
+    4
+
+    3 0 0 0
+
+    7
+
+    4 0 2 3 5 0 3
+
+    5
+
+    4 1 0 0 1
+
+    '
+  output:
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 1 1 0 3 9 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 3 3 2\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n1 2 0 2 2 1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n2 0 2 1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n3 0 2 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n2 1 0 3 2 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 1 0 3 2 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 1 1 0 5 3 4 10 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n2 1 0 3 2 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 1 0 4 3\
+    \ \n"
+  - "1 1 0 -1 \n2 2 1 1 1 0 4 10 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n1 1 2 1 1 1 0 4 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 1 2 0 2 2 1 7 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 1 2 2 0 1 4 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 0 -1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 1 3 -1 -1 \n"
+  - "2 0 1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 1 1 0 4 3 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 3 0 2 1 4 9 \n3 0 1 4 3 \n2 0 2 1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 1 0 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n3 0 2 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n3 0 2 1 7 4 5 7 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 1 0 2 8 5 6 8 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 3 0 1 3 7 \n2 1 0 3 2 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 2 1 0 2 6\
+    \ \n"
+  - "2 0 1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 1 1 0 4 3 \n"
+  - "1 0 -1 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 1 3 -1\
+    \ -1 \n"
+  - "2 0 1 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n3 0 2 1 5 4\
+    \ \n"
+  - "1 1 0 -1 \n2 1 1 1 1 0 6 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 3 -1 \n3 1 0 2 6 5 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n3 1 0 2 8 5 6 8 \n3 0 1 4 3 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "2 0 1 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 2 1 0 3 2 7 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 3 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0\
+    \ 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n4 0 1 3 6 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n2 1 0 3 2 \n2 0 2 2 2 3 1 2 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 1 1 0 3 9 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 3 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n2 0 3 3 2 1 3 7 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n2 1 0 3 2 \n2 1 1 0 4 5 3 4 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 1 1 0 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 3 1 3 4 2 3 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n0 -1 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n3 0 2 1 5 4\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 3 2 2 1 4 \n3 0 1 3 -1 -1 \n"
+  - "1 0 -1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n1 2 0 2 2 1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 3 1 1 0 3 7 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 0 3 2 7 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 0 2 1 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n2 1 0 3 2 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 0 2 1 -1 -1 \n"
+  - "1 1 0 -1 \n4 1 0 2 7 5 6 12 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 1 1 0 4 3 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 2 0 2 2 1 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 2 1 0 2 6 \n"
+  - "1 1 0 -1 \n1 1 1 2 2 0 1 4 \n2 1 0 3 2 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 2 1 4 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "2 0 1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 3 0 2 1 4 9 \n3 1 0 2 5 \n2 0 2 1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n4 0 1 3 6 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 2 1 0 2 6\
+    \ \n"
+  - "2 0 1 -1 \n1 1 2 1 1 1 0 4 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 1 1 1 0 4 -1 -1 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 0 -1 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 3 -1 \n3 1 0 2 6 5 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 1 4 -1 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 2 1 0 2 6\
+    \ \n"
+  - "2 0 1 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 2 1 0 3 2 7 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n1 2 0 1 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n2 1 0 2 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n1 2 0 2 1 \n2 0 2 2 2 3 1 2 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 2 4 2 1 3 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 2 1 0 3 2 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 1 4 3 \n2 0 3 1 3 4 2 3 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 1 0 -1 -1 -1 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 3 2 2 1 4 \n3 1 0 2 6 5 \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n2 1 0 3 2 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 2 0 1 4 \n4 0 1 3 8 6 8 7 \n2 0 2 1 -1 -1 \n"
+  - "1 0 -1 -1 \n4 1 0 2 7 5 6 12 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 0 2 2 1 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n3 1 0 2 6 5\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 1 1 0 4 3 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n2 2 1 0 2 6 \n"
+  - "2 1 0 2 \n1 1 1 2 2 0 1 4 \n2 1 0 3 2 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "2 0 1 -1 \n1 2 1 2 1 0 2 7 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n3 0 2 1 5 4\
+    \ \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n1 3 0 1 4 3 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 1 4 -1 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 2 0 1 5\
+    \ \n"
+  - "2 0 1 -1 \n1 1 1 3 0 2 1 4 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n1 2 0 1 -1 -1 \n"
+  - "1 1 0 -1 \n2 2 2 0 2 1 5 11 \n2 1 0 2 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n2 0 2 1 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n4 0 1 3 6 \n0 -1 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n2 0 2 4 2 1 3 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 2 0 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 1 1 0 4 3 \n3 0 1 4 3 \n1 2 1 0 3 2 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 0 3 1 3 4 2 3 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 1 2 1 0 2 7 \n3 0 1 4 3 \n1 1 0 -1 -1 -1 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 1 0 2 6 5 \n"
+  - "2 0 1 -1 \n1 1 3 1 1 0 3 7 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n2 1 0 3 2 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 2 0 1 4 \n4 0 1 3 8 6 8 7 \n1 1 1 0 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 3 0 2 2 1 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n3 1 0 2 6 5\
+    \ \n"
+  - "2 0 1 -1 \n2 1 1 2 1 0 2 8 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n2 1 1 0 5 4 3 5 \n2 1 1 0 4 3\
+    \ \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n1 3 0 1 4 3 -1 -1 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 2 0 1 4 9 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 2 0 1 5\
+    \ \n"
+  - "2 0 1 -1 \n2 1 1 2 0 2 1 7 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 2 2 0 2 1 5 11 \n1 2 0 1 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n2 0 2 4 2 1 3 6 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n2 2 0 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 1 1 0 4 3 \n3 0 1 4 3 \n1 2 1 0 2 -1 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "2 0 1 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 0 3 1 3 4 2 3 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 3 2 2 2 1 5 \n3 1 0 2 6 5 \n"
+  - "2 0 1 -1 \n1 1 3 1 1 0 3 7 \n3 0 1 4 3 \n0 -1 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n3 0 3 1 4 2 3 9 \n2 2 0 1 4 \n4 0 1 3 7 6 -1 -1 \n1 1 1 0 -1 -1 \n"
+  - "2 0 1 -1 \n2 1 1 2 1 0 2 8 \n2 1 0 3 2 \n2 1 1 0 5 4 3 5 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n1 2 1 0 3 2 -1 -1 \n3 0 1 3 -1 -1 \n"
+  - "2 0 1 -1 \n2 0 3 3 1 3 2 6 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 2 2 0 2 1 5 11 \n0 -1 -1 -1 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n2 0 2 4 2 1 3 6 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 0 3 2 2 1 5 4 \n3 0 1 4 3 \n1 2 1 0 2 -1 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "2 0 1 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 0 3 2 2 2 1 5 \n3 0 1 3 -1 -1 \n"
+  - "2 0 1 -1 \n2 0 3 3 1 3 2 6 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n1 2 1 0 3 2 \n"
+  - "1 1 0 -1 \n2 0 2 4 2 1 3 6 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n1 2 1 0 3 2 \n"
+  - "2 0 1 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 0 3 2 2 2 1 5 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 2 3 2 2 1 4 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n1 2 1 0 3 2 \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 0 3 2 2 2 1 5 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 2 3 2 2 1 4 \n3 0 1 4 3 \n2 0 2 2 2 2 2 1 \n1 1 2 0 2 1 \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 1 1 1 1 1 0 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 1 2 0 1 5 \n3 0 2 1 4 \n2 1 1 1 1 1 0 6 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 2 1 4 \n2 1 1 1 1 1 0 6 \n3 0 1 3 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 0 2 1 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 4 2 2 1 4 8 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 1 -1 -1 -1 -1 -1 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n2 1 1 1 2 0 1 7 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "2 1 0 2 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n3 0 2 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n4 0 1 3 7 6 \n"
+  - "1 1 0 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n2 1 0 3 2 \n2 0 2 2 2 3 1 2 \n3 0 1 3 -1 -1 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0\
+    \ 3 3 2 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n1 2 0 1 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 1 0 2 6 -1 \n3 0 1 4 3 \n3 0 2 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n3 1 0 3 3 2 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 6 6 6 5 \n2 1 0 2 -1 -1 \n"
+  - "1 2 0 1 \n3 0 3 1 4 2 3 9 \n2 1 0 3 2 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n3 1 1 0 5 3 4 10 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 2 0 1 5 4 \n"
+  - "1 1 0 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 1 0 4 3\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 1 1 1 0 4 \n2 1 0 3 2 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n1 2 1 0 3 2 \n"
+  - "1 1 0 -1 \n2 0 2 3 3 1 2 5 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 0 2 1 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 3 0 1 3 8 7 \n3 0 1 4 3 \n2 0 2 1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 1 0 \n1 2 2 1 1 0 3 8 \n3 0 1 4 3 \n4 0 1 3 7 6 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 4 1 4 2 3 7 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n3 0 2 1 7 4 5 7 \n2 2 0 1 4 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 2 0 1 7 4 5 7 \n2 1 0 3 2 \n4 0 1 3 8 6 8 7 \n2 1 0 2 -1 -1 \n"
+  - "1 0 -1 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n3 0 1 4 3 \n3 0 1 4 4 5 3 4 \n3 0 1 3 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n2 2 1 1 1 0 4 10 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n3 1 1 0 3 7\
+    \ \n"
+  - "2 0 1 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n2 1 1 0 4 5 3 4 \n1 2 1 0 3 2 \n"
+  - "1 1 0 -1 \n1 2 2 1 0 3 2 7 \n3 0 1 4 3 \n2 2 0 1 6 4 6 5 \n2 1 0 2 -1 -1 \n"
+  - "2 0 1 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 3 -1 \n3 1 0 2 7 5 7 6 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 3 2 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0\
+    \ 2 -1 -1 \n"
+  - "2 1 0 2 \n1 1 2 2 1 0 2 6 \n4 0 1 3 6 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n2 1 0 3 2 \n2 0 2 3 2 2 1 4 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 0 3 3 2 1 3 7 \n3 0 1 4 3 \n2 1 1 1 1 1 0 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n2 0 3 1 3 4 2 3 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 1 -1 -1 -1 -1 -1 \n3 0 1 3 -1 -1\
+    \ \n"
+  - "1 0 -1 -1 \n1 1 1 2 2 0 1 4 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n1 2 0 2 2 1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 2 0 3 1 2 7 \n1 2 0 2 1 \n3 1 0 2 7 5 7 6 \n2 1 0 2 -1 -1 \n"
+  - "1 1 1 0 \n1 2 2 0 2 2 1 6 \n3 0 1 4 3 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 1 2 2 0 1 4 \n2 1 0 2 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 2 -1\
+    \ -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n3 0 2 1 4 \n1 0 -1 -1 -1 -1 -1 -1 \n1 2 0 1 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 2 3 0 2 1 4 9 \n3 1 0 2 5 \n2 0 2 1 -1 -1 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 1 0 -1 \n2 3 0 2 2 1 5 11 \n4 0 1 3 6 \n3 1 0 2 6 5 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n2 1 2 0 3 1 2 8 \n3 0 1 4 3 \n3 1 0 2 6 5 -1 -1 \n1 2 1 0 3 2 \n"
+  - "1 1 0 -1 \n1 3 1 1 1 0 4 9 \n3 0 1 4 3 \n2 2 0 1 5 4 -1 -1 \n2 1 0 3 3 2 \n"
+  - "1 0 -1 -1 \n2 1 2 0 3 1 2 8 \n4 0 1 3 6 \n3 1 0 2 6 5 -1 -1 \n2 1 0 3 3 2 \n"
+  - "2 0 1 -1 \n2 1 1 3 0 1 3 9 \n3 0 1 4 3 \n3 1 0 2 6 7 5 6 \n2 1 1 0 4 3 \n"
+  - "1 1 0 -1 \n1 0 -1 -1 -1 -1 -1 -1 \n2 1 0 3 2 \n2 0 2 2 2 2 2 1 \n2 1 0 2 -1 -1\
+    \ \n"
+  - "1 1 0 -1 \n1 1 2 2 1 0 2 6 \n1 2 0 2 1 \n2 0 2 2 2 3 1 2 \n3 1 0 2 6 5 \n"
+  - "1 1 0 -1 \n1 1 1 3 1 0 2 5 \n3 0 1 4 3 \n2 0 2 2 2 3 1 2 \n2 1 1 0 4 3 \n"
+  - "2 0 1 -1 \n1 1 2 2 1 0 2 6 \n3 0 1 4 3 \n1 2 1 0 3 2 -1 -1 \n2 1 0 2 -1 -1 \n"
+  - "1 1 0 -1 \n1 1 2 2 0 2 1 5 \n3 0 1 4 3 \n2 0 2 3 2 2 1 4 \n2 2 0 1 5 4 \n"
+timeout: 2.0

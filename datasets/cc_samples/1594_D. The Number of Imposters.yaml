@@ -1,0 +1,10211 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nMaxim wants\
+  \ to buy some games at the local game shop. There are n games in the shop, the i-th\
+  \ game costs c_i.\n\nMaxim has a wallet which can be represented as an array of\
+  \ integers. His wallet contains m bills, the j-th bill has value a_j.\n\nGames in\
+  \ the shop are ordered from left to right, Maxim tries to buy every game in that\
+  \ order.\n\nWhen Maxim stands at the position i in the shop, he takes the first\
+  \ bill from his wallet (if his wallet is empty then he proceeds to the next position\
+  \ immediately) and tries to buy the i-th game using this bill. After Maxim tried\
+  \ to buy the n-th game, he leaves the shop.\n\nMaxim buys the i-th game if and only\
+  \ if the value of the first bill (which he takes) from his wallet is greater or\
+  \ equal to the cost of the i-th game. If he successfully buys the i-th game, the\
+  \ first bill from his wallet disappears and the next bill becomes first. Otherwise\
+  \ Maxim leaves the first bill in his wallet (this bill still remains the first one)\
+  \ and proceeds to the next game.\n\nFor example, for array c = [2, 4, 5, 2, 4] and\
+  \ array a = [5, 3, 4, 6] the following process takes place: Maxim buys the first\
+  \ game using the first bill (its value is 5), the bill disappears, after that the\
+  \ second bill (with value 3) becomes the first one in Maxim's wallet, then Maxim\
+  \ doesn't buy the second game because c_2 > a_2, the same with the third game, then\
+  \ he buys the fourth game using the bill of value a_2 (the third bill becomes the\
+  \ first one in Maxim's wallet) and buys the fifth game using the bill of value a_3.\n\
+  \nYour task is to get the number of games Maxim will buy.\n\nInput\n\nThe first\
+  \ line of the input contains two integers n and m (1 \u2264 n, m \u2264 1000) \u2014\
+  \ the number of games and the number of bills in Maxim's wallet.\n\nThe second line\
+  \ of the input contains n integers c_1, c_2, ..., c_n (1 \u2264 c_i \u2264 1000),\
+  \ where c_i is the cost of the i-th game.\n\nThe third line of the input contains\
+  \ m integers a_1, a_2, ..., a_m (1 \u2264 a_j \u2264 1000), where a_j is the value\
+  \ of the j-th bill from the Maxim's wallet.\n\nOutput\n\nPrint a single integer\
+  \ \u2014 the number of games Maxim will buy.\n\nExamples\n\nInput\n\n5 4\n2 4 5\
+  \ 2 4\n5 3 4 6\n\n\nOutput\n\n3\n\n\nInput\n\n5 2\n20 40 50 20 40\n19 20\n\n\nOutput\n\
+  \n0\n\n\nInput\n\n6 4\n4 8 15 16 23 42\n1000 1000 1000 1000\n\n\nOutput\n\n4\n\n\
+  Note\n\nThe first example is described in the problem statement.\n\nIn the second\
+  \ example Maxim cannot buy any game because the value of the first bill in his wallet\
+  \ is smaller than the cost of any game in the shop.\n\nIn the third example the\
+  \ values of the bills in Maxim's wallet are large enough to buy any game he encounter\
+  \ until he runs out of bills in his wallet.\nA: ```n, m = map(int, input().split())\n\
+  a = list( map(int, input().split()) )\nb = list( map(int, input().split()) )\ni,\
+  \ j, counter = 0, 0, 0\nwhile( i < int(n) and j < int(m) ):\n    if( a[i] <= b[j]\
+  \ ):\n        i += 1\n        j += 1\n        counter += 1\n    else:\n        i\
+  \ += 1\nprint(counter)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nYou are given an array of positive integers. While there are at least two\
+  \ equal elements, we will perform the following operation. We choose the smallest\
+  \ value x that occurs in the array 2 or more times. Take the first two occurrences\
+  \ of x in this array (the two leftmost occurrences). Remove the left of these two\
+  \ occurrences, and the right one is replaced by the sum of this two values (that\
+  \ is, 2 \u22C5 x).\n\nDetermine how the array will look after described operations\
+  \ are performed.\n\nFor example, consider the given array looks like [3, 4, 1, 2,\
+  \ 2, 1, 1]. It will be changed in the following way: [3, 4, 1, 2, 2, 1, 1]~\u2192\
+  ~[3, 4, 2, 2, 2, 1]~\u2192~[3, 4, 4, 2, 1]~\u2192~[3, 8, 2, 1].\n\nIf the given\
+  \ array is look like [1, 1, 3, 1, 1] it will be changed in the following way: [1,\
+  \ 1, 3, 1, 1]~\u2192~[2, 3, 1, 1]~\u2192~[2, 3, 2]~\u2192~[3, 4].\n\nInput\n\nThe\
+  \ first line contains a single integer n (2 \u2264 n \u2264 150 000) \u2014 the\
+  \ number of elements in the array.\n\nThe second line contains a sequence from n\
+  \ elements a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^{9}) \u2014 the elements of\
+  \ the array.\n\nOutput\n\nIn the first line print an integer k \u2014 the number\
+  \ of elements in the array after all the performed operations. In the second line\
+  \ print k integers \u2014 the elements of the array after all the performed operations.\n\
+  \nExamples\n\nInput\n\n7\n3 4 1 2 2 1 1\n\n\nOutput\n\n4\n3 8 2 1 \n\n\nInput\n\n\
+  5\n1 1 3 1 1\n\n\nOutput\n\n2\n3 4 \n\n\nInput\n\n5\n10 40 20 50 30\n\n\nOutput\n\
+  \n5\n10 40 20 50 30 \n\nNote\n\nThe first two examples were considered in the statement.\n\
+  \nIn the third example all integers in the given array are distinct, so it will\
+  \ not change.\nA: ```n = int(input())\nd = {}\nfor i, x in enumerate(map(int, input().split())):\n\
+  \    while x in d:\n        del d[x]\n        x *= 2\n    d[x] = i\nprint(len(d))\n\
+  print(*d)```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nTheofanis\
+  \ started playing the new online game called \"Among them\". However, he always\
+  \ plays with Cypriot players, and they all have the same name: \"Andreas\" (the\
+  \ most common name in Cyprus).\n\nIn each game, Theofanis plays with n other players.\
+  \ Since they all have the same name, they are numbered from 1 to n.\n\nThe players\
+  \ write m comments in the chat. A comment has the structure of \"i j c\" where i\
+  \ and j are two distinct integers and c is a string (1 \u2264 i, j \u2264 n; i \u2260\
+  \ j; c is either imposter or crewmate). The comment means that player i said that\
+  \ player j has the role c.\n\nAn imposter always lies, and a crewmate always tells\
+  \ the truth. \n\nHelp Theofanis find the maximum possible number of imposters among\
+  \ all the other Cypriot players, or determine that the comments contradict each\
+  \ other (see the notes for further explanation).\n\nNote that each player has exactly\
+  \ one role: either imposter or crewmate.\n\nInput\n\nThe first line contains a single\
+  \ integer t (1 \u2264 t \u2264 10^4) \u2014 the number of test cases. Description\
+  \ of each test case follows.\n\nThe first line of each test case contains two integers\
+  \ n and m (1 \u2264 n \u2264 2 \u22C5 10^5; 0 \u2264 m \u2264 5 \u22C5 10^5) \u2014\
+  \ the number of players except Theofanis and the number of comments.\n\nEach of\
+  \ the next m lines contains a comment made by the players of the structure \"i j\
+  \ c\" where i and j are two distinct integers and c is a string (1 \u2264 i, j \u2264\
+  \ n; i \u2260 j; c is either imposter or crewmate).\n\nThere can be multiple comments\
+  \ for the same pair of (i, j).\n\nIt is guaranteed that the sum of all n does not\
+  \ exceed 2 \u22C5 10^5 and the sum of all m does not exceed 5 \u22C5 10^5.\n\nOutput\n\
+  \nFor each test case, print one integer \u2014 the maximum possible number of imposters.\
+  \ If the comments contradict each other, print -1.\n\nExample\n\nInput\n\n\n5\n\
+  3 2\n1 2 imposter\n2 3 crewmate\n5 4\n1 3 crewmate\n2 5 crewmate\n2 4 imposter\n\
+  3 4 imposter\n2 2\n1 2 imposter\n2 1 crewmate\n3 5\n1 2 imposter\n1 2 imposter\n\
+  3 2 crewmate\n3 2 crewmate\n1 3 imposter\n5 0\n\n\nOutput\n\n\n2\n4\n-1\n2\n5\n\n\
+  Note\n\nIn the first test case, imposters can be Andreas 2 and 3.\n\nIn the second\
+  \ test case, imposters can be Andreas 1, 2, 3 and 5.\n\nIn the third test case,\
+  \ comments contradict each other. This is because player 1 says that player 2 is\
+  \ an imposter, and player 2 says that player 1 is a crewmate. If player 1 is a crewmate,\
+  \ then he must be telling the truth, so player 2 must be an imposter. But if player\
+  \ 2 is an imposter then he must be lying, so player 1 can't be a crewmate. Contradiction.\n\
+  A:"
+question: "Theofanis started playing the new online game called \"Among them\". However,\
+  \ he always plays with Cypriot players, and they all have the same name: \"Andreas\"\
+  \ (the most common name in Cyprus).\n\nIn each game, Theofanis plays with n other\
+  \ players. Since they all have the same name, they are numbered from 1 to n.\n\n\
+  The players write m comments in the chat. A comment has the structure of \"i j c\"\
+  \ where i and j are two distinct integers and c is a string (1 \u2264 i, j \u2264\
+  \ n; i \u2260 j; c is either imposter or crewmate). The comment means that player\
+  \ i said that player j has the role c.\n\nAn imposter always lies, and a crewmate\
+  \ always tells the truth. \n\nHelp Theofanis find the maximum possible number of\
+  \ imposters among all the other Cypriot players, or determine that the comments\
+  \ contradict each other (see the notes for further explanation).\n\nNote that each\
+  \ player has exactly one role: either imposter or crewmate.\n\nInput\n\nThe first\
+  \ line contains a single integer t (1 \u2264 t \u2264 10^4) \u2014 the number of\
+  \ test cases. Description of each test case follows.\n\nThe first line of each test\
+  \ case contains two integers n and m (1 \u2264 n \u2264 2 \u22C5 10^5; 0 \u2264\
+  \ m \u2264 5 \u22C5 10^5) \u2014 the number of players except Theofanis and the\
+  \ number of comments.\n\nEach of the next m lines contains a comment made by the\
+  \ players of the structure \"i j c\" where i and j are two distinct integers and\
+  \ c is a string (1 \u2264 i, j \u2264 n; i \u2260 j; c is either imposter or crewmate).\n\
+  \nThere can be multiple comments for the same pair of (i, j).\n\nIt is guaranteed\
+  \ that the sum of all n does not exceed 2 \u22C5 10^5 and the sum of all m does\
+  \ not exceed 5 \u22C5 10^5.\n\nOutput\n\nFor each test case, print one integer \u2014\
+  \ the maximum possible number of imposters. If the comments contradict each other,\
+  \ print -1.\n\nExample\n\nInput\n\n\n5\n3 2\n1 2 imposter\n2 3 crewmate\n5 4\n1\
+  \ 3 crewmate\n2 5 crewmate\n2 4 imposter\n3 4 imposter\n2 2\n1 2 imposter\n2 1 crewmate\n\
+  3 5\n1 2 imposter\n1 2 imposter\n3 2 crewmate\n3 2 crewmate\n1 3 imposter\n5 0\n\
+  \n\nOutput\n\n\n2\n4\n-1\n2\n5\n\nNote\n\nIn the first test case, imposters can\
+  \ be Andreas 2 and 3.\n\nIn the second test case, imposters can be Andreas 1, 2,\
+  \ 3 and 5.\n\nIn the third test case, comments contradict each other. This is because\
+  \ player 1 says that player 2 is an imposter, and player 2 says that player 1 is\
+  \ a crewmate. If player 1 is a crewmate, then he must be telling the truth, so player\
+  \ 2 must be an imposter. But if player 2 is an imposter then he must be lying, so\
+  \ player 1 can't be a crewmate. Contradiction."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    n, m = map(int, input().split())\n\
+  \    graph = {}\n    for _ in range(m):\n        i, j, c = input().split()\n   \
+  \     i, j = int(i), int(j)\n        if c == 'imposter':\n            c = False\n\
+  \        else:\n            c = True\n        if i not in graph:\n            graph[i]\
+  \ = set()\n        graph[i].add((j, c))\n        if j not in graph:\n          \
+  \  graph[j] = set()\n        graph[j].add((i, c))\n    max_imposters = 0\n    for\
+  \ i in range(1, n+1):\n        if i not in graph:\n            continue\n      \
+  \  imposter_count = 0\n        for j, c in graph[i]:\n            if c == (i !=\
+  \ j):\n                imposter_count += 1\n        max_imposters = max(max_imposters,\
+  \ imposter_count)\n    if max_imposters > n//2:\n        print(max_imposters)\n\
+  \    else:\n        print(-1)``` Q:"
+- " ```t = int(input())\nfor _ in range(t):\n    n, m = map(int, input().split())\n\
+  \    graph = {}\n    for _ in range(m):\n        i, j, c = input().split()\n   \
+  \     i, j = int(i), int(j)\n        if i not in graph:\n            graph[i] =\
+  \ set()\n        if j not in graph:\n            graph[j] = set()\n        graph[i].add((j,\
+  \ c))\n        graph[j].add((i, c))\n    for i in range(1, n+1):\n        for j,\
+  \ c in graph.get(i, ()):\n            if c == 'imposter' and i != j:\n         \
+  \       i, j = j, i\n            if c == 'crewmate' and i == j:\n              \
+  \  print(-1)\n                exit()\n    max_imp = 0\n    for i in range(1, n+1):\n\
+  \        for j, c in graph.get(i, ()):\n            if c == 'imposter' and i !=\
+  \ j:\n                max_imp += 1\n    print(max_imp)``` Q:"
+test_cases:
+  input:
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 1 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    9 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    10 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    10 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    4 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    1 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    6 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    13 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    4 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 3 crewmate
+
+    1 3 imposter
+
+    10 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    4 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    8 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    9 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 3 crewmate
+
+    2 3 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    15 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    2 1 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    6 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    7 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    13 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    4 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    4 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    7 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 4 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 1 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    4 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    10 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    9 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    10 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    4 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    6 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    10 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 4 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    8 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    6 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    13 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 4 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    4 5 crewmate
+
+    1 4 imposter
+
+    2 1 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    6 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    10 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    6 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 3 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    1 3 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    2 2 crewmate
+
+    1 2 imposter
+
+    2 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    4 2 crewmate
+
+    10 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    10 2
+
+    1 2 imposter
+
+    4 2 crewmate
+
+    10 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    6 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 1 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 4 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    4 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    4 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    8 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    2 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    3 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 3 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 3 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 3 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 3 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 1 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    3 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 4 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    10 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    6 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    2 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    4 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    4 5 crewmate
+
+    3 5 imposter
+
+    3 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 4 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 1 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 1 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 3 imposter
+
+    3 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    8 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    2 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    2 1 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    2 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 1 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 4 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    4 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 3 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    9 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    3 1 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 1 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 4 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 1 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 4 crewmate
+
+    3 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    6 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    7 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    10 5
+
+    1 2 imposter
+
+    1 1 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 2 crewmate
+
+    2 5 crewmate
+
+    2 1 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    1 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    6 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 1 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    4 5 crewmate
+
+    1 4 imposter
+
+    2 1 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    2 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    4 3 crewmate
+
+    2 3 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 1 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    1 2 crewmate
+
+    1 3 imposter
+
+    3 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 4 imposter
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    2 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    5 4
+
+    1 2 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    2 2 imposter
+
+    3 1 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 1 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 5 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    6 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    1 1 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    5 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    6 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 1 crewmate
+
+    3 2 crewmate
+
+    1 5 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    3 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    6 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    7 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    2 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 3 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 1 crewmate
+
+    2 5 crewmate
+
+    2 5 imposter
+
+    3 5 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    2 2 crewmate
+
+    1 2 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 3 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    4 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    1 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 2 crewmate
+
+    1 2 imposter
+
+    4 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    6 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 2 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    4 5
+
+    1 3 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    6 4
+
+    1 3 crewmate
+
+    2 5 crewmate
+
+    2 3 imposter
+
+    1 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 2 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    1 2 crewmate
+
+    3 2 crewmate
+
+    2 3 imposter
+
+    2 0
+
+    '
+  - '5
+
+    5 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 4 crewmate
+
+    2 5 crewmate
+
+    2 4 imposter
+
+    3 4 imposter
+
+    4 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    3 3 crewmate
+
+    1 3 imposter
+
+    5 0
+
+    '
+  - '5
+
+    3 2
+
+    1 2 imposter
+
+    2 3 crewmate
+
+    5 4
+
+    1 5 crewmate
+
+    2 5 crewmate
+
+    1 4 imposter
+
+    3 4 imposter
+
+    2 2
+
+    1 2 imposter
+
+    2 1 crewmate
+
+    3 5
+
+    1 2 imposter
+
+    1 2 imposter
+
+    3 2 crewmate
+
+    2 2 crewmate
+
+    1 3 imposter
+
+    13 0
+
+    '
+  output:
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    2
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '4
+
+    4
+
+    1
+
+    -1
+
+    2
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    9
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    9
+
+    5
+
+    '
+  - '2
+
+    9
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    4
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    -1
+
+    4
+
+    '
+  - '2
+
+    4
+
+    4
+
+    2
+
+    5
+
+    '
+  - '4
+
+    5
+
+    1
+
+    -1
+
+    2
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    13
+
+    '
+  - '2
+
+    4
+
+    3
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    10
+
+    '
+  - '2
+
+    4
+
+    1
+
+    2
+
+    4
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    3
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    8
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    2
+
+    2
+
+    4
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    2
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    2
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    2
+
+    9
+
+    '
+  - '4
+
+    3
+
+    1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    4
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    15
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    6
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    6
+
+    -1
+
+    2
+
+    7
+
+    '
+  - '4
+
+    4
+
+    2
+
+    -1
+
+    2
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    4
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    7
+
+    '
+  - '2
+
+    4
+
+    1
+
+    2
+
+    13
+
+    '
+  - '2
+
+    3
+
+    1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    6
+
+    3
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    2
+
+    '
+  - '2
+
+    4
+
+    2
+
+    2
+
+    10
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    9
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    10
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    -1
+
+    4
+
+    '
+  - '5
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '3
+
+    3
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '-1
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '7
+
+    4
+
+    2
+
+    -1
+
+    2
+
+    '
+  - '5
+
+    4
+
+    1
+
+    2
+
+    13
+
+    '
+  - '2
+
+    4
+
+    4
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    3
+
+    -1
+
+    5
+
+    '
+  - '3
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    2
+
+    -1
+
+    10
+
+    '
+  - '2
+
+    5
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    2
+
+    '
+  - '-1
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    2
+
+    2
+
+    '
+  - '4
+
+    8
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '9
+
+    8
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    3
+
+    2
+
+    5
+
+    '
+  - '5
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    3
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '4
+
+    -1
+
+    1
+
+    -1
+
+    2
+
+    '
+  - '4
+
+    -1
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '4
+
+    -1
+
+    1
+
+    2
+
+    5
+
+    '
+  - '3
+
+    -1
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    4
+
+    1
+
+    2
+
+    8
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    2
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    7
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    4
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    5
+
+    1
+
+    -1
+
+    2
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '2
+
+    4
+
+    3
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    8
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    5
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    4
+
+    2
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    9
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    4
+
+    '
+  - '2
+
+    4
+
+    4
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    3
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    -1
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    3
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    3
+
+    '
+  - '2
+
+    4
+
+    2
+
+    -1
+
+    5
+
+    '
+  - '-1
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    4
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    7
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    4
+
+    '
+  - '2
+
+    -1
+
+    1
+
+    -1
+
+    5
+
+    '
+  - '4
+
+    4
+
+    1
+
+    -1
+
+    2
+
+    '
+  - '4
+
+    3
+
+    -1
+
+    2
+
+    5
+
+    '
+  - '2
+
+    4
+
+    -1
+
+    2
+
+    13
+
+    '
+timeout: 3.0

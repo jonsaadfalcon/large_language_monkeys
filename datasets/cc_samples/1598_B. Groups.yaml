@@ -1,0 +1,4991 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nProblem statement\n\
+  \nJota knows only the characters from `a` to` z` and the addition symbol `+`. Jota\
+  \ has an older sister, Tachiko. In addition to that, Tatsuko knows multiplication\
+  \ `*`, parentheses `(`, `)`, and integers (numbers) between `1` and` 9`. However,\
+  \ I don't know how to use multiple parentheses and how to multiply inside parentheses.\n\
+  \nFor example, if you have the following formula:\n\n1. `a + a + a`\n2. `a + 4 *\
+  \ (b + c)`\n3. `a + 3 * (b + 2 * (c + d))`\n4. `a-b`\n5. `a / b`\n6. `11 * a`\n\n\
+  \n\nOf these, Jota-kun can write only 1., and Tachiko-san can write 1. and 2. Neither\
+  \ of 3 to 6 can write.\n\nOne day, Jota wrote a polynomial $ S $ with a length of\
+  \ $ n $ as a string. Tachiko, a short coder, wants to rewrite $ S $ as a string\
+  \ into a shorter identity polynomial $ T $, using multiplication, parentheses, and\
+  \ integers greater than or equal to `1` and less than or equal to` 9`. .. But it\
+  \ doesn't seem that easy.\n\nNow, instead of Mr. Tachiko, write a program that creates\
+  \ the shortest $ T $ as a character string and outputs that length.\n\nConstraint\n\
+  \n$ 1 \\ leq N \\ leq 499 $\n$ N $ is odd\n$ S $ consists only of lowercase letters\
+  \ from `a` to` z` and `+`\nThe first letter of $ S $ is the alphabet, followed by\
+  \ the alternating `+` and $ 1 $ letters of the alphabet.\n$ S $ contains less than\
+  \ $ 9 $ of the same alphabet\n\nsample\n\nSample input 1\n\n\nFive\na + a + a\n\n\
+  \nSample output 1\n\n\n3\n\n\nThe $ 3 $ character of `a * 3` is the shortest.\n\n\
+  Sample input 2\n\n\n9\na + a + b + a + b\n\n\nSample output 2\n\n\n7\n\n\nThe $\
+  \ 7 $ character of `a * 3 + 2 * b` or` a * 3 + b + b` is the shortest.\n\nSample\
+  \ input 3\n\n\n11\na + a + b + a + b + b\n\n\nSample output 3\n\n\n7\n\n\n$ 7 $\
+  \ character in `(a + b) * 3`\n\nSample input 4\n\n\n3\na + a\n\n\nSample output\
+  \ 4\n\n\n3\n\n\n$ 3 $ character with `a + a` or` a * 2`\n\n\n\ninput\n\n$ N $\n\
+  $ S $\n\noutput\n\nPrint the answer on the $ 1 $ line.\n\nExample\n\nInput\n\n5\n\
+  a+a+a\n\n\nOutput\n\n3\nA: ```# -*- coding: utf-8 -*-\n\nfrom collections import\
+  \ Counter\n\nN = input()\nS = input().split('+')\n\ndic_chr_num = Counter(S)\ndic_num_kind\
+  \ = Counter(dic_chr_num.values())\n\nans = 4 * len(dic_chr_num) - 1\nfor num, kind\
+  \ in dic_num_kind.items():\n    if num == 1:\n        ans -= 2 * kind\n    elif\
+  \ kind >= 2:\n        ans -= 2 * (kind - 2)\n\nprint(ans)```\nQ: Write python code\
+  \ to solve the following coding problem that obeys the constraints and passes the\
+  \ example test cases. The output code needs to read from and write to standard IO.\
+  \ Please wrap your code answer using ```:\nPolycarpus likes giving presents to Paraskevi.\
+  \ He has bought two chocolate bars, each of them has the shape of a segmented rectangle.\
+  \ The first bar is a1 \xD7 b1 segments large and the second one is a2 \xD7 b2 segments\
+  \ large.\n\nPolycarpus wants to give Paraskevi one of the bars at the lunch break\
+  \ and eat the other one himself. Besides, he wants to show that Polycarpus's mind\
+  \ and Paraskevi's beauty are equally matched, so the two bars must have the same\
+  \ number of squares.\n\nTo make the bars have the same number of squares, Polycarpus\
+  \ eats a little piece of chocolate each minute. Each minute he does the following:\n\
+  \n  * he either breaks one bar exactly in half (vertically or horizontally) and\
+  \ eats exactly a half of the bar, \n  * or he chips of exactly one third of a bar\
+  \ (vertically or horizontally) and eats exactly a third of the bar. \n\n\n\nIn the\
+  \ first case he is left with a half, of the bar and in the second case he is left\
+  \ with two thirds of the bar.\n\nBoth variants aren't always possible, and sometimes\
+  \ Polycarpus cannot chip off a half nor a third. For example, if the bar is 16 \xD7\
+  \ 23, then Polycarpus can chip off a half, but not a third. If the bar is 20 \xD7\
+  \ 18, then Polycarpus can chip off both a half and a third. If the bar is 5 \xD7\
+  \ 7, then Polycarpus cannot chip off a half nor a third.\n\nWhat is the minimum\
+  \ number of minutes Polycarpus needs to make two bars consist of the same number\
+  \ of squares? Find not only the required minimum number of minutes, but also the\
+  \ possible sizes of the bars after the process.\n\nInput\n\nThe first line of the\
+  \ input contains integers a1, b1 (1 \u2264 a1, b1 \u2264 109) \u2014 the initial\
+  \ sizes of the first chocolate bar. The second line of the input contains integers\
+  \ a2, b2 (1 \u2264 a2, b2 \u2264 109) \u2014 the initial sizes of the second bar.\n\
+  \nYou can use the data of type int64 (in Pascal), long long (in \u0421++), long\
+  \ (in Java) to process large integers (exceeding 231 - 1).\n\nOutput\n\nIn the first\
+  \ line print m \u2014 the sought minimum number of minutes. In the second and third\
+  \ line print the possible sizes of the bars after they are leveled in m minutes.\
+  \ Print the sizes using the format identical to the input format. Print the sizes\
+  \ (the numbers in the printed pairs) in any order. The second line must correspond\
+  \ to the first bar and the third line must correspond to the second bar. If there\
+  \ are multiple solutions, print any of them.\n\nIf there is no solution, print a\
+  \ single line with integer -1.\n\nExamples\n\nInput\n\n2 6\n2 3\n\n\nOutput\n\n\
+  1\n1 6\n2 3\n\n\nInput\n\n36 5\n10 16\n\n\nOutput\n\n3\n16 5\n5 16\n\n\nInput\n\n\
+  3 5\n2 1\n\n\nOutput\n\n-1\nA: ```def decomp(a):\n    cnt2 = 0\n    while a%2==0:\n\
+  \        a = a//2\n        cnt2 += 1\n    cnt3 = 0\n    while a%3==0:\n        a\
+  \ = a//3\n        cnt3 += 1\n    return a,cnt2,cnt3\n\ndef cut(a,b,d,p):\n    while\
+  \ d>0:\n        if a%p==0:\n            a = (p-1)*a//p\n            d = d-1\n  \
+  \      elif b%p==0:\n            b = (p-1)*b//p\n            d = d-1\n    return\
+  \ a,b\na1,b1 = [int(s) for s in input().split()]\na2,b2 = [int(s) for s in input().split()]\n\
+  \nu1,n2a1,n3a1 = decomp(a1)\nv1,n2b1,n3b1 = decomp(b1)\n\nu2,n2a2,n3a2 = decomp(a2)\n\
+  v2,n2b2,n3b2 = decomp(b2)\n\n##print(u1,v1,u1*v1)\n##print(u2,v2,u2*v2)\nif u1*v1!=\
+  \ u2*v2:\n    print(-1)\nelse:\n    n = n2a1+n2b1\n    m = n3a1+n3b1\n    x = n2a2+n2b2\n\
+  \    y = n3a2+n3b2\n\n##    print(n,m,x,y)\n    d3 = abs(m-y)\n    if m>y:     \
+  \   \n        n += d3        \n        a1,b1 = cut(a1,b1,d3,3)\n##        print(1,a1,b1)\n\
+  \    else:\n        x += d3\n        a2,b2 = cut(a2,b2,d3,3)\n##        print(2,a2,b2)\n\
+  \    d2 = abs(n-x)\n    if n>x:\n        a1,b1 = cut(a1,b1,d2,2)\n##        print(1,a1,b1)\n\
+  \    else:\n        a2,b2 = cut(a2,b2,d2,2)\n##        print(2,a2,b2)\n\n    m =\
+  \ d2+d3\n\n    print(m)\n    print(a1,b1)\n    print(a2,b2)```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nn students attended the first meeting\
+  \ of the Berland SU programming course (n is even). All students will be divided\
+  \ into two groups. Each group will be attending exactly one lesson each week during\
+  \ one of the five working days (Monday, Tuesday, Wednesday, Thursday and Friday),\
+  \ and the days chosen for the groups must be different. Furthermore, both groups\
+  \ should contain the same number of students.\n\nEach student has filled a survey\
+  \ in which they told which days of the week are convenient for them to attend a\
+  \ lesson, and which are not. \n\nYour task is to determine if it is possible to\
+  \ choose two different week days to schedule the lessons for the group (the first\
+  \ group will attend the lesson on the first chosen day, the second group will attend\
+  \ the lesson on the second chosen day), and divide the students into two groups,\
+  \ so the groups have equal sizes, and for each student, the chosen lesson day for\
+  \ their group is convenient.\n\nInput\n\nThe first line contains a single integer\
+  \ t (1 \u2264 t \u2264 10^4) \u2014 the number of testcases.\n\nThen the descriptions\
+  \ of t testcases follow.\n\nThe first line of each testcase contains one integer\
+  \ n (2 \u2264 n \u2264 1 000) \u2014 the number of students.\n\nThe i-th of the\
+  \ next n lines contains 5 integers, each of them is 0 or 1. If the j-th integer\
+  \ is 1, then the i-th student can attend the lessons on the j-th day of the week.\
+  \ If the j-th integer is 0, then the i-th student cannot attend the lessons on the\
+  \ j-th day of the week. \n\nAdditional constraints on the input: for each student,\
+  \ at least one of the days of the week is convenient, the total number of students\
+  \ over all testcases doesn't exceed 10^5.\n\nOutput\n\nFor each testcase print an\
+  \ answer. If it's possible to divide the students into two groups of equal sizes\
+  \ and choose different days for the groups so each student can attend the lesson\
+  \ in the chosen day of their group, print \"YES\" (without quotes). Otherwise, print\
+  \ \"NO\" (without quotes). \n\nExample\n\nInput\n\n\n2\n4\n1 0 0 1 0\n0 1 0 0 1\n\
+  0 0 0 1 0\n0 1 0 1 0\n2\n0 0 0 1 0\n0 0 0 1 0\n\n\nOutput\n\n\nYES\nNO\n\nNote\n\
+  \nIn the first testcase, there is a way to meet all the constraints. For example,\
+  \ the first group can consist of the first and the third students, they will attend\
+  \ the lessons on Thursday (the fourth day); the second group can consist of the\
+  \ second and the fourth students, and they will attend the lessons on Tuesday (the\
+  \ second day).\n\nIn the second testcase, it is impossible to divide the students\
+  \ into groups so they attend the lessons on different days.\nA:"
+question: "n students attended the first meeting of the Berland SU programming course\
+  \ (n is even). All students will be divided into two groups. Each group will be\
+  \ attending exactly one lesson each week during one of the five working days (Monday,\
+  \ Tuesday, Wednesday, Thursday and Friday), and the days chosen for the groups must\
+  \ be different. Furthermore, both groups should contain the same number of students.\n\
+  \nEach student has filled a survey in which they told which days of the week are\
+  \ convenient for them to attend a lesson, and which are not. \n\nYour task is to\
+  \ determine if it is possible to choose two different week days to schedule the\
+  \ lessons for the group (the first group will attend the lesson on the first chosen\
+  \ day, the second group will attend the lesson on the second chosen day), and divide\
+  \ the students into two groups, so the groups have equal sizes, and for each student,\
+  \ the chosen lesson day for their group is convenient.\n\nInput\n\nThe first line\
+  \ contains a single integer t (1 \u2264 t \u2264 10^4) \u2014 the number of testcases.\n\
+  \nThen the descriptions of t testcases follow.\n\nThe first line of each testcase\
+  \ contains one integer n (2 \u2264 n \u2264 1 000) \u2014 the number of students.\n\
+  \nThe i-th of the next n lines contains 5 integers, each of them is 0 or 1. If the\
+  \ j-th integer is 1, then the i-th student can attend the lessons on the j-th day\
+  \ of the week. If the j-th integer is 0, then the i-th student cannot attend the\
+  \ lessons on the j-th day of the week. \n\nAdditional constraints on the input:\
+  \ for each student, at least one of the days of the week is convenient, the total\
+  \ number of students over all testcases doesn't exceed 10^5.\n\nOutput\n\nFor each\
+  \ testcase print an answer. If it's possible to divide the students into two groups\
+  \ of equal sizes and choose different days for the groups so each student can attend\
+  \ the lesson in the chosen day of their group, print \"YES\" (without quotes). Otherwise,\
+  \ print \"NO\" (without quotes). \n\nExample\n\nInput\n\n\n2\n4\n1 0 0 1 0\n0 1\
+  \ 0 0 1\n0 0 0 1 0\n0 1 0 1 0\n2\n0 0 0 1 0\n0 0 0 1 0\n\n\nOutput\n\n\nYES\nNO\n\
+  \nNote\n\nIn the first testcase, there is a way to meet all the constraints. For\
+  \ example, the first group can consist of the first and the third students, they\
+  \ will attend the lessons on Thursday (the fourth day); the second group can consist\
+  \ of the second and the fourth students, and they will attend the lessons on Tuesday\
+  \ (the second day).\n\nIn the second testcase, it is impossible to divide the students\
+  \ into groups so they attend the lessons on different days."
+samples:
+- " ```# -*- coding: utf-8 -*-\n\nfrom collections import Counter\n\nfor _ in range(int(input())):\n\
+  \    n = int(input())\n    survey = [list(map(int, input().split())) for _ in range(n)]\n\
+  \    total = [0, 0, 0, 0, 0]\n    for i in range(n):\n        for j in range(5):\n\
+  \            if survey[i][j] == 1:\n                total[j] += 1\n\n    total =\
+  \ Counter(total)\n    if total[2] > 0:\n        print(\"NO\")\n    else:\n     \
+  \   print(\"YES\")````\nQ:"
+- " ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    students =\
+  \ [list(map(int, input().split())) for _ in range(n)]\n    for i in range(n):\n\
+  \        if sum(students[i]) == 0:\n            print(\"NO\")\n            break\n\
+  \    else:\n        for i in range(5):\n            for j in range(n):\n       \
+  \         if students[j][i] == 1:\n                    students[j][i] = 0\n    \
+  \        if sum([sum(row) for row in students]) == n//2:\n                print(\"\
+  YES\")\n                break\n        else:\n            print(\"NO\")````\nQ:"
+test_cases:
+  input:
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 1 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 0
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 0 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    1 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    -1 0 0 1 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 0 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 0 1
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 1 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 0 1
+
+    0 1 0 1 0
+
+    0 0 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 0 1 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 1
+
+    1 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 1
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 1 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 0 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    1 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    -1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 0 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    1 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 0
+
+    0 0 0 1 1
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 1 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 1 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 1 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    1 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 1 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 1 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    -1 0 0 1 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 0 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 0 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 0 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 0 0
+
+    0 1 0 0 1
+
+    1 1 0 0 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 0 1
+
+    0 0 1 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 1 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    -1 1 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    1 1 0 0 1
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 1 1
+
+    1 1 0 0 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 1
+
+    1 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    1 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 0
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    1 1 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 1 0 0
+
+    0 0 0 1 1
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 1 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    0 0 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 1 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 1 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    -1 0 0 1 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 0 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 1 1 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    1 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 1
+
+    0 1 0 0 1
+
+    2
+
+    0 1 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 1 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 0
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 1 1 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 1 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 1 1
+
+    0 0 1 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    1 1 0 1 1
+
+    0 0 1 0 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 0 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    1 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 1 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 1 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 1 0 0
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 1 0 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 1 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 0 0
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 1
+
+    1 0 1 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 1
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 0 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    1 1 0 0 1
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 1 1 0
+
+    2
+
+    0 0 0 1 1
+
+    0 1 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 0 0 0 1
+
+    2
+
+    0 0 0 0 1
+
+    0 0 1 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 1 1
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 1 0 0
+
+    '
+  - '2
+
+    4
+
+    0 0 0 1 0
+
+    0 1 0 0 1
+
+    1 1 0 0 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 1 1
+
+    1 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 0 1 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 0 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 0 0 0 1
+
+    0 1 0 1 0
+
+    0 0 0 0 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    0 1 0 0 1
+
+    1 0 0 0 1
+
+    0 1 0 0 1
+
+    2
+
+    0 0 0 1 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 0 1 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 0 0
+
+    '
+  - '2
+
+    4
+
+    1 1 0 1 0
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 0
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 1
+
+    1 1 0 0 1
+
+    0 1 0 1 0
+
+    0 1 0 1 0
+
+    2
+
+    0 1 0 0 1
+
+    0 0 1 1 1
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 1
+
+    0 1 0 0 0
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    2
+
+    0 0 0 0 0
+
+    0 1 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 0 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 0
+
+    0 1 0 0 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 1 1 0
+
+    0 1 1 0 1
+
+    0 0 0 1 0
+
+    1 0 0 1 0
+
+    2
+
+    0 0 0 0 0
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    0 1 0 1 0
+
+    1 1 0 0 0
+
+    2
+
+    0 0 0 0 1
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    1 1 1 1 0
+
+    0 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    0 0 0 1 0
+
+    0 0 0 1 1
+
+    '
+  - '2
+
+    4
+
+    0 0 1 1 0
+
+    1 1 0 0 1
+
+    0 0 0 1 1
+
+    0 1 0 1 0
+
+    2
+
+    1 0 0 0 1
+
+    0 0 0 1 0
+
+    '
+  - '2
+
+    4
+
+    1 0 0 1 0
+
+    0 1 0 0 1
+
+    1 0 0 1 0
+
+    1 1 0 1 0
+
+    2
+
+    0 0 1 1 1
+
+    1 0 0 1 1
+
+    '
+  output:
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    '
+timeout: 4.0

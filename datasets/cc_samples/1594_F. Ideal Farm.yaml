@@ -1,0 +1,2920 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThere are n\
+  \ incoming messages for Vasya. The i-th message is going to be received after ti\
+  \ minutes. Each message has a cost, which equals to A initially. After being received,\
+  \ the cost of a message decreases by B each minute (it can become negative). Vasya\
+  \ can read any message after receiving it at any moment of time. After reading the\
+  \ message, Vasya's bank account receives the current cost of this message. Initially,\
+  \ Vasya's bank account is at 0.\n\nAlso, each minute Vasya's bank account receives\
+  \ C\xB7k, where k is the amount of received but unread messages.\n\nVasya's messages\
+  \ are very important to him, and because of that he wants to have all messages read\
+  \ after T minutes.\n\nDetermine the maximum amount of money Vasya's bank account\
+  \ can hold after T minutes.\n\nInput\n\nThe first line contains five integers n,\
+  \ A, B, C and T (1 \u2264 n, A, B, C, T \u2264 1000).\n\nThe second string contains\
+  \ n integers ti (1 \u2264 ti \u2264 T).\n\nOutput\n\nOutput one integer \u2014 the\
+  \ answer to the problem.\n\nExamples\n\nInput\n\n4 5 5 3 5\n1 5 5 4\n\n\nOutput\n\
+  \n20\n\n\nInput\n\n5 3 1 1 3\n2 2 2 1 1\n\n\nOutput\n\n15\n\n\nInput\n\n5 5 3 4\
+  \ 5\n1 2 3 4 5\n\n\nOutput\n\n35\n\nNote\n\nIn the first sample the messages must\
+  \ be read immediately after receiving, Vasya receives A points for each message,\
+  \ n\xB7A = 20 in total.\n\nIn the second sample the messages can be read at any\
+  \ integer moment.\n\nIn the third sample messages must be read at the moment T.\
+  \ This way Vasya has 1, 2, 3, 4 and 0 unread messages at the corresponding minutes,\
+  \ he gets 40 points for them. When reading messages, he receives (5 - 4\xB73) +\
+  \ (5 - 3\xB73) + (5 - 2\xB73) + (5 - 1\xB73) + 5 = - 5 points. This is 35 in total.\n\
+  A: ```n,a,b,c,t = map(int,input().split())\narr = list()\narr = map(int,input().split())\n\
+  Sum = int(0)\nfor num in arr:\n                Sum += t - num\nans = n * a\nif b\
+  \ >= c:\n                print(ans)\nelse:\n                print(ans + Sum * int(c\
+  \ - b))```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nFor a\
+  \ dynamic list $L$ of integers, perform a sequence of the following operations.\
+  \ $L$ has a special element called END at the end of the list and an element of\
+  \ $L$ is indicated by a cursor.\n\n* insert($x$): Insert $x$ before the element\
+  \ indicated by the cursor. After this operation, the cursor points the inserted\
+  \ element.\n* move($d$): Move the cursor to the end by $d$, if $d$ is positive.\
+  \ Move the cursor to the front by $d$, if $d$ is negative.\n* erase(): Delete the\
+  \ element indicated by the cursor. After this operation, the cursor points the element\
+  \ next to the deleted element. In case there is no such element, the cursor should\
+  \ point END.\n\n\n\nIn the initial state, $L$ is empty and the cursor points END.\n\
+  \nConstraints\n\n* $1 \\leq q \\leq 500,000$\n* The cursor indicates an element\
+  \ of $L$ or END during the operations\n* Erase operation will not given when the\
+  \ cursor points END\n* $-1,000,000,000 \\leq x \\leq 1,000,000,000$\n* Moving distance\
+  \ of the cursor ($\\sum{|d|}$) does not exceed 1,000,000\n* $L$ is not empty after\
+  \ performing all operations\n\nInput\n\nThe input is given in the following format.\n\
+  \n\n$q$\n$query_1$\n$query_2$\n:\n$query_q$\n\n\nEach query $query_i$ is given by\n\
+  \n\n0 $x$\n\n\nor\n\n\n1 $d$\n\n\nor\n\n\n2\n\n\nwhere the first digits 0, 1 and\
+  \ 2 represent insert, move and erase operations respectively.\n\nOutput\n\nPrint\
+  \ all elements of the list in order after performing given operations. Print an\
+  \ element in a line.\n\nExample\n\nInput\n\n5\n0 1\n0 2\n0 3\n1 1\n2\n\n\nOutput\n\
+  \n3\n1\nA: ```q = int(input())\nA = [0 for i in range(1500000)]\nA[0] = 'end'\n\
+  cursor = 0\nhead = [0 for i in range(1500000)]\nhead_len = 0\n\ndef insert(x):\n\
+  \tglobal cursor\n\tcursor += 1\n\tA[cursor] = x\ndef move(d):\n\tglobal cursor,\
+  \ head, head_len\n\tif d >= 0:\n\t\thead[head_len-1+d+(1): head_len-1+(1):-1] =\
+  \ A[cursor-d+1:cursor+1]\n\telse:\n\t\tA[cursor+1:cursor+1+(-d)] = head[head_len-1+(1):head_len-(-d)-1+(1):-1]\n\
+  \tcursor -= d\n\thead_len += d\ndef erase():\n\tglobal cursor\n\tcursor -= 1\n\n\
+  for i in range(q):\n\ta = input()\n\tif a != \"2\":\n\t\tb = [int(i) for i in a.split()]\n\
+  \t\tif b[0] == 0:\n\t\t\tinsert(b[1])\n\t\telif b[0] == 1:\n\t\t\tmove(b[1])\n\t\
+  else:\n\t\terase()\n\t#print(A[:cursor+1],head[1:1+head_len][::-1])\n\nA[cursor+1:cursor+1+head_len]\
+  \ = head[head_len-1+(1):-1+(1):-1]\nlength = cursor +  head_len\nfor i in range(1,length+1)[::-1]:\n\
+  \tprint(A[i])```\nQ: Write python code to solve the following coding problem that\
+  \ obeys the constraints and passes the example test cases. The output code needs\
+  \ to read from and write to standard IO. Please wrap your code answer using ```:\n\
+  Theofanis decided to visit his uncle's farm. There are s animals and n animal pens\
+  \ on the farm. For utility purpose, animal pens are constructed in one row.\n\n\
+  Uncle told Theofanis that a farm is lucky if you can distribute all animals in all\
+  \ pens in such a way that there are no empty pens and there is at least one continuous\
+  \ segment of pens that has exactly k animals in total.\n\nMoreover, a farm is ideal\
+  \ if it's lucky for any distribution without empty pens.\n\nNeither Theofanis nor\
+  \ his uncle knows if their farm is ideal or not. Can you help them to figure it\
+  \ out?\n\nInput\n\nThe first line contains a single integer t (1 \u2264 t \u2264\
+  \ 10^5) \u2014 the number of test cases.\n\nThe first and only line of each test\
+  \ case contains three integers s, n, and k (1 \u2264 s, n, k \u2264 10^{18}; n \u2264\
+  \ s).\n\nOutput\n\nFor each test case, print YES (case-insensitive), if the farm\
+  \ is ideal, or NO (case-insensitive) otherwise.\n\nExample\n\nInput\n\n\n4\n1 1\
+  \ 1\n1 1 2\n100 50 200\n56220 47258 14497\n\n\nOutput\n\n\nYES\nNO\nNO\nYES\n\n\
+  Note\n\nFor the first and the second test case, the only possible combination is\
+  \ [1] so there always will be a subsegment with 1 animal but not with 2 animals.\n\
+  A:"
+question: "Theofanis decided to visit his uncle's farm. There are s animals and n\
+  \ animal pens on the farm. For utility purpose, animal pens are constructed in one\
+  \ row.\n\nUncle told Theofanis that a farm is lucky if you can distribute all animals\
+  \ in all pens in such a way that there are no empty pens and there is at least one\
+  \ continuous segment of pens that has exactly k animals in total.\n\nMoreover, a\
+  \ farm is ideal if it's lucky for any distribution without empty pens.\n\nNeither\
+  \ Theofanis nor his uncle knows if their farm is ideal or not. Can you help them\
+  \ to figure it out?\n\nInput\n\nThe first line contains a single integer t (1 \u2264\
+  \ t \u2264 10^5) \u2014 the number of test cases.\n\nThe first and only line of\
+  \ each test case contains three integers s, n, and k (1 \u2264 s, n, k \u2264 10^{18};\
+  \ n \u2264 s).\n\nOutput\n\nFor each test case, print YES (case-insensitive), if\
+  \ the farm is ideal, or NO (case-insensitive) otherwise.\n\nExample\n\nInput\n\n\
+  \n4\n1 1 1\n1 1 2\n100 50 200\n56220 47258 14497\n\n\nOutput\n\n\nYES\nNO\nNO\n\
+  YES\n\nNote\n\nFor the first and the second test case, the only possible combination\
+  \ is [1] so there always will be a subsegment with 1 animal but not with 2 animals."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    s, n, k = map(int, input().split())\n\
+  \    if (s % k) == 0:\n        print('YES')\n    else:\n        print('NO')```\n\
+  Q:"
+- " ```t = int(input())\nfor _ in range(t):\n\ts, n, k = map(int, input().split())\n\
+  \tif s % k == 0:\n\t\tprint('YES')\n\telse:\n\t\tprint('NO')```\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python"
+test_cases:
+  input:
+  - '4
+
+    1 1 1
+
+    1 1 2
+
+    100 50 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000000000 500000000000000000 2
+
+    '
+  - '1
+
+    1000000000000000000 483271866988016482 2
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    100 50 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000000000 639232692548497767 2
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 127
+
+    56220 17992 14497
+
+    '
+  - '4
+
+    2 1 1
+
+    0 0 2
+
+    101 6 150
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 1
+
+    100 50 200
+
+    56220 47258 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    100 6 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000000000 639232692548497767 1
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    100 6 127
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000001000 639232692548497767 1
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    101 6 127
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000001000 421361110192973470 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 127
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000001000 786139031501790272 1
+
+    '
+  - '1
+
+    1000000000000001000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 127
+
+    56220 20756 14497
+
+    '
+  - '1
+
+    1000000010000001000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 124
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 184
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 184
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 184
+
+    56220 19144 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 184
+
+    56220 31597 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 9 184
+
+    56220 31597 14497
+
+    '
+  - '1
+
+    1000000000000000100 500000000000000000 2
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 2
+
+    100 50 200
+
+    56220 47258 25927
+
+    '
+  - '1
+
+    1000000000100000000 483271866988016482 2
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    110 50 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000001000000000 639232692548497767 2
+
+    '
+  - '1
+
+    1000000001000000000 639232692548497767 1
+
+    '
+  - '1
+
+    1000000000000001000 156260442904248885 1
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    101 6 203
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000000000001000 421361110192973470 2
+
+    '
+  - '1
+
+    1100000000000001000 786139031501790272 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 127
+
+    56220 17992 22503
+
+    '
+  - '1
+
+    1000000000000011000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 150
+
+    56220 20756 14497
+
+    '
+  - '1
+
+    1000000010010001000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 3
+
+    101 6 124
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    100 6 184
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    101 6 184
+
+    56220 19144 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 339
+
+    56220 31597 14497
+
+    '
+  - '1
+
+    1100000000000000100 500000000000000000 2
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 2
+
+    100 81 200
+
+    56220 47258 25927
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    110 50 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1010000001000000000 639232692548497767 1
+
+    '
+  - '1
+
+    1000000001000000000 929899722643065741 1
+
+    '
+  - '1
+
+    1000000000000001000 156260442904248885 2
+
+    '
+  - '1
+
+    1000000000000001000 421361110192973470 3
+
+    '
+  - '1
+
+    1100000000000001000 204451446563104991 1
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    101 6 127
+
+    56220 17992 22503
+
+    '
+  - '1
+
+    1100000000000011000 630371434399517450 1
+
+    '
+  - '1
+
+    1000000010010001000 630371434399517450 2
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 3
+
+    101 9 124
+
+    56220 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    100 6 184
+
+    56220 3222 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    101 6 268
+
+    56220 19144 14497
+
+    '
+  - '1
+
+    1100000000000000100 500000000000000000 4
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 2
+
+    100 81 200
+
+    56220 47258 22220
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    110 53 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1000000001000000000 887761100584834850 1
+
+    '
+  - '1
+
+    1000000000000001000 122882309976301224 2
+
+    '
+  - '1
+
+    1000000000000001000 392860648302887294 3
+
+    '
+  - '1
+
+    1100000000000101000 204451446563104991 1
+
+    '
+  - '1
+
+    1100000000010011000 630371434399517450 1
+
+    '
+  - '4
+
+    4 1 1
+
+    0 0 2
+
+    101 6 150
+
+    56220 20756 14497
+
+    '
+  - '1
+
+    1010000010010001000 630371434399517450 2
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    100 6 184
+
+    56220 4687 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    101 6 268
+
+    104952 19144 14497
+
+    '
+  - '1
+
+    1100000000000000100 985798243261133249 4
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 4
+
+    100 81 200
+
+    56220 47258 22220
+
+    '
+  - '1
+
+    1000000001100000000 887761100584834850 1
+
+    '
+  - '1
+
+    1000000000000001000 232805579881148741 2
+
+    '
+  - '1
+
+    1000000000000001100 392860648302887294 3
+
+    '
+  - '1
+
+    1100000000000101000 248279713007739034 1
+
+    '
+  - '1
+
+    1100000000110011000 630371434399517450 1
+
+    '
+  - '4
+
+    4 1 1
+
+    0 0 2
+
+    101 6 140
+
+    56220 20756 14497
+
+    '
+  - '1
+
+    1010000010010001000 160634952185803064 2
+
+    '
+  - '4
+
+    1 1 2
+
+    0 0 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    2 1 1
+
+    0 -1 2
+
+    100 6 184
+
+    56220 4687 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    111 6 268
+
+    104952 19144 14497
+
+    '
+  - '1
+
+    1100000000000000100 985798243261133249 3
+
+    '
+  - '4
+
+    1 1 1
+
+    2 1 4
+
+    100 81 200
+
+    56220 47258 22220
+
+    '
+  - '1
+
+    1000000001100010000 887761100584834850 1
+
+    '
+  - '1
+
+    1000000000000001000 232805579881148741 4
+
+    '
+  - '1
+
+    1000000000000001100 681306402556340986 3
+
+    '
+  - '1
+
+    1100000000000101100 248279713007739034 1
+
+    '
+  - '1
+
+    1101000000110011000 630371434399517450 1
+
+    '
+  - '4
+
+    4 1 1
+
+    0 0 2
+
+    101 6 140
+
+    44065 20756 14497
+
+    '
+  - '1
+
+    1010000110010001000 160634952185803064 2
+
+    '
+  - '4
+
+    1 1 2
+
+    0 -1 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    2 1 1
+
+    0 -1 2
+
+    100 3 184
+
+    56220 4687 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    111 6 235
+
+    104952 19144 14497
+
+    '
+  - '1
+
+    1100000000000000000 985798243261133249 3
+
+    '
+  - '4
+
+    1 1 1
+
+    2 1 4
+
+    100 81 200
+
+    98862 47258 22220
+
+    '
+  - '1
+
+    1000000001100010000 727889255959630435 1
+
+    '
+  - '1
+
+    1000000000000001000 232805579881148741 6
+
+    '
+  - '1
+
+    1000000000000001100 681306402556340986 4
+
+    '
+  - '1
+
+    1000000000000101100 248279713007739034 1
+
+    '
+  - '1
+
+    1101000000110011000 630371434399517450 2
+
+    '
+  - '4
+
+    4 1 1
+
+    0 0 2
+
+    101 6 140
+
+    44065 20756 11619
+
+    '
+  - '1
+
+    1010000110010001000 223581300084423621 2
+
+    '
+  - '4
+
+    1 0 2
+
+    0 -1 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    2 1 1
+
+    0 -1 2
+
+    100 3 184
+
+    56220 4687 26163
+
+    '
+  - '4
+
+    1 1 1
+
+    1 -1 2
+
+    111 1 235
+
+    104952 19144 14497
+
+    '
+  - '1
+
+    1100000000000000001 985798243261133249 3
+
+    '
+  - '4
+
+    1 1 1
+
+    2 1 4
+
+    100 81 200
+
+    98862 47258 18229
+
+    '
+  - '1
+
+    1000000001100010000 817915954958661538 1
+
+    '
+  - '1
+
+    1000000000000001000 241163582119936326 6
+
+    '
+  - '1
+
+    1000001000000101100 248279713007739034 1
+
+    '
+  - '1
+
+    1101000000110011000 630371434399517450 4
+
+    '
+  - '4
+
+    4 1 1
+
+    0 0 2
+
+    101 1 140
+
+    44065 20756 11619
+
+    '
+  - '1
+
+    1010000110010001000 223581300084423621 3
+
+    '
+  - '4
+
+    0 0 2
+
+    0 -1 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    2 1 1
+
+    0 -2 2
+
+    100 3 184
+
+    56220 4687 26163
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    111 1 235
+
+    104952 19144 14497
+
+    '
+  - '1
+
+    1101000000000000001 985798243261133249 3
+
+    '
+  - '4
+
+    1 1 1
+
+    1 1 4
+
+    100 81 200
+
+    98862 47258 18229
+
+    '
+  - '1
+
+    1000000001100010000 807150895038373670 1
+
+    '
+  - '1
+
+    1000000001000001000 241163582119936326 6
+
+    '
+  - '1
+
+    1101000000110011000 285946729414817720 1
+
+    '
+  - '1
+
+    1010000110010001000 397588546731492842 3
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 3
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -2 2
+
+    100 3 184
+
+    56220 4687 26163
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    111 1 235
+
+    104952 19144 24675
+
+    '
+  - '1
+
+    1111000000000000001 985798243261133249 3
+
+    '
+  - '1
+
+    1000000001100010000 172282198178078794 1
+
+    '
+  - '1
+
+    1000000001000001000 2047532427255969 6
+
+    '
+  - '1
+
+    1101000000110011010 285946729414817720 1
+
+    '
+  - '1
+
+    1010000110010001000 421613200047752355 3
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 5
+
+    101 9 124
+
+    56220 20756 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -4 2
+
+    100 3 184
+
+    56220 4687 26163
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    111 1 326
+
+    104952 19144 24675
+
+    '
+  - '1
+
+    1111000100000000001 985798243261133249 3
+
+    '
+  - '1
+
+    1000000001100010000 267407568162868537 1
+
+    '
+  - '1
+
+    1000000001000001000 1540571446888803 6
+
+    '
+  - '1
+
+    1010001110010001000 421613200047752355 3
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 5
+
+    101 9 124
+
+    56220 25393 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -4 2
+
+    100 5 184
+
+    56220 4687 26163
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    011 1 326
+
+    104952 19144 24675
+
+    '
+  - '1
+
+    1111000100000000001 429636396181762074 3
+
+    '
+  - '1
+
+    1000000011100010000 267407568162868537 1
+
+    '
+  - '1
+
+    1000000001000001000 1111903109060136 6
+
+    '
+  - '1
+
+    1010001110010001100 421613200047752355 3
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 5
+
+    111 9 124
+
+    56220 25393 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -4 2
+
+    100 5 184
+
+    56220 4687 45962
+
+    '
+  - '4
+
+    1 1 1
+
+    -1 -1 2
+
+    011 1 326
+
+    104952 19144 24675
+
+    '
+  - '1
+
+    1011000100000000001 429636396181762074 3
+
+    '
+  - '1
+
+    1000000011100010000 402076534351920741 1
+
+    '
+  - '1
+
+    1000000001000001000 1111903109060136 3
+
+    '
+  - '1
+
+    1010001110010001100 729956845959139562 3
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 5
+
+    111 9 124
+
+    65137 25393 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -4 2
+
+    100 8 184
+
+    56220 4687 45962
+
+    '
+  - '1
+
+    1011000100000000001 722156898491965292 3
+
+    '
+  - '1
+
+    1000000001000001010 1111903109060136 3
+
+    '
+  - '1
+
+    1010001110010001100 729956845959139562 4
+
+    '
+  - '4
+
+    0 0 2
+
+    1 -1 5
+
+    011 9 124
+
+    65137 25393 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -3 2
+
+    100 8 184
+
+    56220 4687 45962
+
+    '
+  - '1
+
+    1011000100000001001 722156898491965292 3
+
+    '
+  - '1
+
+    1000000001000001010 346432192269003 3
+
+    '
+  - '1
+
+    1010001100010001100 729956845959139562 4
+
+    '
+  - '4
+
+    0 -1 2
+
+    1 -1 5
+
+    111 9 124
+
+    65137 25393 17355
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -2 2
+
+    100 8 184
+
+    56220 4687 45962
+
+    '
+  - '1
+
+    1000000001000001010 346432192269003 1
+
+    '
+  - '1
+
+    1010001100010001100 48053156042445212 4
+
+    '
+  - '4
+
+    0 -1 2
+
+    1 -1 5
+
+    111 9 124
+
+    65137 25393 22688
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -2 2
+
+    100 8 184
+
+    56220 4687 60808
+
+    '
+  - '1
+
+    1000000001000001010 412469714002260 1
+
+    '
+  - '1
+
+    1010001100110001100 48053156042445212 4
+
+    '
+  - '4
+
+    -1 -1 2
+
+    1 -1 5
+
+    111 9 124
+
+    65137 25393 22688
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -2 2
+
+    100 4 184
+
+    56220 4687 60808
+
+    '
+  - '1
+
+    1010001100110001100 23413190377925088 4
+
+    '
+  - '4
+
+    -1 -1 2
+
+    2 -1 5
+
+    111 9 124
+
+    65137 25393 22688
+
+    '
+  - '4
+
+    4 1 1
+
+    0 -2 2
+
+    100 4 257
+
+    56220 4687 60808
+
+    '
+  - '1
+
+    1010001100110101100 23413190377925088 4
+
+    '
+  - '4
+
+    4 1 1
+
+    1 -2 2
+
+    100 4 257
+
+    56220 4687 60808
+
+    '
+  - '1
+
+    1010001100110101100 33399589038465681 4
+
+    '
+  - '4
+
+    4 1 1
+
+    1 -2 2
+
+    100 4 257
+
+    96123 4687 60808
+
+    '
+  - '1
+
+    1010001100110101100 33399589038465681 5
+
+    '
+  - '4
+
+    2 1 1
+
+    1 -2 2
+
+    100 4 257
+
+    96123 4687 60808
+
+    '
+  - '1
+
+    1010001100110101100 33399589038465681 2
+
+    '
+  - '1
+
+    1010001100110001100 33399589038465681 2
+
+    '
+  - '1
+
+    1010001100110001100 28967297227753500 2
+
+    '
+  - '1
+
+    1010001100110001100 28967297227753500 3
+
+    '
+  - '1
+
+    1000000000000000000 483271866988016482 1
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    100 64 200
+
+    56220 47258 14497
+
+    '
+  - '1
+
+    1001000000000000000 639232692548497767 2
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    100 6 301
+
+    56220 47258 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    1 0 2
+
+    101 6 127
+
+    56220 37801 14497
+
+    '
+  - '1
+
+    1000000000000001000 5644569064257092 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 127
+
+    56220 47258 239
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 12 127
+
+    56220 17992 14497
+
+    '
+  - '1
+
+    1000000000100001000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 122
+
+    56220 20756 14497
+
+    '
+  - '1
+
+    1001000010000001000 630371434399517450 1
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 124
+
+    56220 20756 8705
+
+    '
+  - '4
+
+    1 1 1
+
+    0 0 2
+
+    101 6 184
+
+    95300 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 184
+
+    28228 20756 14497
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    101 6 184
+
+    56220 19144 12132
+
+    '
+  - '4
+
+    1 1 1
+
+    0 -1 2
+
+    100 9 184
+
+    56220 31597 14497
+
+    '
+  - '1
+
+    1000000010100000000 483271866988016482 2
+
+    '
+  output:
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+timeout: 2.0

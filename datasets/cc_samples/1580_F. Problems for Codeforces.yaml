@@ -1,0 +1,1636 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou got a job\
+  \ as a marketer in a pet shop, and your current task is to boost sales of cat food.\
+  \ One of the strategies is to sell cans of food in packs with discounts. \n\nSuppose\
+  \ you decided to sell packs with a cans in a pack with a discount and some customer\
+  \ wants to buy x cans of cat food. Then he follows a greedy strategy: \n\n  * he\
+  \ buys \\left\u230A x/a \\right\u230B packs with a discount; \n  * then he wants\
+  \ to buy the remaining (x mod a) cans one by one. \n\n\n\n\\left\u230A x/a \\right\u230B\
+  \ is x divided by a rounded down, x mod a is the remainer of x divided by a.\n\n\
+  But customers are greedy in general, so if the customer wants to buy (x mod a) cans\
+  \ one by one and it happens that (x mod a) \u2265 a/2 he decides to buy the whole\
+  \ pack of a cans (instead of buying (x mod a) cans). It makes you, as a marketer,\
+  \ happy since the customer bought more than he wanted initially.\n\nYou know that\
+  \ each of the customers that come to your shop can buy any number of cans from l\
+  \ to r inclusive. Can you choose such size of pack a that each customer buys more\
+  \ cans than they wanted initially?\n\nInput\n\nThe first line contains a single\
+  \ integer t (1 \u2264 t \u2264 1000) \u2014 the number of test cases.\n\nThe first\
+  \ and only line of each test case contains two integers l and r (1 \u2264 l \u2264\
+  \ r \u2264 10^9) \u2014 the range of the number of cans customers can buy.\n\nOutput\n\
+  \nFor each test case, print YES if you can choose such size of pack a that each\
+  \ customer buys more cans than they wanted initially. Otherwise, print NO.\n\nYou\
+  \ can print each character in any case.\n\nExample\n\nInput\n\n\n3\n3 4\n1 2\n120\
+  \ 150\n\n\nOutput\n\n\nYES\nNO\nYES\n\nNote\n\nIn the first test case, you can take,\
+  \ for example, a = 5 as the size of the pack. Then if a customer wants to buy 3\
+  \ cans, he'll buy 5 instead (3 mod 5 = 3, 5/2 = 2.5). The one who wants 4 cans will\
+  \ also buy 5 cans.\n\nIn the second test case, there is no way to choose a.\n\n\
+  In the third test case, you can take, for example, a = 80.\nA: ```for _ in range(int(input())):\n\
+  \    a,b = map(int,input().split())\n    aa = a%(b+1);bb = b%(b+1)\n    if(aa>=(b+1)/2\
+  \ and bb>=(b+1)/2):\n        print(\"YES\")\n    else:\n        print(\"NO\")```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nYou are playing a game\
+  \ similar to Sokoban on an infinite number line. The game is discrete, so you only\
+  \ consider integer positions on the line.\n\nYou start on a position 0. There are\
+  \ n boxes, the i-th box is on a position a_i. All positions of the boxes are distinct.\
+  \ There are also m special positions, the j-th position is b_j. All the special\
+  \ positions are also distinct.\n\nIn one move you can go one position to the left\
+  \ or to the right. If there is a box in the direction of your move, then you push\
+  \ the box to the next position in that direction. If the next position is taken\
+  \ by another box, then that box is also pushed to the next position, and so on.\
+  \ You can't go through the boxes. You can't pull the boxes towards you.\n\nYou are\
+  \ allowed to perform any number of moves (possibly, zero). Your goal is to place\
+  \ as many boxes on special positions as possible. Note that some boxes can be initially\
+  \ placed on special positions.\n\nInput\n\nThe first line contains a single integer\
+  \ t (1 \u2264 t \u2264 1000) \u2014 the number of testcases.\n\nThen descriptions\
+  \ of t testcases follow.\n\nThe first line of each testcase contains two integers\
+  \ n and m (1 \u2264 n, m \u2264 2 \u22C5 10^5) \u2014 the number of boxes and the\
+  \ number of special positions, respectively.\n\nThe second line of each testcase\
+  \ contains n distinct integers in the increasing order a_1, a_2, ..., a_n (-10^9\
+  \ \u2264 a_1 < a_2 < ... < a_n \u2264 10^9; a_i \u2260 0) \u2014 the initial positions\
+  \ of the boxes.\n\nThe third line of each testcase contains m distinct integers\
+  \ in the increasing order b_1, b_2, ..., b_m (-10^9 \u2264 b_1 < b_2 < ... < b_m\
+  \ \u2264 10^9; b_i \u2260 0) \u2014 the special positions.\n\nThe sum of n over\
+  \ all testcases doesn't exceed 2 \u22C5 10^5. The sum of m over all testcases doesn't\
+  \ exceed 2 \u22C5 10^5.\n\nOutput\n\nFor each testcase print a single integer \u2014\
+  \ the maximum number of boxes that can be placed on special positions.\n\nExample\n\
+  \nInput\n\n\n5\n5 6\n-1 1 5 11 15\n-4 -3 -2 6 7 15\n2 2\n-1 1\n-1000000000 1000000000\n\
+  2 2\n-1000000000 1000000000\n-1 1\n3 5\n-1 1 2\n-2 -1 1 2 5\n2 1\n1 2\n10\n\n\n\
+  Output\n\n\n4\n2\n0\n3\n1\n\nNote\n\nIn the first testcase you can go 5 to the right:\
+  \ the box on position 1 gets pushed to position 6 and the box on position 5 gets\
+  \ pushed to position 7. Then you can go 6 to the left to end up on position -1 and\
+  \ push a box to -2. At the end, the boxes are on positions [-2, 6, 7, 11, 15], respectively.\
+  \ Among them positions [-2, 6, 7, 15] are special, thus, the answer is 4.\n\nIn\
+  \ the second testcase you can push the box from -1 to -10^9, then the box from 1\
+  \ to 10^9 and obtain the answer 2.\n\nThe third testcase showcases that you are\
+  \ not allowed to pull the boxes, thus, you can't bring them closer to special positions.\n\
+  \nIn the fourth testcase all the boxes are already on special positions, so you\
+  \ can do nothing and still obtain the answer 3.\n\nIn the fifth testcase there are\
+  \ fewer special positions than boxes. You can move either 8 or 9 to the right to\
+  \ have some box on position 10.\nA: ```import sys\ninput = sys.stdin.readline\n\
+  from bisect import bisect_left\n\ndef solve(p, q):\n    n, m = len(p), len(q)\n\
+  \    res = 0\n    idx = 0\n    t = [0] * m\n    li = []\n    for i in range(n):\n\
+  \        while idx < m and q[idx] < p[i]:\n            idx += 1\n        if idx\
+  \ < m and p[i] == q[idx]:\n            res += 1\n            li.append(p[i])\n \
+  \   for i in range(m):\n        l, r = 0, n + 1\n        while r - l > 1:\n    \
+  \        md = (l + r) // 2\n            if md <= bisect_left(p, q[i] + md):\n  \
+  \              l = md\n            else:\n                r = md\n        t[i] =\
+  \ l\n    ans = res\n    for i in range(m):\n        ans = max(ans, res - bisect_left(li,\
+  \ q[i] + t[i]) + bisect_left(q, q[i] + t[i]) - i)\n    return ans\n\n\nt = int(input())\n\
+  for _ in range(t):\n    n, m = map(int, input().split())\n    a = list(map(int,\
+  \ input().split()))\n    b = list(map(int, input().split()))\n    for i in range(n):\n\
+  \        if a[i] > 0:\n            c = [-x for x in a[:i]]\n            c.reverse()\n\
+  \            a = a[i:]\n            break\n    else:\n        c = [-x for x in a[:n]]\n\
+  \        c.reverse()\n        a = []\n    for i in range(m):\n        if b[i] >\
+  \ 0:\n            d = [-x for x in b[:i]]\n            d.reverse()\n           \
+  \ b = b[i:]\n            break\n    else:\n        d = [-x for x in b[:m]]\n   \
+  \     d.reverse()\n        b = []\n    print(solve(a, b) + solve(c, d))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nXYMXYM and CQXYM will prepare\
+  \ n problems for Codeforces. The difficulty of the problem i will be an integer\
+  \ a_i, where a_i \u2265 0. The difficulty of the problems must satisfy a_i+a_{i+1}<m\
+  \ (1 \u2264 i < n), and a_1+a_n<m, where m is a fixed integer. XYMXYM wants to know\
+  \ how many plans of the difficulty of the problems there are modulo 998 244 353.\n\
+  \nTwo plans of difficulty a and b are different only if there is an integer i (1\
+  \ \u2264 i \u2264 n) satisfying a_i \u2260 b_i.\n\nInput\n\nA single line contains\
+  \ two integers n and m (2 \u2264 n \u2264 50 000, 1 \u2264 m \u2264 10^9).\n\nOutput\n\
+  \nPrint a single integer \u2014 the number of different plans.\n\nExamples\n\nInput\n\
+  \n\n3 2\n\n\nOutput\n\n\n4\n\n\nInput\n\n\n5 9\n\n\nOutput\n\n\n8105\n\n\nInput\n\
+  \n\n21038 3942834\n\n\nOutput\n\n\n338529212\n\nNote\n\nIn the first test case,\
+  \ the valid a are: [0,0,0], [0,0,1], [0,1,0], [1,0,0].\n\n[1,0,1] is invalid since\
+  \ a_1+a_n \u2265 m.\nA:"
+question: "XYMXYM and CQXYM will prepare n problems for Codeforces. The difficulty\
+  \ of the problem i will be an integer a_i, where a_i \u2265 0. The difficulty of\
+  \ the problems must satisfy a_i+a_{i+1}<m (1 \u2264 i < n), and a_1+a_n<m, where\
+  \ m is a fixed integer. XYMXYM wants to know how many plans of the difficulty of\
+  \ the problems there are modulo 998 244 353.\n\nTwo plans of difficulty a and b\
+  \ are different only if there is an integer i (1 \u2264 i \u2264 n) satisfying a_i\
+  \ \u2260 b_i.\n\nInput\n\nA single line contains two integers n and m (2 \u2264\
+  \ n \u2264 50 000, 1 \u2264 m \u2264 10^9).\n\nOutput\n\nPrint a single integer\
+  \ \u2014 the number of different plans.\n\nExamples\n\nInput\n\n\n3 2\n\n\nOutput\n\
+  \n\n4\n\n\nInput\n\n\n5 9\n\n\nOutput\n\n\n8105\n\n\nInput\n\n\n21038 3942834\n\n\
+  \nOutput\n\n\n338529212\n\nNote\n\nIn the first test case, the valid a are: [0,0,0],\
+  \ [0,0,1], [0,1,0], [1,0,0].\n\n[1,0,1] is invalid since a_1+a_n \u2265 m."
+samples:
+- " ```import sys\ninput = sys.stdin.readline\nn, m = map(int, input().split())\n\
+  dp = [0] * (m + 1)\nfor i in range(1, m + 1):\n    dp[i] = dp[i - 1] + 1\nfor i\
+  \ in range(1, n):\n    dp[m - a[i - 1] - a[i]] -= dp[m - a[i - 1] - 1]\n    dp[m\
+  \ - a[i - 1] - a[i]] %= 998244353\nprint(dp[m - a[-1]] % 998244353)```\nQ:"
+- " ```t = int(input())\nn, m = map(int, input().split())\ndp = [0] * (m + 1)\nfor\
+  \ i in range(1, m + 1):\n    dp[i] = dp[i-1] + 1\nfor i in range(n):\n    dp[a]\
+  \ -= 1\n    a += 1\n    print(dp[m] % 998244353)``` A: ```import sys\ninput = sys.stdin.readline\n\
+  from math import gcd\nfrom functools import reduce\n\ndef extended_gcd(a, b):\n\
+  \    if a == 0:\n        return b, 0, 1\n    else:\n        g, y, x = extended_gcd(b\
+  \ % a, a)\n        return g, x - (b // a) * y, y\n\ndef modinv(a, m):\n    g, x,\
+  \ y = extended_gcd(a, m)\n    if g != 1:\n        return None\n    else:\n     \
+  \   return x % m\n\ndef solve():\n    t = int(input())\n    for _ in range(t):\n\
+  \        n, m = map(int, input().split())\n        a = list(map(int, input().split()))\n\
+  \        b = list(map(int, input().split()))\n        for i in range(n):\n     \
+  \       if a[i] > 0:\n                c = [-x for x in a[:i]]\n                c.reverse()\n\
+  \                a = a[i:]\n                break\n        else:\n            c\
+  \ = [-x for x in a[:n]]\n            c.reverse()\n            a = []\n        for\
+  \ i in range(m):\n            if b[i] > 0:\n                d = [-x for x in b[:i]]\n\
+  \                d.reverse()\n                b = b[i:]\n                break\n\
+  \        else:\n            d = [-x for x in b[:m]]\n            d.reverse()\n \
+  \           b = []\n        res = 0\n        for i in range(n):\n            res\
+  \ += (a[i] % m) * (m - a[i]) % m\n        for i in range(m):\n            res +=\
+  \ (b[i] % m) * (m - b[i]) % m\n        res = res % m\n        g, x, _ = extended_gcd(res,\
+  \ m)\n        res = (x * m + m) % m\n        print(res)\n\nif __name__ == \"__main__\"\
+  :\n    solve()``` A: ```for _ in range(int(input())):\n    n, m = map(int, input().split())\n\
+  \    a = list(map(int, input().split()))\n    b = list(map(int, input().split()))\n\
+  \    res = 0\n    for i in range(n):\n        res += (a[i] % m) * (m - a[i]) % m\n\
+  \    for i in range(m):\n        res += (b[i] % m) * (m - b[i]) % m\n    res = res\
+  \ % m\n    print(res)``` A: ```from collections import defaultdict\nfrom functools\
+  \ import reduce\nfrom math import gcd\nfrom operator import mul\n\ndef solve():\n\
+  \    t = int(input())\n    for _ in range(t):\n        n, m = map(int, input().split())\n\
+  \        a = list(map(int, input().split()))\n        b = list(map(int, input().split()))\n\
+  \        dp = defaultdict(int)\n        for i in range(n):\n            dp[a[i]]\
+  \ += 1\n        for i in range(m):\n            dp[b[i]] += 1\n        res = 1\n\
+  \        for k in range(2, m+1):\n            res *= k\n        res = res // gcd(res,\
+  \ m)\n        res = reduce(mul, [dp[i] % m for i in range(1, m+1)], 1)\n       \
+  \ print(res)\n\nif __name__ == \"__main__\":\n    solve()``` A: ```import math\n\
+  import sys\n\ndef solve():\n    t = int(input())\n    for _ in range(t):\n     \
+  \   n, m = map(int, input().split())\n        a = list(map(int, input().split()))\n\
+  \        b = list(map(int, input().split()))\n        res = 0\n        for i in\
+  \ range(n):\n            res += (a[i] % m) * (m - a[i]) % m\n        for i in range(m):\n\
+  \            res += (b[i] % m) * (m - b[i]) % m\n        res = res % (m * m)\n \
+  \       g, x, _ = math.gcdex(res, m * m)\n        res = (res * x % (m * m)) // m\n\
+  \        print(res)\n\nif __name__ == \"__main__\":\n    solve()``` A: ```import\
+  \ math\nimport sys\n\ndef solve():\n    t = int(input())\n    for _ in range(t):\n\
+  \        n, m = map(int, input().split())\n        a = list(map(int,"
+test_cases:
+  input:
+  - '5 9
+
+    '
+  - '3 2
+
+    '
+  - '21038 3942834
+
+    '
+  - '39 1
+
+    '
+  - '2 1
+
+    '
+  - '2 1000000000
+
+    '
+  - '50000 1
+
+    '
+  - '4000 292023
+
+    '
+  - '555 6666
+
+    '
+  - '7777 777777777
+
+    '
+  - '2021 1202
+
+    '
+  - '404 502
+
+    '
+  - '7 7
+
+    '
+  - '12345 987654321
+
+    '
+  - '25 25
+
+    '
+  - '23847 1745
+
+    '
+  - '3 1000000000
+
+    '
+  - '40 2
+
+    '
+  - '2 2
+
+    '
+  - '36 100000000
+
+    '
+  - '50000 2
+
+    '
+  - '7777 20030529
+
+    '
+  - '520 1314
+
+    '
+  - '520 20050820
+
+    '
+  - '309 19260817
+
+    '
+  - '5959 959595959
+
+    '
+  - '49999 77
+
+    '
+  - '49999 1000000000
+
+    '
+  - '50000 20080808
+
+    '
+  - '50000 998244353
+
+    '
+  - '50000 536870911
+
+    '
+  - '50000 999999999
+
+    '
+  - '49998 999999998
+
+    '
+  - '49998 49999
+
+    '
+  - '50000 536870912
+
+    '
+  - '49999 999999999
+
+    '
+  - '50000 20050711
+
+    '
+  - '45000 998244555
+
+    '
+  - '50000 1000000000
+
+    '
+  - '50000 20210814
+
+    '
+  - '50000 19491001
+
+    '
+  - '49998 999999999
+
+    '
+  - '49998 1000000000
+
+    '
+  - '50000 20060319
+
+    '
+  - '40909 5201314
+
+    '
+  - '39 2
+
+    '
+  - '2 1000000010
+
+    '
+  - '4000 414987
+
+    '
+  - '820 6666
+
+    '
+  - '7870 777777777
+
+    '
+  - '2021 1161
+
+    '
+  - '404 865
+
+    '
+  - '7 6
+
+    '
+  - '12345 602875230
+
+    '
+  - '18 25
+
+    '
+  - '23847 2363
+
+    '
+  - '3 1100000000
+
+    '
+  - '26 2
+
+    '
+  - '36 101000000
+
+    '
+  - '3649 2
+
+    '
+  - '7777 563777
+
+    '
+  - '308 1314
+
+    '
+  - '520 11335113
+
+    '
+  - '419 19260817
+
+    '
+  - '10091 959595959
+
+    '
+  - '17303 77
+
+    '
+  - '49999 1000100000
+
+    '
+  - '50000 39514153
+
+    '
+  - '50000 1673924072
+
+    '
+  - '50000 948348855
+
+    '
+  - '50000 1860729918
+
+    '
+  - '49998 445008138
+
+    '
+  - '49998 5236
+
+    '
+  - '50000 643917698
+
+    '
+  - '49999 1868201204
+
+    '
+  - '50000 30414406
+
+    '
+  - '50000 31834736
+
+    '
+  - '50000 3618981
+
+    '
+  - '49998 296427643
+
+    '
+  - '49998 1000000010
+
+    '
+  - '35651 20060319
+
+    '
+  - '40909 5287563
+
+    '
+  - '5 12
+
+    '
+  - '3 3
+
+    '
+  - '22310 3942834
+
+    '
+  - '20 1
+
+    '
+  - '2 1000000011
+
+    '
+  - '4000 740769
+
+    '
+  - '820 9570
+
+    '
+  - '7870 774052032
+
+    '
+  - '80 1161
+
+    '
+  - '404 177
+
+    '
+  - '8 6
+
+    '
+  - '12345 21853381
+
+    '
+  - '10 25
+
+    '
+  - '40939 2363
+
+    '
+  - '3 1100000001
+
+    '
+  - '9 2
+
+    '
+  - '6 101000000
+
+    '
+  - '3649 3
+
+    '
+  - '1742 563777
+
+    '
+  - '308 2526
+
+    '
+  - '244 11335113
+
+    '
+  - '419 13482998
+
+    '
+  - '10091 16785135
+
+    '
+  - '17303 52
+
+    '
+  - '14338 1000000000
+
+    '
+  - '50000 9945755
+
+    '
+  - '50000 1457910591
+
+    '
+  - '50000 1079536616
+
+    '
+  - '12176 445008138
+
+    '
+  - '49998 8568
+
+    '
+  - '50000 635482560
+
+    '
+  - '38347 1868201204
+
+    '
+  - '50000 821060
+
+    '
+  - '50000 46485047
+
+    '
+  - '50000 6233476
+
+    '
+  - '49603 296427643
+
+    '
+  - '35651 12686291
+
+    '
+  - '40909 5117327
+
+    '
+  - '5 22
+
+    '
+  - '2 3
+
+    '
+  - '22310 7418557
+
+    '
+  - '4 1000000011
+
+    '
+  - '305 740769
+
+    '
+  - '820 15296
+
+    '
+  - '7870 945413823
+
+    '
+  - '80 1153
+
+    '
+  - '360 177
+
+    '
+  - '14 6
+
+    '
+  - '13204 21853381
+
+    '
+  - '10 44
+
+    '
+  - '40939 532
+
+    '
+  - '4 1100000001
+
+    '
+  - '10 2
+
+    '
+  - '6 101000001
+
+    '
+  - '6469 3
+
+    '
+  - '1742 699431
+
+    '
+  - '597 2526
+
+    '
+  - '244 515335
+
+    '
+  - '419 16785595
+
+    '
+  - '10091 4135444
+
+    '
+  - '17303 5
+
+    '
+  - '14338 1000001000
+
+    '
+  - '50000 1952870455
+
+    '
+  - '50000 1596873035
+
+    '
+  - '12176 601764039
+
+    '
+  - '49998 2021
+
+    '
+  - '38347 300767379
+
+    '
+  - '50000 844471
+
+    '
+  - '50000 2628487
+
+    '
+  - '49603 485837757
+
+    '
+  - '12715 5117327
+
+    '
+  - '5 14
+
+    '
+  - '1 3
+
+    '
+  - '22310 8512330
+
+    '
+  - '19 2
+
+    '
+  - '3 1000000011
+
+    '
+  - '305 882056
+
+    '
+  - '174 15296
+
+    '
+  - '7870 824668426
+
+    '
+  - '80 137
+
+    '
+  - '360 271
+
+    '
+  - '22 6
+
+    '
+  - '13204 26675681
+
+    '
+  - '10 88
+
+    '
+  - '42334 532
+
+    '
+  - '4 1100000000
+
+    '
+  - '18 2
+
+    '
+  - '6 101001001
+
+    '
+  - '11473 3
+
+    '
+  - '1742 1112090
+
+    '
+  - '153 2526
+
+    '
+  - '419 515335
+
+    '
+  - '315 16785595
+
+    '
+  - '16334 4135444
+
+    '
+  - '1483 5
+
+    '
+  - '14338 1000001010
+
+    '
+  - '12186 1596873035
+
+    '
+  - '12176 728214970
+
+    '
+  - '29115 300767379
+
+    '
+  - '50000 1144769
+
+    '
+  - '50000 1785277
+
+    '
+  - '10323 485837757
+
+    '
+  - '7034 5117327
+
+    '
+  - '2 14
+
+    '
+  - '36481 8512330
+
+    '
+  - '11 2
+
+    '
+  - '3 1100000011
+
+    '
+  - '159 882056
+
+    '
+  - '174 14564
+
+    '
+  - '6696 824668426
+
+    '
+  - '80 271
+
+    '
+  - '273 271
+
+    '
+  - '22 10
+
+    '
+  - '3415 26675681
+
+    '
+  - '17 88
+
+    '
+  - '42334 1035
+
+    '
+  - '1 1100000000
+
+    '
+  - '10 3
+
+    '
+  - '4 101001001
+
+    '
+  - '6399 3
+
+    '
+  - '3193 1112090
+
+    '
+  - '153 315
+
+    '
+  - '419 730257
+
+    '
+  - '315 16355714
+
+    '
+  - '16334 1963404
+
+    '
+  - '2895 5
+
+    '
+  - '14338 1100001010
+
+    '
+  - '12186 886708061
+
+    '
+  - '6578 728214970
+
+    '
+  - '29115 583530549
+
+    '
+  - '50000 1312212
+
+    '
+  - '39329 1785277
+
+    '
+  - '3145 485837757
+
+    '
+  - '1630 5117327
+
+    '
+  - '3 14
+
+    '
+  - '30269 8512330
+
+    '
+  - '8 2
+
+    '
+  - '4 1100000011
+
+    '
+  - '159 79194
+
+    '
+  - '174 16034
+
+    '
+  - '6696 156738791
+
+    '
+  - '80 437
+
+    '
+  - '273 225
+
+    '
+  - '22 2
+
+    '
+  - '3415 17641938
+
+    '
+  - '17 26
+
+    '
+  - '42334 820
+
+    '
+  - '2 1100000000
+
+    '
+  - '10 6
+
+    '
+  - '4 101001011
+
+    '
+  - '6399 4
+
+    '
+  - '3193 1736697
+
+    '
+  - '153 475
+
+    '
+  - '269 730257
+
+    '
+  - '315 18325690
+
+    '
+  - '3979 1963404
+
+    '
+  - '2895 10
+
+    '
+  - '12539 1100001010
+
+    '
+  - '21462 886708061
+
+    '
+  - '6578 490153000
+
+    '
+  - '24675 583530549
+
+    '
+  - '50000 2153165
+
+    '
+  - '18680 1785277
+
+    '
+  output:
+  - '8105
+
+    '
+  - '4
+
+    '
+  - '338529212
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '858035449
+
+    '
+  - '1
+
+    '
+  - '282526831
+
+    '
+  - '769930326
+
+    '
+  - '87853400
+
+    '
+  - '740896918
+
+    '
+  - '358241722
+
+    '
+  - '57271
+
+    '
+  - '831278744
+
+    '
+  - '238027960
+
+    '
+  - '80789628
+
+    '
+  - '954854818
+
+    '
+  - '228826127
+
+    '
+  - '3
+
+    '
+  - '607221828
+
+    '
+  - '795133324
+
+    '
+  - '230513010
+
+    '
+  - '130635321
+
+    '
+  - '754113374
+
+    '
+  - '801321113
+
+    '
+  - '115010178
+
+    '
+  - '653972807
+
+    '
+  - '581991269
+
+    '
+  - '527942203
+
+    '
+  - '0
+
+    '
+  - '987941489
+
+    '
+  - '444937491
+
+    '
+  - '599085128
+
+    '
+  - '407197536
+
+    '
+  - '216879945
+
+    '
+  - '299788369
+
+    '
+  - '3279430
+
+    '
+  - '86399801
+
+    '
+  - '692961166
+
+    '
+  - '140378491
+
+    '
+  - '442854029
+
+    '
+  - '219852252
+
+    '
+  - '519215848
+
+    '
+  - '244773550
+
+    '
+  - '927710857
+
+    '
+  - '141422324
+
+    '
+  - '875591974
+
+    '
+  - '544564286
+
+    '
+  - '975444198
+
+    '
+  - '492262391
+
+    '
+  - '161400107
+
+    '
+  - '89340777
+
+    '
+  - '21122
+
+    '
+  - '552988067
+
+    '
+  - '183388872
+
+    '
+  - '382154915
+
+    '
+  - '740194725
+
+    '
+  - '271443
+
+    '
+  - '495599114
+
+    '
+  - '11338305
+
+    '
+  - '539278532
+
+    '
+  - '269189044
+
+    '
+  - '412330994
+
+    '
+  - '366002052
+
+    '
+  - '845561419
+
+    '
+  - '514881157
+
+    '
+  - '856608057
+
+    '
+  - '56633628
+
+    '
+  - '473381156
+
+    '
+  - '239156050
+
+    '
+  - '637590427
+
+    '
+  - '527047197
+
+    '
+  - '422266826
+
+    '
+  - '787298618
+
+    '
+  - '107243096
+
+    '
+  - '231993693
+
+    '
+  - '238566434
+
+    '
+  - '81451629
+
+    '
+  - '576926226
+
+    '
+  - '239982411
+
+    '
+  - '986215154
+
+    '
+  - '159814758
+
+    '
+  - '31891
+
+    '
+  - '11
+
+    '
+  - '523680470
+
+    '
+  - '1
+
+    '
+  - '877347632
+
+    '
+  - '854610988
+
+    '
+  - '803652889
+
+    '
+  - '180778845
+
+    '
+  - '765491768
+
+    '
+  - '672252278
+
+    '
+  - '87677
+
+    '
+  - '609740300
+
+    '
+  - '440113750
+
+    '
+  - '701725365
+
+    '
+  - '150111664
+
+    '
+  - '76
+
+    '
+  - '851172981
+
+    '
+  - '367105220
+
+    '
+  - '20197327
+
+    '
+  - '23591007
+
+    '
+  - '420809684
+
+    '
+  - '70554584
+
+    '
+  - '155898336
+
+    '
+  - '919843930
+
+    '
+  - '264580287
+
+    '
+  - '303732077
+
+    '
+  - '631002450
+
+    '
+  - '609050932
+
+    '
+  - '868110225
+
+    '
+  - '443592796
+
+    '
+  - '134938394
+
+    '
+  - '692326011
+
+    '
+  - '182891474
+
+    '
+  - '487385876
+
+    '
+  - '8323975
+
+    '
+  - '354854919
+
+    '
+  - '822447637
+
+    '
+  - '795726871
+
+    '
+  - '601271
+
+    '
+  - '6
+
+    '
+  - '719412961
+
+    '
+  - '522271743
+
+    '
+  - '876358740
+
+    '
+  - '576076212
+
+    '
+  - '520439298
+
+    '
+  - '37328200
+
+    '
+  - '855682946
+
+    '
+  - '446592076
+
+    '
+  - '928537899
+
+    '
+  - '639896562
+
+    '
+  - '446320291
+
+    '
+  - '885610282
+
+    '
+  - '123
+
+    '
+  - '924481941
+
+    '
+  - '698665393
+
+    '
+  - '852589959
+
+    '
+  - '596611066
+
+    '
+  - '695537200
+
+    '
+  - '497277340
+
+    '
+  - '882011977
+
+    '
+  - '347485932
+
+    '
+  - '3641437
+
+    '
+  - '294630524
+
+    '
+  - '315393573
+
+    '
+  - '565892269
+
+    '
+  - '471526995
+
+    '
+  - '896711873
+
+    '
+  - '890926226
+
+    '
+  - '576996538
+
+    '
+  - '960568239
+
+    '
+  - '618480077
+
+    '
+  - '66927
+
+    '
+  - '2
+
+    '
+  - '770503629
+
+    '
+  - '9349
+
+    '
+  - '547660866
+
+    '
+  - '473601517
+
+    '
+  - '477783550
+
+    '
+  - '726790145
+
+    '
+  - '346084423
+
+    '
+  - '745224527
+
+    '
+  - '530757740
+
+    '
+  - '427671099
+
+    '
+  - '545328228
+
+    '
+  - '506711004
+
+    '
+  - '730697999
+
+    '
+  - '5778
+
+    '
+  - '930060705
+
+    '
+  - '461429998
+
+    '
+  - '680984923
+
+    '
+  - '718010788
+
+    '
+  - '553465898
+
+    '
+  - '181394016
+
+    '
+  - '413844774
+
+    '
+  - '686981871
+
+    '
+  - '512496893
+
+    '
+  - '865787114
+
+    '
+  - '620412700
+
+    '
+  - '21766101
+
+    '
+  - '911622388
+
+    '
+  - '373995545
+
+    '
+  - '641799500
+
+    '
+  - '478375714
+
+    '
+  - '105
+
+    '
+  - '747779528
+
+    '
+  - '199
+
+    '
+  - '148511419
+
+    '
+  - '144976475
+
+    '
+  - '596045031
+
+    '
+  - '428046740
+
+    '
+  - '334048060
+
+    '
+  - '829098156
+
+    '
+  - '956262759
+
+    '
+  - '273995260
+
+    '
+  - '392382632
+
+    '
+  - '911665947
+
+    '
+  - '550000000
+
+    '
+  - '3281
+
+    '
+  - '796064761
+
+    '
+  - '979960620
+
+    '
+  - '577485747
+
+    '
+  - '686439062
+
+    '
+  - '116807849
+
+    '
+  - '475461644
+
+    '
+  - '219968876
+
+    '
+  - '567558087
+
+    '
+  - '465268928
+
+    '
+  - '887845505
+
+    '
+  - '958809
+
+    '
+  - '642198736
+
+    '
+  - '114353203
+
+    '
+  - '385603852
+
+    '
+  - '325099359
+
+    '
+  - '608384545
+
+    '
+  - '763
+
+    '
+  - '241135537
+
+    '
+  - '47
+
+    '
+  - '230534575
+
+    '
+  - '18089183
+
+    '
+  - '941176189
+
+    '
+  - '851145058
+
+    '
+  - '327005279
+
+    '
+  - '486496177
+
+    '
+  - '39603
+
+    '
+  - '720628648
+
+    '
+  - '491494460
+
+    '
+  - '188782739
+
+    '
+  - '54855645
+
+    '
+  - '1508401
+
+    '
+  - '205422274
+
+    '
+  - '950959967
+
+    '
+  - '564316024
+
+    '
+  - '943173751
+
+    '
+  - '317049330
+
+    '
+  - '356737356
+
+    '
+  - '162018472
+
+    '
+  - '62813154
+
+    '
+  - '154451699
+
+    '
+  - '583343517
+
+    '
+  - '437154487
+
+    '
+  - '352502064
+
+    '
+  - '291488341
+
+    '
+  - '96377009
+
+    '
+timeout: 8.0

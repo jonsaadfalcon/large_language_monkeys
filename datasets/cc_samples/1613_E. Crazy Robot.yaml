@@ -1,0 +1,3787 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThis is an\
+  \ interactive problem. Remember to flush your output while communicating with the\
+  \ testing program. You may use fflush(stdout) in C++, system.out.flush() in Java,\
+  \ stdout.flush() in Python or flush(output) in Pascal to flush the output. If you\
+  \ use some other programming language, consult its documentation. You may also refer\
+  \ to the guide on interactive problems: <https://codeforces.com/blog/entry/45307>.\n\
+  \nThere is a city in which Dixit lives. In the city, there are n houses. There is\
+  \  exactly one directed road between every pair of houses. For example, consider\
+  \ two houses A and B, then there is a directed road either from A to B or from B\
+  \ to A but not both. The number of roads leading to the i-th house is k_i.\n\nTwo\
+  \ houses A and B are bi-reachable if A is reachable from B and B is reachable from\
+  \ A. We say that house B is reachable from house A when there is a path from house\
+  \ A to house B.\n\nDixit wants to buy two houses in the city, that is, one for living\
+  \ and one for studying. Of course, he would like to travel from one house to another.\
+  \ So, he wants to find a pair of bi-reachable houses A and B. Among all such pairs,\
+  \ he wants to choose one with the maximum value of |k_A - k_B|, where k_i is the\
+  \ number of roads leading to the house i. If more than one optimal pair exists,\
+  \ any of them is suitable.\n\nSince Dixit is busy preparing CodeCraft, can you help\
+  \ him find the desired pair of houses, or tell him that no such houses exist?\n\n\
+  In the problem input, you are not given the direction of each road. You are given\
+  \ \u2014 for each house \u2014 only the number of incoming roads to that house (k_i).\n\
+  \nYou are allowed to ask only one type of query from the judge: give two houses\
+  \ A and B, and the judge answers whether B is reachable from A. There is no upper\
+  \ limit on the number of queries. But, you cannot ask more queries after the judge\
+  \ answers \"Yes\" to any of your queries. Also, you cannot ask the same query twice.\n\
+  \nOnce you have exhausted all your queries (or the judge responds \"Yes\" to any\
+  \ of your queries), your program must output its guess for the two houses and quit.\n\
+  \nSee the Interaction section below for more details.\n\nInput\n\nThe first line\
+  \ contains a single integer n (3 \u2264 n \u2264 500) denoting the number of houses\
+  \ in the city. The next line contains n space-separated integers k_1, k_2, ...,\
+  \ k_n (0 \u2264 k_i \u2264 n - 1), the i-th of them represents the number of incoming\
+  \ roads to the i-th house.\n\nInteraction\n\nTo ask a query, print \"? A B\" (1\
+  \ \u2264 A,B \u2264 N, A\u2260 B). The judge will respond \"Yes\" if house B is\
+  \ reachable from house A, or \"No\" otherwise.\n\nTo output the final answer, print\
+  \ \"! A B\", where A and B are bi-reachable with the maximum possible value of |k_A\
+  \ - k_B|. If there does not exist such pair of houses A and B, output \"! 0 0\"\
+  .\n\nAfter outputting the final answer, your program must terminate immediately,\
+  \ otherwise you will receive Wrong Answer verdict.\n\nYou cannot ask the same query\
+  \ twice. There is no upper limit to the number of queries you ask, but, you cannot\
+  \ ask more queries after the judge answers \"Yes\" to any of your queries. Your\
+  \ program must now output the final answer (\"! A B\" or \"! 0 0\") and terminate.\n\
+  \nIf you ask a query in incorrect format or repeat a previous query, you will get\
+  \ Wrong Answer verdict.\n\nAfter printing a query do not forget to output the end\
+  \ of the line and flush the output. Otherwise, you will get the Idleness limit exceeded\
+  \ error. To do this, use:\n\n  * fflush(stdout) or cout.flush() in C++; \n  * System.out.flush()\
+  \ in Java; \n  * flush(output) in Pascal; \n  * stdout.flush() in Python; \n  *\
+  \ see documentation for other languages.\n\nExamples\n\nInput\n\n\n3\n1 1 1\nYes\n\
+  \nOutput\n\n\n? 1 2\n! 1 2\n\nInput\n\n\n4\n1 2 0 3\nNo\nNo\nNo\nNo\nNo\nNo\n\n\
+  Output\n\n\n? 2 1\n? 1 3\n? 4 1\n? 2 3\n? 4 2\n? 4 3\n! 0 0\n\nNote\n\nIn the first\
+  \ sample input, we are given a city of three houses with one incoming road each.\
+  \ The user program asks one query: \"? 1 2\": asking whether we can reach from house\
+  \ 1 to house 2. The judge responds with \"Yes\". The user program now concludes\
+  \ that this is sufficient information to determine the correct answer. So, it outputs\
+  \ \"! 1 2\" and quits.\n\nIn the second sample input, the user program queries for\
+  \ six different pairs of houses, and finally answers \"! 0 0\" as it is convinced\
+  \ that no two houses as desired in the question exist in this city.\nA: ```from\
+  \ sys import stdin, stdout\ninput = stdin.readline\n\n\ndef MyIter(n):\n    for\
+  \ k in range(n-1, 0, -1):\n        i = 0\n        while i + k < n:\n           \
+  \ yield i, i + k\n            i += 1\n\n\ndef solve(n, a):\n    dct = [[] for i\
+  \ in range(n)]\n    for i, el in enumerate(a):\n        dct[el].append(i + 1)\n\
+  \    for i, j in MyIter(n):\n        for a in dct[i]:\n            for b in dct[j]:\n\
+  \                stdout.write('? %d %d\\n' % (b, a))\n                stdout.flush()\n\
+  \                if input()[0] == 'Y':\n                    return [a, b]\n    for\
+  \ j in range(n):\n        if len(dct[j]) >= 2:\n            return dct[j][:2]\n\
+  \    return [0, 0]\n\nn = int(input())\na = list(map(int, input().split()))\n\n\
+  '''\n_qq = 0\ndef input():\n    global _qq\n    _qq += 1\n    print(_qq, end='\\\
+  r')\n    return 'No'\n'''\n\nres = solve(n, a)\nprint('!', *res)```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nPetya loves hockey very much. One\
+  \ day, as he was watching a hockey match, he fell asleep. Petya dreamt of being\
+  \ appointed to change a hockey team's name. Thus, Petya was given the original team\
+  \ name w and the collection of forbidden substrings s1, s2, ..., sn. All those strings\
+  \ consist of uppercase and lowercase Latin letters. String w has the length of |w|,\
+  \ its characters are numbered from 1 to |w|.\n\nFirst Petya should find all the\
+  \ occurrences of forbidden substrings in the w string. During the search of substrings\
+  \ the case of letter shouldn't be taken into consideration. That is, strings \"\
+  aBC\" and \"ABc\" are considered equal.\n\nAfter that Petya should perform the replacement\
+  \ of all letters covered by the occurrences. More formally: a letter in the position\
+  \ i should be replaced by any other one if for position i in string w there exist\
+  \ pair of indices l, r (1 \u2264 l \u2264 i \u2264 r \u2264 |w|) such that substring\
+  \ w[l ... r] is contained in the collection s1, s2, ..., sn, when using case insensitive\
+  \ comparison. During the replacement the letter's case should remain the same. Petya\
+  \ is not allowed to replace the letters that aren't covered by any forbidden substring.\n\
+  \nLetter letter (uppercase or lowercase) is considered lucky for the hockey players.\
+  \ That's why Petya should perform the changes so that the letter occurred in the\
+  \ resulting string as many times as possible. Help Petya to find such resulting\
+  \ string. If there are several such strings, find the one that comes first lexicographically.\n\
+  \nNote that the process of replacements is not repeated, it occurs only once. That\
+  \ is, if after Petya's replacements the string started to contain new occurrences\
+  \ of bad substrings, Petya pays no attention to them.\n\nInput\n\nThe first line\
+  \ contains the only integer n (1 \u2264 n \u2264 100) \u2014 the number of forbidden\
+  \ substrings in the collection. Next n lines contain these substrings. The next\
+  \ line contains string w. All those n + 1 lines are non-empty strings consisting\
+  \ of uppercase and lowercase Latin letters whose length does not exceed 100. The\
+  \ last line contains a lowercase letter letter.\n\nOutput\n\nOutput the only line\
+  \ \u2014 Petya's resulting string with the maximum number of letters letter. If\
+  \ there are several answers then output the one that comes first lexicographically.\n\
+  \nThe lexicographical comparison is performed by the standard < operator in modern\
+  \ programming languages. The line a is lexicographically smaller than the line b,\
+  \ if a is a prefix of b, or there exists such an i (1 \u2264 i \u2264 |a|), that\
+  \ ai < bi, and for any j (1 \u2264 j < i) aj = bj. |a| stands for the length of\
+  \ string a.\n\nExamples\n\nInput\n\n3\nbers\nucky\nelu\nPetrLoveLuckyNumbers\nt\n\
+  \n\nOutput\n\nPetrLovtTttttNumtttt\n\n\nInput\n\n4\nhello\nparty\nabefglghjdhfgj\n\
+  IVan\npetrsmatchwin\na\n\n\nOutput\n\npetrsmatchwin\n\n\nInput\n\n2\naCa\ncba\n\
+  abAcaba\nc\n\n\nOutput\n\nabCacba\nA: ```n = int(input())\na = []\nfor i in range(n):\n\
+  \    a.append(input().rstrip())\nw = list(input().rstrip())\nc = input().rstrip()\n\
+  m = len(w)\nz = []\ni = 0\nwhile i < m:\n    for j in range(n):\n        if w[i].lower()\
+  \ == a[j][0].lower():\n            if i + len(a[j]) <= m:\n                f = 1\n\
+  \                for k in range(i,i+len(a[j])):\n                    if w[k].lower()\
+  \ != a[j][k-i].lower():\n                        f=0\n                        break\n\
+  \                if f:\n                    if len(z)!=0:\n                    \
+  \    if z[-1][1]>=i:\n                            z[-1][1]=max(i+len(a[j])-1,z[-1][1])\n\
+  \                        else:\n                            z.append([i,i+len(a[j])-1])\n\
+  \                    else:\n                        z.append([i,i+len(a[j])-1])\n\
+  \    i += 1\nfor i in z:\n    for k in range(i[0],i[1]+1):\n        if w[k].isupper():\n\
+  \            if w[k] != c.upper():\n                w[k] = c.upper()\n         \
+  \   else:\n                if w[k] != \"A\":\n                    w[k] = \"A\"\n\
+  \                else:\n                    w[k] = \"B\"\n        else:\n      \
+  \      if w[k] != c.lower():\n                w[k] = c.lower()\n            else:\n\
+  \                if w[k] != \"a\":\n                    w[k] = \"a\"\n         \
+  \       else:\n                    w[k] = \"b\"\nprint(\"\".join(w))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nThere is a grid, consisting\
+  \ of n rows and m columns. Each cell of the grid is either free or blocked. One\
+  \ of the free cells contains a lab. All the cells beyond the borders of the grid\
+  \ are also blocked.\n\nA crazy robot has escaped from this lab. It is currently\
+  \ in some free cell of the grid. You can send one of the following commands to the\
+  \ robot: \"move right\", \"move down\", \"move left\" or \"move up\". Each command\
+  \ means moving to a neighbouring cell in the corresponding direction.\n\nHowever,\
+  \ as the robot is crazy, it will do anything except following the command. Upon\
+  \ receiving a command, it will choose a direction such that it differs from the\
+  \ one in command and the cell in that direction is not blocked. If there is such\
+  \ a direction, then it will move to a neighbouring cell in that direction. Otherwise,\
+  \ it will do nothing.\n\nWe want to get the robot to the lab to get it fixed. For\
+  \ each free cell, determine if the robot can be forced to reach the lab starting\
+  \ in this cell. That is, after each step of the robot a command can be sent to a\
+  \ robot such that no matter what different directions the robot chooses, it will\
+  \ end up in a lab.\n\nInput\n\nThe first line contains a single integer t (1 \u2264\
+  \ t \u2264 1000) \u2014 the number of testcases.\n\nThe first line of each testcase\
+  \ contains two integers n and m (1 \u2264 n, m \u2264 10^6; n \u22C5 m \u2264 10^6)\
+  \ \u2014 the number of rows and the number of columns in the grid.\n\nThe i-th of\
+  \ the next n lines provides a description of the i-th row of the grid. It consists\
+  \ of m elements of one of three types: \n\n  * '.' \u2014 the cell is free; \n \
+  \ * '#' \u2014 the cell is blocked; \n  * 'L' \u2014 the cell contains a lab. \n\
+  \n\n\nThe grid contains exactly one lab. The sum of n \u22C5 m over all testcases\
+  \ doesn't exceed 10^6.\n\nOutput\n\nFor each testcase find the free cells that the\
+  \ robot can be forced to reach the lab from. Given the grid, replace the free cells\
+  \ (marked with a dot) with a plus sign ('+') for the cells that the robot can be\
+  \ forced to reach the lab from. Print the resulting grid.\n\nExample\n\nInput\n\n\
+  \n4\n3 3\n...\n.L.\n...\n4 5\n#....\n..##L\n...#.\n.....\n1 1\nL\n1 9\n....L..#.\n\
+  \n\nOutput\n\n\n...\n.L.\n...\n#++++\n..##L\n...#+\n...++\nL\n++++L++#.\n\nNote\n\
+  \nIn the first testcase there is no free cell that the robot can be forced to reach\
+  \ the lab from. Consider a corner cell. Given any direction, it will move to a neighbouring\
+  \ border grid that's not a corner. Now consider a non-corner free cell. No matter\
+  \ what direction you send to the robot, it can choose a different direction such\
+  \ that it ends up in a corner.\n\nIn the last testcase, you can keep sending the\
+  \ command that is opposite to the direction to the lab and the robot will have no\
+  \ choice other than move towards the lab.\nA:"
+question: "There is a grid, consisting of n rows and m columns. Each cell of the grid\
+  \ is either free or blocked. One of the free cells contains a lab. All the cells\
+  \ beyond the borders of the grid are also blocked.\n\nA crazy robot has escaped\
+  \ from this lab. It is currently in some free cell of the grid. You can send one\
+  \ of the following commands to the robot: \"move right\", \"move down\", \"move\
+  \ left\" or \"move up\". Each command means moving to a neighbouring cell in the\
+  \ corresponding direction.\n\nHowever, as the robot is crazy, it will do anything\
+  \ except following the command. Upon receiving a command, it will choose a direction\
+  \ such that it differs from the one in command and the cell in that direction is\
+  \ not blocked. If there is such a direction, then it will move to a neighbouring\
+  \ cell in that direction. Otherwise, it will do nothing.\n\nWe want to get the robot\
+  \ to the lab to get it fixed. For each free cell, determine if the robot can be\
+  \ forced to reach the lab starting in this cell. That is, after each step of the\
+  \ robot a command can be sent to a robot such that no matter what different directions\
+  \ the robot chooses, it will end up in a lab.\n\nInput\n\nThe first line contains\
+  \ a single integer t (1 \u2264 t \u2264 1000) \u2014 the number of testcases.\n\n\
+  The first line of each testcase contains two integers n and m (1 \u2264 n, m \u2264\
+  \ 10^6; n \u22C5 m \u2264 10^6) \u2014 the number of rows and the number of columns\
+  \ in the grid.\n\nThe i-th of the next n lines provides a description of the i-th\
+  \ row of the grid. It consists of m elements of one of three types: \n\n  * '.'\
+  \ \u2014 the cell is free; \n  * '#' \u2014 the cell is blocked; \n  * 'L' \u2014\
+  \ the cell contains a lab. \n\n\n\nThe grid contains exactly one lab. The sum of\
+  \ n \u22C5 m over all testcases doesn't exceed 10^6.\n\nOutput\n\nFor each testcase\
+  \ find the free cells that the robot can be forced to reach the lab from. Given\
+  \ the grid, replace the free cells (marked with a dot) with a plus sign ('+') for\
+  \ the cells that the robot can be forced to reach the lab from. Print the resulting\
+  \ grid.\n\nExample\n\nInput\n\n\n4\n3 3\n...\n.L.\n...\n4 5\n#....\n..##L\n...#.\n\
+  .....\n1 1\nL\n1 9\n....L..#.\n\n\nOutput\n\n\n...\n.L.\n...\n#++++\n..##L\n...#+\n\
+  ...++\nL\n++++L++#.\n\nNote\n\nIn the first testcase there is no free cell that\
+  \ the robot can be forced to reach the lab from. Consider a corner cell. Given any\
+  \ direction, it will move to a neighbouring border grid that's not a corner. Now\
+  \ consider a non-corner free cell. No matter what direction you send to the robot,\
+  \ it can choose a different direction such that it ends up in a corner.\n\nIn the\
+  \ last testcase, you can keep sending the command that is opposite to the direction\
+  \ to the lab and the robot will have no choice other than move towards the lab."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    n, m = map(int, input().split())\n\
+  \    grid = [input() for _ in range(n)]\n    for i in range(n):\n        for j in\
+  \ range(m):\n            if grid[i][j] == '.':\n                grid[i] = grid[i][:j]\
+  \ + '+' + grid[i][j+1:]\n    print('\\n'.join(grid))```\nQ:"
+- " ```from collections import deque\n\ndef bfs(grid, n, m, lab_row, lab_col):\n \
+  \   visited = [[False]*m for _ in range(n)]\n    queue = deque([(lab_row, lab_col)])\n\
+  \    visited[lab_row][lab_col] = True\n    while queue:\n        row, col = queue.popleft()\n\
+  \        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            nr, nc =\
+  \ row + dr, col + dc\n            if 0 <= nr < n and 0 <= nc < m and not visited[nr][nc]\
+  \ and grid[nr][nc] == '.':\n                queue.append((nr, nc))\n           \
+  \     visited[nr][nc] = True\n    return visited\n\ndef solve(t):\n    for _ in\
+  \ range(t):\n        n, m = map(int, input().split())\n        grid = [list(input())\
+  \ for _ in range(n)]\n        for i in range(n):\n            for j in range(m):\n\
+  \                if grid[i][j] == 'L':\n                    lab_row, lab_col = i,\
+  \ j\n        visited = bfs(grid, n, m, lab_row, lab_col)\n        for i in range(n):\n\
+  \            for j in range(m):\n                if grid[i][j] == '.' and visited[i][j]:\n\
+  \                    grid[i] = list(grid[i])\n                    grid[i][j] = '+'\n\
+  \                    grid[i] = ''.join(grid[i])\n        print('\\n'.join(grid))\n\
+  \nsolve(int(input()))````\nQ:"
+test_cases:
+  input:
+  - '4
+
+    3 3
+
+    ...
+
+    .L.
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    ...#.
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    ....L..#.
+
+    '
+  - '1
+
+    3 31
+
+    ############################..#
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    ######################..#
+
+    .......................L.
+
+    ######################..#
+
+    '
+  - '1
+
+    3 31
+
+    #############################..
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ######################..#
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    .L.
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    ...#.
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    .#..L....
+
+    '
+  - '1
+
+    3 31
+
+    ############################..#
+
+    .L.............................
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    #..######################
+
+    .......................L.
+
+    ######################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    3 25
+
+    ######################..#
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .L.............................
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    ######################..#
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    .L.
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    .#...
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    .#..L....
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .L.............................
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    #####################..##
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    ..L
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    .#...
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    .#..L....
+
+    '
+  - '1
+
+    3 25
+
+    #####################..##
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    #################"##########..#
+
+    '
+  - '1
+
+    3 31
+
+    ..#############################
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    #..######################
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '1
+
+    3 25
+
+    ##..#####################
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    3 31
+
+    #############################..
+
+    ...........L...................
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    ######################..#
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    ##.#############.########
+
+    .L.......................
+
+    #..###$###########$######
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .L.............................
+
+    #..############################
+
+    '
+  - '1
+
+    3 25
+
+    ##..#####################
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    #..######################
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    3 25
+
+    #####################..##
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '1
+
+    2 25
+
+    ################.#####.##
+
+    .L.......................
+
+    #..######$####"#$########
+
+    '
+  - '1
+
+    3 31
+
+    ..#############################
+
+    .L.............................
+
+    ############################..#
+
+    '
+  - '1
+
+    2 31
+
+    #..############################
+
+    .............................L.
+
+    ##########"######"##########./#
+
+    '
+  - '1
+
+    3 31
+
+    #############################..
+
+    ...................L...........
+
+    ############################..#
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .L.............................
+
+    #.##.##########################
+
+    '
+  - '1
+
+    2 25
+
+    ##.##########.###########
+
+    .L.......................
+
+    ####"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    ##.#####.################
+
+    .......................L.
+
+    #############"########..#
+
+    '
+  - '1
+
+    2 25
+
+    ################.#####.##
+
+    .......................L.
+
+    ######"######"##$#####..#
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .L.............................
+
+    ################.############.#
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    ..L
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    ..#..
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    .#..L....
+
+    '
+  - '1
+
+    3 25
+
+    #..######################
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .............................L.
+
+    #..############################
+
+    '
+  - '1
+
+    2 25
+
+    ##.#####.################
+
+    .L.......................
+
+    #..######$####"#$########
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .............................L.
+
+    #.##.##########################
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    ......................L..
+
+    #..###$##################
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    .L.
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    .#...
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    ....L..#.
+
+    '
+  - '1
+
+    2 25
+
+    #####################..##
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    ########.#############.##
+
+    .L.......................
+
+    #..###$###########$######
+
+    '
+  - '1
+
+    2 25
+
+    ###########.##########.##
+
+    .L.......................
+
+    ####"#################..#
+
+    '
+  - '1
+
+    3 31
+
+    #..############################
+
+    .............................L.
+
+    ################.############.#
+
+    '
+  - '1
+
+    2 25
+
+    ##########.############.#
+
+    ......................L..
+
+    #..###$##################
+
+    '
+  - '1
+
+    2 31
+
+    #..############################
+
+    ...............L...............
+
+    #/.##########"######"##########
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    .L.
+
+    ...
+
+    4 5
+
+    #....
+
+    L.##.
+
+    ...#.
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    ....L..#.
+
+    '
+  - '1
+
+    2 31
+
+    #############################..
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '4
+
+    3 3
+
+    ...
+
+    ..L
+
+    ...
+
+    4 5
+
+    #....
+
+    ..##L
+
+    ...#.
+
+    .....
+
+    1 1
+
+    L
+
+    1 9
+
+    .#..L....
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    ....................L....
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    ##..#####################
+
+    .L.......................
+
+    #..######################
+
+    '
+  - '1
+
+    2 31
+
+    ..#############################
+
+    .............................L.
+
+    ############################..#
+
+    '
+  - '1
+
+    3 25
+
+    ##..#####################
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '1
+
+    3 31
+
+    #############################..
+
+    ...................L...........
+
+    #..############################
+
+    '
+  - '1
+
+    2 25
+
+    ######.###############.##
+
+    .......................L.
+
+    #..###$##################
+
+    '
+  - '1
+
+    3 31
+
+    ############################..#
+
+    .............................L.
+
+    #..############################
+
+    '
+  - '1
+
+    2 31
+
+    #..############################
+
+    .L.............................
+
+    #################"##########-.#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..######################
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###########"##########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ######################..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ######################..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..###$##################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..###$###########$######
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###$###########$######
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..#################"####
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ###########"##########..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###########"#$########
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .L.............................
+
+    #################"##########..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"##############$##..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#################"####
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..##########"###########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###########"#$####$###
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"###########$##$##..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #.#############.#########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..###$##################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..####$############"####
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..######$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$#####$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..###############"######
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###$########$##$######
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"#######"######$##..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"###########$##$##..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ##################$###..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    ##########"######"##########..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$#####$#"##"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"#######"######$##..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ##################$###..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    ##########"######"##########./#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..$#####$#"##"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ##############"#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ####"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..#####$#####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..##$##$###########"####
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..####$############"####
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..###############!######
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ##################$###..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"#######"######$$#..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$#######"##"#$#####$##
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ####"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ########$#"#####$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    $#######$#"#####$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###################$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #./######################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #############"########..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ########$#"###########..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "##########"##########..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    #################"##########-.#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..$#####$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###$########$##$######
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"####"#########$##..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ##$#"###########$##$##..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .L.............................
+
+    ##########"######"##########..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..$#####$#"##"#$########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    "###"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..####$############""###
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ######!###############..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###$##################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###########"#######$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #############"########..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    #.-##########"#################
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ######$##$########$###..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"####"#########$##.."
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#################"###"
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#"#########"#######$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"####"##$######$##.."
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    "###"#########$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#"#########"###"###$##
+
+    '
+  - '1
+
+    2 25
+
+    ##.#####.################
+
+    .......................L.
+
+    #############"##$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#######$#########"###"
+
+    '
+  - '1
+
+    2 25
+
+    ##.#####.################
+
+    .......................L.
+
+    ######"######"##$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..#######$#####"###"###"
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    "###"###"#####$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ################.#####.##
+
+    .L.......................
+
+    ######"######"##$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###########"##########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"###########$#####..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###$######"####$######
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..#######"#########"####
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #.#############.#########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###$########%##$######
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"###########$##$##..$
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .L.............................
+
+    #..##########"######"##########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$#####$$"##"#$########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..$#####$#"##"#######$##
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ##############"#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ##.#############.########
+
+    .L.......................
+
+    #/.###$###########$######
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$#######"##"#$####"$##
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..###################$##
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #./######################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####$########"########..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ###$####$#"###########..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .L.............................
+
+    #################"##########-.#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..$##"##$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #./$#####$#"##"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..####$############""###
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "..##$#########"####"####
+
+    '
+  - '1
+
+    2 25
+
+    ##.##########.###########
+
+    .L.......................
+
+    ####"############"####..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "###"#########$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ##.#####.################
+
+    .......................L.
+
+    #############"##%#####..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "###"###"#####$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..#######"#########"####
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ########$#"##"$$#####$..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ######"#######"#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..$###"###"##"#$####"$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #./$#####$#"##"#$#####$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "###"#$#######$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..$###"###"##"#$####"$##
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ###""#################..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ########$#"####$######..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    ####"#########"####$##..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ##################$##"..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"#######"######$#$..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    ####"#################..$
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..#####$$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    .#################$####.#
+
+    '
+  - '1
+
+    2 25
+
+    ################.#####.##
+
+    .L.......................
+
+    ########$#"####$######..#
+
+    '
+  - '1
+
+    2 31
+
+    #..############################
+
+    .............................L.
+
+    #/.##########"######"##########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    "###"#################..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..###$######$###########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"######"##########..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #############"$#######..#
+
+    '
+  - '1
+
+    2 31
+
+    ############################..#
+
+    .............................L.
+
+    #.-######"#####################
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..#################"###"
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    "#############$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    #..#######$#########"###"
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .......................L.
+
+    #..###########!##########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #.############$.#########
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ######$##%########$###..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    ####"###########$#$###..$
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    #..$"#"##$####"#$########
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    #..####$###$########""###
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .......................L.
+
+    "#$#"#########$#######..#
+
+    '
+  - '1
+
+    2 25
+
+    #..######################
+
+    .L.......................
+
+    $..#######"#########"####
+
+    '
+  - '1
+
+    2 25
+
+    ######################..#
+
+    .L.......................
+
+    ########$###""$$#####$..#
+
+    '
+  output:
+  - '...
+
+    .L.
+
+    ...
+
+    #++++
+
+    ..##L
+
+    ...#+
+
+    ...++
+
+    L
+
+    ++++L++#.
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    ############################++#
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    ######################++#
+
+    '
+  - '#############################++
+
+    +++++++++++++++++++++++++++++L+
+
+    ############################++#
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '...
+
+    .L.
+
+    ...
+
+    #++++
+
+    ..##L
+
+    ...#+
+
+    ...++
+
+    L
+
+    .#++L++++
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    ############################..#
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    ######################++#
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    ...++++++++++++++++++++L+
+
+    #..######################
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    ######################..#
+
+    '
+  - '...
+
+    .L.
+
+    ...
+
+    #++++
+
+    ++##L
+
+    +#...
+
+    ++...
+
+    L
+
+    .#++L++++
+
+    '
+  - '#++############################
+
+    +L++++++++++++++++++++++++++...
+
+    ############################..#
+
+    '
+  - '#####################..##
+
+    .......................L+
+
+    #..######################
+
+    '
+  - '..+
+
+    ..L
+
+    ..+
+
+    #++++
+
+    ++##L
+
+    +#...
+
+    ++...
+
+    L
+
+    .#++L++++
+
+    '
+  - '#####################..##
+
+    +L+++++++++++++++++++....
+
+    #++######################
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '..#############################
+
+    ..+++++++++++++++++++++++++++L+
+
+    ############################++#
+
+    '
+  - '#++######################
+
+    +L++++++++++++++++++++...
+
+    ######################..#
+
+    '
+  - '##..#####################
+
+    ....+++++++++++++++++++L+
+
+    #..######################
+
+    '
+  - '#############################..
+
+    +++++++++++L++++++++++++++++...
+
+    ############################..#
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    #++######################
+
+    '
+  - '##.#############.########
+
+    +L.......................
+
+    '
+  - '#++############################
+
+    +L+++++++++++++++++++++++++++++
+
+    #++############################
+
+    '
+  - '##..#####################
+
+    +L.......................
+
+    #++######################
+
+    '
+  - '#..############################
+
+    ...++++++++++++++++++++++++++L+
+
+    ############################++#
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    #..######################
+
+    '
+  - '#####################..##
+
+    +L+++++++++++++++++++....
+
+    ######################..#
+
+    '
+  - '################.#####.##
+
+    +L++++++++++++++.........
+
+    '
+  - '++#############################
+
+    +L++++++++++++++++++++++++++...
+
+    ############################..#
+
+    '
+  - '#..############################
+
+    ...++++++++++++++++++++++++++L+
+
+    '
+  - '#############################..
+
+    +++++++++++++++++++L++++++++...
+
+    ############################..#
+
+    '
+  - '#++############################
+
+    +L++...........................
+
+    #+##.##########################
+
+    '
+  - '##.##########.###########
+
+    +L.......................
+
+    '
+  - '##.#####.################
+
+    .........++++++++++++++L+
+
+    '
+  - '################.#####.##
+
+    .......................L+
+
+    '
+  - '#++############################
+
+    +L++++++++++++++...............
+
+    ################.############.#
+
+    '
+  - '..+
+
+    ..L
+
+    ..+
+
+    #++++
+
+    ..##L
+
+    ..#..
+
+    .....
+
+    L
+
+    .#++L++++
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    #++######################
+
+    '
+  - '#..############################
+
+    ...++++++++++++++++++++++++++L+
+
+    #..############################
+
+    '
+  - '##.#####.################
+
+    +L.......................
+
+    '
+  - '#..############################
+
+    .....++++++++++++++++++++++++L+
+
+    #.##.##########################
+
+    '
+  - '######################++#
+
+    ++++++++++++++++++++++L++
+
+    '
+  - '...
+
+    .L.
+
+    ...
+
+    #++++
+
+    ++##L
+
+    +#...
+
+    ++...
+
+    L
+
+    ++++L++#.
+
+    '
+  - '#####################..##
+
+    .......................L+
+
+    '
+  - '########.#############.##
+
+    +L++++++.................
+
+    '
+  - '###########.##########.##
+
+    +L+++++++++..............
+
+    '
+  - '#..############################
+
+    .................++++++++++++L+
+
+    ################.############+#
+
+    '
+  - '##########.############.#
+
+    ...........+++++++++++L..
+
+    '
+  - '#..############################
+
+    ...++++++++++++L+++++++++++++++
+
+    '
+  - '...
+
+    .L.
+
+    ...
+
+    #....
+
+    L.##.
+
+    ...#.
+
+    .....
+
+    L
+
+    ++++L++#.
+
+    '
+  - '#############################++
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '..+
+
+    ..L
+
+    ..+
+
+    #++++
+
+    ..##L
+
+    ...#+
+
+    ...++
+
+    L
+
+    .#++L++++
+
+    '
+  - '#..######################
+
+    ...+++++++++++++++++L++++
+
+    '
+  - '##..#####################
+
+    +L.......................
+
+    '
+  - '..#############################
+
+    ..+++++++++++++++++++++++++++L+
+
+    '
+  - '##..#####################
+
+    +L.......................
+
+    ######################..#
+
+    '
+  - '#############################..
+
+    ...++++++++++++++++L+++++++++..
+
+    #..############################
+
+    '
+  - '######.###############.##
+
+    .......................L+
+
+    '
+  - '############################++#
+
+    ...++++++++++++++++++++++++++L+
+
+    #..############################
+
+    '
+  - '#++############################
+
+    +L+++++++++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '##.#####.################
+
+    .........++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '##.#####.################
+
+    .........++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '################.#####.##
+
+    +L++++++++++++++.........
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '##.#############.########
+
+    +L.......................
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '############################..#
+
+    +L++++++++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '##.##########.###########
+
+    +L.......................
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '##.#####.################
+
+    .........++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '################.#####.##
+
+    +L++++++++++++++.........
+
+    '
+  - '#..############################
+
+    ...++++++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '############################++#
+
+    +++++++++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '######################++#
+
+    +++++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#..######################
+
+    ...++++++++++++++++++++L+
+
+    '
+  - '#++######################
+
+    +L+++++++++++++++++++++++
+
+    '
+  - '######################..#
+
+    +L++++++++++++++++++++...
+
+    '
+timeout: 2.0

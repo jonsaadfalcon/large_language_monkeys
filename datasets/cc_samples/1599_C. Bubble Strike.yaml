@@ -1,0 +1,1533 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nAmong Johnny's\
+  \ numerous hobbies, there are two seemingly harmless ones: applying bitwise operations\
+  \ and sneaking into his dad's office. As it is usually the case with small children,\
+  \ Johnny is unaware that combining these two activities can get him in a lot of\
+  \ trouble.\n\nThere is a set S containing very important numbers on his dad's desk.\
+  \ The minute Johnny heard about it, he decided that it's a good idea to choose a\
+  \ positive integer k and replace each element s of the set S with s \u2295 k (\u2295\
+  \ denotes the [exclusive or](https://en.wikipedia.org/wiki/Exclusive_or#Computer_science)\
+  \ operation). \n\nHelp him choose such k that Johnny's dad will not see any difference\
+  \ after his son is done playing (i.e. Johnny will get the same set as before playing).\
+  \ It is possible that no such number exists. It is also possible that there are\
+  \ many of them. In such a case, output the smallest one. Note that the order of\
+  \ elements in a set doesn't matter, i.e. set \\{1, 2, 3\\} equals to set \\{2, 1,\
+  \ 3\\}.\n\nFormally, find the smallest positive integer k such that \\\\{s \u2295\
+  \ k | s \u2208 S\\} = S or report that there is no such number.\n\nFor example,\
+  \ if S = \\{1, 3, 4\\} and k = 2, new set will be equal to \\{3, 1, 6\\}. If S =\
+  \ \\{0, 1, 2, 3\\} and k = 1, after playing set will stay the same.\n\nInput\n\n\
+  In the first line of input, there is a single integer t (1 \u2264 t \u2264 1024),\
+  \ the number of test cases. In the next lines, t test cases follow. Each of them\
+  \ consists of two lines. \n\nIn the first line there is a single integer n (1 \u2264\
+  \ n \u2264 1024) denoting the number of elements in set S. Second line consists\
+  \ of n distinct integers s_i (0 \u2264 s_i < 1024), elements of S.\n\nIt is guaranteed\
+  \ that the sum of n over all test cases will not exceed 1024.\n\nOutput\n\nPrint\
+  \ t lines; i-th line should contain the answer to the i-th test case, the minimal\
+  \ positive integer k satisfying the conditions or -1 if no such k exists.\n\nExample\n\
+  \nInput\n\n\n6\n4\n1 0 2 3\n6\n10 7 14 8 3 12\n2\n0 2\n3\n1 2 3\n6\n1 4 6 10 11\
+  \ 12\n2\n0 1023\n\n\nOutput\n\n\n1\n4\n2\n-1\n-1\n1023\n\nNote\n\nIn the first test\
+  \ case, the answer is 1 because it is a minimum positive integer and it satisfies\
+  \ all the conditions.\nA: ```t=int(input())\nfor T in range(t):\n\tn=int(input())\n\
+  \tlista=[int(x) for x in input().split()]\n\tma=max(lista)\n\tmi=min(lista)\n\t\
+  listb=[0]*n\n\tans=0\n\tfor k in range(1,2*ma+1):\n\t\ttemp=0\n\t\tfor i in range(n):\n\
+  \t\t\tlistb[i]=lista[i]^k\n\t\t\ttk=0\n\t\t\tif(listb[i] not in lista):\n\t\t\t\t\
+  temp=1\n\t\t\t\tbreak\n\t\tif(temp==0):\n\t\t\tans=1\n\t\t\tprint(k)\n\t\t\tbreak\n\
+  \tif(ans==0):\n\t\tprint(-1)```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nTokitsukaze is one of the characters in the game \"Kantai Collection\"\
+  . In this game, every character has a common attribute \u2014 health points, shortened\
+  \ to HP.\n\nIn general, different values of HP are grouped into 4 categories:\n\n\
+  \  * Category A if HP is in the form of (4 n + 1), that is, when divided by 4, the\
+  \ remainder is 1; \n  * Category B if HP is in the form of (4 n + 3), that is, when\
+  \ divided by 4, the remainder is 3; \n  * Category C if HP is in the form of (4\
+  \ n + 2), that is, when divided by 4, the remainder is 2; \n  * Category D if HP\
+  \ is in the form of 4 n, that is, when divided by 4, the remainder is 0. \n\n\n\n\
+  The above-mentioned n can be any integer.\n\nThese 4 categories ordered from highest\
+  \ to lowest as A > B > C > D, which means category A is the highest and category\
+  \ D is the lowest.\n\nWhile playing the game, players can increase the HP of the\
+  \ character. Now, Tokitsukaze wants you to increase her HP by at most 2 (that is,\
+  \ either by 0, 1 or 2). How much should she increase her HP so that it has the highest\
+  \ possible category?\n\nInput\n\nThe only line contains a single integer x (30 \u2264\
+  \ x \u2264 100) \u2014 the value Tokitsukaze's HP currently.\n\nOutput\n\nPrint\
+  \ an integer a (0 \u2264 a \u2264 2) and an uppercase letter b (b \u2208 { A, B,\
+  \ C, D }), representing that the best way is to increase her HP by a, and then the\
+  \ category becomes b.\n\nNote that the output characters are case-sensitive.\n\n\
+  Examples\n\nInput\n\n\n33\n\n\nOutput\n\n\n0 A\n\n\nInput\n\n\n98\n\n\nOutput\n\n\
+  \n1 B\n\nNote\n\nFor the first example, the category of Tokitsukaze's HP is already\
+  \ A, so you don't need to enhance her ability.\n\nFor the second example:\n\n  *\
+  \ If you don't increase her HP, its value is still 98, which equals to (4 \xD7 24\
+  \ + 2), and its category is C. \n  * If you increase her HP by 1, its value becomes\
+  \ 99, which equals to (4 \xD7 24 + 3), and its category becomes B. \n  * If you\
+  \ increase her HP by 2, its value becomes 100, which equals to (4 \xD7 25), and\
+  \ its category becomes D. \n\n\n\nTherefore, the best way is to increase her HP\
+  \ by 1 so that the category of her HP becomes B.\nA: ```n=int(input())\nd={}\nd[0]='1\
+  \ A'\nd[1]='0 A'\nd[2]='1 B'\nd[3]='2 A'\nx=n%4\nprint(d[x])```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nLittle Johnny Bubbles enjoys spending\
+  \ hours in front of his computer playing video games. His favorite game is Bubble\
+  \ Strike, fast-paced bubble shooting online game for two players.\n\nEach game is\
+  \ set in one of the N maps, each having different terrain configuration. First phase\
+  \ of each game decides on which map the game will be played. The game system randomly\
+  \ selects three maps and shows them to the players. Each player must pick one of\
+  \ those three maps to be discarded. The game system then randomly selects one of\
+  \ the maps that were not picked by any of the players and starts the game.\n\nJohnny\
+  \ is deeply enthusiastic about the game and wants to spend some time studying maps,\
+  \ thus increasing chances to win games played on those maps. However, he also needs\
+  \ to do his homework, so he does not have time to study all the maps. That is why\
+  \ he asked himself the following question: \"What is the minimum number of maps\
+  \ I have to study, so that the probability to play one of those maps is at least\
+  \ P\"?\n\nCan you help Johnny find the answer for this question? You can assume\
+  \ Johnny's opponents do not know him, and they will randomly pick maps.\n\nInput\n\
+  \nThe first line contains two integers N (3 \u2264 N \u2264 10^{3}) and P (0 \u2264\
+  \ P \u2264 1) \u2013 total number of maps in the game and probability to play map\
+  \ Johnny has studied. P will have at most four digits after the decimal point.\n\
+  \nOutput\n\nOutput contains one integer number \u2013 minimum number of maps Johnny\
+  \ has to study.\n\nExample\n\nInput\n\n\n7 1.0000\n\n\nOutput\n\n\n6\nA:"
+question: "Little Johnny Bubbles enjoys spending hours in front of his computer playing\
+  \ video games. His favorite game is Bubble Strike, fast-paced bubble shooting online\
+  \ game for two players.\n\nEach game is set in one of the N maps, each having different\
+  \ terrain configuration. First phase of each game decides on which map the game\
+  \ will be played. The game system randomly selects three maps and shows them to\
+  \ the players. Each player must pick one of those three maps to be discarded. The\
+  \ game system then randomly selects one of the maps that were not picked by any\
+  \ of the players and starts the game.\n\nJohnny is deeply enthusiastic about the\
+  \ game and wants to spend some time studying maps, thus increasing chances to win\
+  \ games played on those maps. However, he also needs to do his homework, so he does\
+  \ not have time to study all the maps. That is why he asked himself the following\
+  \ question: \"What is the minimum number of maps I have to study, so that the probability\
+  \ to play one of those maps is at least P\"?\n\nCan you help Johnny find the answer\
+  \ for this question? You can assume Johnny's opponents do not know him, and they\
+  \ will randomly pick maps.\n\nInput\n\nThe first line contains two integers N (3\
+  \ \u2264 N \u2264 10^{3}) and P (0 \u2264 P \u2264 1) \u2013 total number of maps\
+  \ in the game and probability to play map Johnny has studied. P will have at most\
+  \ four digits after the decimal point.\n\nOutput\n\nOutput contains one integer\
+  \ number \u2013 minimum number of maps Johnny has to study.\n\nExample\n\nInput\n\
+  \n\n7 1.0000\n\n\nOutput\n\n\n6"
+samples:
+- " ```n=int(input())\np=float(input())\nmaps=int(n*(n-1)*(n-2)/6)\nwhile maps<p*n:\n\
+  \tmaps+=1\nprint(maps)```\n\n\nQ:"
+- " ```N=int(input())\nP=float(input())\nn=0\nfor i in range(1,N+1):\n    if sum(1/(i+j-1)\
+  \ for j in range(1,i+1)) >= P:\n        n=i\n        break\nprint(n)```\nQ:"
+test_cases:
+  input:
+  - '7 1.0000
+
+    '
+  - '956 0.9733
+
+    '
+  - '444 0.0265
+
+    '
+  - '267 0.4122
+
+    '
+  - '840 0.5672
+
+    '
+  - '937 0.8022
+
+    '
+  - '504 0.2099
+
+    '
+  - '439 0.0404
+
+    '
+  - '200 0.9495
+
+    '
+  - '566 0.6282
+
+    '
+  - '995 0.4480
+
+    '
+  - '364 0.3555
+
+    '
+  - '891 0.6481
+
+    '
+  - '329 0.5879
+
+    '
+  - '622 0.8974
+
+    '
+  - '634 0.7906
+
+    '
+  - '440 0.9342
+
+    '
+  - '848 0.8576
+
+    '
+  - '38 0.2356
+
+    '
+  - '716 0.9851
+
+    '
+  - '141 0.0086
+
+    '
+  - '357 0.9853
+
+    '
+  - '1000 1.0000
+
+    '
+  - '999 1.0000
+
+    '
+  - '217 0.0744
+
+    '
+  - '1000 0.0000
+
+    '
+  - '571 0.5208
+
+    '
+  - '588 0.3851
+
+    '
+  - '517 0.4859
+
+    '
+  - '444 0.0180
+
+    '
+  - '847 0.3600
+
+    '
+  - '853 0.0684
+
+    '
+  - '3 1.0000
+
+    '
+  - '317 0.2190
+
+    '
+  - '195 0.5459
+
+    '
+  - '3 0.0000
+
+    '
+  - '444 0.8368614164269385
+
+    '
+  - '306 0.4122
+
+    '
+  - '504 0.47945891424701503
+
+    '
+  - '439 0.9705914955146071
+
+    '
+  - '84 0.9495
+
+    '
+  - '995 0.6666090518597632
+
+    '
+  - '43 0.3555
+
+    '
+  - '3 0.5879
+
+    '
+  - '278 0.9342
+
+    '
+  - '38 0.8234508095977526
+
+    '
+  - '141 0.759575113336164
+
+    '
+  - '562 0.9853
+
+    '
+  - '217 0.33182341459969744
+
+    '
+  - '1000 0.4721875056593412
+
+    '
+  - '151 0.5208
+
+    '
+  - '604 0.3851
+
+    '
+  - '517 0.678830287790332
+
+    '
+  - '444 0.34094493029760853
+
+    '
+  - '925 0.3600
+
+    '
+  - '320 0.2190
+
+    '
+  - '4 0.0000
+
+    '
+  - '543 0.4122
+
+    '
+  - '743 0.47945891424701503
+
+    '
+  - '137 0.6666090518597632
+
+    '
+  - '89 0.9342
+
+    '
+  - '387 0.9853
+
+    '
+  - '376 0.33182341459969744
+
+    '
+  - '151 0.9009996112351931
+
+    '
+  - '963 0.678830287790332
+
+    '
+  - '444 0.49265183917195776
+
+    '
+  - '320 0.726566593926582
+
+    '
+  - '246 0.5459
+
+    '
+  - '543 0.6633934256556311
+
+    '
+  - '137 0.765450854094475
+
+    '
+  - '42 0.405144876722721
+
+    '
+  - '565 0.9853
+
+    '
+  - '550 0.33182341459969744
+
+    '
+  - '444 0.9466357734609373
+
+    '
+  - '317 0.5459
+
+    '
+  - '569 0.6633934256556311
+
+    '
+  - '17 0.405144876722721
+
+    '
+  - '559 0.9466357734609373
+
+    '
+  - '291 0.5459
+
+    '
+  - '17 0.5820481456743822
+
+    '
+  - '950 0.9466357734609373
+
+    '
+  - '291 0.8964808296309417
+
+    '
+  - '840 0.9596127351861631
+
+    '
+  - '504 0.5947570920298648
+
+    '
+  - '439 0.8765981365229966
+
+    '
+  - '82 0.6282
+
+    '
+  - '364 0.9775023820866555
+
+    '
+  - '101 0.5879
+
+    '
+  - '622 0.9478877112400735
+
+    '
+  - '1001 1.0000
+
+    '
+  - '878 1.0000
+
+    '
+  - '217 0.7234534740709847
+
+    '
+  - '1000 0.8104271403056146
+
+    '
+  - '432 0.5208
+
+    '
+  - '916 0.3851
+
+    '
+  - '853 0.5791562296680591
+
+    '
+  - '317 0.2668465580102487
+
+    '
+  - '10 1.0000
+
+    '
+  - '444 0.8876644358674806
+
+    '
+  - '45 0.4122
+
+    '
+  - '154 0.47945891424701503
+
+    '
+  - '491 0.9705914955146071
+
+    '
+  - '43 0.8464204825280321
+
+    '
+  - '450 0.9342
+
+    '
+  - '54 0.8234508095977526
+
+    '
+  - '168 0.759575113336164
+
+    '
+  - '115 0.33182341459969744
+
+    '
+  - '95 0.5208
+
+    '
+  - '39 0.678830287790332
+
+    '
+  - '444 0.5245828091861575
+
+    '
+  - '265 0.5459
+
+    '
+  - '4 0.7946852462863271
+
+    '
+  - '743 0.48892132820895473
+
+    '
+  - '680 0.9853
+
+    '
+  - '305 0.726566593926582
+
+    '
+  - '246 0.7472850448443579
+
+    '
+  - '815 0.6633934256556311
+
+    '
+  - '42 0.5145840515202826
+
+    '
+  - '199 0.9853
+
+    '
+  - '550 0.8336099701008937
+
+    '
+  - '378 0.5459
+
+    '
+  - '569 0.94398385687172
+
+    '
+  - '456 0.8964808296309417
+
+    '
+  - '97 0.6282727299161085
+
+    '
+  - '369 0.8765981365229966
+
+    '
+  - '177 0.9775023820866555
+
+    '
+  - '324 0.9478877112400735
+
+    '
+  - '95 0.5791562296680591
+
+    '
+  - '253 0.2668465580102487
+
+    '
+  - '444 0.9482691444461535
+
+    '
+  - '746 0.9342
+
+    '
+  - '160 0.33182341459969744
+
+    '
+  - '34 0.678830287790332
+
+    '
+  - '549 0.5245828091861575
+
+    '
+  - '223 0.3645088288541779
+
+    '
+  - '265 0.8305978609064739
+
+    '
+  - '366 0.9853
+
+    '
+  - '977 0.33182341459969744
+
+    '
+  - '83 0.726566593926582
+
+    '
+  - '42 0.7747423604241646
+
+    '
+  - '899 0.94398385687172
+
+    '
+  - '22 0.495817654397473
+
+    '
+  - '608 0.8964808296309417
+
+    '
+  - '9 0.5915128699030916
+
+    '
+  - '539 0.9478877112400735
+
+    '
+  - '184 0.9278209568135339
+
+    '
+  - '8 0.9021564439020576
+
+    '
+  - '438 0.9482691444461535
+
+    '
+  - '746 0.9426309517208602
+
+    '
+  - '287 0.33182341459969744
+
+    '
+  - '407 0.3645088288541779
+
+    '
+  - '95 0.33182341459969744
+
+    '
+  - '17 0.7936902105410145
+
+    '
+  - '320 0.8964808296309417
+
+    '
+  - '74 0.5947570920298648
+
+    '
+  - '234 0.9278209568135339
+
+    '
+  - '50 0.8381046203747061
+
+    '
+  - '31 0.7936902105410145
+
+    '
+  - '234 0.9971618767671863
+
+    '
+  - '493 0.7619437242088244
+
+    '
+  - '455 0.3645088288541779
+
+    '
+  - '70 0.43648125150341044
+
+    '
+  - '116 0.565449237610959
+
+    '
+  - '186 0.565449237610959
+
+    '
+  - '182 0.565449237610959
+
+    '
+  - '35 0.9733
+
+    '
+  - '54 0.0265
+
+    '
+  - '267 0.7287650431365782
+
+    '
+  - '840 0.9683100150304929
+
+    '
+  - '898 0.8022
+
+    '
+  - '66 0.9495
+
+    '
+  - '806 0.8974
+
+    '
+  - '91 0.9851
+
+    '
+  - '141 0.4244045002139862
+
+    '
+  - '1000 0.1246698958946757
+
+    '
+  - '588 0.4800804599292542
+
+    '
+  - '517 0.5545893627219094
+
+    '
+  - '853 0.9431069122210773
+
+    '
+  - '468 0.2190
+
+    '
+  - '136 0.8368614164269385
+
+    '
+  - '306 0.5999354446956728
+
+    '
+  - '96 0.9853
+
+    '
+  - '217 0.8362304409743125
+
+    '
+  - '168 0.5208
+
+    '
+  - '543 0.678830287790332
+
+    '
+  - '444 0.9856768815607899
+
+    '
+  - '776 0.3600
+
+    '
+  - '150 0.9342
+
+    '
+  - '282 0.9853
+
+    '
+  - '572 0.33182341459969744
+
+    '
+  - '80 0.9009996112351931
+
+    '
+  - '786 0.49265183917195776
+
+    '
+  - '199 0.5459
+
+    '
+  - '45 0.5459
+
+    '
+  - '443 0.9466357734609373
+
+    '
+  - '308 0.8964808296309417
+
+    '
+  - '823 0.5947570920298648
+
+    '
+  - '763 0.8765981365229966
+
+    '
+  - '37 0.806926298415745
+
+    '
+  - '217 0.8053641233379188
+
+    '
+  - '611 0.5208
+
+    '
+  - '758 0.3851
+
+    '
+  - '571 0.8680271156357405
+
+    '
+  - '41 0.47945891424701503
+
+    '
+  - '552 0.9705914955146071
+
+    '
+  - '80 0.8234508095977526
+
+    '
+  - '169 0.33182341459969744
+
+    '
+  - '878 0.5245828091861575
+
+    '
+  - '122 0.3645088288541779
+
+    '
+  - '328 0.5459
+
+    '
+  - '743 0.6126673961293478
+
+    '
+  - '335 0.9853
+
+    '
+  - '704 0.40818286346050336
+
+    '
+  - '139 0.726566593926582
+
+    '
+  - '925 0.8336099701008937
+
+    '
+  - '400 0.5459
+
+    '
+  - '253 0.9702178074771743
+
+    '
+  - '107 0.5245828091861575
+
+    '
+  - '223 0.8942369794166085
+
+    '
+  - '977 0.5972540154596311
+
+    '
+  - '83 0.8747242371314395
+
+    '
+  - '260 0.9853
+
+    '
+  - '667 0.9478877112400735
+
+    '
+  - '487 0.33182341459969744
+
+    '
+  - '180 0.9278209568135339
+
+    '
+  - '200 0.9971618767671863
+
+    '
+  - '88 0.43648125150341044
+
+    '
+  - '574 0.9683100150304929
+
+    '
+  - '384 0.41094767128887283
+
+    '
+  - '763 0.3613184604463928
+
+    '
+  - '184 0.5459
+
+    '
+  - '142 0.5459
+
+    '
+  - '42 0.3555
+
+    '
+  - '8 0.0000
+
+    '
+  - '97 0.0265
+
+    '
+  - '4 0.4122
+
+    '
+  output:
+  - '6
+
+    '
+  - '826
+
+    '
+  - '8
+
+    '
+  - '76
+
+    '
+  - '336
+
+    '
+  - '573
+
+    '
+  - '71
+
+    '
+  - '12
+
+    '
+  - '162
+
+    '
+  - '254
+
+    '
+  - '307
+
+    '
+  - '88
+
+    '
+  - '415
+
+    '
+  - '137
+
+    '
+  - '452
+
+    '
+  - '380
+
+    '
+  - '344
+
+    '
+  - '571
+
+    '
+  - '6
+
+    '
+  - '643
+
+    '
+  - '1
+
+    '
+  - '321
+
+    '
+  - '999
+
+    '
+  - '998
+
+    '
+  - '11
+
+    '
+  - '0
+
+    '
+  - '208
+
+    '
+  - '155
+
+    '
+  - '174
+
+    '
+  - '6
+
+    '
+  - '208
+
+    '
+  - '39
+
+    '
+  - '2
+
+    '
+  - '47
+
+    '
+  - '75
+
+    '
+  - '0
+
+    '
+  - '288
+
+    '
+  - '87
+
+    '
+  - '168
+
+    '
+  - '376
+
+    '
+  - '68
+
+    '
+  - '480
+
+    '
+  - '11
+
+    '
+  - '2
+
+    '
+  - '218
+
+    '
+  - '24
+
+    '
+  - '80
+
+    '
+  - '505
+
+    '
+  - '49
+
+    '
+  - '327
+
+    '
+  - '55
+
+    '
+  - '159
+
+    '
+  - '255
+
+    '
+  - '103
+
+    '
+  - '227
+
+    '
+  - '48
+
+    '
+  - '0
+
+    '
+  - '154
+
+    '
+  - '247
+
+    '
+  - '66
+
+    '
+  - '70
+
+    '
+  - '348
+
+    '
+  - '85
+
+    '
+  - '111
+
+    '
+  - '474
+
+    '
+  - '152
+
+    '
+  - '172
+
+    '
+  - '95
+
+    '
+  - '260
+
+    '
+  - '79
+
+    '
+  - '12
+
+    '
+  - '508
+
+    '
+  - '124
+
+    '
+  - '358
+
+    '
+  - '122
+
+    '
+  - '273
+
+    '
+  - '5
+
+    '
+  - '450
+
+    '
+  - '112
+
+    '
+  - '7
+
+    '
+  - '765
+
+    '
+  - '211
+
+    '
+  - '698
+
+    '
+  - '213
+
+    '
+  - '306
+
+    '
+  - '37
+
+    '
+  - '319
+
+    '
+  - '42
+
+    '
+  - '502
+
+    '
+  - '1000
+
+    '
+  - '877
+
+    '
+  - '116
+
+    '
+  - '620
+
+    '
+  - '157
+
+    '
+  - '241
+
+    '
+  - '349
+
+    '
+  - '57
+
+    '
+  - '9
+
+    '
+  - '316
+
+    '
+  - '13
+
+    '
+  - '52
+
+    '
+  - '421
+
+    '
+  - '29
+
+    '
+  - '352
+
+    '
+  - '34
+
+    '
+  - '96
+
+    '
+  - '26
+
+    '
+  - '35
+
+    '
+  - '20
+
+    '
+  - '163
+
+    '
+  - '102
+
+    '
+  - '3
+
+    '
+  - '252
+
+    '
+  - '612
+
+    '
+  - '164
+
+    '
+  - '137
+
+    '
+  - '391
+
+    '
+  - '15
+
+    '
+  - '179
+
+    '
+  - '355
+
+    '
+  - '145
+
+    '
+  - '455
+
+    '
+  - '330
+
+    '
+  - '44
+
+    '
+  - '258
+
+    '
+  - '155
+
+    '
+  - '262
+
+    '
+  - '39
+
+    '
+  - '46
+
+    '
+  - '359
+
+    '
+  - '584
+
+    '
+  - '36
+
+    '
+  - '17
+
+    '
+  - '201
+
+    '
+  - '56
+
+    '
+  - '170
+
+    '
+  - '329
+
+    '
+  - '220
+
+    '
+  - '45
+
+    '
+  - '25
+
+    '
+  - '719
+
+    '
+  - '8
+
+    '
+  - '441
+
+    '
+  - '4
+
+    '
+  - '435
+
+    '
+  - '142
+
+    '
+  - '6
+
+    '
+  - '354
+
+    '
+  - '595
+
+    '
+  - '65
+
+    '
+  - '101
+
+    '
+  - '22
+
+    '
+  - '10
+
+    '
+  - '232
+
+    '
+  - '32
+
+    '
+  - '181
+
+    '
+  - '33
+
+    '
+  - '19
+
+    '
+  - '224
+
+    '
+  - '281
+
+    '
+  - '113
+
+    '
+  - '21
+
+    '
+  - '47
+
+    '
+  - '74
+
+    '
+  - '73
+
+    '
+  - '30
+
+    '
+  - '1
+
+    '
+  - '144
+
+    '
+  - '715
+
+    '
+  - '549
+
+    '
+  - '54
+
+    '
+  - '585
+
+    '
+  - '82
+
+    '
+  - '41
+
+    '
+  - '84
+
+    '
+  - '196
+
+    '
+  - '202
+
+    '
+  - '681
+
+    '
+  - '69
+
+    '
+  - '89
+
+    '
+  - '131
+
+    '
+  - '86
+
+    '
+  - '141
+
+    '
+  - '61
+
+    '
+  - '268
+
+    '
+  - '400
+
+    '
+  - '190
+
+    '
+  - '118
+
+    '
+  - '254
+
+    '
+  - '129
+
+    '
+  - '59
+
+    '
+  - '269
+
+    '
+  - '77
+
+    '
+  - '18
+
+    '
+  - '357
+
+    '
+  - '223
+
+    '
+  - '347
+
+    '
+  - '532
+
+    '
+  - '23
+
+    '
+  - '134
+
+    '
+  - '222
+
+    '
+  - '200
+
+    '
+  - '392
+
+    '
+  - '14
+
+    '
+  - '473
+
+    '
+  - '51
+
+    '
+  - '38
+
+    '
+  - '322
+
+    '
+  - '31
+
+    '
+  - '126
+
+    '
+  - '324
+
+    '
+  - '301
+
+    '
+  - '197
+
+    '
+  - '75
+
+    '
+  - '597
+
+    '
+  - '153
+
+    '
+  - '217
+
+    '
+  - '40
+
+    '
+  - '161
+
+    '
+  - '414
+
+    '
+  - '58
+
+    '
+  - '234
+
+    '
+  - '539
+
+    '
+  - '110
+
+    '
+  - '139
+
+    '
+  - '191
+
+    '
+  - '27
+
+    '
+  - '489
+
+    '
+  - '108
+
+    '
+  - '188
+
+    '
+  - '71
+
+    '
+  - '55
+
+    '
+  - '11
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '2
+
+    '
+timeout: 0.5

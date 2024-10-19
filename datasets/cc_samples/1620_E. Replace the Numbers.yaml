@@ -1,0 +1,1651 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThe student\
+  \ council has a shared document file. Every day, some members of the student council\
+  \ write the sequence TMT (short for Towa Maji Tenshi) in it.\n\nHowever, one day,\
+  \ the members somehow entered the sequence into the document at the same time, creating\
+  \ a jumbled mess. Therefore, it is Suguru Doujima's task to figure out whether the\
+  \ document has malfunctioned. Specifically, he is given a string of length n whose\
+  \ characters are all either T or M, and he wants to figure out if it is possible\
+  \ to partition it into some number of disjoint subsequences, all of which are equal\
+  \ to TMT. That is, each character of the string should belong to exactly one of\
+  \ the subsequences.\n\nA string a is a subsequence of a string b if a can be obtained\
+  \ from b by deletion of several (possibly, zero) characters.\n\nInput\n\nThe first\
+  \ line contains an integer t (1 \u2264 t \u2264 5000) \u2014 the number of test\
+  \ cases.\n\nThe first line of each test case contains an integer n (3 \u2264 n <\
+  \ 10^5), the number of characters in the string entered in the document. It is guaranteed\
+  \ that n is divisible by 3.\n\nThe second line of each test case contains a string\
+  \ of length n consisting of only the characters T and M.\n\nIt is guaranteed that\
+  \ the sum of n over all test cases does not exceed 10^5.\n\nOutput\n\nFor each test\
+  \ case, print a single line containing YES if the described partition exists, and\
+  \ a single line containing NO otherwise.\n\nExample\n\nInput\n\n\n5\n3\nTMT\n3\n\
+  MTT\n6\nTMTMTT\n6\nTMTTTT\n6\nTTMMTT\n\n\nOutput\n\n\nYES\nNO\nYES\nNO\nYES\n\n\
+  Note\n\nIn the first test case, the string itself is already a sequence equal to\
+  \ TMT.\n\nIn the third test case, we may partition the string into the subsequences\
+  \ TMTMTT. Both the bolded and the non-bolded subsequences are equal to TMT.\nA:\
+  \ ```import collections\nimport itertools\nfrom functools import reduce\n\nmod =\
+  \ (10 ** 9) + 7\n\n\ndef permutationbysum():\n    for _ in range(int(input())):\n\
+  \        num, l, r, achieve = map(int, input().split())\n        k = r - l + 1\n\
+  \        if (k * (k + 1)) // 2 <= achieve <= (k * (num * 2 + 1 - k)) // 2:\n   \
+  \         outpos = (r) % num\n            inpos = l - 1\n            ans = [0] *\
+  \ num\n            for i in range(num, 0, -1):\n                if achieve - i >\
+  \ 0 or (achieve - i == 0 and inpos == r - 1):\n                    achieve -= i\n\
+  \                    ans[inpos] = i\n                    inpos += 1\n          \
+  \      else:\n                    ans[outpos] = i\n                    outpos +=\
+  \ 1\n                    outpos %= num\n            print(*ans)\n        else:\n\
+  \            print(-1)\n\n\n# permutationbysum()\n\ndef peaks():\n    for _ in range(int(input())):\n\
+  \        num, peak = map(int, input().split())\n        pos = 1\n        rpos =\
+  \ num\n        ans = []\n        now = 0\n        if num == 1:\n            if not\
+  \ peak:\n                print(1)\n            else:\n                print(-1)\n\
+  \            continue\n        if num == 2:\n            if peak:\n            \
+  \    print(-1)\n            else:\n                print(1, 2)\n            continue\n\
+  \        added = 0\n        while rpos + 1 != pos:\n            if not peak:\n \
+  \               while pos <= rpos:\n                    ans.append(pos)\n      \
+  \              pos += 1\n                break\n            if not now:\n      \
+  \          ans.append(pos)\n                pos += 1\n            else:\n      \
+  \          ans.append(rpos)\n                rpos -= 1\n                if num -\
+  \ added != 1:\n                    peak -= 1\n            added += 1\n         \
+  \   now = 1 - now\n        if peak:\n            print(-1)\n            continue\n\
+  \        print(*ans)\n\n\n# peaks()\nimport sys\n\ninput = sys.stdin.readline\n\n\
+  \ndef addone():\n    for _ in range(int(input())):\n        num, changes = input().split()\n\
+  \        l = collections.deque(sorted([int(i) for i in num]))\n        perm = collections.deque()\n\
+  \        changes = int(changes)\n        cd = 0\n        ans = len(num)\n      \
+  \  while True:\n            nextnum = l.pop()\n            while perm and perm[-1]\
+  \ == nextnum:\n                l.append(perm.pop())\n            c = (10 - nextnum)\
+  \ - cd\n            changes -= c\n            cd += c\n            if changes >=\
+  \ 0:\n                if not c:\n                    perm.appendleft(1 - cd)\n \
+  \                   l.appendleft(-cd)\n                else:\n                 \
+  \   l.appendleft(1 - cd)\n                    l.appendleft(-cd)\n              \
+  \  ans += 1\n            else:\n                break\n        print(ans % 1000000007)\n\
+  \n\n# addone()\n\nimport math\n\n\ndef andsequences():\n    def mapping(num):\n\
+  \        nonlocal mnum\n        nonlocal c\n        num = int(num)\n        if num\
+  \ < mnum:\n            mnum = num\n            c = 1\n        elif num == mnum:\n\
+  \            c += 1\n        return num\n\n    mod = 1000000007\n    for _ in range(int(input())):\n\
+  \        mnum = float('inf')\n        c = 0\n        num = int(input())\n      \
+  \  l = list(map(mapping, input().split()))\n        for i in l:\n            if\
+  \ mnum & i != mnum:\n                print(0)\n                break\n        else:\n\
+  \            if c == 1:\n                print(0)\n            else:\n         \
+  \       print((math.factorial(num - 2) * (c - 1) * c) % mod)\n\n\n# andsequences()\n\
+  \ndef numberdigit():\n    n = ((10 ** 5) * 2)\n    l = [0] * 11\n    mod = 10 **\
+  \ 9 + 7\n    l[0] = l[1] = l[2] = l[3] = l[4] = l[5] = l[6] = l[7] = l[8] = 2\n\
+  \    l[9] = 3\n    l[10] = 4\n    for i in range(11, n):\n        l.append((l[i\
+  \ - 10] + l[i - 9]) % mod)\n    for _ in range(int(input())):\n        num, c =\
+  \ input().split()\n        c = int(c)\n        ans = 0\n        for i in num:\n\
+  \            i = int(i)\n            if 10 - i > c:\n                ans += 1\n\
+  \            else:\n                ans += l[c - (10 - i)]\n        print(ans %\
+  \ mod)\n\n\n# numberdigit()\n\ndef mushroom():\n    people, t1, t2, percent = map(int,\
+  \ input().split())\n    l = []\n    percent = 1 - percent * 0.01\n    for i in range(1,\
+  \ people + 1):\n        s, s1 = map(int, input().split())\n        l.append([i,\
+  \ max(s * t1 * percent + s1 * t2, s1 * t1 * percent + s * t2)])\n    l.sort(key=lambda\
+  \ x: (x[1]), reverse=True)\n    for i in l:\n        i[1] = \"{:.2f}\".format(i[1])\n\
+  \        print(*i)\n\n\n# mushroom()\n\ndef escape():\n    prins = int(input())\n\
+  \    dra = int(input())\n    start = int(input())\n    pack = int(input())\n   \
+  \ c = int(input())\n    speeddiff = dra - prins\n    if speeddiff <= 0:\n      \
+  \  return 0\n    pd = start * prins\n    ans = 0\n    while pd < c:\n        hs\
+  \ = pd / speeddiff\n        pd += prins * hs\n        if pd >= c:\n            break\n\
+  \        time = pd / dra\n        time += pack\n        pd += prins * time\n   \
+  \     ans += 1\n    return ans\n\n\n# print(escape())\n\ndef perm():\n    def high(n,\
+  \ k):\n        return k * (2 * n - k + 1) // 2\n\n    def low(k):\n        return\
+  \ k * (k + 1) // 2\n\n    for _ in range(int(input())):\n        num, lef, rig,\
+  \ s = map(int, input().split())\n        k = rig - lef + 1\n        rig, lef = rig\
+  \ - 1, lef - 1\n        if not high(num, k) >= s >= low(k):\n            print(-1)\n\
+  \            continue\n        l = [0] * num\n        lp = lef\n        rp = lef\
+  \ - 1\n        for i in range(num, 0, -1):\n            if high(i, k) >= s and s\
+  \ - i >= low(k - 1) and k:\n                l[lp] = i\n                lp += 1\n\
+  \                s -= i\n                k -= 1\n            else:\n           \
+  \     l[rp] = i\n                rp -= 1\n        if k:\n            print(-1)\n\
+  \        else:\n            print(*l)\n\n\n# perm()\n\n\ndef newcom():\n    for\
+  \ _ in range(int(input())):\n        days, price = map(int, input().split())\n \
+  \       dl = input().split()\n        worth = input().split()\n        worth.append(0)\n\
+  \        ans = float('inf')\n        req = 0\n        left = 0\n        for i in\
+  \ range(days):\n            a = int(dl[i])\n            w = int(worth[i])\n    \
+  \        ans = min(ans, req + max(0, price - left + a - 1) // a)\n            ns\
+  \ = max(0, w - left + a - 1) // a\n            req += ns + 1\n            left +=\
+  \ a * ns - w\n        print(ans)\n\n\n# newcom()\n\n\ndef perfectsq():\n    for\
+  \ _ in range(int(input())):\n        n = input()\n        for i in input().split():\n\
+  \            sq = math.sqrt(int(i))\n            if sq != int(sq):\n           \
+  \     print(\"YES\")\n                break\n        else:\n            print(\"\
+  NO\")\n\n\n# perfectsq()\n\ndef and0big():\n    for _ in range(int(input())):\n\
+  \        l, k = map(int, input().split())\n        print(l ** k % mod)\n\n\n# and0big()\n\
+  \nimport math\n\n\ndef mod1p():\n    n = int(input())\n    ans = dict()\n    p =\
+  \ 1\n    for i in range(1, n):\n        if math.gcd(i, n) == 1:\n            ans[str(i)]\
+  \ = True\n            p = (p * i) % n\n    if p == 1:\n        print(len(ans))\n\
+  \        print(' '.join(ans.keys()))\n    else:\n        ans.pop(str(p))\n     \
+  \   print(len(ans))\n        print(' '.join(ans.keys()))\n\n\n# mod1p()\n\ndef shorttask():\n\
+  \    num = 10000100\n    l = [-1] * (num + 2)\n    s = [-1] * (num + 2)\n    l[1]\
+  \ = 1\n    for i in range(2, int(math.sqrt(num + 1)) + 2):\n        if l[i] == -1:\n\
+  \            l[i] = i\n            for x in range(i * i, num + 1, i):\n        \
+  \        if l[x] == -1:\n                    l[x] = i\n    s[1] = 1\n    for i in\
+  \ range(2, num + 1):\n        if l[i] == -1:\n            l[i] = i\n           \
+  \ s[i] = i + 1\n        else:\n            i1 = i\n            s[i] = 1\n      \
+  \      while i1 % l[i] == 0:\n                i1 //= l[i]\n                s[i]\
+  \ = s[i] * l[i] + 1\n            s[i] *= s[i1]\n    ans = [-1] * (num + 1)\n   \
+  \ for i in range(num, 0, -1):\n        if s[i] < num:\n            ans[s[i]] = i\n\
+  \    for _ in range(int(input())):\n        print(ans[int(input())])\n\n\n# shorttask()\n\
+  \ndef review():\n    for _ in range(int(input())):\n        n = int(input())\n \
+  \       ans = 0\n        for i in input().split():\n            i = int(i)\n   \
+  \         if i == 1 or i == 3:\n                ans += 1\n        print(ans)\n\n\
+  \n# review()\n\ndef GCDleng():\n    po10 = [0] * 11\n    po10[1] = 1\n    for i\
+  \ in range(2, 11):\n        po10[i] = po10[i - 1] * 10\n    for _ in range(int(input())):\n\
+  \        n, n1, res = map(int, input().split())\n        print(po10[n], po10[n1]\
+  \ + po10[res])\n\n\n# GCDleng()\n\n\ndef anothercarddeck():\n    n, q = map(int,\
+  \ input().split())\n    l = input().split()\n    d = {l[i]: i for i in range(n -\
+  \ 1, -1, -1)}\n    ans = []\n    for i in input().split():\n        now = d[i]\n\
+  \        ans.append(now + 1)\n        for key in d:\n            if d[key] < now:\n\
+  \                d[key] += 1\n        d[i] = 0\n    print(*ans)\n\n\n# anothercarddeck()\n\
+  \ndef mincoststring():\n    n, letters = map(int, input().split())\n    l = [chr(i\
+  \ + 97) for i in range(letters)]\n    ans = []\n    real = letters - 1\n    if not\
+  \ n:\n        print(*ans, sep='')\n        return\n    if n == 1:\n        print(*ans,\
+  \ sep='', end='')\n        print(l[1 % (real + 1)])\n        return\n    while n:\n\
+  \        for i in range(len(l)):\n            for i1 in range(i, len(l)):\n    \
+  \            if i1 != real:\n                    ans.append(l[i1])\n           \
+  \         ans.append(l[i])\n                    n -= 2\n                else:\n\
+  \                    ans.append(l[i1])\n                    n -= 1\n           \
+  \     if not n:\n                    print(*ans, sep='')\n                    return\n\
+  \                if n == 1:\n                    print(*ans, sep='', end='')\n \
+  \                   print(l[(i1 + 1) % (real + 1)])\n                    return\n\
+  \    print(*ans)\n\n\n# mincoststring()\n\n\ndef mincost2():\n    n, letters = map(int,\
+  \ input().split())\n    l = [chr(i + 97) for i in range(letters)]\n    comb = []\n\
+  \    if letters == 1 or n == 1:\n        print('a' * n)\n        return\n    for\
+  \ i in range(letters):\n        for i1 in range(i, letters):\n            comb.append(l[i1]\
+  \ + l[i])\n    lc = len(comb)\n    while True:\n        for i in range(lc):\n  \
+  \          if ord(comb[i][0]) - 97 == letters - 1:\n                n -= 1\n   \
+  \             print(comb[i][0], end='')\n            else:\n                n -=\
+  \ 2\n                print(comb[i], end='')\n            if n == 1:\n          \
+  \      pos = ord(comb[i][0]) - 97 + 1\n                print(l[pos % letters])\n\
+  \                return\n            if not n:\n                return\n\n\n# mincost2()\n\
+  def Tittat():\n    for _ in range(int(input())):\n        n, k = map(int, input().split())\n\
+  \        l = list(map(int, input().split()))\n        for i in range(n):\n     \
+  \       if not k:\n                break\n            while k and l[i]:\n      \
+  \          l[i] -= 1\n                l[-1] += 1\n                k -= 1\n     \
+  \   print(*l)\n\n\n# Tittat()\n\ndef xorq2():\n    for _ in range(int(input())):\n\
+  \        n = int(input())\n        s = 0\n        num = -1\n        nc = 0\n   \
+  \     c = 0\n        for i in input().split():\n            i = int(i)\n       \
+  \     s ^= i\n            c += 1\n            if num == -1 and s == i:\n       \
+  \         num = s\n                s = 0\n                nc += c\n            \
+  \    c = 0\n            if num != -1 and (s == num or not s):\n                s\
+  \ = 0\n                nc += c\n                c = 0\n        print(['NO', 'YES'][nc\
+  \ == n])\n\n\n# xorq2()\n\n\ndef xorq2re():\n    n = int(input())\n    s = input().split()\n\
+  \    xor = 0\n    for i in range(n):\n        s[i] = int(s[i])\n        xor ^= s[i]\n\
+  \    if not xor:\n        print(\"YES\")\n    else:\n        new = 0\n        ans\
+  \ = 0\n        for i in s:\n            new ^= i\n            if new == xor:\n \
+  \               new = 0\n                ans += 1\n        print([\"NO\", \"YES\"\
+  ][ans > 1])\n\n\nimport sys\n\nsys.setrecursionlimit(2300)\n\n\ndef q3partition():\n\
+  \    def partition():\n        if tol % 2:\n            return 0\n        up = tol\n\
+  \        rec = [[False] * (up + 2) for _ in range(n + 1)]\n        rec[0][0] = True\n\
+  \        for i in range(1, n + 1):\n            v = l[i - 1]\n            for j\
+  \ in range(up + 1):\n                if rec[i - 1][j]:\n                    if v\
+  \ + j <= up:\n                        rec[i][j + v] = True\n                   \
+  \ rec[i][j] = True\n\n        return rec[n][tol // 2]\n\n    def ints(x):\n    \
+  \    nonlocal tol\n        nonlocal gcf\n        x = int(x)\n        tol += x\n\
+  \        gcf = math.gcd(gcf, x) if gcf != float('inf') else x\n        return x\n\
+  \n    n = int(input())\n    tol = 0\n    gcf = float('inf')\n    l = list(map(ints,\
+  \ input().split()))\n    if partition():\n        pos = 1\n        for i in l:\n\
+  \            if i // gcf % 2:\n                print(1)\n                print(pos)\n\
+  \                return\n            pos += 1\n    else:\n        print(0)\n\n\n\
+  def permu(n, r):\n    return math.factorial(n) // math.factorial(n - r)\n\n\ndef\
+  \ comb(n, r):\n    return math.factorial(n) // math.factorial(r) * math.factorial(n\
+  \ - r)\n\n\ndef calc():\n    n = int(input())\n    ans = permu(n, n)\n    for i\
+  \ in range(1, n + 1):\n        ans -= comb(n, i)\n    print(ans)\n\n\n# calc()\n\
+  \n\ndef order():\n    for _ in range(int(input())):\n        n = int(input())\n\
+  \        odd = []\n        even = []\n        for i in input().split():\n      \
+  \      i = int(i)\n            if i % 2:\n                odd.append(i)\n      \
+  \      else:\n                even.append(i)\n        print(*odd + even)\n\n\n#\
+  \ order()\n\n\ndef TMTdoc():\n    n = int(input())\n    l = input().rstrip()\n \
+  \   tts = 0\n    tms = 0\n    for i in l:\n        if i == 'T':\n            tts\
+  \ += 1\n        else:\n            tms += 1\n    if tms * 2 == tts:\n        nowts\
+  \ = 0\n        nowms = 0\n        for i in l:\n            if i == 'T':\n      \
+  \          nowts += 1\n            else:\n                nowms += 1\n         \
+  \       if nowts >= nowms and tms - nowms +1 <= tts - nowts:\n                 \
+  \   continue\n                return \"NO\"\n    else:\n        return \"NO\"\n\
+  \    return 'YES'\n\n\ndef main():\n    for _ in range(int(input())):\n        print(TMTdoc())\n\
+  \n\nmain()```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nCompute\
+  \ A \\times B.\n\nConstraints\n\n* 1 \\leq A \\leq 100\n* 1 \\leq B \\leq 100\n\
+  * All values in input are integers.\n\nInput\n\nInput is given from Standard Input\
+  \ in the following format:\n\n\nA B\n\n\nOutput\n\nPrint the value A \\times B as\
+  \ an integer.\n\nExamples\n\nInput\n\n2 5\n\n\nOutput\n\n10\n\n\nInput\n\n100 100\n\
+  \n\nOutput\n\n10000\nA: ```a, b = [int(_) for _ in input().split()]\nprint(a*b)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nYou have an array of\
+  \ integers (initially empty).\n\nYou have to perform q queries. Each query is of\
+  \ one of two types: \n\n  * \"1 x\" \u2014 add the element x to the end of the array;\
+  \ \n  * \"2 x y\" \u2014 replace all occurrences of x in the array with y. \n\n\n\
+  \nFind the resulting array after performing all the queries.\n\nInput\n\nThe first\
+  \ line contains a single integer q (1 \u2264 q \u2264 5 \u22C5 10^5) \u2014 the\
+  \ number of queries.\n\nNext q lines contain queries (one per line). Each query\
+  \ is of one of two types: \n\n  * \"1 x\" (1 \u2264 x \u2264 5 \u22C5 10^5); \n\
+  \  * \"2 x y\" (1 \u2264 x, y \u2264 5 \u22C5 10^5). \n\n\n\nIt's guaranteed that\
+  \ there is at least one query of the first type.\n\nOutput\n\nIn a single line,\
+  \ print k integers \u2014 the resulting array after performing all the queries,\
+  \ where k is the number of queries of the first type.\n\nExamples\n\nInput\n\n\n\
+  7\n1 3\n1 1\n2 1 2\n1 2\n1 1\n1 2\n2 1 3\n\n\nOutput\n\n\n3 2 2 3 2 \n\nInput\n\n\
+  \n4\n1 1\n1 2\n1 1\n2 2 2\n\n\nOutput\n\n\n1 2 1 \n\nInput\n\n\n8\n2 1 4\n1 1\n\
+  1 4\n1 2\n2 2 4\n2 4 3\n1 2\n2 2 7\n\n\nOutput\n\n\n1 3 3 7 \n\nNote\n\nIn the first\
+  \ example, the array changes as follows:\n\n[] \u2192 [3] \u2192 [3, 1] \u2192 [3,\
+  \ 2] \u2192 [3, 2, 2] \u2192 [3, 2, 2, 1] \u2192 [3, 2, 2, 1, 2] \u2192 [3, 2, 2,\
+  \ 3, 2].\n\nIn the second example, the array changes as follows:\n\n[] \u2192 [1]\
+  \ \u2192 [1, 2] \u2192 [1, 2, 1] \u2192 [1, 2, 1].\n\nIn the third example, the\
+  \ array changes as follows:\n\n[] \u2192 [] \u2192 [1] \u2192 [1, 4] \u2192 [1,\
+  \ 4, 2] \u2192 [1, 4, 4] \u2192 [1, 3, 3] \u2192 [1, 3, 3, 2] \u2192 [1, 3, 3, 7].\n\
+  A:"
+question: "You have an array of integers (initially empty).\n\nYou have to perform\
+  \ q queries. Each query is of one of two types: \n\n  * \"1 x\" \u2014 add the element\
+  \ x to the end of the array; \n  * \"2 x y\" \u2014 replace all occurrences of x\
+  \ in the array with y. \n\n\n\nFind the resulting array after performing all the\
+  \ queries.\n\nInput\n\nThe first line contains a single integer q (1 \u2264 q \u2264\
+  \ 5 \u22C5 10^5) \u2014 the number of queries.\n\nNext q lines contain queries (one\
+  \ per line). Each query is of one of two types: \n\n  * \"1 x\" (1 \u2264 x \u2264\
+  \ 5 \u22C5 10^5); \n  * \"2 x y\" (1 \u2264 x, y \u2264 5 \u22C5 10^5). \n\n\n\n\
+  It's guaranteed that there is at least one query of the first type.\n\nOutput\n\n\
+  In a single line, print k integers \u2014 the resulting array after performing all\
+  \ the queries, where k is the number of queries of the first type.\n\nExamples\n\
+  \nInput\n\n\n7\n1 3\n1 1\n2 1 2\n1 2\n1 1\n1 2\n2 1 3\n\n\nOutput\n\n\n3 2 2 3 2\
+  \ \n\nInput\n\n\n4\n1 1\n1 2\n1 1\n2 2 2\n\n\nOutput\n\n\n1 2 1 \n\nInput\n\n\n\
+  8\n2 1 4\n1 1\n1 4\n1 2\n2 2 4\n2 4 3\n1 2\n2 2 7\n\n\nOutput\n\n\n1 3 3 7 \n\n\
+  Note\n\nIn the first example, the array changes as follows:\n\n[] \u2192 [3] \u2192\
+  \ [3, 1] \u2192 [3, 2] \u2192 [3, 2, 2] \u2192 [3, 2, 2, 1] \u2192 [3, 2, 2, 1,\
+  \ 2] \u2192 [3, 2, 2, 3, 2].\n\nIn the second example, the array changes as follows:\n\
+  \n[] \u2192 [1] \u2192 [1, 2] \u2192 [1, 2, 1] \u2192 [1, 2, 1].\n\nIn the third\
+  \ example, the array changes as follows:\n\n[] \u2192 [] \u2192 [1] \u2192 [1, 4]\
+  \ \u2192 [1, 4, 2] \u2192 [1, 4, 4] \u2192 [1, 3, 3] \u2192 [1, 3, 3, 2] \u2192\
+  \ [1, 3, 3, 7]."
+samples:
+- " ```q = int(input())\na = []\nfor _ in range(q):\n    query = input().split()\n\
+  \    if query[0] == '1':\n        a.append(int(query[1]))\n    elif query[0] ==\
+  \ '2':\n        for i in range(len(a)):\n            if a[i] == int(query[1]):\n\
+  \                a[i] = int(query[2])\nprint(*a)```\nQ:"
+- " ```import sys\n\ninput = sys.stdin.readline\n\nn = int(input())\narr = []\n\n\
+  for _ in range(n):\n    query = input().split()\n    if query[0] == '1':\n     \
+  \   arr.append(int(query[1]))\n    elif query[0] == '2':\n        arr = [x if x\
+  \ != int(query[1]) else int(query[2]) for x in arr]\n\nprint(*arr, sep=' ')``` Q:"
+test_cases:
+  input:
+  - '8
+
+    2 1 4
+
+    1 1
+
+    1 4
+
+    1 2
+
+    2 2 4
+
+    2 4 3
+
+    1 2
+
+    2 2 7
+
+    '
+  - '4
+
+    1 1
+
+    1 2
+
+    1 1
+
+    2 2 2
+
+    '
+  - '7
+
+    1 3
+
+    1 1
+
+    2 1 2
+
+    1 2
+
+    1 1
+
+    1 2
+
+    2 1 3
+
+    '
+  - '1
+
+    1 50
+
+    '
+  - '1
+
+    1 114514
+
+    '
+  - '1
+
+    1 2002
+
+    '
+  - '1
+
+    1 500
+
+    '
+  - '1
+
+    1 28
+
+    '
+  - '1
+
+    1 2887
+
+    '
+  - '1
+
+    1 228
+
+    '
+  - '1
+
+    1 29
+
+    '
+  - '1
+
+    1 1270
+
+    '
+  - '1
+
+    1 182
+
+    '
+  - '1
+
+    1 2279
+
+    '
+  - '1
+
+    1 979
+
+    '
+  - '1
+
+    1 1719
+
+    '
+  - '1
+
+    1 1163
+
+    '
+  - '1
+
+    1 1134
+
+    '
+  - '1
+
+    1 2216
+
+    '
+  - '1
+
+    1 810
+
+    '
+  - '1
+
+    1 1162
+
+    '
+  - '1
+
+    1 8
+
+    '
+  - '1
+
+    1 176923
+
+    '
+  - '1
+
+    1 346
+
+    '
+  - '8
+
+    2 2 4
+
+    1 1
+
+    1 4
+
+    1 2
+
+    2 2 4
+
+    2 4 3
+
+    1 2
+
+    2 2 7
+
+    '
+  - '4
+
+    1 1
+
+    1 2
+
+    1 1
+
+    2 3 2
+
+    '
+  - '7
+
+    1 3
+
+    1 1
+
+    2 1 2
+
+    1 2
+
+    1 1
+
+    1 1
+
+    2 1 3
+
+    '
+  - '1
+
+    1 192
+
+    '
+  - '1
+
+    1 6
+
+    '
+  - '1
+
+    1 1566
+
+    '
+  - '1
+
+    1 1612
+
+    '
+  - '1
+
+    1 391
+
+    '
+  - '1
+
+    1 1904
+
+    '
+  - '1
+
+    1 12
+
+    '
+  - '1
+
+    1 455
+
+    '
+  - '8
+
+    2 2 4
+
+    1 1
+
+    1 4
+
+    1 2
+
+    2 2 6
+
+    2 4 3
+
+    1 2
+
+    2 2 7
+
+    '
+  - '4
+
+    1 2
+
+    1 2
+
+    1 1
+
+    2 3 2
+
+    '
+  - '1
+
+    1 61
+
+    '
+  - '1
+
+    1 3
+
+    '
+  - '1
+
+    1 107
+
+    '
+  - '1
+
+    1 537
+
+    '
+  - '1
+
+    1 520
+
+    '
+  - '1
+
+    1 72
+
+    '
+  - '1
+
+    1 415
+
+    '
+  - '1
+
+    1 639
+
+    '
+  - '1
+
+    1 705
+
+    '
+  - '1
+
+    1 34
+
+    '
+  - '1
+
+    1 42
+
+    '
+  - '1
+
+    1 91
+
+    '
+  - '1
+
+    1 123055
+
+    '
+  - '1
+
+    1 408
+
+    '
+  - '8
+
+    2 1 4
+
+    1 1
+
+    1 4
+
+    1 2
+
+    2 2 4
+
+    2 4 3
+
+    1 2
+
+    2 1 7
+
+    '
+  - '1
+
+    1 10
+
+    '
+  - '1
+
+    1 5175
+
+    '
+  - '1
+
+    1 37
+
+    '
+  - '1
+
+    1 2219
+
+    '
+  - '1
+
+    1 205
+
+    '
+  - '1
+
+    1 1536
+
+    '
+  - '1
+
+    1 1539
+
+    '
+  - '1
+
+    1 1784
+
+    '
+  - '1
+
+    1 147
+
+    '
+  - '1
+
+    1 825
+
+    '
+  - '1
+
+    1 3545
+
+    '
+  - '1
+
+    1 14
+
+    '
+  - '7
+
+    1 3
+
+    1 1
+
+    2 1 1
+
+    1 2
+
+    1 1
+
+    1 1
+
+    2 1 3
+
+    '
+  - '1
+
+    1 212
+
+    '
+  - '1
+
+    1 416
+
+    '
+  - '1
+
+    1 1055
+
+    '
+  - '1
+
+    1 341
+
+    '
+  - '1
+
+    1 3564
+
+    '
+  - '1
+
+    1 5
+
+    '
+  - '8
+
+    2 2 4
+
+    1 1
+
+    1 4
+
+    1 2
+
+    2 2 6
+
+    2 4 3
+
+    1 2
+
+    2 2 5
+
+    '
+  - '1
+
+    1 1
+
+    '
+  - '1
+
+    1 115
+
+    '
+  - '1
+
+    1 727
+
+    '
+  - '1
+
+    1 98
+
+    '
+  - '1
+
+    1 55
+
+    '
+  - '1
+
+    1 284
+
+    '
+  - '1
+
+    1 4
+
+    '
+  - '1
+
+    1 9
+
+    '
+  - '1
+
+    1 583
+
+    '
+  - '1
+
+    1 16
+
+    '
+  - '1
+
+    1 2794
+
+    '
+  - '1
+
+    1 59
+
+    '
+  - '1
+
+    1 300
+
+    '
+  - '1
+
+    1 388
+
+    '
+  - '1
+
+    1 1084
+
+    '
+  - '1
+
+    1 2314
+
+    '
+  - '1
+
+    1 736
+
+    '
+  - '1
+
+    1 4527
+
+    '
+  - '1
+
+    1 2
+
+    '
+  - '1
+
+    1 439
+
+    '
+  - '1
+
+    1 86
+
+    '
+  - '1
+
+    1 5588
+
+    '
+  - '1
+
+    1 152
+
+    '
+  - '1
+
+    1 41
+
+    '
+  - '1
+
+    1 260
+
+    '
+  - '1
+
+    1 551
+
+    '
+  - '1
+
+    1 2765
+
+    '
+  - '1
+
+    1 1371
+
+    '
+  - '1
+
+    1 127
+
+    '
+  - '1
+
+    1 8623
+
+    '
+  - '1
+
+    1 49
+
+    '
+  - '1
+
+    1 874
+
+    '
+  - '1
+
+    1 376
+
+    '
+  - '1
+
+    1 58
+
+    '
+  - '1
+
+    1 6215
+
+    '
+  - '1
+
+    1 1464
+
+    '
+  - '1
+
+    1 33
+
+    '
+  - '1
+
+    1 4800
+
+    '
+  - '1
+
+    1 6121
+
+    '
+  - '1
+
+    1 121267
+
+    '
+  - '1
+
+    1 3093
+
+    '
+  - '1
+
+    1 19
+
+    '
+  - '1
+
+    1 202
+
+    '
+  - '1
+
+    1 1050
+
+    '
+  - '1
+
+    1 2535
+
+    '
+  - '1
+
+    1 1306
+
+    '
+  - '1
+
+    1 1571
+
+    '
+  - '1
+
+    1 1578
+
+    '
+  - '1
+
+    1 142
+
+    '
+  - '1
+
+    1 2055
+
+    '
+  - '1
+
+    1 53
+
+    '
+  - '1
+
+    1 3184
+
+    '
+  - '1
+
+    1 21
+
+    '
+  - '1
+
+    1 642
+
+    '
+  - '1
+
+    1 15
+
+    '
+  - '1
+
+    1 23
+
+    '
+  - '1
+
+    1 169
+
+    '
+  - '1
+
+    1 861
+
+    '
+  - '1
+
+    1 139
+
+    '
+  - '1
+
+    1 552
+
+    '
+  - '1
+
+    1 247
+
+    '
+  - '1
+
+    1 40
+
+    '
+  - '1
+
+    1 46
+
+    '
+  - '1
+
+    1 173
+
+    '
+  - '1
+
+    1 171905
+
+    '
+  - '1
+
+    1 509
+
+    '
+  - '1
+
+    1 7014
+
+    '
+  - '1
+
+    1 47
+
+    '
+  - '1
+
+    1 335
+
+    '
+  - '1
+
+    1 3035
+
+    '
+  - '1
+
+    1 237
+
+    '
+  - '1
+
+    1 4338
+
+    '
+  - '7
+
+    1 6
+
+    1 1
+
+    2 1 1
+
+    1 2
+
+    1 1
+
+    1 1
+
+    2 1 3
+
+    '
+  - '1
+
+    1 528
+
+    '
+  - '1
+
+    1 1192
+
+    '
+  - '1
+
+    1 210
+
+    '
+  - '1
+
+    1 1402
+
+    '
+  - '1
+
+    1 195
+
+    '
+  - '1
+
+    1 347
+
+    '
+  - '1
+
+    1 208
+
+    '
+  - '1
+
+    1 525
+
+    '
+  - '1
+
+    1 413
+
+    '
+  - '1
+
+    1 4000
+
+    '
+  - '1
+
+    1 587
+
+    '
+  - '1
+
+    1 6510
+
+    '
+  - '1
+
+    1 209
+
+    '
+  - '1
+
+    1 430
+
+    '
+  - '1
+
+    1 1080
+
+    '
+  - '1
+
+    1 56
+
+    '
+  - '1
+
+    1 483
+
+    '
+  - '1
+
+    1 12268
+
+    '
+  - '1
+
+    1 1439
+
+    '
+  - '1
+
+    1 9124
+
+    '
+  - '1
+
+    1 9067
+
+    '
+  - '1
+
+    1 34301
+
+    '
+  - '1
+
+    1 553
+
+    '
+  - '1
+
+    1 35
+
+    '
+  - '1
+
+    1 4704
+
+    '
+  - '1
+
+    1 994
+
+    '
+  - '1
+
+    1 1751
+
+    '
+  - '1
+
+    1 702
+
+    '
+  - '1
+
+    1 224
+
+    '
+  - '4
+
+    1 1
+
+    1 1
+
+    1 1
+
+    2 6 2
+
+    '
+  - '1
+
+    1 278
+
+    '
+  - '1
+
+    1 70
+
+    '
+  - '1
+
+    1 26
+
+    '
+  - '1
+
+    1 99
+
+    '
+  - '1
+
+    1 487
+
+    '
+  - '1
+
+    1 502
+
+    '
+  - '1
+
+    1 145712
+
+    '
+  - '1
+
+    1 4942
+
+    '
+  - '1
+
+    1 7
+
+    '
+  - '1
+
+    1 2767
+
+    '
+  - '1
+
+    1 340
+
+    '
+  - '1
+
+    1 8530
+
+    '
+  - '1
+
+    1 63
+
+    '
+  - '1
+
+    1 1575
+
+    '
+  - '1
+
+    1 2756
+
+    '
+  - '1
+
+    1 821
+
+    '
+  - '1
+
+    1 2667
+
+    '
+  - '1
+
+    1 25
+
+    '
+  - '1
+
+    1 11
+
+    '
+  - '1
+
+    1 2714
+
+    '
+  - '1
+
+    1 4721
+
+    '
+  - '1
+
+    1 369
+
+    '
+  - '1
+
+    1 4188
+
+    '
+  - '1
+
+    1 103
+
+    '
+  - '1
+
+    1 87
+
+    '
+  - '1
+
+    1 18
+
+    '
+  - '1
+
+    1 679
+
+    '
+  - '1
+
+    1 423
+
+    '
+  - '1
+
+    1 13
+
+    '
+  - '1
+
+    1 2163
+
+    '
+  - '1
+
+    1 494
+
+    '
+  - '1
+
+    1 223
+
+    '
+  output:
+  - "1 3 3 7 \n"
+  - "1 2 1 \n"
+  - "3 2 2 3 2 \n"
+  - "50 \n"
+  - "114514 \n"
+  - "2002 \n"
+  - "500 \n"
+  - '28'
+  - '2887'
+  - '228'
+  - '29'
+  - '1270'
+  - '182'
+  - '2279'
+  - '979'
+  - '1719'
+  - '1163'
+  - '1134'
+  - '2216'
+  - '810'
+  - '1162'
+  - '8'
+  - '176923'
+  - '346'
+  - 1 3 3 7
+  - 1 2 1
+  - 3 2 2 3 3
+  - '192'
+  - '6'
+  - '1566'
+  - '1612'
+  - '391'
+  - '1904'
+  - '12'
+  - '455'
+  - 1 3 6 7
+  - 2 2 1
+  - '61'
+  - '3'
+  - '107'
+  - '537'
+  - '520'
+  - '72'
+  - '415'
+  - '639'
+  - '705'
+  - '34'
+  - '42'
+  - '91'
+  - '123055'
+  - '408'
+  - 7 3 3 2
+  - '10'
+  - '5175'
+  - '37'
+  - '2219'
+  - '205'
+  - '1536'
+  - '1539'
+  - '1784'
+  - '147'
+  - '825'
+  - '3545'
+  - '14'
+  - 3 3 2 3 3
+  - '212'
+  - '416'
+  - '1055'
+  - '341'
+  - '3564'
+  - '5'
+  - 1 3 6 5
+  - '1'
+  - '115'
+  - '727'
+  - '98'
+  - '55'
+  - '284'
+  - '4'
+  - '9'
+  - '583'
+  - '16'
+  - '2794'
+  - '59'
+  - '300'
+  - '388'
+  - '1084'
+  - '2314'
+  - '736'
+  - '4527'
+  - '2'
+  - '439'
+  - '86'
+  - '5588'
+  - '152'
+  - '41'
+  - '260'
+  - '551'
+  - '2765'
+  - '1371'
+  - '127'
+  - '8623'
+  - '49'
+  - '874'
+  - '376'
+  - '58'
+  - '6215'
+  - '1464'
+  - '33'
+  - '4800'
+  - '6121'
+  - '121267'
+  - '3093'
+  - '19'
+  - '202'
+  - '1050'
+  - '2535'
+  - '1306'
+  - '1571'
+  - '1578'
+  - '142'
+  - '2055'
+  - '53'
+  - '3184'
+  - '21'
+  - '642'
+  - '15'
+  - '23'
+  - '169'
+  - '861'
+  - '139'
+  - '552'
+  - '247'
+  - '40'
+  - '46'
+  - '173'
+  - '171905'
+  - '509'
+  - '7014'
+  - '47'
+  - '335'
+  - '3035'
+  - '237'
+  - '4338'
+  - 6 3 2 3 3
+  - '528'
+  - '1192'
+  - '210'
+  - '1402'
+  - '195'
+  - '347'
+  - '208'
+  - '525'
+  - '413'
+  - '4000'
+  - '587'
+  - '6510'
+  - '209'
+  - '430'
+  - '1080'
+  - '56'
+  - '483'
+  - '12268'
+  - '1439'
+  - '9124'
+  - '9067'
+  - '34301'
+  - '553'
+  - '35'
+  - '4704'
+  - '994'
+  - '1751'
+  - '702'
+  - '224'
+  - 1 1 1
+  - '278'
+  - '70'
+  - '26'
+  - '99'
+  - '487'
+  - '502'
+  - '145712'
+  - '4942'
+  - '7'
+  - '2767'
+  - '340'
+  - '8530'
+  - '63'
+  - '1575'
+  - '2756'
+  - '821'
+  - '2667'
+  - '25'
+  - '11'
+  - '2714'
+  - '4721'
+  - '369'
+  - '4188'
+  - '103'
+  - '87'
+  - '18'
+  - '679'
+  - '423'
+  - '13'
+  - '2163'
+  - '494'
+  - '223'
+timeout: 2.0

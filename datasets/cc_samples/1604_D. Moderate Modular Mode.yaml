@@ -1,0 +1,1889 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nAlice and Bob\
+  \ are playing One Card Poker.\nOne Card Poker is a two-player game using playing\
+  \ cards.\n\nEach card in this game shows an integer between `1` and `13`, inclusive.\n\
+  The strength of a card is determined by the number written on it, as follows:\n\n\
+  Weak `2` < `3` < `4` < `5` < `6` < `7` < `8` < `9` < `10` < `11` < `12` < `13` <\
+  \ `1` Strong\n\nOne Card Poker is played as follows:\n\n1. Each player picks one\
+  \ card from the deck. The chosen card becomes the player's hand.\n2. The players\
+  \ reveal their hands to each other. The player with the stronger card wins the game.\n\
+  If their cards are equally strong, the game is drawn.\n\n\n\nYou are watching Alice\
+  \ and Bob playing the game, and can see their hands.\nThe number written on Alice's\
+  \ card is A, and the number written on Bob's card is B.\nWrite a program to determine\
+  \ the outcome of the game.\n\nConstraints\n\n* 1\u2266A\u226613\n* 1\u2266B\u2266\
+  13\n* A and B are integers.\n\nInput\n\nThe input is given from Standard Input in\
+  \ the following format:\n\n\nA B\n\n\nOutput\n\nPrint `Alice` if Alice will win.\
+  \ Print `Bob` if Bob will win. Print `Draw` if the game will be drawn.\n\nExamples\n\
+  \nInput\n\n8 6\n\n\nOutput\n\nAlice\n\n\nInput\n\n1 1\n\n\nOutput\n\nDraw\n\n\n\
+  Input\n\n13 1\n\n\nOutput\n\nBob\nA: ```a,b=map(int,input().split())\na=(a-2)%13\n\
+  b=(b-2)%13\nif a<b:print('Bob')\nelif a>b:print('Alice')\nelse:print('Draw')```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nThis year too, the time\
+  \ has come for the National Programming Championships. In the district tournament\
+  \ where the right to participate in the national tournament is bet, 2n teams will\
+  \ face each other in a one-on-one winning tournament system.\n\nTeam numbers 0,\
+  \ .. .2n \u2212 1 are assigned to the tournament table, and the confrontation procedure\
+  \ from the first round to the nth round is as follows.\n\n1. In the first round,\
+  \ (team with team number l) and (team with team number l + 1) will face each other.\
+  \ (l \u2261 0 (mod 2))\n2. In the i + 1st round (1 \u2264 i <n), \"the team whose\
+  \ team number is l or more and less than l + 2i who has not lost even once in the\
+  \ confrontation up to the i round\" and \"the team number is l\" Of the teams with\
+  \ + 2i or more and less than l + 2i + 1, the team that has never lost in the confrontation\
+  \ up to the i round will confront. (l \u2261 0 (mod 2i + 1))\n\n\nAfter the nth\
+  \ round, the ranking of each team is fixed at 2n \u2212 (the number of times that\
+  \ team has won). Since there is no draw in this confrontation, one of the confronting\
+  \ teams wins and the other loses.\n\nAs we were selected to represent the district\
+  \ conference on a sunny day, we decided to have the manager examine the results\
+  \ of other district conferences. The result of the examination here was the \"ranking\
+  \ table received from the manager\". To explain the \"ranking table received from\
+  \ the manager\" in more detail, the ranking of the team with team number i is written\
+  \ in the i (0 \u2264 i \u2264 2n \u2212 1) th element in a sequence of length 2n.\
+  \ ..\n\nHowever, the \"stands received from the manager\" had a large number of\
+  \ the same rankings! Due to the rules of the tournament, it is unlikely that the\
+  \ same ranking will be lined up in large numbers. Therefore, let's calculate the\
+  \ minimum number of teams to change the ranking in order to make the \"standings\
+  \ received from the manager\" a \"consistent standings\" and tell the manager how\
+  \ wrong the standings are. A \"consistent standings\" is a standings that can occur\
+  \ as a result of a tournament with a fixed ranking.\n\nInput\n\nThe \"ranking table\
+  \ received from the manager\" is given to the input in the following format.\n\n\
+  \nn m\na0 a1 .. .am\nb0 b1 ... bm\u22121\n\n\n* The first line consists of two integers,\
+  \ n and m, where 2n is the \"number of participating teams in the district tournament\"\
+  \ and m is the \"number of sections in which consecutive rankings are lined up in\
+  \ the\" standings received from the manager \"\". Represents.\n* The second line\
+  \ consists of m + 1 integers of ai (0 \u2264 i \u2264 m), and each ai represents\
+  \ \"the division position of the section where consecutive rankings are lined up\
+  \ in the'ranking table received from the manager'\". ..\n* The third line consists\
+  \ of m integers of bi (0 \u2264 i <m), and each 2bi represents \"the ranking of\
+  \ teams whose team numbers are greater than or equal to ai and less than ai + 1\
+  \ in the standings received from the manager\". ..\n\n\n\nConstraints\n\n* 1 \u2264\
+  \ n \u2264 30\n* 1 \u2264 m \u2264 10,000\n* 0 = a0 <a1 \u2264 ... \u2264 am\u2212\
+  1 <am = 2n\n* 0 \u2264 bi \u2264 n\n\n\n\nOutput\n\nOutput the minimum number of\
+  \ teams to change the ranking in one line so that the \"standings received from\
+  \ the manager\" becomes a \"consistent standings\".\n\nSample Input 1\n\n\n1 1\n\
+  0 2\n1\n\n\nOutput for the Sample Input 1\n\n\n1\n\n\nThere are two \"consistent\
+  \ standings\" with 2 participating teams: {\"ranking of teams with team number 0\"\
+  \ and \"ranking of teams with team number 1\"}, {1, 2} and {2, 1}. There is. In\
+  \ order to modify the standings {2, 2} to a \"consistent standings\", the ranking\
+  \ of one of the teams must be changed to 1.\n\nSample Input 2\n\n\ntwenty three\n\
+  0 1 2 4\n0 1 2\n\n\nOutput for the Sample Input 2\n\n\n2\n\n\nSample Input 3\n\n\
+  \ntwenty three\n0 1 3 4\n0 2 1\n\n\nOutput for the Sample Input 3\n\n\n0\n\n\nSample\
+  \ Input 4\n\n\n4 5\n0 1 2 4 8 16\n0 1 2 3 4\n\n\nOutput for the Sample Input 4\n\
+  \n\nTen\n\n\n\n\n\n\nExample\n\nInput\n\n1 1\n0 2\n1\n\n\nOutput\n\n1\nA: ```import\
+  \ sys\nreadline = sys.stdin.readline\nwrite = sys.stdout.write\ndef solve():\n \
+  \   N, M = map(int, readline().split())\n    *A, = map(int, readline().split())\n\
+  \    *B, = map(int, readline().split())\n    C = []\n    prv = 0\n    for i in range(M):\n\
+  \        C.append((A[i+1] - prv, 1 << B[i]))\n        prv = A[i+1]\n    ans = 0\n\
+  \    for i in range(N-1, -1, -1):\n        v = 1 << (i+1)\n        C1 = []\n   \
+  \     r = 0; p = 0\n        for c, b in C:\n            if r:\n                if\
+  \ (b & v) == (p & v) > 0:\n                    b0 = b | p\n                elif\
+  \ b & v:\n                    b0 = p\n                elif p & v:\n            \
+  \        b0 = b\n                else:\n                    b0 = b | p\n       \
+  \             ans += 1\n                if C1 and C1[-1][1] == b0:\n           \
+  \         c1, b1 = C1.pop()\n                    C1.append((1+c1, b0))\n       \
+  \         else:\n                    C1.append((1, b0))\n                c -= 1\n\
+  \            if c > 1:\n                if b & v == 0:\n                    ans\
+  \ += c // 2\n                if C1 and C1[-1][1] == b:\n                    c1,\
+  \ b1 = C1.pop()\n                    C1.append((c//2+c1, b))\n                else:\n\
+  \                    C1.append((c//2, b))\n            if c % 2:\n             \
+  \   r = 1; p = b\n            else:\n                r = 0\n        C = C1\n   \
+  \ c, p = C[0]\n    if p & 1 == 0:\n        ans += 1\n    write(\"%d\\n\" % ans)\n\
+  solve()```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nYouKn0wWho\
+  \ has two even integers x and y. Help him to find an integer n such that 1 \u2264\
+  \ n \u2264 2 \u22C5 10^{18} and n mod x = y mod n. Here, a mod b denotes the remainder\
+  \ of a after division by b. If there are multiple such integers, output any. It\
+  \ can be shown that such an integer always exists under the given constraints.\n\
+  \nInput\n\nThe first line contains a single integer t (1 \u2264 t \u2264 10^5) \u2014\
+  \ the number of test cases.\n\nThe first and only line of each test case contains\
+  \ two integers x and y (2 \u2264 x, y \u2264 10^9, both are even).\n\nOutput\n\n\
+  For each test case, print a single integer n (1 \u2264 n \u2264 2 \u22C5 10^{18})\
+  \ that satisfies the condition mentioned in the statement. If there are multiple\
+  \ such integers, output any. It can be shown that such an integer always exists\
+  \ under the given constraints.\n\nExample\n\nInput\n\n\n4\n4 8\n4 2\n420 420\n69420\
+  \ 42068\n\n\nOutput\n\n\n4\n10\n420\n9969128\n\nNote\n\nIn the first test case,\
+  \ 4 mod 4 = 8 mod 4 = 0.\n\nIn the second test case, 10 mod 4 = 2 mod 10 = 2.\n\n\
+  In the third test case, 420 mod 420 = 420 mod 420 = 0.\nA:"
+question: "YouKn0wWho has two even integers x and y. Help him to find an integer n\
+  \ such that 1 \u2264 n \u2264 2 \u22C5 10^{18} and n mod x = y mod n. Here, a mod\
+  \ b denotes the remainder of a after division by b. If there are multiple such integers,\
+  \ output any. It can be shown that such an integer always exists under the given\
+  \ constraints.\n\nInput\n\nThe first line contains a single integer t (1 \u2264\
+  \ t \u2264 10^5) \u2014 the number of test cases.\n\nThe first and only line of\
+  \ each test case contains two integers x and y (2 \u2264 x, y \u2264 10^9, both\
+  \ are even).\n\nOutput\n\nFor each test case, print a single integer n (1 \u2264\
+  \ n \u2264 2 \u22C5 10^{18}) that satisfies the condition mentioned in the statement.\
+  \ If there are multiple such integers, output any. It can be shown that such an\
+  \ integer always exists under the given constraints.\n\nExample\n\nInput\n\n\n4\n\
+  4 8\n4 2\n420 420\n69420 42068\n\n\nOutput\n\n\n4\n10\n420\n9969128\n\nNote\n\n\
+  In the first test case, 4 mod 4 = 8 mod 4 = 0.\n\nIn the second test case, 10 mod\
+  \ 4 = 2 mod 10 = 2.\n\nIn the third test case, 420 mod 420 = 420 mod 420 = 0."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    x, y = map(int, input().split())\n\
+  \    n = y\n    while True:\n        if n % x == y % n:\n            break\n   \
+  \     n += 1\n    print(n)```\n\n\n\n```python\n```A: ```t = int(input())\nfor _\
+  \ in range(t):\n    x, y = map(int, input().split())\n    n = y\n    while True:\n\
+  \        if n % x == y % n:\n            break\n        n += 1\n    print(n)\n``````\n\
+  \n\n\n```python\n```A: ```t = int(input())\nfor _ in range(t):\n    x, y = map(int,\
+  \ input().split())\n    n = y\n    while True:\n        if n % x == y % n:\n   \
+  \         break\n        n += 1\n    print(n)\n``````\n\n\n\n```python\n```A: ```t\
+  \ = int(input())\nfor _ in range(t):\n    x, y = map(int, input().split())\n   \
+  \ n = y\n    while True:\n        if n % x == y % n:\n            break\n      \
+  \  n += 1\n    print(n)\n````````\nQ:"
+- " ```readline = sys.stdin.readline\nwrite = sys.stdout.write\ndef solve():\n   \
+  \ t = int(readline())\n    for _ in range(t):\n        x, y = map(int, readline().split())\n\
+  \        n = x\n        while True:\n            if n % x == y % n:\n          \
+  \      write(\"%d\\n\" % n)\n                break\n            n += 1\nsolve()```\
+  \ Q:"
+test_cases:
+  input:
+  - '4
+
+    4 8
+
+    4 2
+
+    420 420
+
+    69420 42068
+
+    '
+  - '1
+
+    1000000000 1000000000
+
+    '
+  - '1
+
+    1000010000 1000000000
+
+    '
+  - '4
+
+    4 8
+
+    4 2
+
+    420 420
+
+    83876 42068
+
+    '
+  - '1
+
+    1001010000 1000000000
+
+    '
+  - '1
+
+    1001010010 1000000000
+
+    '
+  - '1
+
+    1001010010 1000100000
+
+    '
+  - '1
+
+    1000010010 1000000000
+
+    '
+  - '1
+
+    1000010011 1000000000
+
+    '
+  - '1
+
+    1001000000 1000000000
+
+    '
+  - '1
+
+    1000010000 1000100000
+
+    '
+  - '4
+
+    4 8
+
+    4 1
+
+    420 420
+
+    83876 42068
+
+    '
+  - '1
+
+    1001010010 1000001000
+
+    '
+  - '1
+
+    1001000010 1000100000
+
+    '
+  - '1
+
+    1100010010 1000000000
+
+    '
+  - '1
+
+    1000010011 1000000001
+
+    '
+  - '1
+
+    1001000001 1000000000
+
+    '
+  - '1
+
+    1000010000 1000100010
+
+    '
+  - '4
+
+    4 8
+
+    4 1
+
+    420 420
+
+    167306 42068
+
+    '
+  - '1
+
+    1001000000 1000100000
+
+    '
+  - '1
+
+    1101010010 1000000000
+
+    '
+  - '1
+
+    1001000001 1001000000
+
+    '
+  - '1
+
+    1000010000 1000100110
+
+    '
+  - '1
+
+    1011000000 1000100000
+
+    '
+  - '1
+
+    1101010000 1000000000
+
+    '
+  - '1
+
+    1010010010 1000000001
+
+    '
+  - '1
+
+    1011000000 1000110000
+
+    '
+  - '1
+
+    1101010000 1001000000
+
+    '
+  - '1
+
+    1010010110 1000000001
+
+    '
+  - '1
+
+    1010000000 1000110000
+
+    '
+  - '1
+
+    1101010000 1001000100
+
+    '
+  - '1
+
+    1010011110 1000000001
+
+    '
+  - '1
+
+    1010000001 1000110000
+
+    '
+  - '1
+
+    1101010100 1001000100
+
+    '
+  - '1
+
+    1010011110 1001000001
+
+    '
+  - '1
+
+    1010000001 1000110100
+
+    '
+  - '1
+
+    1101010110 1001000100
+
+    '
+  - '1
+
+    1010001110 1001000001
+
+    '
+  - '1
+
+    1010000001 1000110110
+
+    '
+  - '1
+
+    1111010110 1001000100
+
+    '
+  - '1
+
+    1010000001 0000110110
+
+    '
+  - '1
+
+    1111010110 1001000110
+
+    '
+  - '1
+
+    1110000001 0000110110
+
+    '
+  - '1
+
+    1111010010 1001000110
+
+    '
+  - '1
+
+    1110000001 0000111110
+
+    '
+  - '1
+
+    1111010010 1011000110
+
+    '
+  - '1
+
+    1100000001 0000111110
+
+    '
+  - '1
+
+    1111010110 1011000110
+
+    '
+  - '1
+
+    1100000001 0100111110
+
+    '
+  - '1
+
+    1111010110 1011000111
+
+    '
+  - '1
+
+    1100000001 0100011110
+
+    '
+  - '1
+
+    1111010110 0011000111
+
+    '
+  - '1
+
+    1100000001 0100011111
+
+    '
+  - '1
+
+    1101010110 0011000111
+
+    '
+  - '1
+
+    1100100001 0100011111
+
+    '
+  - '1
+
+    1101010010 0011000111
+
+    '
+  - '1
+
+    1100100011 0100011111
+
+    '
+  - '1
+
+    1100010010 0011000111
+
+    '
+  - '1
+
+    1000100011 0100011111
+
+    '
+  - '1
+
+    1100010110 0011000111
+
+    '
+  - '1
+
+    1000100011 0101011111
+
+    '
+  - '1
+
+    0100010110 0011000111
+
+    '
+  - '1
+
+    1000101011 0101011111
+
+    '
+  - '1
+
+    0100011110 0011000111
+
+    '
+  - '1
+
+    1000101011 0101001111
+
+    '
+  - '1
+
+    0100011110 0011000101
+
+    '
+  - '1
+
+    1000101111 0101001111
+
+    '
+  - '1
+
+    0100001110 0011000101
+
+    '
+  - '1
+
+    1001101111 0101001111
+
+    '
+  - '1
+
+    0100001110 0011100101
+
+    '
+  - '1
+
+    1001001111 0101001111
+
+    '
+  - '1
+
+    1001001101 0101001111
+
+    '
+  - '1
+
+    1001001101 0101011111
+
+    '
+  - '1
+
+    1001001101 0001011111
+
+    '
+  - '1
+
+    1001001101 0000011111
+
+    '
+  - '1
+
+    1000001101 0000011111
+
+    '
+  - '1
+
+    1000001101 1000011111
+
+    '
+  - '1
+
+    1000000000 1010000000
+
+    '
+  - '4
+
+    4 8
+
+    4 2
+
+    457 420
+
+    69420 42068
+
+    '
+  - '1
+
+    0000010000 1000000000
+
+    '
+  - '4
+
+    4 8
+
+    7 2
+
+    420 420
+
+    83876 42068
+
+    '
+  - '1
+
+    1101010011 1000000000
+
+    '
+  - '1
+
+    1001010110 1000100000
+
+    '
+  - '1
+
+    1000010010 1001000000
+
+    '
+  - '1
+
+    1000010011 1000010000
+
+    '
+  - '1
+
+    1000000000 1000100000
+
+    '
+  - '1
+
+    1001010010 1000001100
+
+    '
+  - '1
+
+    1001000010 1000100100
+
+    '
+  - '1
+
+    1101010010 1000010000
+
+    '
+  - '1
+
+    1000000011 1000000001
+
+    '
+  - '4
+
+    4 8
+
+    4 1
+
+    420 420
+
+    167306 11758
+
+    '
+  - '1
+
+    1101000000 1000100000
+
+    '
+  - '1
+
+    1100010010 1000000001
+
+    '
+  - '1
+
+    1101010000 1000100000
+
+    '
+  - '1
+
+    1010110010 1000000001
+
+    '
+  - '1
+
+    1011000100 1000110000
+
+    '
+  - '1
+
+    1101010000 0001000000
+
+    '
+  - '1
+
+    1000010110 1000000001
+
+    '
+  - '1
+
+    1010011110 1000000011
+
+    '
+  - '1
+
+    1101010100 1011000100
+
+    '
+  - '1
+
+    1010011110 1001000101
+
+    '
+  - '1
+
+    1010000001 1000100100
+
+    '
+  - '1
+
+    1010001110 0001000001
+
+    '
+  - '1
+
+    0010000001 0000110110
+
+    '
+  - '1
+
+    1111011110 1001000110
+
+    '
+  - '1
+
+    1100000001 0000110110
+
+    '
+  - '1
+
+    1110010010 1001000110
+
+    '
+  - '1
+
+    1010000001 0000111110
+
+    '
+  - '1
+
+    1111010010 0011000110
+
+    '
+  - '1
+
+    1100100001 0000111110
+
+    '
+  - '1
+
+    1100000001 0100111100
+
+    '
+  - '1
+
+    1111011110 1011000111
+
+    '
+  - '1
+
+    1100001001 0100011110
+
+    '
+  - '1
+
+    1111011110 0011000111
+
+    '
+  - '1
+
+    1000000001 0100011111
+
+    '
+  - '1
+
+    1101010110 0011010111
+
+    '
+  - '1
+
+    1100000001 0101011111
+
+    '
+  - '1
+
+    1101010011 0011000111
+
+    '
+  - '1
+
+    1100100011 0100011110
+
+    '
+  - '1
+
+    1100010010 0011000101
+
+    '
+  - '1
+
+    1000110011 0100011111
+
+    '
+  - '1
+
+    1100010110 0111000111
+
+    '
+  - '1
+
+    1000100111 0101011111
+
+    '
+  - '1
+
+    0100010110 0011000110
+
+    '
+  - '1
+
+    1000101001 0101011111
+
+    '
+  - '1
+
+    1100011110 0011000111
+
+    '
+  - '1
+
+    1000101011 0101001110
+
+    '
+  - '1
+
+    0100011110 0001000101
+
+    '
+  - '1
+
+    0110001110 0011000101
+
+    '
+  - '1
+
+    1001101111 0101011111
+
+    '
+  - '1
+
+    0100001110 0011110101
+
+    '
+  - '1
+
+    1001101111 0101001101
+
+    '
+  - '1
+
+    1000001101 0101001111
+
+    '
+  - '1
+
+    1001001101 0101010111
+
+    '
+  - '1
+
+    1001001101 1001011111
+
+    '
+  - '1
+
+    1001001111 0000011111
+
+    '
+  - '1
+
+    1000001101 0000011110
+
+    '
+  - '1
+
+    1000001101 1000011101
+
+    '
+  - '1
+
+    1000000000 1010001000
+
+    '
+  - '4
+
+    4 8
+
+    4 2
+
+    457 420
+
+    69420 52851
+
+    '
+  - '4
+
+    4 8
+
+    7 2
+
+    420 420
+
+    83876 56185
+
+    '
+  - '1
+
+    1101010111 1000000000
+
+    '
+  - '1
+
+    1001010110 1000101000
+
+    '
+  - '1
+
+    1000010010 1001100000
+
+    '
+  - '1
+
+    1000100000 1000100000
+
+    '
+  - '1
+
+    1001010010 1010001100
+
+    '
+  - '1
+
+    1001000110 1000100100
+
+    '
+  - '1
+
+    1101010010 1000110000
+
+    '
+  - '1
+
+    1000000011 1010000001
+
+    '
+  - '4
+
+    6 8
+
+    4 1
+
+    420 420
+
+    167306 11758
+
+    '
+  - '1
+
+    1101010010 1010000001
+
+    '
+  - '1
+
+    1100010000 1000000001
+
+    '
+  - '1
+
+    1001010000 1000100100
+
+    '
+  - '1
+
+    1101010000 1000100001
+
+    '
+  - '1
+
+    1110010010 1000000001
+
+    '
+  - '1
+
+    1011000000 1000110010
+
+    '
+  - '1
+
+    1101010001 0001000000
+
+    '
+  - '1
+
+    1011000000 0000110100
+
+    '
+  - '1
+
+    1000011110 1000000001
+
+    '
+  - '1
+
+    1101010100 1011100100
+
+    '
+  - '1
+
+    1010011110 1001000100
+
+    '
+  - '1
+
+    1010000011 1000100100
+
+    '
+  - '1
+
+    1010001110 0000000001
+
+    '
+  - '1
+
+    1010000011 1000110101
+
+    '
+  - '1
+
+    0010000001 0001110110
+
+    '
+  - '1
+
+    1111010110 1001100110
+
+    '
+  - '1
+
+    1100000001 0000110111
+
+    '
+  - '1
+
+    1110010011 1001000110
+
+    '
+  - '1
+
+    1010100001 0000111110
+
+    '
+  - '1
+
+    0111010010 0011000110
+
+    '
+  - '1
+
+    1100100001 0000110110
+
+    '
+  - '1
+
+    1000000001 0100111100
+
+    '
+  - '1
+
+    1111011111 1011000111
+
+    '
+  - '1
+
+    1100001001 0100111110
+
+    '
+  - '1
+
+    1111111110 0011000111
+
+    '
+  - '1
+
+    1000000011 0100011111
+
+    '
+  - '1
+
+    1101010010 0011010111
+
+    '
+  - '1
+
+    1100001001 0101011111
+
+    '
+  - '1
+
+    1101010011 0111000111
+
+    '
+  - '1
+
+    1100100011 0101011110
+
+    '
+  - '1
+
+    1100010010 0010000101
+
+    '
+  - '1
+
+    1000110011 0110011111
+
+    '
+  - '1
+
+    1100010110 0101000111
+
+    '
+  - '1
+
+    1000100111 0111011111
+
+    '
+  - '1
+
+    0100010110 0001000110
+
+    '
+  - '1
+
+    1000101001 0101011101
+
+    '
+  - '1
+
+    1100011110 0011000110
+
+    '
+  - '1
+
+    0100010110 0001000101
+
+    '
+  - '1
+
+    1000101111 0101001001
+
+    '
+  - '1
+
+    0110001010 0011000101
+
+    '
+  - '1
+
+    1001101111 0101011011
+
+    '
+  - '1
+
+    0100001110 0001110101
+
+    '
+  - '1
+
+    1011001101 0101010111
+
+    '
+  - '1
+
+    1001001101 1000011111
+
+    '
+  - '1
+
+    1001001111 0100011111
+
+    '
+  - '1
+
+    1000001101 0000011100
+
+    '
+  - '1
+
+    1000001101 0000011101
+
+    '
+  - '4
+
+    4 8
+
+    7 2
+
+    420 366
+
+    83876 56185
+
+    '
+  - '1
+
+    1101010111 1000100000
+
+    '
+  - '1
+
+    1001010010 1000101000
+
+    '
+  - '1
+
+    1100010010 1001100000
+
+    '
+  - '1
+
+    1001100000 1000100000
+
+    '
+  output:
+  - '8
+
+    6
+
+    420
+
+    111488
+
+    '
+  - "1000000000 \n"
+  - '2000010000
+
+    '
+  - '8
+
+    6
+
+    420
+
+    125944
+
+    '
+  - '2001010000
+
+    '
+  - '2001010010
+
+    '
+  - '2001110010
+
+    '
+  - '2000010010
+
+    '
+  - '2000010011
+
+    '
+  - '2001000000
+
+    '
+  - '1000055000
+
+    '
+  - '8
+
+    5
+
+    420
+
+    125944
+
+    '
+  - '2001011010
+
+    '
+  - '2001100010
+
+    '
+  - '2100010010
+
+    '
+  - '2000010012
+
+    '
+  - '2001000001
+
+    '
+  - '1000055005
+
+    '
+  - '8
+
+    5
+
+    420
+
+    209374
+
+    '
+  - '2001100000
+
+    '
+  - '2101010010
+
+    '
+  - '2002000001
+
+    '
+  - '1000055055
+
+    '
+  - '2011100000
+
+    '
+  - '2101010000
+
+    '
+  - '2010010011
+
+    '
+  - '2011110000
+
+    '
+  - '2102010000
+
+    '
+  - '2010010111
+
+    '
+  - '2010110000
+
+    '
+  - '2102010100
+
+    '
+  - '2010011111
+
+    '
+  - '2010110001
+
+    '
+  - '2102010200
+
+    '
+  - '2011011111
+
+    '
+  - '2010110101
+
+    '
+  - '2102010210
+
+    '
+  - '2011001111
+
+    '
+  - '2010110111
+
+    '
+  - '2112010210
+
+    '
+  - '1010110111
+
+    '
+  - '2112010220
+
+    '
+  - '1110110111
+
+    '
+  - '2112010120
+
+    '
+  - '1110111111
+
+    '
+  - '2122010120
+
+    '
+  - '1100111111
+
+    '
+  - '2122010220
+
+    '
+  - '1200111111
+
+    '
+  - '2122010221
+
+    '
+  - '1200011111
+
+    '
+  - '1122010221
+
+    '
+  - '1200011112
+
+    '
+  - '1112010221
+
+    '
+  - '1200111112
+
+    '
+  - '1112010121
+
+    '
+  - '1200111122
+
+    '
+  - '1111010121
+
+    '
+  - '1100111122
+
+    '
+  - '1111010221
+
+    '
+  - '1101111122
+
+    '
+  - '111010221
+
+    '
+  - '1101112122
+
+    '
+  - '111011221
+
+    '
+  - '1101102122
+
+    '
+  - '111011211
+
+    '
+  - '1101102222
+
+    '
+  - '111001211
+
+    '
+  - '1102102222
+
+    '
+  - '111101211
+
+    '
+  - '1102002222
+
+    '
+  - '1102002212
+
+    '
+  - '1102012212
+
+    '
+  - '1002012212
+
+    '
+  - '1001012212
+
+    '
+  - '1000012212
+
+    '
+  - '1000006106
+
+    '
+  - '1005000000
+
+    '
+  - '8
+
+    6
+
+    877
+
+    111488
+
+    '
+  - '1000000000
+
+    '
+  - '8
+
+    9
+
+    420
+
+    125944
+
+    '
+  - '2101010011
+
+    '
+  - '2001110110
+
+    '
+  - '1000505005
+
+    '
+  - '2000020011
+
+    '
+  - '1000050000
+
+    '
+  - '2001011110
+
+    '
+  - '2001100110
+
+    '
+  - '2101020010
+
+    '
+  - '2000000012
+
+    '
+  - '8
+
+    5
+
+    420
+
+    179064
+
+    '
+  - '2101100000
+
+    '
+  - '2100010011
+
+    '
+  - '2101110000
+
+    '
+  - '2010110011
+
+    '
+  - '2011110100
+
+    '
+  - '1102010000
+
+    '
+  - '2000010111
+
+    '
+  - '2010011121
+
+    '
+  - '2112010200
+
+    '
+  - '2011011211
+
+    '
+  - '2010100101
+
+    '
+  - '1011001111
+
+    '
+  - '10110111
+
+    '
+  - '2112011220
+
+    '
+  - '1100110111
+
+    '
+  - '2111010120
+
+    '
+  - '1010111111
+
+    '
+  - '1122010120
+
+    '
+  - '1100211111
+
+    '
+  - '1200111101
+
+    '
+  - '2122011221
+
+    '
+  - '1200012111
+
+    '
+  - '1122011221
+
+    '
+  - '1100011112
+
+    '
+  - '1112020221
+
+    '
+  - '1201011112
+
+    '
+  - '1112010122
+
+    '
+  - '1200111121
+
+    '
+  - '1111010111
+
+    '
+  - '1100121122
+
+    '
+  - '1211010221
+
+    '
+  - '1101111222
+
+    '
+  - '111010220
+
+    '
+  - '1101112112
+
+    '
+  - '1111011221
+
+    '
+  - '1101102121
+
+    '
+  - '101011211
+
+    '
+  - '121001211
+
+    '
+  - '1102112222
+
+    '
+  - '111111211
+
+    '
+  - '1102102212
+
+    '
+  - '1101002212
+
+    '
+  - '1102011212
+
+    '
+  - '1001006106
+
+    '
+  - '1001012222
+
+    '
+  - '1000012211
+
+    '
+  - '1000006101
+
+    '
+  - '1005000500
+
+    '
+  - '8
+
+    6
+
+    877
+
+    122271
+
+    '
+  - '8
+
+    9
+
+    420
+
+    140061
+
+    '
+  - '2101010111
+
+    '
+  - '2001111110
+
+    '
+  - '1000555005
+
+    '
+  - '1000100000
+
+    '
+  - '1005505555
+
+    '
+  - '2001100210
+
+    '
+  - '2101120010
+
+    '
+  - '1005000006
+
+    '
+  - '7
+
+    5
+
+    420
+
+    179064
+
+    '
+  - '2111010011
+
+    '
+  - '2100010001
+
+    '
+  - '2001110100
+
+    '
+  - '2101110001
+
+    '
+  - '2110010011
+
+    '
+  - '2011110010
+
+    '
+  - '1102010001
+
+    '
+  - '1011110100
+
+    '
+  - '2000011111
+
+    '
+  - '2112110200
+
+    '
+  - '2011011210
+
+    '
+  - '2010100111
+
+    '
+  - '1010001111
+
+    '
+  - '2010110112
+
+    '
+  - '11110111
+
+    '
+  - '2112110220
+
+    '
+  - '1100110112
+
+    '
+  - '2111010121
+
+    '
+  - '1010211111
+
+    '
+  - '122010120
+
+    '
+  - '1100210111
+
+    '
+  - '1100111101
+
+    '
+  - '2122011222
+
+    '
+  - '1200112111
+
+    '
+  - '1122111221
+
+    '
+  - '1100011122
+
+    '
+  - '1112020121
+
+    '
+  - '1201012112
+
+    '
+  - '1212010122
+
+    '
+  - '1201111121
+
+    '
+  - '1110010111
+
+    '
+  - '1110121122
+
+    '
+  - '1201010221
+
+    '
+  - '1111111222
+
+    '
+  - '101010220
+
+    '
+  - '1101112102
+
+    '
+  - '1111011220
+
+    '
+  - '101010211
+
+    '
+  - '1101102112
+
+    '
+  - '121001111
+
+    '
+  - '1102112122
+
+    '
+  - '101111211
+
+    '
+  - '1112011212
+
+    '
+  - '2001012212
+
+    '
+  - '1101012222
+
+    '
+  - '1000012201
+
+    '
+  - '1000012202
+
+    '
+  - '8
+
+    9
+
+    786
+
+    140061
+
+    '
+  - '2101110111
+
+    '
+  - '2001111010
+
+    '
+  - '2101110010
+
+    '
+  - '2001200000
+
+    '
+timeout: 1.0

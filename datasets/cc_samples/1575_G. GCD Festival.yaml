@@ -1,0 +1,1751 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou are given\
+  \ an undirected unweighted graph consisting of n vertices and m edges.\n\nYou have\
+  \ to write a number on each vertex of the graph. Each number should be 1, 2 or 3.\
+  \ The graph becomes beautiful if for each edge the sum of numbers on vertices connected\
+  \ by this edge is odd.\n\nCalculate the number of possible ways to write numbers\
+  \ 1, 2 and 3 on vertices so the graph becomes beautiful. Since this number may be\
+  \ large, print it modulo 998244353.\n\nNote that you have to write exactly one number\
+  \ on each vertex.\n\nThe graph does not have any self-loops or multiple edges.\n\
+  \nInput\n\nThe first line contains one integer t (1 \u2264 t \u2264 3 \u22C5 10^5)\
+  \ \u2014 the number of tests in the input.\n\nThe first line of each test contains\
+  \ two integers n and m (1 \u2264 n \u2264 3 \u22C5 10^5, 0 \u2264 m \u2264 3 \u22C5\
+  \ 10^5) \u2014 the number of vertices and the number of edges, respectively. Next\
+  \ m lines describe edges: i-th line contains two integers u_i,  v_i (1 \u2264 u_i,\
+  \ v_i \u2264 n; u_i \u2260 v_i) \u2014 indices of vertices connected by i-th edge.\n\
+  \nIt is guaranteed that \u2211_{i=1}^{t} n \u2264 3 \u22C5 10^5 and \u2211_{i=1}^{t}\
+  \ m \u2264 3 \u22C5 10^5.\n\nOutput\n\nFor each test print one line, containing\
+  \ one integer \u2014 the number of possible ways to write numbers 1, 2, 3 on the\
+  \ vertices of given graph so it becomes beautiful. Since answers may be large, print\
+  \ them modulo 998244353.\n\nExample\n\nInput\n\n\n2\n2 1\n1 2\n4 6\n1 2\n1 3\n1\
+  \ 4\n2 3\n2 4\n3 4\n\n\nOutput\n\n\n4\n0\n\nNote\n\nPossible ways to distribute\
+  \ numbers in the first test: \n\n  1. the vertex 1 should contain 1, and 2 should\
+  \ contain 2; \n  2. the vertex 1 should contain 3, and 2 should contain 2; \n  3.\
+  \ the vertex 1 should contain 2, and 2 should contain 1; \n  4. the vertex 1 should\
+  \ contain 2, and 2 should contain 3. \n\n\n\nIn the second test there is no way\
+  \ to distribute numbers.\nA: ```from collections import deque\nfrom sys import stdin,\
+  \ stdout\ninput = stdin.readline\n\n \nsaida = []\nt = int(input())\nmodulo = 998244353\n\
+  \nfor _ in range(t):\n    ans = 1\n    part = 0\n    factor = 0\n    fila = deque([])\n\
+  \    n, m = map(int, input().split())\n\n    if m > (n // 2) * ( n // 2 + 1):\n\
+  \        saida.append('0')\n        for edge_count in range(m):\n            input()\n\
+  \        continue\n    edge = [[] for i in range(n + 1)]\n    visitados = [-1] *\
+  \ (n + 1)\n    assure = 1\n \n    for arestas in range(m):\n        u, v = map(int,\
+  \ input().split())\n        edge[u].append(v)\n        edge[v].append(u)\n    visitados[1]\
+  \ = 0\n    fila.append(1)\n \n    break_all = False\n    while not break_all:\n\
+  \        par, impar = 1, 0\n        while fila and not break_all:\n            search\
+  \ = fila.popleft()\n            \n            current = visitados[search]\n    \
+  \        for i in edge[search]:\n                if visitados[i] == -1:\n      \
+  \              visitados[i] = current ^ 1\n                    if visitados[i] &\
+  \ 1:\n                        impar += 1\n                    else:\n          \
+  \              par += 1\n                    fila.append(i)\n                elif\
+  \ visitados[i] == current:\n                    break_all = True\n             \
+  \   else:\n                    assert visitados[i] == current ^ 1\n        if break_all:\n\
+  \            ans = 0\n        else:\n            if (par, impar) == (1, 0):\n  \
+  \              factor += 1\n            else:\n                ans *= pow(2, par,\
+  \ modulo) + pow(2, impar, modulo)\n                ans %= modulo\n        while\
+  \ assure <= n:\n            if visitados[assure] == -1:\n                part +=\
+  \ 1\n                visitados[assure] = 2 * part\n \n                fila.append(assure)\n\
+  \                break\n            assure += 1\n        if assure == n + 1:\n \
+  \           break\n    ans *= pow(3, factor, modulo)\n    ans %= modulo\n    saida.append(str(ans))\n\
+  print('\\n'.join(saida))```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nThis is the hard version of the problem. The difference between the\
+  \ versions is the constraint on n and the required number of operations. You can\
+  \ make hacks only if all versions of the problem are solved.\n\nThere are two binary\
+  \ strings a and b of length n (a binary string is a string consisting of symbols\
+  \ 0 and 1). In an operation, you select a prefix of a, and simultaneously invert\
+  \ the bits in the prefix (0 changes to 1 and 1 changes to 0) and reverse the order\
+  \ of the bits in the prefix.\n\nFor example, if a=001011 and you select the prefix\
+  \ of length 3, it becomes 011011. Then if you select the entire string, it becomes\
+  \ 001001.\n\nYour task is to transform the string a into b in at most 2n operations.\
+  \ It can be proved that it is always possible.\n\nInput\n\nThe first line contains\
+  \ a single integer t (1\u2264 t\u2264 1000) \u2014 the number of test cases. Next\
+  \ 3t lines contain descriptions of test cases.\n\nThe first line of each test case\
+  \ contains a single integer n (1\u2264 n\u2264 10^5) \u2014 the length of the binary\
+  \ strings.\n\nThe next two lines contain two binary strings a and b of length n.\n\
+  \nIt is guaranteed that the sum of n across all test cases does not exceed 10^5.\n\
+  \nOutput\n\nFor each test case, output an integer k (0\u2264 k\u2264 2n), followed\
+  \ by k integers p_1,\u2026,p_k (1\u2264 p_i\u2264 n). Here k is the number of operations\
+  \ you use and p_i is the length of the prefix you flip in the i-th operation.\n\n\
+  Example\n\nInput\n\n\n5\n2\n01\n10\n5\n01011\n11100\n2\n01\n01\n10\n0110011011\n\
+  1000110100\n1\n0\n1\n\n\nOutput\n\n\n3 1 2 1\n6 5 2 5 3 1 2\n0\n9 4 1 2 10 4 1 2\
+  \ 1 5\n1 1\n\nNote\n\nIn the first test case, we have 01\u2192 11\u2192 00\u2192\
+  \ 10.\n\nIn the second test case, we have 01011\u2192 00101\u2192 11101\u2192 01000\u2192\
+  \ 10100\u2192 00100\u2192 11100.\n\nIn the third test case, the strings are already\
+  \ the same. Another solution is to flip the prefix of length 2, which will leave\
+  \ a unchanged.\nA: ```t=int(input())\nfor _ in range(t):\n    n=int(input())\n \
+  \   arr=list(input().rstrip(\"\\n\"))\n    arr1=list(input().rstrip(\"\\n\"))\n\
+  \    arr=[int(x) for x in arr]\n    arr1=[int(x) for x in arr1]\n    #print(arr,n)\n\
+  \    result=[]\n    if arr == arr1:\n        print(0)\n    else:\n        if n ==\
+  \ 1:\n            print(\"1 1\")\n            continue\n        prev=arr[0]\n  \
+  \      for i in range(1,n):\n            #print(arr,n)\n            if prev != arr[i]:\n\
+  \                result.append(i)\n            prev=arr[i]\n        if arr[-1] ==\
+  \ 1:\n            last=1\n        else:\n            last=0\n        for i in range(n-1,-1,-1):\n\
+  \            if arr1[i]!= last:\n                result.append(i+1)\n          \
+  \      if last == 0:\n                    last=1\n                else:\n      \
+  \              last=0\n        print(len(result),end=\" \")\n        print(*result)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nMr. Chanek has an array\
+  \ a of n integers. The prettiness value of a is denoted as:\n\n$$$\u2211_{i=1}^{n}\
+  \ {\u2211_{j=1}^{n} {\\gcd(a_i, a_j) \u22C5 \\gcd(i, j)}}$$$\n\nwhere \\gcd(x, y)\
+  \ denotes the greatest common divisor (GCD) of integers x and y.\n\nIn other words,\
+  \ the prettiness value of an array a is the total sum of \\gcd(a_i, a_j) \u22C5\
+  \ \\gcd(i, j) for all pairs (i, j).\n\nHelp Mr. Chanek find the prettiness value\
+  \ of a, and output the result modulo 10^9 + 7!\n\nInput\n\nThe first line contains\
+  \ an integer n (2 \u2264 n \u2264 10^5).\n\nThe second line contains n integers\
+  \ a_1, a_2, \u2026, a_n (1 \u2264 a_i \u2264 10^5).\n\nOutput\n\nOutput an integer\
+  \ denoting the prettiness value of a modulo 10^9 + 7.\n\nExample\n\nInput\n\n\n\
+  5\n3 6 2 1 4\n\n\nOutput\n\n\n77\nA:"
+question: "Mr. Chanek has an array a of n integers. The prettiness value of a is denoted\
+  \ as:\n\n$$$\u2211_{i=1}^{n} {\u2211_{j=1}^{n} {\\gcd(a_i, a_j) \u22C5 \\gcd(i,\
+  \ j)}}$$$\n\nwhere \\gcd(x, y) denotes the greatest common divisor (GCD) of integers\
+  \ x and y.\n\nIn other words, the prettiness value of an array a is the total sum\
+  \ of \\gcd(a_i, a_j) \u22C5 \\gcd(i, j) for all pairs (i, j).\n\nHelp Mr. Chanek\
+  \ find the prettiness value of a, and output the result modulo 10^9 + 7!\n\nInput\n\
+  \nThe first line contains an integer n (2 \u2264 n \u2264 10^5).\n\nThe second line\
+  \ contains n integers a_1, a_2, \u2026, a_n (1 \u2264 a_i \u2264 10^5).\n\nOutput\n\
+  \nOutput an integer denoting the prettiness value of a modulo 10^9 + 7.\n\nExample\n\
+  \nInput\n\n\n5\n3 6 2 1 4\n\n\nOutput\n\n\n77"
+samples:
+- " ```from collections import defaultdict\nfrom math import gcd\nfrom functools import\
+  \ reduce\nfrom sys import stdin, stdout\n\ninput = stdin.readline\noutput = stdout.write\n\
+  \nn = int(input())\na = list(map(int, input().split()))\n\ndp = defaultdict(int)\n\
+  for i in range(n):\n    for j in range(i + 1, n):\n        dp[i, j] = dp.get((j,\
+  \ i), 0) + gcd(a[i], a[j]) * gcd(i + 1, j + 1)\n\noutput(str(reduce(lambda x, y:\
+  \ x + y, [dp[i, j] for i in range(n) for j in range(i + 1, n)])) % (10**9 + 7) +\
+  \ \"\\n\")\n``` Q:"
+- " ```n = int(input())\na = list(map(int, input().split()))\nfrom math import gcd\n\
+  from functools import reduce\nfrom operator import mul\np = 0\nfor i in range(n):\n\
+  \    for j in range(i+1, n):\n        p += a[i] * a[j] * gcd(i+1, j+1)\nprint(p\
+  \ % (10**9 + 7))``` Q:"
+test_cases:
+  input:
+  - '5
+
+    3 6 2 1 4
+
+    '
+  - '5
+
+    54883 59286 71521 84428 60278
+
+    '
+  - '2
+
+    83160 83160
+
+    '
+  - '5
+
+    54883 59286 14742 84428 60278
+
+    '
+  - '5
+
+    3 3 2 1 4
+
+    '
+  - '5
+
+    54883 59286 17269 84428 60278
+
+    '
+  - '5
+
+    54883 68768 17269 84428 60278
+
+    '
+  - '5
+
+    3 5 1 1 4
+
+    '
+  - '5
+
+    54883 92651 71521 84428 60278
+
+    '
+  - '2
+
+    83160 1006
+
+    '
+  - '5
+
+    3 11 2 1 4
+
+    '
+  - '5
+
+    54883 11471 14742 84428 60278
+
+    '
+  - '5
+
+    3 2 2 1 4
+
+    '
+  - '5
+
+    54883 59286 18015 84428 60278
+
+    '
+  - '5
+
+    6 5 2 1 4
+
+    '
+  - '5
+
+    54883 68768 17269 84428 20399
+
+    '
+  - '2
+
+    83160 674
+
+    '
+  - '5
+
+    58138 11471 14742 84428 60278
+
+    '
+  - '5
+
+    3 2 2 2 4
+
+    '
+  - '5
+
+    54883 68768 17269 52463 20399
+
+    '
+  - '2
+
+    83160 1153
+
+    '
+  - '5
+
+    58138 11471 14742 91222 60278
+
+    '
+  - '5
+
+    54883 133 17269 52463 20399
+
+    '
+  - '2
+
+    83160 973
+
+    '
+  - '5
+
+    58138 11471 2840 91222 60278
+
+    '
+  - '5
+
+    99534 133 17269 52463 20399
+
+    '
+  - '2
+
+    83160 1163
+
+    '
+  - '5
+
+    99534 147 17269 52463 20399
+
+    '
+  - '2
+
+    83160 1049
+
+    '
+  - '5
+
+    99534 147 17269 52463 20125
+
+    '
+  - '2
+
+    79842 1049
+
+    '
+  - '5
+
+    99534 147 17269 58616 20125
+
+    '
+  - '2
+
+    79842 214
+
+    '
+  - '5
+
+    99534 147 17269 58616 3805
+
+    '
+  - '5
+
+    99534 151 17269 58616 3805
+
+    '
+  - '5
+
+    99534 151 27204 58616 3805
+
+    '
+  - '5
+
+    99534 151 27204 58616 5917
+
+    '
+  - '5
+
+    99534 151 27204 58616 10100
+
+    '
+  - '5
+
+    99534 151 27204 37060 10100
+
+    '
+  - '5
+
+    99534 151 37520 37060 10100
+
+    '
+  - '5
+
+    99534 151 37520 37866 10100
+
+    '
+  - '5
+
+    99534 151 37520 37866 10110
+
+    '
+  - '5
+
+    99534 151 37520 19505 10110
+
+    '
+  - '5
+
+    99534 63 37520 19505 10110
+
+    '
+  - '5
+
+    99534 65 37520 19505 10110
+
+    '
+  - '5
+
+    99534 57 37520 19505 10110
+
+    '
+  - '5
+
+    99534 57 37520 19505 10100
+
+    '
+  - '5
+
+    54245 57 37520 19505 10100
+
+    '
+  - '5
+
+    54245 57 37520 19505 10101
+
+    '
+  - '5
+
+    47612 57 37520 19505 10101
+
+    '
+  - '5
+
+    47612 57 37520 19505 10100
+
+    '
+  - '5
+
+    47612 57 33910 19505 10100
+
+    '
+  - '5
+
+    47612 57 4731 19505 10100
+
+    '
+  - '5
+
+    47612 57 3570 19505 10100
+
+    '
+  - '5
+
+    49368 57 3570 19505 10100
+
+    '
+  - '5
+
+    49368 57 3564 19505 10100
+
+    '
+  - '5
+
+    49368 57 1389 19505 10100
+
+    '
+  - '5
+
+    49368 57 816 19505 10100
+
+    '
+  - '5
+
+    49368 57 816 9769 10100
+
+    '
+  - '5
+
+    40531 59286 71521 84428 60278
+
+    '
+  - '2
+
+    83160 30588
+
+    '
+  - '5
+
+    3 6 2 2 4
+
+    '
+  - '5
+
+    3 3 2 1 2
+
+    '
+  - '5
+
+    54883 59286 17269 18865 60278
+
+    '
+  - '5
+
+    3 5 2 1 8
+
+    '
+  - '5
+
+    54883 68768 12907 84428 60278
+
+    '
+  - '5
+
+    54883 92651 71521 41670 60278
+
+    '
+  - '2
+
+    83160 1472
+
+    '
+  - '5
+
+    3 4 2 1 4
+
+    '
+  - '5
+
+    54883 19021 14742 84428 60278
+
+    '
+  - '5
+
+    3 1 2 1 4
+
+    '
+  - '5
+
+    54883 59286 18015 84428 41705
+
+    '
+  - '5
+
+    54883 1289 17269 84428 20399
+
+    '
+  - '5
+
+    54883 68768 30171 52463 20399
+
+    '
+  - '2
+
+    62932 1153
+
+    '
+  - '5
+
+    58138 11471 14742 91222 43001
+
+    '
+  - '5
+
+    16135 133 17269 52463 20399
+
+    '
+  - '2
+
+    83160 1103
+
+    '
+  - '5
+
+    99534 133 21279 52463 20399
+
+    '
+  - '2
+
+    83160 2042
+
+    '
+  - '5
+
+    99534 147 17269 22062 20399
+
+    '
+  - '2
+
+    79842 1488
+
+    '
+  - '5
+
+    99534 147 17185 58616 3805
+
+    '
+  - '5
+
+    99534 151 33935 58616 3805
+
+    '
+  - '5
+
+    99534 151 27204 58616 3362
+
+    '
+  - '5
+
+    99534 151 27204 85241 5917
+
+    '
+  - '5
+
+    99534 151 1014 58616 10100
+
+    '
+  - '5
+
+    99534 151 27204 12835 10100
+
+    '
+  - '5
+
+    99534 151 37520 38479 10100
+
+    '
+  - '5
+
+    99534 151 37520 25362 10100
+
+    '
+  - '5
+
+    79997 151 37520 19505 10110
+
+    '
+  - '5
+
+    99534 87 37520 19505 10110
+
+    '
+  - '5
+
+    99534 57 71829 19505 10110
+
+    '
+  - '5
+
+    99534 57 37520 5150 10100
+
+    '
+  - '5
+
+    54245 57 2106 19505 10100
+
+    '
+  - '5
+
+    54245 57 74457 19505 10101
+
+    '
+  - '5
+
+    7132 57 37520 19505 10101
+
+    '
+  - '5
+
+    47612 114 37520 19505 10100
+
+    '
+  - '5
+
+    88338 57 33910 19505 10100
+
+    '
+  - '5
+
+    80407 57 4731 19505 10100
+
+    '
+  - '5
+
+    47612 47 3570 19505 10100
+
+    '
+  - '5
+
+    49368 57 3570 19505 10101
+
+    '
+  - '5
+
+    49368 57 3564 19505 10000
+
+    '
+  - '5
+
+    49368 57 1389 29577 10100
+
+    '
+  - '5
+
+    49368 23 816 19505 10100
+
+    '
+  - '5
+
+    49368 8 816 9769 10100
+
+    '
+  - '5
+
+    40531 59286 87177 84428 60278
+
+    '
+  - '2
+
+    83160 15866
+
+    '
+  - '5
+
+    3 6 2 4 4
+
+    '
+  - '5
+
+    3 3 2 1 3
+
+    '
+  - '5
+
+    54883 59286 17269 18865 22967
+
+    '
+  - '5
+
+    3 7 2 1 4
+
+    '
+  - '5
+
+    54883 68768 12907 84428 59145
+
+    '
+  - '5
+
+    33608 92651 71521 41670 60278
+
+    '
+  - '5
+
+    3 4 1 1 4
+
+    '
+  - '5
+
+    54883 19021 14742 84428 2563
+
+    '
+  - '5
+
+    54883 59286 18015 84428 79925
+
+    '
+  - '5
+
+    54883 1289 17269 84428 27581
+
+    '
+  - '5
+
+    54883 68768 30171 52463 11349
+
+    '
+  - '2
+
+    62932 1299
+
+    '
+  - '5
+
+    58138 11471 14742 91222 49893
+
+    '
+  - '5
+
+    16135 223 17269 52463 20399
+
+    '
+  - '2
+
+    83160 1741
+
+    '
+  - '2
+
+    6544 2042
+
+    '
+  - '5
+
+    37726 147 17269 22062 20399
+
+    '
+  - '2
+
+    57413 1488
+
+    '
+  - '5
+
+    82514 147 17185 58616 3805
+
+    '
+  - '5
+
+    99534 151 33935 58616 1780
+
+    '
+  - '5
+
+    99534 151 27204 85241 4386
+
+    '
+  - '5
+
+    99534 287 1014 58616 10100
+
+    '
+  - '5
+
+    43041 151 27204 12835 10100
+
+    '
+  - '5
+
+    99534 151 37520 74526 10100
+
+    '
+  - '5
+
+    99534 151 37520 25362 11100
+
+    '
+  - '5
+
+    79997 151 42796 19505 10110
+
+    '
+  - '5
+
+    99534 87 37520 19505 10100
+
+    '
+  - '5
+
+    99534 57 71829 8304 10110
+
+    '
+  - '5
+
+    99534 30 37520 5150 10100
+
+    '
+  - '5
+
+    54245 57 2106 20283 10100
+
+    '
+  - '5
+
+    30546 57 74457 19505 10101
+
+    '
+  - '5
+
+    7132 2 37520 19505 10101
+
+    '
+  - '5
+
+    47612 114 37520 19505 10101
+
+    '
+  - '5
+
+    88338 57 33910 19505 11100
+
+    '
+  - '5
+
+    80407 57 4731 37120 10100
+
+    '
+  - '5
+
+    47612 47 3570 14707 10100
+
+    '
+  - '5
+
+    49368 57 3570 19505 11101
+
+    '
+  - '5
+
+    49368 57 3564 19505 10010
+
+    '
+  - '5
+
+    49368 105 1389 29577 10100
+
+    '
+  - '5
+
+    49368 23 816 7771 10100
+
+    '
+  - '5
+
+    49368 8 816 9769 10101
+
+    '
+  - '2
+
+    83160 4632
+
+    '
+  - '5
+
+    3 6 2 4 8
+
+    '
+  - '5
+
+    46756 59286 17269 18865 22967
+
+    '
+  - '5
+
+    54883 11112 12907 84428 59145
+
+    '
+  - '5
+
+    33608 20002 71521 41670 60278
+
+    '
+  - '5
+
+    54883 19021 2640 84428 2563
+
+    '
+  - '5
+
+    54883 59286 26328 84428 79925
+
+    '
+  - '5
+
+    6 3 1 1 5
+
+    '
+  - '5
+
+    54883 1289 2325 84428 27581
+
+    '
+  - '5
+
+    54883 68768 26666 52463 11349
+
+    '
+  - '2
+
+    62932 2102
+
+    '
+  - '5
+
+    58138 11471 14742 91222 87478
+
+    '
+  - '5
+
+    10896 223 17269 52463 20399
+
+    '
+  - '2
+
+    83160 2871
+
+    '
+  - '2
+
+    3822 2042
+
+    '
+  - '5
+
+    42322 147 17269 22062 20399
+
+    '
+  - '2
+
+    57413 2443
+
+    '
+  - '5
+
+    82514 240 17185 58616 3805
+
+    '
+  - '5
+
+    99534 278 33935 58616 1780
+
+    '
+  - '5
+
+    99534 151 27204 85241 4150
+
+    '
+  - '5
+
+    99534 287 1127 58616 10100
+
+    '
+  - '5
+
+    43041 151 27204 12835 10000
+
+    '
+  - '5
+
+    99534 151 37520 13048 10100
+
+    '
+  - '5
+
+    99534 151 37520 16767 11100
+
+    '
+  - '5
+
+    87375 87 37520 19505 10100
+
+    '
+  - '5
+
+    30546 25 74457 19505 10101
+
+    '
+  - '5
+
+    4905 2 37520 19505 10101
+
+    '
+  - '5
+
+    6731 114 37520 19505 10101
+
+    '
+  - '5
+
+    80407 57 4731 2545 10100
+
+    '
+  - '5
+
+    47612 47 3570 1504 10100
+
+    '
+  - '5
+
+    49368 57 3570 33856 11101
+
+    '
+  - '5
+
+    49368 57 3564 34542 10010
+
+    '
+  - '5
+
+    93014 105 1389 29577 10100
+
+    '
+  - '5
+
+    49368 23 816 7771 10110
+
+    '
+  - '5
+
+    49368 8 816 8329 10101
+
+    '
+  - '5
+
+    3 6 4 4 8
+
+    '
+  - '5
+
+    46756 59286 17269 18865 38821
+
+    '
+  - '5
+
+    54883 11112 12907 84428 36812
+
+    '
+  - '5
+
+    33608 20002 71521 41670 52727
+
+    '
+  - '5
+
+    42107 19021 2640 84428 2563
+
+    '
+  - '5
+
+    11997 59286 26328 84428 79925
+
+    '
+  - '5
+
+    6 6 1 1 5
+
+    '
+  - '5
+
+    92694 1289 2325 84428 27581
+
+    '
+  - '5
+
+    54883 20390 26666 52463 11349
+
+    '
+  - '2
+
+    62932 1165
+
+    '
+  - '5
+
+    7110 11471 14742 91222 87478
+
+    '
+  - '5
+
+    10896 223 17269 52463 6753
+
+    '
+  - '2
+
+    3822 409
+
+    '
+  - '5
+
+    42322 147 17269 33420 20399
+
+    '
+  - '2
+
+    57413 3595
+
+    '
+  - '5
+
+    99534 278 33935 51005 1780
+
+    '
+  - '5
+
+    99534 93 27204 85241 4150
+
+    '
+  - '5
+
+    99534 287 1127 67249 10100
+
+    '
+  - '5
+
+    43041 151 27204 9606 10000
+
+    '
+  output:
+  - '77
+
+    '
+  - '1027150
+
+    '
+  - '415800
+
+    '
+  - '856827
+
+    '
+  - '67
+
+    '
+  - '864394
+
+    '
+  - '883378
+
+    '
+  - '62
+
+    '
+  - '1093874
+
+    '
+  - '85176
+
+    '
+  - '79
+
+    '
+  - '761181
+
+    '
+  - '65
+
+    '
+  - '866636
+
+    '
+  - '74
+
+    '
+  - '683979
+
+    '
+  - '84512
+
+    '
+  - '764442
+
+    '
+  - '77
+
+    '
+  - '556107
+
+    '
+  - '85468
+
+    '
+  - '791618
+
+    '
+  - '418837
+
+    '
+  - '85120
+
+    '
+  - '755912
+
+    '
+  - '463488
+
+    '
+  - '85488
+
+    '
+  - '463520
+
+    '
+  - '85260
+
+    '
+  - '462218
+
+    '
+  - '81942
+
+    '
+  - '486788
+
+    '
+  - '80274
+
+    '
+  - '405164
+
+    '
+  - '405156
+
+    '
+  - '434977
+
+    '
+  - '445537
+
+    '
+  - '466466
+
+    '
+  - '380274
+
+    '
+  - '411278
+
+    '
+  - '414438
+
+    '
+  - '414484
+
+    '
+  - '341034
+
+    '
+  - '340878
+
+    '
+  - '340894
+
+    '
+  - '340854
+
+    '
+  - '340812
+
+    '
+  - '295575
+
+    '
+  - '295542
+
+    '
+  - '288863
+
+    '
+  - '288894
+
+    '
+  - '278040
+
+    '
+  - '190751
+
+    '
+  - '187024
+
+    '
+  - '188984
+
+    '
+  - '189006
+
+    '
+  - '182217
+
+    '
+  - '181314
+
+    '
+  - '142362
+
+    '
+  - '1012798
+
+    '
+  - '144360
+
+    '
+  - '89
+
+    '
+  - '57
+
+    '
+  - '602148
+
+    '
+  - '87
+
+    '
+  - '870280
+
+    '
+  - '922842
+
+    '
+  - '86120
+
+    '
+  - '73
+
+    '
+  - '776281
+
+    '
+  - '59
+
+    '
+  - '773775
+
+    '
+  - '548997
+
+    '
+  - '594801
+
+    '
+  - '65240
+
+    '
+  - '705239
+
+    '
+  - '380113
+
+    '
+  - '85368
+
+    '
+  - '475510
+
+    '
+  - '87248
+
+    '
+  - '341934
+
+    '
+  - '82830
+
+    '
+  - '404920
+
+    '
+  - '455162
+
+    '
+  - '432768
+
+    '
+  - '552029
+
+    '
+  - '387888
+
+    '
+  - '283936
+
+    '
+  - '416888
+
+    '
+  - '364422
+
+    '
+  - '321485
+
+    '
+  - '340914
+
+    '
+  - '443765
+
+    '
+  - '283494
+
+    '
+  - '189285
+
+    '
+  - '406333
+
+    '
+  - '248383
+
+    '
+  - '289014
+
+    '
+  - '318766
+
+    '
+  - '223540
+
+    '
+  - '187184
+
+    '
+  - '189005
+
+    '
+  - '188514
+
+    '
+  - '222513
+
+    '
+  - '181238
+
+    '
+  - '142290
+
+    '
+  - '1059770
+
+    '
+  - '114896
+
+    '
+  - '101
+
+    '
+  - '68
+
+    '
+  - '415615
+
+    '
+  - '71
+
+    '
+  - '864611
+
+    '
+  - '901571
+
+    '
+  - '66
+
+    '
+  - '487702
+
+    '
+  - '964875
+
+    '
+  - '584907
+
+    '
+  - '549555
+
+    '
+  - '65532
+
+    '
+  - '739691
+
+    '
+  - '380269
+
+    '
+  - '86644
+
+    '
+  - '10632
+
+    '
+  - '280114
+
+    '
+  - '60391
+
+    '
+  - '387896
+
+    '
+  - '445045
+
+    '
+  - '544394
+
+    '
+  - '388160
+
+    '
+  - '227435
+
+    '
+  - '561078
+
+    '
+  - '369438
+
+    '
+  - '337289
+
+    '
+  - '340872
+
+    '
+  - '398985
+
+    '
+  - '283518
+
+    '
+  - '192393
+
+    '
+  - '382614
+
+    '
+  - '248273
+
+    '
+  - '288981
+
+    '
+  - '323778
+
+    '
+  - '293866
+
+    '
+  - '167804
+
+    '
+  - '194021
+
+    '
+  - '188628
+
+    '
+  - '222617
+
+    '
+  - '134294
+
+    '
+  - '142285
+
+    '
+  - '92472
+
+    '
+  - '121
+
+    '
+  - '407490
+
+    '
+  - '749303
+
+    '
+  - '756281
+
+    '
+  - '451420
+
+    '
+  - '989818
+
+    '
+  - '70
+
+    '
+  - '540075
+
+    '
+  - '539038
+
+    '
+  - '67140
+
+    '
+  - '927618
+
+    '
+  - '375018
+
+    '
+  - '89100
+
+    '
+  - '7910
+
+    '
+  - '284734
+
+    '
+  - '62301
+
+    '
+  - '388116
+
+    '
+  - '445307
+
+    '
+  - '543362
+
+    '
+  - '388497
+
+    '
+  - '226935
+
+    '
+  - '315270
+
+    '
+  - '335044
+
+    '
+  - '328773
+
+    '
+  - '382554
+
+    '
+  - '246058
+
+    '
+  - '248092
+
+    '
+  - '155536
+
+    '
+  - '115178
+
+    '
+  - '251433
+
+    '
+  - '249038
+
+    '
+  - '266247
+
+    '
+  - '134352
+
+    '
+  - '136525
+
+    '
+  - '135
+
+    '
+  - '486736
+
+    '
+  - '637646
+
+    '
+  - '718520
+
+    '
+  - '438644
+
+    '
+  - '946940
+
+    '
+  - '82
+
+    '
+  - '577892
+
+    '
+  - '442282
+
+    '
+  - '65264
+
+    '
+  - '876622
+
+    '
+  - '306792
+
+    '
+  - '4642
+
+    '
+  - '330166
+
+    '
+  - '64605
+
+    '
+  - '414867
+
+    '
+  - '543254
+
+    '
+  - '423057
+
+    '
+  - '213427
+
+    '
+timeout: 3.0

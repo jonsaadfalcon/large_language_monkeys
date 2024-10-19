@@ -1,0 +1,462 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThe Little\
+  \ Elephant has got a problem \u2014 somebody has been touching his sorted by non-decreasing\
+  \ array a of length n and possibly swapped some elements of the array.\n\nThe Little\
+  \ Elephant doesn't want to call the police until he understands if he could have\
+  \ accidentally changed the array himself. He thinks that he could have accidentally\
+  \ changed array a, only if array a can be sorted in no more than one operation of\
+  \ swapping elements (not necessarily adjacent). That is, the Little Elephant could\
+  \ have accidentally swapped some two elements.\n\nHelp the Little Elephant, determine\
+  \ if he could have accidentally changed the array a, sorted by non-decreasing, himself.\n\
+  \nInput\n\nThe first line contains a single integer n (2 \u2264 n \u2264 105) \u2014\
+  \ the size of array a. The next line contains n positive integers, separated by\
+  \ single spaces and not exceeding 109, \u2014 array a.\n\nNote that the elements\
+  \ of the array are not necessarily distinct numbers.\n\nOutput\n\nIn a single line\
+  \ print \"YES\" (without the quotes) if the Little Elephant could have accidentally\
+  \ changed the array himself, and \"NO\" (without the quotes) otherwise.\n\nExamples\n\
+  \nInput\n\n2\n1 2\n\n\nOutput\n\nYES\n\n\nInput\n\n3\n3 2 1\n\n\nOutput\n\nYES\n\
+  \n\nInput\n\n4\n4 3 2 1\n\n\nOutput\n\nNO\n\nNote\n\nIn the first sample the array\
+  \ has already been sorted, so to sort it, we need 0 swap operations, that is not\
+  \ more than 1. Thus, the answer is \"YES\".\n\nIn the second sample we can sort\
+  \ the array if we swap elements 1 and 3, so we need 1 swap operation to sort the\
+  \ array. Thus, the answer is \"YES\".\n\nIn the third sample we can't sort the array\
+  \ in more than one swap operation, so the answer is \"NO\".\nA: ```n = int(input())\n\
+  a = list(map(int, input().split()))\nb = sorted(a)\nres = 0\nfor i in range(n):\n\
+  \    if a[i] != b[i]:\n        res += 1\nprint('YES' if res <= 2 else 'NO')```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nProblem Statement\n\n\
+  Mr. Takatsuki, who is planning to participate in the Aizu training camp, has a poor\
+  \ house and does not have much money. Therefore, he is trying to save money by using\
+  \ the Seishun 18 Ticket. With only one 18 ticket, you can ride a local train all\
+  \ day long, and you can enter and exit the ticket gates freely (detailed usage rules\
+  \ are omitted).\n\nThe attraction of the 18 Ticket is that you can use your spare\
+  \ time to see local souvenirs at the station where you change trains. She wants\
+  \ to visit various stations during her trip because it is a great opportunity. However,\
+  \ since I don't want to miss the next train, I decided to look around the station\
+  \ only when the time between the time I arrived at the transfer station and the\
+  \ time I left the transfer station was T minutes or more.\n\nYou will be given a\
+  \ transfer plan using Mr. Takatsuki's 18 ticket, so output the name and time of\
+  \ the station you can look around. Please note that the station that departs first\
+  \ and the station that arrives last are not candidates for exploration.\n\nConstraints\n\
+  \n* 1 <= N <= 10\n* 1 <= T <= 180\n* st_timei, ar_timei\n* Represented by \"HH:\
+  \ MM\", HH is 00 or more and 23 or less, and MM is 00 or more and 59 or less. HH\
+  \ is hours and MM is minutes.\n* 00:00 <= st_time1 <ar_time1 <st_time2 <ar_time2\
+  \ <... <st_timeN <ar_timeN <= 23:59\n* st_namei, ar_namei\n* A character string\
+  \ represented by uppercase and lowercase letters.\n* 1 <= string length <= 50\n\
+  * The names of the i-th arrival station ar_namei and the i + 1th departure station\
+  \ st_namei + 1 match.\n* The names of st_name1, ar_nameN, and the transfer station\
+  \ are different character strings.\n\nInput\n\nEach data set is input in the following\
+  \ format.\n\n\nN T\nst_time1 st_name1 ar_time1 ar_name1\nst_time2 st_name2 ar_time2\
+  \ ar_name2\n...\nst_timeN st_nameN ar_timeN ar_nameN\n\n\nN is an integer representing\
+  \ the number of times the train is boarded, and T is an integer representing the\
+  \ permissible time (minutes) to see the transfer station. Subsequently, train departure\
+  \ and arrival pairs are given over N lines. The input of each line means that the\
+  \ train that Mr. Takatsuki rides departs from the station of st_namei at the time\
+  \ of st_timei, and that the train that Mr. Takatsuki rides arrives at the station\
+  \ of ar_namei at the time of ar_timei.\n\nOutput\n\nOutput in the following format\
+  \ for each data set.\n\n\nM\nstay_name1 stay_time1\nstay_name2 stay_time2\n...\n\
+  stay_nameM stay_timeM\n\n\nM (0 <= M <= N -1) is an integer that represents the\
+  \ number of stations you can look around. Then, over M lines, a list of stations\
+  \ that can be visited is output in ascending order of time. Each line means that\
+  \ you can walk around the station of stay_namei for stay_timei minutes.\n\nExamples\n\
+  \nInput\n\nN T\nst_time1 st_name1 ar_time1 ar_name1\nst_time2 st_name2 ar_time2\
+  \ ar_name2\n...\nst_timeN st_nameN ar_timeN ar_nameN\n\n\nOutput\n\n2\nKanazawa\
+  \ 55\nNiitsu 24\n\n\nInput\n\n8 24\n05:30 Kyoto 06:37 Maibara\n06:50 Maibara 07:36\
+  \ Tsuruga\n07:42 Tsuruga 10:03 Kanazawa\n10:58 Kanazawa 12:07 Toyama\n12:15 Toyama\
+  \ 14:12 Naoetsu\n14:29 Naoetsu 15:57 Nagaoka\n16:11 Nagaoka 17:14 Niitsu\n17:38\
+  \ Niitsu 20:06 AizuWakamatsu\n\n\nOutput\n\n2\nKanazawa 55\nNiitsu 24\n\n\nInput\n\
+  \n1 180\n10:44 Koriyama 11:52 AizuWakamatsu\n\n\nOutput\n\n0\nA: ```N,T=map(int,input().split())\n\
+  a,b,s,name1=input().split()\ndef func(s):\n    a=s[:2]\n    b=s[3:]\n    return\
+  \ int(a)*60+int(b)\ns=func(s)\nl=[]\nfor i in range(N-1):\n    t,name1,s2,name2=input().split()\n\
+  \    t=func(t)\n    s2=func(s2)\n    if t-s>=T:\n        l.append([name1,t-s])\n\
+  \    s=s2\nprint(len(l))\nfor i,j in l:\n    print(i,j)```\nQ: Write python code\
+  \ to solve the following coding problem that obeys the constraints and passes the\
+  \ example test cases. The output code needs to read from and write to standard IO.\
+  \ Please wrap your code answer using ```:\nPolycarp had an array a of 3 positive\
+  \ integers. He wrote out the sums of all non-empty subsequences of this array, sorted\
+  \ them in non-decreasing order, and got an array b of 7 integers.\n\nFor example,\
+  \ if a = \\{1, 4, 3\\}, then Polycarp wrote out 1, 4, 3, 1 + 4 = 5, 1 + 3 = 4, 4\
+  \ + 3 = 7, 1 + 4 + 3 = 8. After sorting, he got an array b = \\{1, 3, 4, 4, 5, 7,\
+  \ 8\\}.\n\nUnfortunately, Polycarp lost the array a. He only has the array b left.\
+  \ Help him to restore the array a.\n\nInput\n\nThe first line contains one integer\
+  \ t (1 \u2264 t \u2264 5000) \u2014 the number of test cases.\n\nEach test case\
+  \ consists of one line which contains 7 integers b_1, b_2, ..., b_7 (1 \u2264 b_i\
+  \ \u2264 10^9; b_i \u2264 b_{i+1}). \n\nAdditional constraint on the input: there\
+  \ exists at least one array a which yields this array b as described in the statement.\n\
+  \nOutput\n\nFor each test case, print 3 integers \u2014 a_1, a_2 and a_3. If there\
+  \ can be several answers, print any of them.\n\nExample\n\nInput\n\n\n5\n1 3 4 4\
+  \ 5 7 8\n1 2 3 4 5 6 7\n300000000 300000000 300000000 600000000 600000000 600000000\
+  \ 900000000\n1 1 2 999999998 999999999 999999999 1000000000\n1 2 2 3 3 4 5\n\n\n\
+  Output\n\n\n1 4 3\n4 1 2\n300000000 300000000 300000000\n999999998 1 1\n1 2 2\n\n\
+  Note\n\nThe subsequence of the array a is a sequence that can be obtained from a\
+  \ by removing zero or more of its elements.\n\nTwo subsequences are considered different\
+  \ if index sets of elements included in them are different. That is, the values\
+  \ of the elements don't matter in the comparison of subsequences. In particular,\
+  \ any array of length 3 has exactly 7 different non-empty subsequences.\nA:"
+question: "Polycarp had an array a of 3 positive integers. He wrote out the sums of\
+  \ all non-empty subsequences of this array, sorted them in non-decreasing order,\
+  \ and got an array b of 7 integers.\n\nFor example, if a = \\{1, 4, 3\\}, then Polycarp\
+  \ wrote out 1, 4, 3, 1 + 4 = 5, 1 + 3 = 4, 4 + 3 = 7, 1 + 4 + 3 = 8. After sorting,\
+  \ he got an array b = \\{1, 3, 4, 4, 5, 7, 8\\}.\n\nUnfortunately, Polycarp lost\
+  \ the array a. He only has the array b left. Help him to restore the array a.\n\n\
+  Input\n\nThe first line contains one integer t (1 \u2264 t \u2264 5000) \u2014 the\
+  \ number of test cases.\n\nEach test case consists of one line which contains 7\
+  \ integers b_1, b_2, ..., b_7 (1 \u2264 b_i \u2264 10^9; b_i \u2264 b_{i+1}). \n\
+  \nAdditional constraint on the input: there exists at least one array a which yields\
+  \ this array b as described in the statement.\n\nOutput\n\nFor each test case, print\
+  \ 3 integers \u2014 a_1, a_2 and a_3. If there can be several answers, print any\
+  \ of them.\n\nExample\n\nInput\n\n\n5\n1 3 4 4 5 7 8\n1 2 3 4 5 6 7\n300000000 300000000\
+  \ 300000000 600000000 600000000 600000000 900000000\n1 1 2 999999998 999999999 999999999\
+  \ 1000000000\n1 2 2 3 3 4 5\n\n\nOutput\n\n\n1 4 3\n4 1 2\n300000000 300000000 300000000\n\
+  999999998 1 1\n1 2 2\n\nNote\n\nThe subsequence of the array a is a sequence that\
+  \ can be obtained from a by removing zero or more of its elements.\n\nTwo subsequences\
+  \ are considered different if index sets of elements included in them are different.\
+  \ That is, the values of the elements don't matter in the comparison of subsequences.\
+  \ In particular, any array of length 3 has exactly 7 different non-empty subsequences."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    b = list(map(int, input().split()))\n\
+  \    a = [0, 0, 0]\n    for i in range(3):\n        a[i] = sum(b[i:i+3])\n    print(*a)```\n\
+  Q:"
+- " ```t=int(input())\nfor _ in range(t):\n    b=list(map(int,input().split()))\n\
+  \    a1=a2=a3=0\n    for i in range(1,7):\n        a1+=b[i-1]\n    for i in range(1,6):\n\
+  \        a2+=b[i-1]\n    a3=b[-1]\n    print(a1,a2,a3)```\nQ:"
+test_cases:
+  input:
+  - '5
+
+    1 3 4 4 5 7 8
+
+    1 2 3 4 5 6 7
+
+    300000000 300000000 300000000 600000000 600000000 600000000 900000000
+
+    1 1 2 999999998 999999999 999999999 1000000000
+
+    1 2 2 3 3 4 5
+
+    '
+  - '1
+
+    69696868 69696868 69696868 139393736 139393736 139393736 209090604
+
+    '
+  - '2
+
+    1 1 2 69696874 69696875 69696875 69696876
+
+    1 1 1 2 2 2 3
+
+    '
+  - '1
+
+    1 1 2 69696880 69696881 69696881 69696882
+
+    '
+  - '2
+
+    1 1 2 69696967 69696968 69696968 69696969
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696868 69696869 69696869 69696870
+
+    1 2 3 4 5 6 7
+
+    '
+  - '2
+
+    1 1 2 696967 696968 696968 696969
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696873 69696874 69696874 69696875
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696889 69696890 69696890 69696891
+
+    1 1 1 2 2 2 3
+
+    '
+  - '1
+
+    1 2 3 69696875 69696876 69696877 69696878
+
+    '
+  - '2
+
+    1 1 2 69696870 69696871 69696871 69696872
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696881 69696882 69696882 69696883
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 598989 598990 598990 598991
+
+    1 3 4 4 5 7 8
+
+    '
+  - '2
+
+    1 1 2 69696875 69696876 69696876 69696877
+
+    1 1 1 2 2 2 3
+
+    '
+  - '1
+
+    1 1 2 69696884 69696885 69696885 69696886
+
+    '
+  - '1
+
+    1 1 2 69696883 69696884 69696884 69696885
+
+    '
+  - '2
+
+    1 1 2 69696885 69696886 69696886 69696887
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696879 69696880 69696880 69696881
+
+    1 1 1 2 2 2 3
+
+    '
+  - '5
+
+    1 3 4 4 5 7 8
+
+    1 2 3 4 5 6 7
+
+    300000000 300000000 300000000 600000000 600000000 600000000 900000000
+
+    1 1 2 999999998 999999999 999999999 1000000000
+
+    1 2 2 3 3 4 5
+
+    '
+  - '2
+
+    1 1 2 69696886 69696887 69696887 69696888
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696869 69696870 69696870 69696871
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696887 69696888 69696888 69696889
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696877 69696878 69696878 69696879
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696871 69696872 69696872 69696873
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696882 69696883 69696883 69696884
+
+    1 1 1 2 2 2 3
+
+    '
+  - '1
+
+    1 2 3 69696887 69696888 69696889 69696890
+
+    '
+  - '2
+
+    1 1 2 69696872 69696873 69696873 69696874
+
+    1 1 1 2 2 2 3
+
+    '
+  - '2
+
+    1 1 2 69696878 69696879 69696879 69696880
+
+    1 1 1 2 2 2 3
+
+    '
+  output:
+  - '1 3 4
+
+    1 2 4
+
+    300000000 300000000 300000000
+
+    1 1 999999998
+
+    1 2 2
+
+    '
+  - "69696868 69696868 69696868 \n"
+  - '1 1 69696874
+
+    1 1 1
+
+    '
+  - '1 1 69696880
+
+    '
+  - '1 1 69696967
+
+    1 1 1
+
+    '
+  - '1 1 69696868
+
+    1 2 4
+
+    '
+  - '1 1 696967
+
+    1 1 1
+
+    '
+  - '1 1 69696873
+
+    1 1 1
+
+    '
+  - '1 1 69696889
+
+    1 1 1
+
+    '
+  - '1 2 69696875
+
+    '
+  - '1 1 69696870
+
+    1 1 1
+
+    '
+  - '1 1 69696881
+
+    1 1 1
+
+    '
+  - '1 1 598989
+
+    1 3 4
+
+    '
+  - '1 1 69696875
+
+    1 1 1
+
+    '
+  - '1 1 69696884
+
+    '
+  - '1 1 69696883
+
+    '
+  - '1 1 69696885
+
+    1 1 1
+
+    '
+  - '1 1 69696879
+
+    1 1 1
+
+    '
+  - '1 3 4
+
+    1 2 4
+
+    300000000 300000000 300000000
+
+    1 1 999999998
+
+    1 2 2
+
+    '
+  - '1 1 69696886
+
+    1 1 1
+
+    '
+  - '1 1 69696869
+
+    1 1 1
+
+    '
+  - '1 1 69696887
+
+    1 1 1
+
+    '
+  - '1 1 69696877
+
+    1 1 1
+
+    '
+  - '1 1 69696871
+
+    1 1 1
+
+    '
+  - '1 1 69696882
+
+    1 1 1
+
+    '
+  - '1 2 69696887
+
+    '
+  - '1 1 69696872
+
+    1 1 1
+
+    '
+  - '1 1 69696878
+
+    1 1 1
+
+    '
+timeout: 1.0

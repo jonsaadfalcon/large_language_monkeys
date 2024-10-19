@@ -1,0 +1,3782 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nIt is said\
+  \ that a legendary treasure left by Mr. Yao is sleeping somewhere in Hachioji long\
+  \ ago. The treasure map, which is said to show its whereabouts, has been handed\
+  \ down by Yao's n descendants, divided into several pieces.\n\nNow, the descendants\
+  \ of Mr. Yao were trying to cooperate to obtain the treasure. However, the treasure\
+  \ cannot be found only by a part of the treasure map that points to the location\
+  \ of the treasure. Therefore, all the descendants of Mr. Yao gathered and tried\
+  \ to collect the map in one place. However, even if I tried to put it into practice,\
+  \ I couldn't get together because I couldn't meet the schedule. However, this information\
+  \ about the treasure is valuable information that has been secretly passed down\
+  \ in the clan. Considering the risk of leakage, exchanging maps using public communication\
+  \ means is out of the question.\n\nTherefore, I decided to collect the map for one\
+  \ descendant by repeating the process of meeting the descendants in person and handing\
+  \ over the map. There is no limit to the number of people that one person can meet\
+  \ in a day, but it is necessary that there is a schedule for each other.\n\nYour\
+  \ job is to write a program that asks for at least how many days it will take to\
+  \ collect a map from a list of open days on schedule for each offspring.\n\nBy the\
+  \ way, the unity of the Yao clan is very tight. If the descendants who finally get\
+  \ the entire map betray the other descendants and take away the treasure, they will\
+  \ be sanctioned by the clan. The sanctions are so horrifying that it is virtually\
+  \ impossible for their descendants to actually carry away the treasure.\n\n\n\n\
+  Input\n\nThe input consists of multiple datasets.\n\nEach dataset consists of multiple\
+  \ rows. The first line contains the integer n (1 <n <= 50), which represents the\
+  \ number of people with a piece of the map. The next n lines contain the schedule\
+  \ for each descendant. Line i represents the schedule of the i-th descendant, with\
+  \ some integers separated by a single character space. The first integer fi (0 <=\
+  \ fi <= 30) is an integer that represents the number of days that the descendant's\
+  \ schedule is free. The following fi integers represent dates when the schedule\
+  \ is free. These dates differ from each other and are all greater than or equal\
+  \ to 1 and less than or equal to 30.\n\nThere is one line containing only 0 at the\
+  \ end of the input.\n\nOutput\n\nPrint one integer on one line for each dataset.\
+  \ If you can collect the map within 30 days, output the minimum number of days required\
+  \ to collect the map, otherwise output -1.\n\nAddendum: The above \"minimum number\
+  \ of days required to collect maps\" means the date when all maps are collected\
+  \ earliest starting from one day.\n\nExample\n\nInput\n\n4\n1 1\n2 2 3\n2 1 2\n\
+  3 3 4 5\n0\n\n\nOutput\n\n3\nA: ```while True:\n  n = int(input())\n  if n == 0:\n\
+  \    break\n  days = [[] for _ in range(31)]\n  for i in range(n):\n    hima = list(map(int,\
+  \ input().split()))\n    for d in hima[1:]:\n      days[d].append(i)\n  \n  tos\
+  \ = [{i} for i in range(n)]\n  end = {i for i in range(n)}\n  for i in range(31):\n\
+  \    gather = set()\n    for to in days[i]:\n      gather = gather | tos[to]\n \
+  \   if gather == end:\n      print(i)\n      break\n    for to in days[i]:\n   \
+  \   tos[to] = gather\n  else:\n    print(-1)```\nQ: Write python code to solve the\
+  \ following coding problem that obeys the constraints and passes the example test\
+  \ cases. The output code needs to read from and write to standard IO. Please wrap\
+  \ your code answer using ```:\nWord s of length n is called k-complete if \n\n \
+  \ * s is a palindrome, i.e. s_i=s_{n+1-i} for all 1 \u2264 i \u2264 n; \n  * s has\
+  \ a period of k, i.e. s_i=s_{k+i} for all 1 \u2264 i \u2264 n-k. \n\n\n\nFor example,\
+  \ \"abaaba\" is a 3-complete word, while \"abccba\" is not.\n\nBob is given a word\
+  \ s of length n consisting of only lowercase Latin letters and an integer k, such\
+  \ that n is divisible by k. He wants to convert s to any k-complete word.\n\nTo\
+  \ do this Bob can choose some i (1 \u2264 i \u2264 n) and replace the letter at\
+  \ position i with some other lowercase Latin letter.\n\nSo now Bob wants to know\
+  \ the minimum number of letters he has to replace to convert s to any k-complete\
+  \ word.\n\nNote that Bob can do zero changes if the word s is already k-complete.\n\
+  \nYou are required to answer t test cases independently.\n\nInput\n\nThe first line\
+  \ contains a single integer t (1 \u2264 t\u2264 10^5) \u2014 the number of test\
+  \ cases.\n\nThe first line of each test case contains two integers n and k (1 \u2264\
+  \ k < n \u2264 2 \u22C5 10^5, n is divisible by k).\n\nThe second line of each test\
+  \ case contains a word s of length n.\n\nIt is guaranteed that word s only contains\
+  \ lowercase Latin letters. And it is guaranteed that the sum of n over all test\
+  \ cases will not exceed 2 \u22C5 10^5.\n\nOutput\n\nFor each test case, output one\
+  \ integer, representing the minimum number of characters he has to replace to convert\
+  \ s to any k-complete word.\n\nExample\n\nInput\n\n\n4\n6 2\nabaaba\n6 3\nabaaba\n\
+  36 9\nhippopotomonstrosesquippedaliophobia\n21 7\nwudixiaoxingxingheclp\n\n\nOutput\n\
+  \n\n2\n0\n23\n16\n\nNote\n\nIn the first test case, one optimal solution is aaaaaa.\n\
+  \nIn the second test case, the given word itself is k-complete.\nA: ```import sys\n\
+  input=sys.stdin.readline\nt=int(input())\ndef find(no):\n    global par\n    if\
+  \ par[no]==no:\n        return no\n    par[no]=find(par[no])\n    return par[no]\n\
+  for _ in range(t):\n    n,k=map(int,input().split())\n    s=[ord(i)-97 for i in\
+  \ input()]\n    \n    par=[i for i in range(n)]\n    vis=[0 for i in range(n)]\n\
+  \    for i in range(k):\n        for j in range(i,n,k):\n        \n            vis[j]=1\n\
+  \            x=n-j-1\n            aa=find(x)\n            bb=find(j)\n         \
+  \   par[bb]=aa\n            if(j>i):\n                aa=find(j-k)\n           \
+  \     bb=find(j)\n                par[bb]=aa\n    tot=n\n    aa=set(par)\n    co=[[0\
+  \ for i in range(26)] for j in range(n)]\n   # print(par)\n    for i in range(n):\n\
+  \        co[par[i]][s[i]]+=1\n    tot-=sum([max(i) for i in co])\n    print(tot)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nA string is called square\
+  \ if it is some string written twice in a row. For example, the strings \"aa\",\
+  \ \"abcabc\", \"abab\" and \"baabaa\" are square. But the strings \"aaa\", \"abaaab\"\
+  \ and \"abcdabc\" are not square.\n\nFor a given string s determine if it is square.\n\
+  \nInput\n\nThe first line of input data contains an integer t (1 \u2264 t \u2264\
+  \ 100) \u2014the number of test cases.\n\nThis is followed by t lines, each containing\
+  \ a description of one test case. The given strings consist only of lowercase Latin\
+  \ letters and have lengths between 1 and 100 inclusive.\n\nOutput\n\nFor each test\
+  \ case, output on a separate line:\n\n  * YES if the string in the corresponding\
+  \ test case is square, \n  * NO otherwise. \n\n\n\nYou can output YES and NO in\
+  \ any case (for example, strings yEs, yes, Yes and YES will be recognized as a positive\
+  \ response).\n\nExample\n\nInput\n\n\n10\na\naa\naaa\naaaa\nabab\nabcabc\nabacaba\n\
+  xxyy\nxyyx\nxyxy\n\n\nOutput\n\n\nNO\nYES\nNO\nYES\nYES\nYES\nNO\nNO\nNO\nYES\n\
+  A:"
+question: "A string is called square if it is some string written twice in a row.\
+  \ For example, the strings \"aa\", \"abcabc\", \"abab\" and \"baabaa\" are square.\
+  \ But the strings \"aaa\", \"abaaab\" and \"abcdabc\" are not square.\n\nFor a given\
+  \ string s determine if it is square.\n\nInput\n\nThe first line of input data contains\
+  \ an integer t (1 \u2264 t \u2264 100) \u2014the number of test cases.\n\nThis is\
+  \ followed by t lines, each containing a description of one test case. The given\
+  \ strings consist only of lowercase Latin letters and have lengths between 1 and\
+  \ 100 inclusive.\n\nOutput\n\nFor each test case, output on a separate line:\n\n\
+  \  * YES if the string in the corresponding test case is square, \n  * NO otherwise.\
+  \ \n\n\n\nYou can output YES and NO in any case (for example, strings yEs, yes,\
+  \ Yes and YES will be recognized as a positive response).\n\nExample\n\nInput\n\n\
+  \n10\na\naa\naaa\naaaa\nabab\nabcabc\nabacaba\nxxyy\nxyyx\nxyxy\n\n\nOutput\n\n\n\
+  NO\nYES\nNO\nYES\nYES\nYES\nNO\nNO\nNO\nYES"
+samples:
+- " ```while True:\n    t=int(input())\n    if t==0:\n        break\n    for _ in\
+  \ range(t):\n        s=input().strip()\n        if len(s)<2:\n            print(\"\
+  NO\")\n        else:\n            if s==s[::-1]:\n                print(\"YES\"\
+  )\n            else:\n                print(\"NO\")```\nQ:"
+- " ```t=int(input())\nfor _ in range(t):\n    s=input()\n    if s==s[::-1]+s[::-1]:\n\
+  \        print(\"YES\")\n    else:\n        print(\"NO\")```\nQ:"
+test_cases:
+  input:
+  - '10
+
+    a
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    xxyy
+
+    xyyx
+
+    xyxy
+
+    '
+  - '1
+
+    acascnakcn
+
+    '
+  - '1
+
+    ababab
+
+    '
+  - '1
+
+    zz
+
+    '
+  - '1
+
+    acascnajcn
+
+    '
+  - '10
+
+    a
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xyyx
+
+    xyxy
+
+    '
+  - '1
+
+    {{
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xyxx
+
+    xyxz
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xyxx
+
+    xyxz
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abc`bc
+
+    abacaba
+
+    yxxy
+
+    xyxx
+
+    xyxz
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abacbaa
+
+    xyxy
+
+    xyxw
+
+    zxyx
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abacbaa
+
+    yxyx
+
+    xyxw
+
+    zxyx
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zxyx
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    _aba
+
+    abbb
+
+    cca`ba
+
+    abacbca
+
+    xyxx
+
+    xwyv
+
+    yzxy
+
+    '
+  - '10
+
+    d
+
+    `c
+
+    bab
+
+    caa_
+
+    baba
+
+    ccabc`
+
+    _baceac
+
+    wxxy
+
+    wuwy
+
+    w|wz
+
+    '
+  - '1
+
+    `babab
+
+    '
+  - '1
+
+    z{
+
+    '
+  - '1
+
+    acascankcn
+
+    '
+  - '1
+
+    `babbb
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xyyx
+
+    xyxy
+
+    '
+  - '1
+
+    acbscankcn
+
+    '
+  - '1
+
+    _babbb
+
+    '
+  - '1
+
+    {|
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xxyx
+
+    xyxy
+
+    '
+  - '1
+
+    acbscakncn
+
+    '
+  - '1
+
+    _baabb
+
+    '
+  - '1
+
+    |{
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    aaaa
+
+    abab
+
+    abcabc
+
+    abacaba
+
+    yxxy
+
+    xyxx
+
+    xyxy
+
+    '
+  - '1
+
+    abbscakncn
+
+    '
+  - '1
+
+    ^baabb
+
+    '
+  - '1
+
+    ||
+
+    '
+  - '1
+
+    abbscakmcn
+
+    '
+  - '1
+
+    ^baacb
+
+    '
+  - '1
+
+    z|
+
+    '
+  - '1
+
+    ncmkacsbba
+
+    '
+  - '1
+
+    ^b`acb
+
+    '
+  - '1
+
+    |z
+
+    '
+  - '1
+
+    ncmkacsbca
+
+    '
+  - '1
+
+    bca`b^
+
+    '
+  - '1
+
+    z}
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abc`bc
+
+    abacaba
+
+    yxxy
+
+    xyxx
+
+    xyxz
+
+    '
+  - '1
+
+    ncmlacsbca
+
+    '
+  - '1
+
+    bca`b_
+
+    '
+  - '1
+
+    }z
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abc`bc
+
+    abacaba
+
+    yxxy
+
+    xyxw
+
+    xyxz
+
+    '
+  - '1
+
+    ccmlansbca
+
+    '
+  - '1
+
+    `cabb_
+
+    '
+  - '1
+
+    {}
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abc`bc
+
+    abacaaa
+
+    yxxy
+
+    xyxw
+
+    xyxz
+
+    '
+  - '1
+
+    ccmlamsbca
+
+    '
+  - '1
+
+    _bbac`
+
+    '
+  - '1
+
+    {z
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    abc`bc
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    xyxz
+
+    '
+  - '1
+
+    bcmlamsbca
+
+    '
+  - '1
+
+    `bbac`
+
+    '
+  - '1
+
+    yz
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    aac`bc
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    xyxz
+
+    '
+  - '1
+
+    bcmlamsbda
+
+    '
+  - '1
+
+    `cabb`
+
+    '
+  - '1
+
+    zy
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    abaa
+
+    abab
+
+    aac`bc
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bcmlaasbdm
+
+    '
+  - '1
+
+    `cabc`
+
+    '
+  - '1
+
+    zx
+
+    '
+  - '10
+
+    c
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    aac`bc
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    mdbsaalmcb
+
+    '
+  - '1
+
+    _cabc`
+
+    '
+  - '1
+
+    xz
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    aac`bc
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    mdbsaakmcb
+
+    '
+  - '1
+
+    _cbbc`
+
+    '
+  - '1
+
+    yy
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abacbaa
+
+    yxxy
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    mdbsaajmcb
+
+    '
+  - '1
+
+    _cbbd`
+
+    '
+  - '1
+
+    y{
+
+    '
+  - '1
+
+    bcmjaasbdm
+
+    '
+  - '1
+
+    `dbbc_
+
+    '
+  - '1
+
+    y|
+
+    '
+  - '10
+
+    b
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abacbaa
+
+    yxyx
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bbmjaasbdm
+
+    '
+  - '1
+
+    `dbbb_
+
+    '
+  - '1
+
+    x|
+
+    '
+  - '10
+
+    a
+
+    aa
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abacbaa
+
+    yxyx
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdmjaasbbm
+
+    '
+  - '1
+
+    adbbb_
+
+    '
+  - '1
+
+    x}
+
+    '
+  - '1
+
+    bdmj`asbbm
+
+    '
+  - '1
+
+    a_bbbd
+
+    '
+  - '1
+
+    w}
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abbcbaa
+
+    yxyx
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdmj`ascbm
+
+    '
+  - '1
+
+    a_cbbd
+
+    '
+  - '1
+
+    }w
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`cab
+
+    abbcbaa
+
+    yxyx
+
+    xyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdma`jscbm
+
+    '
+  - '1
+
+    a_cbcd
+
+    '
+  - '1
+
+    }x
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`cab
+
+    abbcbaa
+
+    yxyx
+
+    wyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdm`ajscbm
+
+    '
+  - '1
+
+    a_cbcc
+
+    '
+  - '1
+
+    y}
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abbcbaa
+
+    yxyx
+
+    wyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdm`ajscbl
+
+    '
+  - '1
+
+    a_cbbc
+
+    '
+  - '1
+
+    }y
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    abab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zxyx
+
+    '
+  - '1
+
+    bdl`ajscbl
+
+    '
+  - '1
+
+    a_cabc
+
+    '
+  - '1
+
+    ~y
+
+    '
+  - '1
+
+    bbl`ajscdl
+
+    '
+  - '1
+
+    a`cabc
+
+    '
+  - '1
+
+    y~
+
+    '
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    ab`a
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zyxx
+
+    '
+  - '1
+
+    ldcsja`lbb
+
+    '
+  - '1
+
+    a`cbbc
+
+    '
+  - "1\ny\x7F\n"
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zyxx
+
+    '
+  - '1
+
+    ldcrja`lbb
+
+    '
+  - '1
+
+    aacbbc
+
+    '
+  - "1\n\x7Fy\n"
+  - '10
+
+    a
+
+    ba
+
+    aaa
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zyxy
+
+    '
+  - '1
+
+    ldcrja`lab
+
+    '
+  - '1
+
+    aacbbb
+
+    '
+  - "1\nx\x7F\n"
+  - '10
+
+    a
+
+    b`
+
+    aaa
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zyxy
+
+    '
+  - '1
+
+    lddrja`lab
+
+    '
+  - '1
+
+    aadbbb
+
+    '
+  - '1
+
+    x~
+
+    '
+  - '10
+
+    a
+
+    b`
+
+    aa`
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    zyxy
+
+    '
+  - '1
+
+    bal`ajrddl
+
+    '
+  - '1
+
+    aaebbb
+
+    '
+  - '1
+
+    z~
+
+    '
+  - '10
+
+    a
+
+    b`
+
+    aa`
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    cal`ajrddl
+
+    '
+  - '1
+
+    aaebab
+
+    '
+  - '1
+
+    ~z
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    aa`
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    lddrja`lac
+
+    '
+  - '1
+
+    babeaa
+
+    '
+  - "1\nz\x7F\n"
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    mddrja`lac
+
+    '
+  - '1
+
+    aabeaa
+
+    '
+  - "1\n\x7Fz\n"
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a`ba
+
+    baab
+
+    cb`caa
+
+    abbcbba
+
+    yxyx
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    cal`ajrddm
+
+    '
+  - '1
+
+    aaebaa
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a`ba
+
+    baab
+
+    ab`cac
+
+    abbcbba
+
+    yxyx
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    cal`ajqddm
+
+    '
+  - '1
+
+    baebaa
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a`ba
+
+    baab
+
+    cac`ba
+
+    abbcbba
+
+    yxyx
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    cal`aiqddm
+
+    '
+  - '1
+
+    aabeab
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    cac`ba
+
+    abbcbba
+
+    yxyx
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    mddqia`lac
+
+    '
+  - '1
+
+    baebab
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    ab`cac
+
+    abbcbba
+
+    yxyx
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    mcdqia`lad
+
+    '
+  - '1
+
+    bafbab
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    ab`cac
+
+    abbcbba
+
+    xyxy
+
+    wyyw
+
+    yzxy
+
+    '
+  - '1
+
+    mcdqia`mad
+
+    '
+  - '1
+
+    bagbab
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    ab`cac
+
+    abbcbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    dam`aiqdcm
+
+    '
+  - '1
+
+    bagbaa
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    cac`ba
+
+    abbcbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    d`m`aiqdcm
+
+    '
+  - '1
+
+    aagbba
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    cca`ba
+
+    abbcbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    d`c`aiqdmm
+
+    '
+  - '1
+
+    a`gbba
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    baab
+
+    cca`ba
+
+    abbcbba
+
+    xyxy
+
+    wxyw
+
+    yzxy
+
+    '
+  - '1
+
+    d`b`aiqdmm
+
+    '
+  - '1
+
+    a`gbb`
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abbcbba
+
+    xyxy
+
+    wxyw
+
+    yzxy
+
+    '
+  - '1
+
+    m`b`aiqddm
+
+    '
+  - '1
+
+    a`gb`b
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abbcbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    m`c`aiqddm
+
+    '
+  - '1
+
+    a`hb`b
+
+    '
+  - '10
+
+    b
+
+    b`
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abacbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    mac`aiqddm
+
+    '
+  - '1
+
+    b`hb`b
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abacbba
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    nac`aiqddm
+
+    '
+  - '1
+
+    a`hbab
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    wyxw
+
+    yzxy
+
+    '
+  - '1
+
+    mddqia`can
+
+    '
+  - '1
+
+    a_hbab
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abab
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    wxyw
+
+    yzxy
+
+    '
+  - '1
+
+    addqia`cmn
+
+    '
+  - '1
+
+    babh_a
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abbb
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    wxyw
+
+    yzxy
+
+    '
+  - '1
+
+    addqia`cnn
+
+    '
+  - '1
+
+    babh^a
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abbb
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    wxyv
+
+    yzxy
+
+    '
+  - '1
+
+    nnc`aiqdda
+
+    '
+  - '1
+
+    bbbh^a
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    a_ba
+
+    abbb
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    xwyv
+
+    yzxy
+
+    '
+  - '1
+
+    nnc`ajqdda
+
+    '
+  - '1
+
+    abbh^b
+
+    '
+  - '10
+
+    b
+
+    `b
+
+    a``
+
+    _aba
+
+    abbb
+
+    cca`ba
+
+    abacbca
+
+    xyxy
+
+    xwyv
+
+    yzxy
+
+    '
+  - '1
+
+    addqja`cnn
+
+    '
+  output:
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+timeout: 1.0

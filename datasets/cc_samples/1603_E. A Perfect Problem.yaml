@@ -1,0 +1,1275 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nIT City company\
+  \ developing computer games decided to upgrade its way to reward its employees.\
+  \ Now it looks the following way. After a new game release users start buying it\
+  \ actively, and the company tracks the number of sales with precision to each transaction.\
+  \ Every time when the next number of sales is not divisible by any number from 2\
+  \ to 10 every developer of this game gets a small bonus.\n\nA game designer Petya\
+  \ knows that the company is just about to release a new game that was partly developed\
+  \ by him. On the basis of his experience he predicts that n people will buy the\
+  \ game during the first month. Now Petya wants to determine how many times he will\
+  \ get the bonus. Help him to know it.\n\nInput\n\nThe only line of the input contains\
+  \ one integer n (1 \u2264 n \u2264 1018) \u2014 the prediction on the number of\
+  \ people who will buy the game.\n\nOutput\n\nOutput one integer showing how many\
+  \ numbers from 1 to n are not divisible by any number from 2 to 10.\n\nExamples\n\
+  \nInput\n\n12\n\n\nOutput\n\n2\nA: ```def precalc(st, end):\n    count = 0\n   \
+  \ for i in range(st, end + 1):\n        if not any(i % k == 0 for k in [2,3,5,7]):\n\
+  \            count += 1\n    return count\n\nn = int(input())\n\nbuckets = 2*3*4*5*6*7\n\
+  \nc = int(n / buckets)\n\nres = c * precalc(1, buckets) + precalc(c * buckets+1,\
+  \ n)\n\nprint(res)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nThis problem consists of three subproblems: for solving subproblem C1 you\
+  \ will receive 4 points, for solving subproblem C2 you will receive 4 points, and\
+  \ for solving subproblem C3 you will receive 8 points.\n\nManao decided to pursue\
+  \ a fighter's career. He decided to begin with an ongoing tournament. Before Manao\
+  \ joined, there were n contestants in the tournament, numbered from 1 to n. Each\
+  \ of them had already obtained some amount of tournament points, namely the i-th\
+  \ fighter had pi points.\n\nManao is going to engage in a single fight against each\
+  \ contestant. Each of Manao's fights ends in either a win or a loss. A win grants\
+  \ Manao one point, and a loss grants Manao's opponent one point. For each i, Manao\
+  \ estimated the amount of effort ei he needs to invest to win against the i-th contestant.\
+  \ Losing a fight costs no effort.\n\nAfter Manao finishes all of his fights, the\
+  \ ranklist will be determined, with 1 being the best rank and n + 1 being the worst.\
+  \ The contestants will be ranked in descending order of their tournament points.\
+  \ The contestants with the same number of points as Manao will be ranked better\
+  \ than him if they won the match against him and worse otherwise. The exact mechanism\
+  \ of breaking ties for other fighters is not relevant here.\n\nManao's objective\
+  \ is to have rank k or better. Determine the minimum total amount of effort he needs\
+  \ to invest in order to fulfill this goal, if it is possible.\n\nInput\n\nThe first\
+  \ line contains a pair of integers n and k (1 \u2264 k \u2264 n + 1). The i-th of\
+  \ the following n lines contains two integers separated by a single space \u2014\
+  \ pi and ei (0 \u2264 pi, ei \u2264 200000).\n\nThe problem consists of three subproblems.\
+  \ The subproblems have different constraints on the input. You will get some score\
+  \ for the correct submission of the subproblem. The description of the subproblems\
+  \ follows.\n\n  * In subproblem C1 (4 points), the constraint 1 \u2264 n \u2264\
+  \ 15 will hold. \n  * In subproblem C2 (4 points), the constraint 1 \u2264 n \u2264\
+  \ 100 will hold. \n  * In subproblem C3 (8 points), the constraint 1 \u2264 n \u2264\
+  \ 200000 will hold. \n\nOutput\n\nPrint a single number in a single line \u2014\
+  \ the minimum amount of effort Manao needs to use to rank in the top k. If no amount\
+  \ of effort can earn Manao such a rank, output number -1.\n\nExamples\n\nInput\n\
+  \n3 2\n1 1\n1 4\n2 2\n\n\nOutput\n\n3\n\n\nInput\n\n2 1\n3 2\n4 0\n\n\nOutput\n\n\
+  -1\n\n\nInput\n\n5 2\n2 10\n2 10\n1 1\n3 1\n3 1\n\n\nOutput\n\n12\n\nNote\n\nConsider\
+  \ the first test case. At the time when Manao joins the tournament, there are three\
+  \ fighters. The first of them has 1 tournament point and the victory against him\
+  \ requires 1 unit of effort. The second contestant also has 1 tournament point,\
+  \ but Manao needs 4 units of effort to defeat him. The third contestant has 2 points\
+  \ and victory against him costs Manao 2 units of effort. Manao's goal is top be\
+  \ in top 2. The optimal decision is to win against fighters 1 and 3, after which\
+  \ Manao, fighter 2, and fighter 3 will all have 2 points. Manao will rank better\
+  \ than fighter 3 and worse than fighter 2, thus finishing in second place.\n\nConsider\
+  \ the second test case. Even if Manao wins against both opponents, he will still\
+  \ rank third.\nA: ```m = 301000\nns = [0] * m\nes = [0] * m\nc = [0] * m\nb = [0]\
+  \ * m\nt = [0] * m\nP = 0\n\ndef add(b, k):\n    k = t[k]\n    while k:\n      \
+  \  e = es[k]\n        if b[-1] > e: b[-1] = e\n        b[e] += 1\n        k = ns[k]\n\
+  \ndef delete(b):\n   for i in range(b[m - 1], m + 1):\n       if b[i]:\n       \
+  \    b[i] -= 1\n           b[-1] = i\n           return i\n\ndef calc(k):\n    global\
+  \ b\n    q = 0\n    b = [0] * m\n    b[-1] = m\n    take = rank - dn\n    if take\
+  \ < 0: take = 0\n    add(b, k)\n    add(b, k - 1)\n    for i in range(1, take +\
+  \ 1): q += delete(b)\n    for i in range(k - 1): add(b, i)\n    for i in range(k\
+  \ + 1, P + 1): add(b, i)\n    for i in range(1, k - take + 1): q += delete(b)\n\
+  \    return q\n\nn, k = map(int, input().split())\nrank = n - k + 1\n\nif rank ==\
+  \ 0:\n    print('0')\n    exit(0)\n\nfor i in range(1, n + 1):\n    p, e = map(int,\
+  \ input().split())\n    if p > P: P = p\n    c[p] += 1\n    es[i], ns[i] = e, t[p]\n\
+  \    t[p] = i\n\ndn = 0\nfor i in range(1, n + 1):\n    if i > 1: dn += c[i - 2]\n\
+  \    if c[i] + c[i - 1] + dn >= rank and rank <= i + dn:\n        u = calc(i)\n\
+  \        if i < n:\n            dn += c[i - 1]\n            v = calc(i + 1)\n  \
+  \          if u > v: u = v\n        if i < n - 1:\n            dn += c[i]\n    \
+  \        v = calc(i + 2)\n            if u > v: u = v\n        print(u)\n      \
+  \  exit(0)\n        \nprint('-1')```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nA sequence of integers b_1, b_2, \u2026, b_m is called good\
+  \ if max(b_1, b_2, \u2026, b_m) \u22C5 min(b_1, b_2, \u2026, b_m) \u2265 b_1 + b_2\
+  \ + \u2026 + b_m.\n\nA sequence of integers a_1, a_2, \u2026, a_n is called perfect\
+  \ if every non-empty subsequence of a is good.\n\nYouKn0wWho has two integers n\
+  \ and M, M is prime. Help him find the number, modulo M, of perfect sequences a_1,\
+  \ a_2, \u2026, a_n such that 1 \u2264 a_i \u2264 n + 1 for each integer i from 1\
+  \ to n.\n\nA sequence d is a subsequence of a sequence c if d can be obtained from\
+  \ c by deletion of several (possibly, zero or all) elements.\n\nInput\n\nThe first\
+  \ and only line of the input contains two space-separated integers n and M (1 \u2264\
+  \ n \u2264 200; 10^8 \u2264 M \u2264 10^9). It is guaranteed that M is prime.\n\n\
+  Output\n\nPrint a single integer \u2014 the number of perfect sequences modulo M.\n\
+  \nExamples\n\nInput\n\n\n2 998244353\n\n\nOutput\n\n\n4\n\n\nInput\n\n\n4 100000007\n\
+  \n\nOutput\n\n\n32\n\n\nInput\n\n\n69 999999937\n\n\nOutput\n\n\n456886663\n\nNote\n\
+  \nIn the first test case, the perfect sequences are [2, 2], [2, 3], [3, 2] and [3,\
+  \ 3].\n\nIn the second test case, some of the perfect sequences are [3, 4, 3, 5],\
+  \ [4, 5, 4, 4], [4, 5, 5, 5] etc. One example of a sequence which is not perfect\
+  \ is [2, 3, 3, 4], because, for example, the subsequence [2, 3, 4] is not an good\
+  \ as 2 \u22C5 4 < 2 + 3 + 4.\nA:"
+question: "A sequence of integers b_1, b_2, \u2026, b_m is called good if max(b_1,\
+  \ b_2, \u2026, b_m) \u22C5 min(b_1, b_2, \u2026, b_m) \u2265 b_1 + b_2 + \u2026\
+  \ + b_m.\n\nA sequence of integers a_1, a_2, \u2026, a_n is called perfect if every\
+  \ non-empty subsequence of a is good.\n\nYouKn0wWho has two integers n and M, M\
+  \ is prime. Help him find the number, modulo M, of perfect sequences a_1, a_2, \u2026\
+  , a_n such that 1 \u2264 a_i \u2264 n + 1 for each integer i from 1 to n.\n\nA sequence\
+  \ d is a subsequence of a sequence c if d can be obtained from c by deletion of\
+  \ several (possibly, zero or all) elements.\n\nInput\n\nThe first and only line\
+  \ of the input contains two space-separated integers n and M (1 \u2264 n \u2264\
+  \ 200; 10^8 \u2264 M \u2264 10^9). It is guaranteed that M is prime.\n\nOutput\n\
+  \nPrint a single integer \u2014 the number of perfect sequences modulo M.\n\nExamples\n\
+  \nInput\n\n\n2 998244353\n\n\nOutput\n\n\n4\n\n\nInput\n\n\n4 100000007\n\n\nOutput\n\
+  \n\n32\n\n\nInput\n\n\n69 999999937\n\n\nOutput\n\n\n456886663\n\nNote\n\nIn the\
+  \ first test case, the perfect sequences are [2, 2], [2, 3], [3, 2] and [3, 3].\n\
+  \nIn the second test case, some of the perfect sequences are [3, 4, 3, 5], [4, 5,\
+  \ 4, 4], [4, 5, 5, 5] etc. One example of a sequence which is not perfect is [2,\
+  \ 3, 3, 4], because, for example, the subsequence [2, 3, 4] is not an good as 2\
+  \ \u22C5 4 < 2 + 3 + 4."
+samples:
+- " ```n, M = map(int, input().split())\n\ndef good(b):\n    return max(b) * min(b)\
+  \ >= sum(b)\n\ndef perfect(a):\n    for i in range(1 << len(a)):\n        b = [a[j]\
+  \ for j in range(len(a)) if (i & (1 << j))]\n        if not good(b):\n         \
+  \   return False\n    return True\n\nres = 0\nfor mask in range(1 << n):\n    a\
+  \ = [i + 1 for i in range(n) if (mask & (1 << i))]\n    if perfect(a):\n       \
+  \ res += 1\n\nprint(res % M)```  ```python\n```  ```  ```python  ```  ```python\n\
+  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ``` \
+  \ ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```  ```\
+  \  ```  ```  ```  ```  ```"
+- " ```m = int(input())\nn = int(input())\n MOD = int(1e9 + 7)\n\ndp = [[0]*(n+1)\
+  \ for _ in range(n+1)]\n\nfor i in range(1, n+1):\n    for j in range(1, n+1):\n\
+  \        if i == 1:\n            dp[i][j] = 1\n        elif j == 1:\n          \
+  \  dp[i][j] = 1\n        else:\n            dp[i][j] = (dp[i-1][j-1] + dp[i-1][j]\
+  \ + dp[i][j-1] - dp[i-1][j-1]) % MOD\n\nans = 0\nfor i in range(1, n+1):\n    ans\
+  \ = (ans + dp[i][n+1-i]) % MOD\n\nprint(ans)```\nQ:"
+test_cases:
+  input:
+  - '4 100000007
+
+    '
+  - '2 998244353
+
+    '
+  - '69 999999937
+
+    '
+  - '10 999999937
+
+    '
+  - '4 998244353
+
+    '
+  - '198 549999959
+
+    '
+  - '22 100757149
+
+    '
+  - '2 549999959
+
+    '
+  - '103 267850993
+
+    '
+  - '1 550000001
+
+    '
+  - '192 999999937
+
+    '
+  - '6 998244353
+
+    '
+  - '194 100000007
+
+    '
+  - '162 999999937
+
+    '
+  - '3 549999959
+
+    '
+  - '140 550000001
+
+    '
+  - '106 100757149
+
+    '
+  - '120 267850993
+
+    '
+  - '170 100000007
+
+    '
+  - '93 267850993
+
+    '
+  - '196 100000007
+
+    '
+  - '191 100757149
+
+    '
+  - '20 549999959
+
+    '
+  - '9 999999937
+
+    '
+  - '1 100000007
+
+    '
+  - '130 100757149
+
+    '
+  - '197 100000007
+
+    '
+  - '192 998244353
+
+    '
+  - '160 100757149
+
+    '
+  - '193 998244353
+
+    '
+  - '110 999999937
+
+    '
+  - '190 999999937
+
+    '
+  - '10 267850993
+
+    '
+  - '7 100000007
+
+    '
+  - '100 267850993
+
+    '
+  - '82 267850993
+
+    '
+  - '8 549999959
+
+    '
+  - '200 550000001
+
+    '
+  - '200 998244353
+
+    '
+  - '169 100757149
+
+    '
+  - '195 549999959
+
+    '
+  - '119 999999937
+
+    '
+  - '50 100757149
+
+    '
+  - '196 100757149
+
+    '
+  - '180 100757149
+
+    '
+  - '5 100757149
+
+    '
+  - '28 549999959
+
+    '
+  - '150 998244353
+
+    '
+  - '200 549999959
+
+    '
+  - '188 100757149
+
+    '
+  - '190 267850993
+
+    '
+  - '199 550000001
+
+    '
+  - '1 998244353
+
+    '
+  - '24 100757149
+
+    '
+  - '59 267850993
+
+    '
+  - '64 100000007
+
+    '
+  - '33 999999937
+
+    '
+  - '38 550000001
+
+    '
+  - '49 100000007
+
+    '
+  - '26 549999959
+
+    '
+  - '2 100000007
+
+    '
+  - '173 998244353
+
+    '
+  - '100 999999937
+
+    '
+  - '11 267850993
+
+    '
+  - '134 267850993
+
+    '
+  - '200 540434957
+
+    '
+  - '182 100757149
+
+    '
+  - '29 549999959
+
+    '
+  - '77 267850993
+
+    '
+  - '199 906719791
+
+    '
+  - '49 267850993
+
+    '
+  - '86 100000007
+
+    '
+  - '32 999999937
+
+    '
+  - '12 550000001
+
+    '
+  - '49 40573319
+
+    '
+  - '101 999999937
+
+    '
+  - '69 540434957
+
+    '
+  - '28 100757149
+
+    '
+  - '54 267850993
+
+    '
+  - '39 999999937
+
+    '
+  - '64 540434957
+
+    '
+  - '18 100757149
+
+    '
+  - '54 540434957
+
+    '
+  - '94 540434957
+
+    '
+  - '94 17616491
+
+    '
+  - '62 17616491
+
+    '
+  - '3 998244353
+
+    '
+  - '38 100757149
+
+    '
+  - '132 267850993
+
+    '
+  - '173 550000001
+
+    '
+  - '154 267850993
+
+    '
+  - '40 267850993
+
+    '
+  - '160 100000007
+
+    '
+  - '114 100757149
+
+    '
+  - '010 999999937
+
+    '
+  - '20 267850993
+
+    '
+  - '88 100757149
+
+    '
+  - '166 549999959
+
+    '
+  - '60 100757149
+
+    '
+  - '156 550000001
+
+    '
+  - '44 100757149
+
+    '
+  - '79 100000007
+
+    '
+  - '195 540434957
+
+    '
+  - '76 267850993
+
+    '
+  - '17 267850993
+
+    '
+  - '23 550000001
+
+    '
+  - '119 540434957
+
+    '
+  - '134 17616491
+
+    '
+  - '46 267850993
+
+    '
+  - '15 100757149
+
+    '
+  - '75 100757149
+
+    '
+  - '6 999999937
+
+    '
+  - '30 100757149
+
+    '
+  - '8 999999937
+
+    '
+  - '5 998244353
+
+    '
+  - '88 100000007
+
+    '
+  - '23 549999959
+
+    '
+  - '9 771869561
+
+    '
+  - '110 267850993
+
+    '
+  - '112 267850993
+
+    '
+  - '44 999999937
+
+    '
+  - '66 267850993
+
+    '
+  - '25 550000001
+
+    '
+  - '18 549999959
+
+    '
+  - '111 999999937
+
+    '
+  - '65 267850993
+
+    '
+  - '77 149726867
+
+    '
+  - '13 40573319
+
+    '
+  - '108 540434957
+
+    '
+  - '39 178077079
+
+    '
+  - '88 540434957
+
+    '
+  - '110 17616491
+
+    '
+  - '50 267850993
+
+    '
+  - '31 267850993
+
+    '
+  - '48 100757149
+
+    '
+  - '71 100757149
+
+    '
+  - '44 550000001
+
+    '
+  - '158 100000007
+
+    '
+  - '169 540434957
+
+    '
+  - '32 267850993
+
+    '
+  - '53 267850993
+
+    '
+  - '25 100757149
+
+    '
+  - '132 100757149
+
+    '
+  - '88 190942883
+
+    '
+  - '122 267850993
+
+    '
+  - '49 550000001
+
+    '
+  - '60 540434957
+
+    '
+  - '83 267850993
+
+    '
+  - '136 100757149
+
+    '
+  - '54 550000001
+
+    '
+  - '78 100000007
+
+    '
+  - '7 267850993
+
+    '
+  - '60 267850993
+
+    '
+  - '29 999999937
+
+    '
+  - '142 190942883
+
+    '
+  - '49 107279927
+
+    '
+  - '91 540434957
+
+    '
+  - '109 190942883
+
+    '
+  - '83 107279927
+
+    '
+  - '154 107279927
+
+    '
+  - '46 107279927
+
+    '
+  - '20 999999937
+
+    '
+  - '22 3455723
+
+    '
+  - '89 999999937
+
+    '
+  - '166 999999937
+
+    '
+  - '28 550000001
+
+    '
+  - '124 100757149
+
+    '
+  - '25 267850993
+
+    '
+  - '52 100757149
+
+    '
+  - '155 998244353
+
+    '
+  - '102 100757149
+
+    '
+  - '119 998244353
+
+    '
+  - '107 267850993
+
+    '
+  - '53 100757149
+
+    '
+  - '107 998244353
+
+    '
+  - '128 999999937
+
+    '
+  - '56 267850993
+
+    '
+  - '33 100000007
+
+    '
+  - '90 100000007
+
+    '
+  - '4 549999959
+
+    '
+  - '121 267850993
+
+    '
+  - '30 999999937
+
+    '
+  - '33 40573319
+
+    '
+  - '106 267850993
+
+    '
+  - '124 540434957
+
+    '
+  - '191 267850993
+
+    '
+  - '72 267850993
+
+    '
+  - '96 100000007
+
+    '
+  - '42 100757149
+
+    '
+  - '31 100757149
+
+    '
+  - '30 267850993
+
+    '
+  - '33 550000001
+
+    '
+  - '145 540434957
+
+    '
+  - '71 17616491
+
+    '
+  - '14 100757149
+
+    '
+  - '18 999999937
+
+    '
+  - '42 549999959
+
+    '
+  - '111 267850993
+
+    '
+  - '30 550000001
+
+    '
+  - '61 149726867
+
+    '
+  - '20 178077079
+
+    '
+  - '45 267850993
+
+    '
+  - '31 200485211
+
+    '
+  - '74 100757149
+
+    '
+  - '36 100757149
+
+    '
+  - '82 550000001
+
+    '
+  - '83 540434957
+
+    '
+  - '47 100757149
+
+    '
+  - '122 100757149
+
+    '
+  - '16 549999959
+
+    '
+  - '37 550000001
+
+    '
+  - '114 540434957
+
+    '
+  - '83 508493911
+
+    '
+  - '62 550000001
+
+    '
+  - '20 100000007
+
+    '
+  - '26 999999937
+
+    '
+  - '80 540434957
+
+    '
+  - '161 190942883
+
+    '
+  - '100 107279927
+
+    '
+  - '51 107279927
+
+    '
+  - '144 999999937
+
+    '
+  - '31 550000001
+
+    '
+  - '39 267850993
+
+    '
+  - '93 100757149
+
+    '
+  - '47 999999937
+
+    '
+  - '30 100000007
+
+    '
+  - '71 267850993
+
+    '
+  - '43 100757149
+
+    '
+  - '187 540434957
+
+    '
+  - '19 998244353
+
+    '
+  - '91 149726867
+
+    '
+  - '111 17616491
+
+    '
+  - '162 267850993
+
+    '
+  - '160 540434957
+
+    '
+  - '67 100757149
+
+    '
+  - '179 100757149
+
+    '
+  - '50 550000001
+
+    '
+  - '136 540434957
+
+    '
+  - '88 508493911
+
+    '
+  - '114 550000001
+
+    '
+  - '122 540434957
+
+    '
+  - '128 190942883
+
+    '
+  - '51 204097519
+
+    '
+  - '44 267850993
+
+    '
+  - '66 100757149
+
+    '
+  - '21 100757149
+
+    '
+  - '25 540434957
+
+    '
+  - '29 100757149
+
+    '
+  - '200 100757149
+
+    '
+  - '136 827126549
+
+    '
+  - '111 190942883
+
+    '
+  - '40 204097519
+
+    '
+  output:
+  - '32
+
+    '
+  - '4
+
+    '
+  - '456886663
+
+    '
+  - '38324
+
+    '
+  - '32
+
+    '
+  - '545511297
+
+    '
+  - '12864320
+
+    '
+  - '4
+
+    '
+  - '262873012
+
+    '
+  - '2
+
+    '
+  - '960726876
+
+    '
+  - '295
+
+    '
+  - '24964109
+
+    '
+  - '356680016
+
+    '
+  - '11
+
+    '
+  - '464259310
+
+    '
+  - '7881104
+
+    '
+  - '91785690
+
+    '
+  - '28293730
+
+    '
+  - '34145854
+
+    '
+  - '80552289
+
+    '
+  - '22329873
+
+    '
+  - '461862358
+
+    '
+  - '10901
+
+    '
+  - '2
+
+    '
+  - '87253785
+
+    '
+  - '59296946
+
+    '
+  - '216873641
+
+    '
+  - '54532638
+
+    '
+  - '959300190
+
+    '
+  - '165234842
+
+    '
+  - '259139303
+
+    '
+  - '38324
+
+    '
+  - '940
+
+    '
+  - '189712610
+
+    '
+  - '181769218
+
+    '
+  - '3148
+
+    '
+  - '481731577
+
+    '
+  - '180611733
+
+    '
+  - '41487196
+
+    '
+  - '305462979
+
+    '
+  - '810859890
+
+    '
+  - '4745300
+
+    '
+  - '71649802
+
+    '
+  - '40944895
+
+    '
+  - '97
+
+    '
+  - '265377742
+
+    '
+  - '563043130
+
+    '
+  - '178617235
+
+    '
+  - '15934891
+
+    '
+  - '38309988
+
+    '
+  - '262511266
+
+    '
+  - '2'
+  - '29433739'
+  - '35178092'
+  - '82998189'
+  - '748205630'
+  - '272495121'
+  - '83367000'
+  - '403635788'
+  - '4'
+  - '321085900'
+  - '834284953'
+  - '135313'
+  - '149885748'
+  - '129627646'
+  - '43651400'
+  - '512344742'
+  - '210743433'
+  - '200389562'
+  - '40039647'
+  - '24382692'
+  - '36606324'
+  - '478989'
+  - '27473845'
+  - '959035158'
+  - '351560517'
+  - '9793083'
+  - '78800621'
+  - '371195765'
+  - '386453419'
+  - '97975116'
+  - '521664396'
+  - '287126328'
+  - '1249142'
+  - '12030036'
+  - '11'
+  - '72590243'
+  - '117332317'
+  - '498542128'
+  - '58910293'
+  - '259872202'
+  - '9956506'
+  - '28247797'
+  - '38324'
+  - '44354650'
+  - '30280367'
+  - '198119503'
+  - '52517889'
+  - '184695038'
+  - '28481454'
+  - '1793158'
+  - '526747992'
+  - '227135162'
+  - '30864968'
+  - '548057575'
+  - '319947304'
+  - '702824'
+  - '172582091'
+  - '22187311'
+  - '77125677'
+  - '295'
+  - '35851126'
+  - '3148'
+  - '97'
+  - '94131967'
+  - '548119147'
+  - '10901'
+  - '80406994'
+  - '100483688'
+  - '213334607'
+  - '260023280'
+  - '433999792'
+  - '5546688'
+  - '393946658'
+  - '157997856'
+  - '94477025'
+  - '1704939'
+  - '489710442'
+  - '4509732'
+  - '46063534'
+  - '6650868'
+  - '78320981'
+  - '17034302'
+  - '48729908'
+  - '46578979'
+  - '164432144'
+  - '45364546'
+  - '246426050'
+  - '215150624'
+  - '39664654'
+  - '62977485'
+  - '8843107'
+  - '92754110'
+  - '51776771'
+  - '96668799'
+  - '27767248'
+  - '37833359'
+  - '45282456'
+  - '494455237'
+  - '31509758'
+  - '940'
+  - '114646021'
+  - '584814679'
+  - '125762882'
+  - '91042627'
+  - '537398283'
+  - '180218161'
+  - '3367017'
+  - '39086816'
+  - '85411195'
+  - '311862196'
+  - '1003329'
+  - '535087070'
+  - '404644353'
+  - '217527646'
+  - '41160144'
+  - '126334879'
+  - '28549505'
+  - '730511740'
+  - '18691952'
+  - '411850541'
+  - '27018215'
+  - '100576538'
+  - '364510387'
+  - '457918330'
+  - '143275172'
+  - '94384447'
+  - '41149080'
+  - '32'
+  - '197862388'
+  - '499890308'
+  - '10569905'
+  - '200675543'
+  - '529348806'
+  - '49729290'
+  - '30649944'
+  - '66681128'
+  - '16279614'
+  - '7242356'
+  - '94861817'
+  - '124263216'
+  - '77870075'
+  - '12253476'
+  - '6120951'
+  - '105546669'
+  - '434584378'
+  - '149170873'
+  - '360853137'
+  - '124089802'
+  - '175309536'
+  - '161214298'
+  - '127661582'
+  - '90537982'
+  - '81672004'
+  - '15444612'
+  - '389815196'
+  - '82737973'
+  - '21236385'
+  - '81129556'
+  - '234377717'
+  - '129723572'
+  - '375668967'
+  - '545758408'
+  - '11860180'
+  - '53133760'
+  - '115193916'
+  - '105041883'
+  - '96912497'
+  - '85416516'
+  - '498271032'
+  - '517892080'
+  - '249921389'
+  - '97678955'
+  - '538621209'
+  - '91248874'
+  - '59630253'
+  - '74182850'
+  - '160336418'
+  - '114709331'
+  - '24292228'
+  - '3441001'
+  - '70436914'
+  - '516011390'
+  - '33075262'
+  - '98036739'
+  - '350048165'
+  - '250080614'
+  - '78773259'
+  - '237633163'
+  - '344371655'
+  - '130061774'
+  - '153442795'
+  - '251940302'
+  - '3801463'
+  - '15554113'
+  - '239009642'
+  - '36402019'
+  - '77064709'
+  - '267577970'
+  - '27225090'
+  - '143164749'
+timeout: 2.0

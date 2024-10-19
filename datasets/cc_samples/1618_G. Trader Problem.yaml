@@ -1,0 +1,4181 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nChouti was\
+  \ tired of the tedious homework, so he opened up an old programming problem he created\
+  \ years ago.\n\nYou are given a connected undirected graph with n vertices and m\
+  \ weighted edges. There are k special vertices: x_1, x_2, \u2026, x_k.\n\nLet's\
+  \ define the cost of the path as the maximum weight of the edges in it. And the\
+  \ distance between two vertexes as the minimum cost of the paths connecting them.\n\
+  \nFor each special vertex, find another special vertex which is farthest from it\
+  \ (in terms of the previous paragraph, i.e. the corresponding distance is maximum\
+  \ possible) and output the distance between them.\n\nThe original constraints are\
+  \ really small so he thought the problem was boring. Now, he raises the constraints\
+  \ and hopes you can solve it for him.\n\nInput\n\nThe first line contains three\
+  \ integers n, m and k (2 \u2264 k \u2264 n \u2264 10^5, n-1 \u2264 m \u2264 10^5)\
+  \ \u2014 the number of vertices, the number of edges and the number of special vertices.\n\
+  \nThe second line contains k distinct integers x_1, x_2, \u2026, x_k (1 \u2264 x_i\
+  \ \u2264 n).\n\nEach of the following m lines contains three integers u, v and w\
+  \ (1 \u2264 u,v \u2264 n, 1 \u2264 w \u2264 10^9), denoting there is an edge between\
+  \ u and v of weight w. The given graph is undirected, so an edge (u, v) can be used\
+  \ in the both directions.\n\nThe graph may have multiple edges and self-loops.\n\
+  \nIt is guaranteed, that the graph is connected.\n\nOutput\n\nThe first and only\
+  \ line should contain k integers. The i-th integer is the distance between x_i and\
+  \ the farthest special vertex from it.\n\nExamples\n\nInput\n\n2 3 2\n2 1\n1 2 3\n\
+  1 2 2\n2 2 1\n\n\nOutput\n\n2 2 \n\n\nInput\n\n4 5 3\n1 2 3\n1 2 5\n4 2 1\n2 3 2\n\
+  1 4 4\n1 3 3\n\n\nOutput\n\n3 3 3 \n\nNote\n\nIn the first example, the distance\
+  \ between vertex 1 and 2 equals to 2 because one can walk through the edge of weight\
+  \ 2 connecting them. So the distance to the farthest node for both 1 and 2 equals\
+  \ to 2.\n\nIn the second example, one can find that distance between 1 and 2, distance\
+  \ between 1 and 3 are both 3 and the distance between 2 and 3 is 2.\n\nThe graph\
+  \ may have multiple edges between and self-loops, as in the first example.\nA: ```\"\
+  \"\"\n@author: phamv\n\"\"\"\n####Function Definition \ndef find(x):\n    while\
+  \ f[x] != x :\n        f[x] = f[f[x]]\n        x = f[x]\n    return x\n\ndef merge(u,\
+  \ v) :\n    u, v = map(find, (u, v))\n    f[u] = v;\n    if u == v:\n        return\
+  \ False\n    ret = s[u] > 0 and s[v] > 0\n    s[v] += s[u]\n    return ret\n\n###############\n\
+  \nn, m, k = map(int, input().split())\nx = list(map(int, input().split()))\nlst\
+  \ = list()\nfor i in range(m):\n    lst.append(tuple(map(int, input().split())))\n\
+  lst.sort(key = lambda x: x[2])\n\nf = list(range(n + 1))\ns = [0] * (n + 1)\n\n\
+  for j in x:\n    s[j] += 1\n\nfor h in lst: \n    if merge(h[0], h[1]): \n     \
+  \   answer = h[2]\n\nprint(*[answer]*k)```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nConsider a table G of size n \xD7 m such that G(i, j) = GCD(i,\
+  \ j) for all 1 \u2264 i \u2264 n, 1 \u2264 j \u2264 m. GCD(a, b) is the greatest\
+  \ common divisor of numbers a and b.\n\nYou have a sequence of positive integer\
+  \ numbers a1, a2, ..., ak. We say that this sequence occurs in table G if it coincides\
+  \ with consecutive elements in some row, starting from some position. More formally,\
+  \ such numbers 1 \u2264 i \u2264 n and 1 \u2264 j \u2264 m - k + 1 should exist\
+  \ that G(i, j + l - 1) = al for all 1 \u2264 l \u2264 k.\n\nDetermine if the sequence\
+  \ a occurs in table G.\n\nInput\n\nThe first line contains three space-separated\
+  \ integers n, m and k (1 \u2264 n, m \u2264 1012; 1 \u2264 k \u2264 10000). The\
+  \ second line contains k space-separated integers a1, a2, ..., ak (1 \u2264 ai \u2264\
+  \ 1012).\n\nOutput\n\nPrint a single word \"YES\", if the given sequence occurs\
+  \ in table G, otherwise print \"NO\".\n\nExamples\n\nInput\n\n100 100 5\n5 2 1 2\
+  \ 1\n\n\nOutput\n\nYES\n\n\nInput\n\n100 8 5\n5 2 1 2 1\n\n\nOutput\n\nNO\n\n\n\
+  Input\n\n100 100 7\n1 2 3 4 5 6 7\n\n\nOutput\n\nNO\n\nNote\n\nSample 1. The tenth\
+  \ row of table G starts from sequence {1, 2, 1, 2, 5, 2, 1, 2, 1, 10}. As you can\
+  \ see, elements from fifth to ninth coincide with sequence a.\n\nSample 2. This\
+  \ time the width of table G equals 8. Sequence a doesn't occur there.\nA: ```from\
+  \ math import gcd\n\n\ndef LCM(a, b):\n    if min(a, b) == 0: return max(a, b)\n\
+  \    return a // gcd(a, b) * b\n\n\nclass Eqn():\n    def __init__(self, r, mod):\n\
+  \        self.r = r\n        self.mod = mod\n\n\ndef bye():\n    print(\"NO\")\n\
+  \    exit(0)\n\n\ndef exgcd(a, b):\n    if b == 0:\n        return (1, 0)\n    xp,\
+  \ yp = exgcd(b, a % b)\n    x = yp\n    y = xp - a // b * yp\n    return (x, y)\n\
+  \n\ndef merge(a, b):\n    newmode = LCM(a.mod, b.mod)\n    if (a.r - b.r) % gcd(a.mod,\
+  \ b.mod) != 0:\n        bye()\n    newr = exgcd(a.mod, b.mod)[0] * (b.r - a.r) //\
+  \ gcd(a.mod, b.mod) * a.mod + a.r\n    newr %= newmode\n    return Eqn(newr, newmode)\n\
+  \n\nx, y = 0, 0\nn, m, k = [int(i) for i in input().split()]\na = [int(i) for i\
+  \ in input().split()]\nfor i in a:\n    x = LCM(x, i)\n    if x > n:\n        bye()\n\
+  cur = Eqn(0, 1)\nfor i in range(0, len(a)):\n    cur = merge(cur, Eqn((-i) % a[i],\
+  \ a[i]))\ny = cur.r\n\nif y == 0: y += x\nfor i in range(0, len(a)):\n    if gcd(x,\
+  \ y + i) != a[i]:\n        bye()\n\nif x > n or y + k - 1 > m: bye()\nprint(\"YES\"\
+  )```\nQ: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nMonocarp plays\
+  \ a computer game (yet again!). This game has a unique trading mechanics.\n\nTo\
+  \ trade with a character, Monocarp has to choose one of the items he possesses and\
+  \ trade it for some item the other character possesses. Each item has an integer\
+  \ price. If Monocarp's chosen item has price x, then he can trade it for any item\
+  \ (exactly one item) with price not greater than x+k.\n\nMonocarp initially has\
+  \ n items, the price of the i-th item he has is a_i. The character Monocarp is trading\
+  \ with has m items, the price of the i-th item they have is b_i. Monocarp can trade\
+  \ with this character as many times as he wants (possibly even zero times), each\
+  \ time exchanging one of his items with one of the other character's items according\
+  \ to the aforementioned constraints. Note that if Monocarp gets some item during\
+  \ an exchange, he can trade it for another item (since now the item belongs to him),\
+  \ and vice versa: if Monocarp trades one of his items for another item, he can get\
+  \ his item back by trading something for it.\n\nYou have to answer q queries. Each\
+  \ query consists of one integer, which is the value of k, and asks you to calculate\
+  \ the maximum possible total cost of items Monocarp can have after some sequence\
+  \ of trades, assuming that he can trade an item of cost x for an item of cost not\
+  \ greater than x+k during each trade. Note that the queries are independent: the\
+  \ trades do not actually occur, Monocarp only wants to calculate the maximum total\
+  \ cost he can get.\n\nInput\n\nThe first line contains three integers n, m and q\
+  \ (1 \u2264 n, m, q \u2264 2 \u22C5 10^5).\n\nThe second line contains n integers\
+  \ a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^9) \u2014 the prices of the items Monocarp\
+  \ has.\n\nThe third line contains m integers b_1, b_2, ..., b_m (1 \u2264 b_i \u2264\
+  \ 10^9) \u2014 the prices of the items the other character has.\n\nThe fourth line\
+  \ contains q integers, where the i-th integer is the value of k for the i-th query\
+  \ (0 \u2264 k \u2264 10^9).\n\nOutput\n\nFor each query, print one integer \u2014\
+  \ the maximum possible total cost of items Monocarp can have after some sequence\
+  \ of trades, given the value of k from the query.\n\nExample\n\nInput\n\n\n3 4 5\n\
+  10 30 15\n12 31 14 18\n0 1 2 3 4\n\n\nOutput\n\n\n55\n56\n60\n64\n64\nA:"
+question: "Monocarp plays a computer game (yet again!). This game has a unique trading\
+  \ mechanics.\n\nTo trade with a character, Monocarp has to choose one of the items\
+  \ he possesses and trade it for some item the other character possesses. Each item\
+  \ has an integer price. If Monocarp's chosen item has price x, then he can trade\
+  \ it for any item (exactly one item) with price not greater than x+k.\n\nMonocarp\
+  \ initially has n items, the price of the i-th item he has is a_i. The character\
+  \ Monocarp is trading with has m items, the price of the i-th item they have is\
+  \ b_i. Monocarp can trade with this character as many times as he wants (possibly\
+  \ even zero times), each time exchanging one of his items with one of the other\
+  \ character's items according to the aforementioned constraints. Note that if Monocarp\
+  \ gets some item during an exchange, he can trade it for another item (since now\
+  \ the item belongs to him), and vice versa: if Monocarp trades one of his items\
+  \ for another item, he can get his item back by trading something for it.\n\nYou\
+  \ have to answer q queries. Each query consists of one integer, which is the value\
+  \ of k, and asks you to calculate the maximum possible total cost of items Monocarp\
+  \ can have after some sequence of trades, assuming that he can trade an item of\
+  \ cost x for an item of cost not greater than x+k during each trade. Note that the\
+  \ queries are independent: the trades do not actually occur, Monocarp only wants\
+  \ to calculate the maximum total cost he can get.\n\nInput\n\nThe first line contains\
+  \ three integers n, m and q (1 \u2264 n, m, q \u2264 2 \u22C5 10^5).\n\nThe second\
+  \ line contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^9) \u2014\
+  \ the prices of the items Monocarp has.\n\nThe third line contains m integers b_1,\
+  \ b_2, ..., b_m (1 \u2264 b_i \u2264 10^9) \u2014 the prices of the items the other\
+  \ character has.\n\nThe fourth line contains q integers, where the i-th integer\
+  \ is the value of k for the i-th query (0 \u2264 k \u2264 10^9).\n\nOutput\n\nFor\
+  \ each query, print one integer \u2014 the maximum possible total cost of items\
+  \ Monocarp can have after some sequence of trades, given the value of k from the\
+  \ query.\n\nExample\n\nInput\n\n\n3 4 5\n10 30 15\n12 31 14 18\n0 1 2 3 4\n\n\n\
+  Output\n\n\n55\n56\n60\n64\n64"
+samples:
+- " ``````\n```python\nn, m, q = map(int, input().split())\na = list(map(int, input().split()))\n\
+  b = list(map(int, input().split()))\nk = [int(i) for i in input().split()]\nans\
+  \ = []\nfor i in k:\n    cur = max(a)\n    a = [i for i in a if i <= cur + i]\n\
+  \    ans.append(sum(a))\nprint(*ans)\n```\n````\nQ:"
+- " ``````python\nfrom collections import deque\n\nn, m, q = map(int, input().split())\n\
+  a = list(map(int, input().split()))\nb = list(map(int, input().split()))\nk = [int(input())\
+  \ for _ in range(q)]\n\nd = deque([(0, 0, 0)])\ndp = [[float('inf')] * (n + m) for\
+  \ _ in range(q + 1)]\ndp[0] = [0] * (n + m)\n\nfor i in range(q):\n    while d:\n\
+  \        x, y, z = d.popleft()\n        if z > dp[i][x + y]:\n            dp[i][x\
+  \ + y] = z\n            for j in range(max(0, x - a[x]), min(n, x + 1)):\n     \
+  \           d.append((j, y + 1, max(z, a[j])))\n            for j in range(max(0,\
+  \ y - b[y]), min(m, y + 1)):\n                d.append((x + 1, j, max(z, b[j])))\n\
+  \nfor i in range(q):\n    print(dp[i][n + m - 1])```\n````\nQ:"
+test_cases:
+  input:
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 18
+
+    0 1 2 3 4
+
+    '
+  - '1 1 1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 27 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 17 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 14 18
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 57 15
+
+    12 31 14 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 13 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 31 17 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 14 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 57 15
+
+    12 31 14 7
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 17 6
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    20 30 15
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 17 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 18
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 3
+
+    12 31 14 7
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 26
+
+    12 31 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 0 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 56 27 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 20 18
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    15 31 13 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    8 30 15
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 28 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    1 30 15
+
+    12 45 14 7
+
+    0 1 2 4 7
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 17 6
+
+    0 1 2 1 6
+
+    '
+  - '3 4 5
+
+    20 30 28
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    7 30 30
+
+    12 57 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    20 9 15
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 17 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 6 30
+
+    12 57 26 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    12 31 14 18
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    11 30 26
+
+    12 31 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 27 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 20 18
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    12 31 14 13
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 31 30
+
+    12 57 17 6
+
+    0 1 2 1 6
+
+    '
+  - '3 4 5
+
+    10 4 30
+
+    12 57 26 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    12 31 14 0
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 3
+
+    12 31 12 7
+
+    0 1 3 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 7 18
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 20
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 14 13
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 37 30
+
+    12 57 17 6
+
+    0 1 2 1 6
+
+    '
+  - '3 4 5
+
+    10 4 30
+
+    12 57 26 6
+
+    0 2 2 1 2
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    22 31 14 0
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    5 30 3
+
+    12 31 12 7
+
+    0 1 3 3 4
+
+    '
+  - '3 4 5
+
+    10 43 20
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 16 13
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    12 57 47 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    5 32 3
+
+    12 31 12 7
+
+    0 1 3 3 4
+
+    '
+  - '3 4 5
+
+    8 43 20
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    20 5 28
+
+    12 76 14 18
+
+    1 0 3 3 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    19 57 47 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    5 32 3
+
+    12 31 12 7
+
+    0 1 3 3 8
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 45 15
+
+    5 31 16 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 10 15
+
+    22 31 14 0
+
+    1 2 1 3 4
+
+    '
+  - '3 4 5
+
+    5 32 3
+
+    19 31 12 7
+
+    0 1 3 3 8
+
+    '
+  - '3 4 5
+
+    3 45 13
+
+    5 31 16 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    0 5 28
+
+    12 76 14 18
+
+    0 0 3 3 4
+
+    '
+  - '3 4 5
+
+    5 32 3
+
+    19 31 12 7
+
+    0 1 3 3 15
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    3 31 20 6
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 45 13
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    9 43 10
+
+    3 31 20 6
+
+    1 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 45 18
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 41 18
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 41 21
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 21
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 24 27 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 30 10
+
+    12 31 14 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 17 7
+
+    0 0 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 14 18
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 30 5
+
+    12 31 13 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 31 17 13
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    13 22 14 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 45 14 7
+
+    0 2 2 4 7
+
+    '
+  - '3 4 5
+
+    10 57 15
+
+    12 31 24 7
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 31 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    1 22 14 6
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 52 30
+
+    12 57 17 6
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 17 14 6
+
+    1 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 26 6
+
+    0 2 0 1 1
+
+    '
+  - '3 4 5
+
+    10 30 3
+
+    12 31 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 46 26
+
+    12 31 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 19 7
+
+    0 1 0 1 4
+
+    '
+  - '3 4 5
+
+    10 30 27
+
+    12 22 14 5
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    20 30 18
+
+    12 76 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    7 30 11
+
+    12 57 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 17 6
+
+    0 2 1 1 1
+
+    '
+  - '3 4 5
+
+    20 18 15
+
+    12 31 14 18
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    3 30 15
+
+    22 56 27 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 20 18
+
+    0 1 1 2 4
+
+    '
+  - '3 4 5
+
+    10 54 15
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    7 55 30
+
+    22 57 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 4 30
+
+    12 57 26 7
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 34 15
+
+    12 31 14 0
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 3
+
+    12 31 12 7
+
+    1 1 3 3 4
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 14 13
+
+    0 3 2 1 4
+
+    '
+  - '3 4 5
+
+    20 30 14
+
+    12 76 14 18
+
+    1 0 2 3 4
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    22 13 14 0
+
+    0 1 1 3 4
+
+    '
+  - '3 4 5
+
+    5 30 1
+
+    12 31 12 7
+
+    0 1 3 3 4
+
+    '
+  - '3 4 5
+
+    10 43 40
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 16 21
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    38 30 28
+
+    12 76 14 18
+
+    1 0 3 3 4
+
+    '
+  - '3 4 5
+
+    10 36 16
+
+    12 57 47 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 18 12
+
+    22 31 14 0
+
+    1 1 1 3 4
+
+    '
+  - '3 4 5
+
+    8 43 4
+
+    12 31 20 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    31 57 47 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    3 45 15
+
+    5 31 16 13
+
+    1 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 10 4
+
+    22 31 14 0
+
+    1 2 1 3 4
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    12 31 20 11
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 36 60
+
+    19 57 23 0
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    5 32 4
+
+    19 31 12 7
+
+    0 1 3 3 15
+
+    '
+  - '3 4 5
+
+    7 43 10
+
+    3 31 20 6
+
+    1 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 45 13
+
+    5 24 27 13
+
+    0 2 1 1 6
+
+    '
+  - '3 4 5
+
+    3 41 21
+
+    5 24 27 13
+
+    0 2 2 1 11
+
+    '
+  - '3 4 5
+
+    3 24 24
+
+    5 24 27 1
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 24 5 2
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 37 27 2
+
+    0 2 2 2 6
+
+    '
+  - '3 4 5
+
+    5 30 10
+
+    12 31 14 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    13 30 15
+
+    12 31 17 7
+
+    0 0 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    11 58 14 18
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    16 30 5
+
+    12 31 13 7
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    14 30 15
+
+    13 22 14 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 68 15
+
+    12 31 24 7
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    13 30 15
+
+    1 22 14 6
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 17 14 6
+
+    1 1 0 3 4
+
+    '
+  - '3 4 5
+
+    10 44 15
+
+    12 76 14 18
+
+    0 2 2 3 5
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 2 4 7
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 76 14 18
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 45 14 7
+
+    0 1 2 4 7
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 31 17 6
+
+    0 1 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 14 6
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 14 6
+
+    1 1 2 3 4
+
+    '
+  - '3 4 5
+
+    20 30 15
+
+    12 76 14 18
+
+    0 2 2 3 5
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 26 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 57 15
+
+    12 31 14 13
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 14 5
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 3
+
+    12 31 14 7
+
+    0 1 3 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    15 31 13 7
+
+    0 1 2 2 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 22 5 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    20 30 28
+
+    12 76 14 18
+
+    1 2 2 3 4
+
+    '
+  - '3 4 5
+
+    7 30 30
+
+    22 57 17 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 28 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 27 7
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    20 30 28
+
+    12 76 14 18
+
+    1 0 2 3 4
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 47 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 27 7
+
+    0 1 2 0 5
+
+    '
+  - '3 4 5
+
+    20 30 28
+
+    12 76 14 18
+
+    1 0 3 3 4
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    22 31 14 0
+
+    1 1 1 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 27 7
+
+    0 1 2 1 5
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 16 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 18 15
+
+    22 31 14 0
+
+    1 2 1 3 4
+
+    '
+  - '3 4 5
+
+    20 5 28
+
+    12 76 14 18
+
+    0 0 3 3 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    19 57 23 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    12 31 20 6
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    19 57 23 0
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    3 45 13
+
+    5 24 16 13
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    3 31 20 6
+
+    1 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 24 27 1
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 24 27 2
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 37 27 2
+
+    0 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 37 14 7
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 14 7
+
+    0 1 2 4 13
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 76 14 18
+
+    0 2 2 3 8
+
+    '
+  - '3 4 5
+
+    10 30 30
+
+    12 57 3 6
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 76 14 18
+
+    0 2 2 3 5
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 114 20 18
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 31 9 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    8 30 15
+
+    12 108 14 18
+
+    0 2 2 3 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 12 28 4
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 57 15
+
+    12 48 14 13
+
+    0 2 2 1 4
+
+    '
+  - '3 4 5
+
+    20 9 15
+
+    12 76 14 18
+
+    0 1 2 3 4
+
+    '
+  - '3 4 5
+
+    10 6 30
+
+    12 57 23 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    11 30 26
+
+    12 31 14 3
+
+    0 1 2 4 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    15 31 13 7
+
+    0 1 2 2 5
+
+    '
+  - '3 4 5
+
+    20 30 28
+
+    12 76 14 18
+
+    1 2 2 3 8
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 28 6
+
+    1 2 2 1 1
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 27 7
+
+    0 1 3 0 4
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    12 58 7 18
+
+    0 1 1 5 4
+
+    '
+  - '3 4 5
+
+    10 30 20
+
+    12 31 19 4
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    10 37 30
+
+    12 57 17 6
+
+    1 1 2 1 6
+
+    '
+  - '3 4 5
+
+    10 60 30
+
+    12 57 47 6
+
+    0 2 2 1 0
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    22 56 2 7
+
+    0 1 2 1 5
+
+    '
+  - '3 4 5
+
+    10 45 15
+
+    5 31 16 13
+
+    0 2 2 2 6
+
+    '
+  - '3 4 5
+
+    20 5 28
+
+    12 76 14 18
+
+    2 0 3 3 4
+
+    '
+  - '3 4 5
+
+    5 32 3
+
+    12 31 12 7
+
+    1 1 3 3 8
+
+    '
+  - '3 4 5
+
+    20 5 28
+
+    12 89 14 18
+
+    0 0 3 3 4
+
+    '
+  - '3 4 5
+
+    10 36 30
+
+    19 57 32 6
+
+    0 2 2 1 1
+
+    '
+  - '3 4 5
+
+    0 5 28
+
+    12 76 14 18
+
+    0 0 3 6 4
+
+    '
+  - '3 4 5
+
+    9 43 10
+
+    3 31 20 6
+
+    0 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 45 13
+
+    5 24 16 13
+
+    0 2 2 0 6
+
+    '
+  - '3 4 5
+
+    9 43 20
+
+    3 31 31 6
+
+    1 1 2 0 4
+
+    '
+  - '3 4 5
+
+    3 24 17
+
+    5 24 27 13
+
+    1 2 2 1 6
+
+    '
+  - '3 4 5
+
+    10 30 15
+
+    21 37 14 7
+
+    0 1 2 4 4
+
+    '
+  output:
+  - '55
+
+    56
+
+    60
+
+    64
+
+    64
+
+    '
+  - '1
+
+    '
+  - '55
+
+    56
+
+    60
+
+    60
+
+    60
+
+    '
+  - '55
+
+    56
+
+    60
+
+    56
+
+    60
+
+    '
+  - '55
+
+    56
+
+    58
+
+    56
+
+    58
+
+    '
+  - '55
+
+    56
+
+    60
+
+    56
+
+    63
+
+    '
+  - '55
+
+    55
+
+    59
+
+    63
+
+    63
+
+    '
+  - '82
+
+    82
+
+    86
+
+    82
+
+    86
+
+    '
+  - '55
+
+    56
+
+    59
+
+    56
+
+    59
+
+    '
+  - '70
+
+    71
+
+    73
+
+    71
+
+    73
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '82
+
+    86
+
+    86
+
+    82
+
+    86
+
+    '
+  - '55
+
+    59
+
+    59
+
+    63
+
+    63
+
+    '
+  - '70
+
+    70
+
+    72
+
+    70
+
+    72
+
+    '
+  - '65
+
+    65
+
+    65
+
+    68
+
+    68
+
+    '
+  - '70
+
+    72
+
+    72
+
+    70
+
+    72
+
+    '
+  - '70
+
+    72
+
+    72
+
+    70
+
+    70
+
+    '
+  - '55
+
+    56
+
+    56
+
+    64
+
+    64
+
+    '
+  - '43
+
+    44
+
+    48
+
+    48
+
+    57
+
+    '
+  - '66
+
+    67
+
+    71
+
+    75
+
+    75
+
+    '
+  - '55
+
+    56
+
+    55
+
+    56
+
+    60
+
+    '
+  - '55
+
+    55
+
+    57
+
+    55
+
+    57
+
+    '
+  - '55
+
+    55
+
+    57
+
+    68
+
+    68
+
+    '
+  - '55
+
+    56
+
+    60
+
+    55
+
+    60
+
+    '
+  - '55
+
+    56
+
+    56
+
+    56
+
+    61
+
+    '
+  - '53
+
+    53
+
+    53
+
+    56
+
+    63
+
+    '
+  - '55
+
+    55
+
+    57
+
+    57
+
+    57
+
+    '
+  - '46
+
+    46
+
+    46
+
+    46
+
+    59
+
+    '
+  - '70
+
+    70
+
+    72
+
+    70
+
+    77
+
+    '
+  - '78
+
+    78
+
+    78
+
+    78
+
+    78
+
+    '
+  - '67
+
+    67
+
+    67
+
+    67
+
+    67
+
+    '
+  - '44
+
+    44
+
+    44
+
+    53
+
+    53
+
+    '
+  - '100
+
+    102
+
+    102
+
+    100
+
+    100
+
+    '
+  - '46
+
+    48
+
+    48
+
+    46
+
+    46
+
+    '
+  - '43
+
+    43
+
+    43
+
+    51
+
+    51
+
+    '
+  - '67
+
+    69
+
+    71
+
+    75
+
+    75
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '55
+
+    55
+
+    55
+
+    68
+
+    68
+
+    '
+  - '55
+
+    56
+
+    58
+
+    55
+
+    58
+
+    '
+  - '70
+
+    74
+
+    74
+
+    70
+
+    74
+
+    '
+  - '71
+
+    71
+
+    73
+
+    71
+
+    78
+
+    '
+  - '44
+
+    48
+
+    48
+
+    44
+
+    44
+
+    '
+  - '43
+
+    43
+
+    43
+
+    47
+
+    47
+
+    '
+  - '43
+
+    44
+
+    46
+
+    46
+
+    55
+
+    '
+  - '55
+
+    55
+
+    55
+
+    63
+
+    63
+
+    '
+  - '60
+
+    61
+
+    63
+
+    60
+
+    63
+
+    '
+  - '70
+
+    70
+
+    70
+
+    70
+
+    74
+
+    '
+  - '77
+
+    77
+
+    79
+
+    77
+
+    84
+
+    '
+  - '44
+
+    48
+
+    48
+
+    44
+
+    48
+
+    '
+  - '43
+
+    43
+
+    43
+
+    43
+
+    55
+
+    '
+  - '38
+
+    39
+
+    43
+
+    43
+
+    43
+
+    '
+  - '73
+
+    73
+
+    75
+
+    73
+
+    75
+
+    '
+  - '70
+
+    71
+
+    71
+
+    71
+
+    76
+
+    '
+  - '76
+
+    78
+
+    78
+
+    76
+
+    76
+
+    '
+  - '40
+
+    40
+
+    44
+
+    44
+
+    44
+
+    '
+  - '71
+
+    71
+
+    71
+
+    71
+
+    75
+
+    '
+  - '53
+
+    53
+
+    53
+
+    53
+
+    53
+
+    '
+  - '76
+
+    76
+
+    76
+
+    76
+
+    76
+
+    '
+  - '40
+
+    40
+
+    44
+
+    44
+
+    56
+
+    '
+  - '72
+
+    72
+
+    72
+
+    72
+
+    75
+
+    '
+  - '63
+
+    66
+
+    66
+
+    64
+
+    66
+
+    '
+  - '35
+
+    35
+
+    35
+
+    35
+
+    39
+
+    '
+  - '40
+
+    40
+
+    44
+
+    44
+
+    63
+
+    '
+  - '61
+
+    63
+
+    63
+
+    61
+
+    66
+
+    '
+  - '33
+
+    33
+
+    33
+
+    33
+
+    33
+
+    '
+  - '40
+
+    40
+
+    44
+
+    44
+
+    82
+
+    '
+  - '72
+
+    72
+
+    72
+
+    72
+
+    72
+
+    '
+  - '61
+
+    63
+
+    63
+
+    61
+
+    63
+
+    '
+  - '62
+
+    62
+
+    62
+
+    62
+
+    62
+
+    '
+  - '66
+
+    68
+
+    68
+
+    66
+
+    77
+
+    '
+  - '62
+
+    64
+
+    64
+
+    62
+
+    73
+
+    '
+  - '65
+
+    67
+
+    67
+
+    65
+
+    73
+
+    '
+  - '48
+
+    50
+
+    50
+
+    48
+
+    56
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    49
+
+    '
+  - '50
+
+    51
+
+    57
+
+    51
+
+    57
+
+    '
+  - '55
+
+    55
+
+    60
+
+    56
+
+    63
+
+    '
+  - '55
+
+    55
+
+    59
+
+    55
+
+    63
+
+    '
+  - '45
+
+    46
+
+    51
+
+    46
+
+    56
+
+    '
+  - '70
+
+    71
+
+    74
+
+    71
+
+    78
+
+    '
+  - '55
+
+    55
+
+    55
+
+    59
+
+    59
+
+    '
+  - '55
+
+    59
+
+    59
+
+    59
+
+    59
+
+    '
+  - '82
+
+    84
+
+    84
+
+    82
+
+    84
+
+    '
+  - '70
+
+    73
+
+    73
+
+    71
+
+    73
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    59
+
+    '
+  - '92
+
+    92
+
+    94
+
+    92
+
+    94
+
+    '
+  - '55
+
+    55
+
+    62
+
+    62
+
+    62
+
+    '
+  - '70
+
+    72
+
+    70
+
+    70
+
+    70
+
+    '
+  - '43
+
+    44
+
+    48
+
+    57
+
+    57
+
+    '
+  - '82
+
+    82
+
+    86
+
+    86
+
+    86
+
+    '
+  - '55
+
+    56
+
+    55
+
+    56
+
+    65
+
+    '
+  - '67
+
+    67
+
+    71
+
+    71
+
+    71
+
+    '
+  - '68
+
+    68
+
+    68
+
+    68
+
+    68
+
+    '
+  - '48
+
+    49
+
+    49
+
+    49
+
+    53
+
+    '
+  - '100
+
+    102
+
+    100
+
+    100
+
+    100
+
+    '
+  - '53
+
+    53
+
+    53
+
+    56
+
+    56
+
+    '
+  - '48
+
+    48
+
+    48
+
+    48
+
+    52
+
+    '
+  - '55
+
+    55
+
+    55
+
+    57
+
+    68
+
+    '
+  - '79
+
+    79
+
+    81
+
+    79
+
+    81
+
+    '
+  - '92
+
+    94
+
+    94
+
+    92
+
+    94
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    44
+
+    '
+  - '59
+
+    59
+
+    59
+
+    63
+
+    63
+
+    '
+  - '44
+
+    44
+
+    46
+
+    46
+
+    55
+
+    '
+  - '70
+
+    74
+
+    70
+
+    70
+
+    74
+
+    '
+  - '64
+
+    64
+
+    64
+
+    64
+
+    68
+
+    '
+  - '43
+
+    43
+
+    43
+
+    47
+
+    55
+
+    '
+  - '36
+
+    37
+
+    39
+
+    39
+
+    43
+
+    '
+  - '93
+
+    93
+
+    95
+
+    93
+
+    95
+
+    '
+  - '70
+
+    71
+
+    71
+
+    71
+
+    71
+
+    '
+  - '96
+
+    96
+
+    96
+
+    96
+
+    96
+
+    '
+  - '62
+
+    64
+
+    64
+
+    62
+
+    62
+
+    '
+  - '40
+
+    40
+
+    40
+
+    44
+
+    54
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    63
+
+    '
+  - '76
+
+    77
+
+    77
+
+    77
+
+    77
+
+    '
+  - '64
+
+    66
+
+    66
+
+    64
+
+    66
+
+    '
+  - '24
+
+    24
+
+    24
+
+    24
+
+    28
+
+    '
+  - '72
+
+    72
+
+    75
+
+    72
+
+    75
+
+    '
+  - '106
+
+    106
+
+    106
+
+    106
+
+    106
+
+    '
+  - '41
+
+    41
+
+    44
+
+    44
+
+    82
+
+    '
+  - '60
+
+    60
+
+    60
+
+    60
+
+    60
+
+    '
+  - '61
+
+    63
+
+    61
+
+    61
+
+    63
+
+    '
+  - '65
+
+    67
+
+    67
+
+    65
+
+    92
+
+    '
+  - '51
+
+    53
+
+    53
+
+    51
+
+    56
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    46
+
+    '
+  - '44
+
+    46
+
+    46
+
+    46
+
+    49
+
+    '
+  - '45
+
+    46
+
+    52
+
+    46
+
+    57
+
+    '
+  - '58
+
+    58
+
+    63
+
+    59
+
+    63
+
+    '
+  - '55
+
+    56
+
+    56
+
+    55
+
+    63
+
+    '
+  - '51
+
+    52
+
+    54
+
+    52
+
+    54
+
+    '
+  - '59
+
+    59
+
+    59
+
+    59
+
+    59
+
+    '
+  - '93
+
+    95
+
+    95
+
+    93
+
+    95
+
+    '
+  - '58
+
+    59
+
+    59
+
+    59
+
+    59
+
+    '
+  - '55
+
+    55
+
+    55
+
+    62
+
+    62
+
+    '
+  - '69
+
+    73
+
+    73
+
+    77
+
+    77
+
+    '
+  - '55
+
+    56
+
+    60
+
+    60
+
+    60
+
+    '
+  - '55
+
+    56
+
+    60
+
+    60
+
+    60
+
+    '
+  - '55
+
+    56
+
+    60
+
+    60
+
+    60
+
+    '
+  - '55
+
+    55
+
+    59
+
+    63
+
+    63
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '70
+
+    71
+
+    73
+
+    71
+
+    73
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '65
+
+    65
+
+    65
+
+    68
+
+    68
+
+    '
+  - '70
+
+    72
+
+    72
+
+    70
+
+    70
+
+    '
+  - '82
+
+    86
+
+    86
+
+    82
+
+    86
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '43
+
+    44
+
+    48
+
+    48
+
+    57
+
+    '
+  - '55
+
+    56
+
+    56
+
+    56
+
+    61
+
+    '
+  - '55
+
+    55
+
+    57
+
+    57
+
+    57
+
+    '
+  - '78
+
+    78
+
+    78
+
+    78
+
+    78
+
+    '
+  - '67
+
+    67
+
+    67
+
+    67
+
+    67
+
+    '
+  - '100
+
+    102
+
+    102
+
+    100
+
+    100
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '78
+
+    78
+
+    78
+
+    78
+
+    78
+
+    '
+  - '100
+
+    102
+
+    102
+
+    100
+
+    100
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '78
+
+    78
+
+    78
+
+    78
+
+    78
+
+    '
+  - '43
+
+    43
+
+    43
+
+    43
+
+    55
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '70
+
+    71
+
+    71
+
+    71
+
+    76
+
+    '
+  - '43
+
+    43
+
+    43
+
+    43
+
+    55
+
+    '
+  - '53
+
+    53
+
+    53
+
+    53
+
+    53
+
+    '
+  - '76
+
+    76
+
+    76
+
+    76
+
+    76
+
+    '
+  - '72
+
+    72
+
+    72
+
+    72
+
+    75
+
+    '
+  - '76
+
+    76
+
+    76
+
+    76
+
+    76
+
+    '
+  - '61
+
+    63
+
+    63
+
+    61
+
+    66
+
+    '
+  - '72
+
+    72
+
+    72
+
+    72
+
+    72
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    49
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    49
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    49
+
+    '
+  - '55
+
+    55
+
+    59
+
+    59
+
+    59
+
+    '
+  - '55
+
+    56
+
+    60
+
+    60
+
+    60
+
+    '
+  - '55
+
+    59
+
+    59
+
+    63
+
+    63
+
+    '
+  - '70
+
+    72
+
+    72
+
+    70
+
+    72
+
+    '
+  - '55
+
+    59
+
+    59
+
+    63
+
+    63
+
+    '
+  - '55
+
+    55
+
+    57
+
+    68
+
+    68
+
+    '
+  - '55
+
+    56
+
+    58
+
+    55
+
+    58
+
+    '
+  - '53
+
+    53
+
+    53
+
+    56
+
+    63
+
+    '
+  - '55
+
+    55
+
+    57
+
+    57
+
+    57
+
+    '
+  - '82
+
+    86
+
+    86
+
+    82
+
+    86
+
+    '
+  - '44
+
+    44
+
+    44
+
+    53
+
+    53
+
+    '
+  - '46
+
+    48
+
+    48
+
+    46
+
+    46
+
+    '
+  - '67
+
+    69
+
+    71
+
+    75
+
+    75
+
+    '
+  - '55
+
+    56
+
+    56
+
+    56
+
+    61
+
+    '
+  - '78
+
+    78
+
+    78
+
+    78
+
+    78
+
+    '
+  - '100
+
+    102
+
+    102
+
+    100
+
+    100
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '55
+
+    55
+
+    55
+
+    63
+
+    63
+
+    '
+  - '60
+
+    61
+
+    63
+
+    60
+
+    63
+
+    '
+  - '77
+
+    77
+
+    79
+
+    77
+
+    84
+
+    '
+  - '100
+
+    102
+
+    102
+
+    100
+
+    100
+
+    '
+  - '55
+
+    55
+
+    55
+
+    55
+
+    55
+
+    '
+  - '70
+
+    71
+
+    71
+
+    71
+
+    76
+
+    '
+  - '53
+
+    53
+
+    53
+
+    53
+
+    53
+
+    '
+  - '40
+
+    40
+
+    44
+
+    44
+
+    56
+
+    '
+  - '53
+
+    53
+
+    53
+
+    53
+
+    53
+
+    '
+  - '76
+
+    78
+
+    78
+
+    76
+
+    76
+
+    '
+  - '33
+
+    33
+
+    33
+
+    33
+
+    33
+
+    '
+  - '62
+
+    62
+
+    62
+
+    62
+
+    62
+
+    '
+  - '61
+
+    63
+
+    63
+
+    61
+
+    66
+
+    '
+  - '72
+
+    72
+
+    72
+
+    72
+
+    72
+
+    '
+  - '44
+
+    46
+
+    46
+
+    44
+
+    49
+
+    '
+  - '55
+
+    55
+
+    55
+
+    59
+
+    59
+
+    '
+timeout: 4.5

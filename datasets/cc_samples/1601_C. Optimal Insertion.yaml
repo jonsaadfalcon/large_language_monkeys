@@ -1,0 +1,5849 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nZookeeper is\
+  \ buying a carton of fruit to feed his pet wabbit. The fruits are a sequence of\
+  \ apples and oranges, which is represented by a binary string s_1s_2\u2026 s_n of\
+  \ length n. 1 represents an apple and 0 represents an orange.\n\nSince wabbit is\
+  \ allergic to eating oranges, Zookeeper would like to find the longest contiguous\
+  \ sequence of apples. Let f(l,r) be the longest contiguous sequence of apples in\
+  \ the substring s_{l}s_{l+1}\u2026 s_{r}. \n\nHelp Zookeeper find \u2211_{l=1}^{n}\
+  \ \u2211_{r=l}^{n} f(l,r), or the sum of f across all substrings.\n\nInput\n\nThe\
+  \ first line contains a single integer n (1 \u2264 n \u2264 5 \u22C5 10^5).\n\n\
+  The next line contains a binary string s of length n (s_i \u2208 \\{0,1\\}) \n\n\
+  Output\n\nPrint a single integer: \u2211_{l=1}^{n} \u2211_{r=l}^{n} f(l,r). \n\n\
+  Examples\n\nInput\n\n\n4\n0110\n\n\nOutput\n\n\n12\n\n\nInput\n\n\n7\n1101001\n\n\
+  \nOutput\n\n\n30\n\n\nInput\n\n\n12\n011100011100\n\n\nOutput\n\n\n156\n\nNote\n\
+  \nIn the first test, there are ten substrings. The list of them (we let [l,r] be\
+  \ the substring s_l s_{l+1} \u2026 s_r):\n\n  * [1,1]: 0 \n  * [1,2]: 01 \n  * [1,3]:\
+  \ 011 \n  * [1,4]: 0110 \n  * [2,2]: 1 \n  * [2,3]: 11 \n  * [2,4]: 110 \n  * [3,3]:\
+  \ 1 \n  * [3,4]: 10 \n  * [4,4]: 0 \n\n\n\nThe lengths of the longest contiguous\
+  \ sequence of ones in each of these ten substrings are 0,1,2,2,1,2,2,1,1,0 respectively.\
+  \ Hence, the answer is 0+1+2+2+1+2+2+1+1+0 = 12.\nA: ```hist = [0]*1000005\n\ndef\
+  \ solve(n,s):\n    cnt = 0 \n    tot = 0 \n    i = 0 \n    while i < n:\n      \
+  \  if s[i] == '0':\n            tot += cnt \n        else:\n            l = i \n\
+  \            r = i  \n            while r+1 < n and s[r+1] == '1':\n           \
+  \     r+=1 \n            #print(r)\n            for x in range(r-l+1):\n       \
+  \         cnt += (l+x+1)-hist[x]\n                tot += cnt \n                hist[x]\
+  \ = r-x+1\n            i = r \n        i+=1 \n    return tot\n    \n\n\nn = int(input())\n\
+  s = input()\nprint(solve(n,s))```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nTo confuse the opponents, the Galactic Empire represents fractions\
+  \ in an unusual format. The fractions are represented as two sets of integers. The\
+  \ product of numbers from the first set gives the fraction numerator, the product\
+  \ of numbers from the second set gives the fraction denominator. However, it turned\
+  \ out that the programs that work with fractions in this representations aren't\
+  \ complete, they lack supporting the operation of reducing fractions. Implement\
+  \ this operation and the Empire won't forget you.\n\nInput\n\nThe first input line\
+  \ contains two space-separated integers n, m (1 \u2264 n, m \u2264 105) that show\
+  \ how many numbers the first set (the numerator) and the second set (the denominator)\
+  \ contain, correspondingly.\n\nThe second line contains n space-separated integers:\
+  \ a1, a2, ..., an (1 \u2264 ai \u2264 107) \u2014 the numbers that are multiplied\
+  \ to produce the numerator.\n\nThe third line contains m space-separated integers:\
+  \ b1, b2, ..., bm (1 \u2264 bi \u2264 107) \u2014 the numbers that are multiplied\
+  \ to produce the denominator.\n\nOutput\n\nPrint the answer to the problem in the\
+  \ form, similar to the form of the input data. The number of values in the sets\
+  \ you print nout, mout must satisfy the inequality 1 \u2264 nout, mout \u2264 105,\
+  \ and the actual values in the sets aout, i and bout, i must satisfy the inequality\
+  \ 1 \u2264 aout, i, bout, i \u2264 107. \n\nSeparate the values in the lines by\
+  \ spaces. The printed fraction must be reduced, that is, there mustn't be such integer\
+  \ x (x > 1), that the numerator and the denominator of the printed fraction are\
+  \ divisible by x. If there are several matching answers, print any of them.\n\n\
+  Examples\n\nInput\n\n3 2\n100 5 2\n50 10\n\n\nOutput\n\n2 3\n2 1\n1 1 1\n\n\nInput\n\
+  \n4 3\n2 5 10 20\n100 1 3\n\n\nOutput\n\n1 1\n20\n3\n\nNote\n\nIn the first test\
+  \ sample the numerator equals 1000, the denominator equals 500. If we reduce fraction\
+  \ 1000/500 by the greatest common divisor of the numerator and the denominator (by\
+  \ 500), we obtain fraction 2/1.\n\nIn the second test sample the numerator equals\
+  \ 2000, the denominator equals 300. If we reduce fraction 2000/300 by the greatest\
+  \ common divisor of the numerator and the denominator (by 100), we obtain fraction\
+  \ 20/3.\nA: ```from collections import defaultdict\nimport bisect\nfrom itertools\
+  \ import accumulate\nimport os\nimport sys\nimport math\nfrom io import BytesIO,\
+  \ IOBase\n\nBUFSIZE = 8192\n\n\nclass FastIO(IOBase):\n    newlines = 0\n\n    def\
+  \ __init__(self, file):\n        self._fd = file.fileno()\n        self.buffer =\
+  \ BytesIO()\n        self.writable = \"x\" in file.mode or \"r\" not in file.mode\n\
+  \        self.write = self.buffer.write if self.writable else None\n\n    def read(self):\n\
+  \        while True:\n            b = os.read(self._fd, max(os.fstat(self._fd).st_size,\
+  \ BUFSIZE))\n            if not b:\n                break\n            ptr = self.buffer.tell()\n\
+  \            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)\n\
+  \        self.newlines = 0\n        return self.buffer.read()\n\n    def readline(self):\n\
+  \        while self.newlines == 0:\n            b = os.read(self._fd, max(os.fstat(self._fd).st_size,\
+  \ BUFSIZE))\n            self.newlines = b.count(b\"\\n\") + (not b)\n         \
+  \   ptr = self.buffer.tell()\n            self.buffer.seek(0, 2), self.buffer.write(b),\
+  \ self.buffer.seek(ptr)\n        self.newlines -= 1\n        return self.buffer.readline()\n\
+  \n    def flush(self):\n        if self.writable:\n            os.write(self._fd,\
+  \ self.buffer.getvalue())\n            self.buffer.truncate(0), self.buffer.seek(0)\n\
+  \n\nclass IOWrapper(IOBase):\n    def __init__(self, file):\n        self.buffer\
+  \ = FastIO(file)\n        self.flush = self.buffer.flush\n        self.writable\
+  \ = self.buffer.writable\n        self.write = lambda s: self.buffer.write(s.encode(\"\
+  ascii\"))\n        self.read = lambda: self.buffer.read().decode(\"ascii\")\n  \
+  \      self.readline = lambda: self.buffer.readline().decode(\"ascii\")\n\n\nsys.stdin,\
+  \ sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)\n\n\ndef input(): return\
+  \ sys.stdin.readline().rstrip(\"\\r\\n\")\n\n\n# ------------------- fast io --------------------\n\
+  def factor(n, dic1):\n    while(n % 2 == 0):\n        if 2 not in dic1:\n      \
+  \      dic1[2] = 1\n        else:\n            dic1[2] += 1\n        n = n//2\n\
+  \    for i in range(3, int(math.sqrt(n))+1, 2):\n        while(n % i == 0):\n  \
+  \          if i not in dic1:\n                dic1[i] = 1\n            else:\n \
+  \               dic1[i] += 1\n            n = n//i\n    if n > 2:\n        if n\
+  \ not in dic1:\n            dic1[n] = 1\n        else:\n            dic1[n] += 1\n\
+  \n\ndef factor1(n, dic2):\n    while(n % 2 == 0):\n        if 2 not in dic2:\n \
+  \           dic2[2] = 1\n        else:\n            dic2[2] += 1\n        n = n//2\n\
+  \    for i in range(3, int(math.sqrt(n))+1, 2):\n        if n % i == 0:\n      \
+  \      while(n % i == 0):\n                if i not in dic2:\n                 \
+  \   dic2[i] = 1\n                else:\n                    dic2[i] += 1\n     \
+  \           n = n//i\n    if n > 2:\n        if n not in dic2:\n            dic2[n]\
+  \ = 1\n        else:\n            dic2[n] += 1\n\n\nn, m = map(int, input().split())\n\
+  dic1 = {}\ndic2 = {}\na = sorted(list(map(int, input().split())))\nb = sorted(list(map(int,\
+  \ input().split())))\nfor i in range(0, len(a)):\n    factor(a[i], dic1)\nfor i\
+  \ in range(0, len(b)):\n    factor1(b[i], dic2)\nans1 = [1]*n\nans2 = [1]*m\nfac1\
+  \ = []\nfac2 = []\nfor key in dic1:\n    if key in dic2:\n        if dic1[key] >=\
+  \ dic2[key]:\n            dic1[key] -= dic2[key]\n            dic2[key] = 0\n  \
+  \      elif dic2[key] > dic1[key]:\n            dic2[key] -= dic1[key]\n       \
+  \     dic1[key] = 0\nfac11=[]\nfac22=[]\nfor key in dic1:\n    fac11.append([key,dic1[key]])\n\
+  for key in dic2:\n    fac22.append([key,dic2[key]])\nfac11.sort(reverse=True)\n\
+  fac22.sort(reverse=True)\nj=0\nfor i in range(0,len(fac11)):\n    while(fac11[i][1]>0):\n\
+  \        if ans1[j]*fac11[i][0]<=10**7:\n            ans1[j]=ans1[j]*fac11[i][0]\n\
+  \            fac11[i][1]-=1\n        j=(j+1)%n\nj=0\nfor i in range(0, len(fac22)):\n\
+  \    while(fac22[i][1] > 0):\n        if ans2[j]*fac22[i][0] <= 10**7:\n       \
+  \     ans2[j] = ans2[j]*fac22[i][0]\n            fac22[i][1] -= 1\n        j = (j+1)\
+  \ % m\nprint(len(ans1),len(ans2))\nprint(*ans1)\nprint(*ans2)```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nYou are given two arrays of integers\
+  \ a_1, a_2, \u2026, a_n and b_1, b_2, \u2026, b_m.\n\nYou need to insert all elements\
+  \ of b into a in an arbitrary way. As a result you will get an array c_1, c_2, \u2026\
+  , c_{n+m} of size n + m.\n\nNote that you are not allowed to change the order of\
+  \ elements in a, while you can insert elements of b at arbitrary positions. They\
+  \ can be inserted at the beginning, between any elements of a, or at the end. Moreover,\
+  \ elements of b can appear in the resulting array in any order.\n\nWhat is the minimum\
+  \ possible number of inversions in the resulting array c? Recall that an inversion\
+  \ is a pair of indices (i, j) such that i < j and c_i > c_j.\n\nInput\n\nEach test\
+  \ contains multiple test cases. The first line contains the number of test cases\
+  \ t (1 \u2264 t \u2264 10^4). Description of the test cases follows.\n\nThe first\
+  \ line of each test case contains two integers n and m (1 \u2264 n, m \u2264 10^6).\n\
+  \nThe second line of each test case contains n integers a_1, a_2, \u2026, a_n (1\
+  \ \u2264 a_i \u2264 10^9).\n\nThe third line of each test case contains m integers\
+  \ b_1, b_2, \u2026, b_m (1 \u2264 b_i \u2264 10^9).\n\nIt is guaranteed that the\
+  \ sum of n for all tests cases in one input doesn't exceed 10^6. The sum of m for\
+  \ all tests cases doesn't exceed 10^6 as well.\n\nOutput\n\nFor each test case,\
+  \ print one integer \u2014 the minimum possible number of inversions in the resulting\
+  \ array c.\n\nExample\n\nInput\n\n\n3\n3 4\n1 2 3\n4 3 2 1\n3 3\n3 2 1\n1 2 3\n\
+  5 4\n1 3 5 3 1\n4 3 6 1\n\n\nOutput\n\n\n0\n4\n6\n\nNote\n\nBelow is given the solution\
+  \ to get the optimal answer for each of the example test cases (elements of a are\
+  \ underscored).\n\n  * In the first test case, c = [\\underline{1}, 1, \\underline{2},\
+  \ 2, \\underline{3}, 3, 4]. \n  * In the second test case, c = [1, 2, \\underline{3},\
+  \ \\underline{2}, \\underline{1}, 3]. \n  * In the third test case, c = [\\underline{1},\
+  \ 1, 3, \\underline{3}, \\underline{5}, \\underline{3}, \\underline{1}, 4, 6]. \n\
+  A:"
+question: "You are given two arrays of integers a_1, a_2, \u2026, a_n and b_1, b_2,\
+  \ \u2026, b_m.\n\nYou need to insert all elements of b into a in an arbitrary way.\
+  \ As a result you will get an array c_1, c_2, \u2026, c_{n+m} of size n + m.\n\n\
+  Note that you are not allowed to change the order of elements in a, while you can\
+  \ insert elements of b at arbitrary positions. They can be inserted at the beginning,\
+  \ between any elements of a, or at the end. Moreover, elements of b can appear in\
+  \ the resulting array in any order.\n\nWhat is the minimum possible number of inversions\
+  \ in the resulting array c? Recall that an inversion is a pair of indices (i, j)\
+  \ such that i < j and c_i > c_j.\n\nInput\n\nEach test contains multiple test cases.\
+  \ The first line contains the number of test cases t (1 \u2264 t \u2264 10^4). Description\
+  \ of the test cases follows.\n\nThe first line of each test case contains two integers\
+  \ n and m (1 \u2264 n, m \u2264 10^6).\n\nThe second line of each test case contains\
+  \ n integers a_1, a_2, \u2026, a_n (1 \u2264 a_i \u2264 10^9).\n\nThe third line\
+  \ of each test case contains m integers b_1, b_2, \u2026, b_m (1 \u2264 b_i \u2264\
+  \ 10^9).\n\nIt is guaranteed that the sum of n for all tests cases in one input\
+  \ doesn't exceed 10^6. The sum of m for all tests cases doesn't exceed 10^6 as well.\n\
+  \nOutput\n\nFor each test case, print one integer \u2014 the minimum possible number\
+  \ of inversions in the resulting array c.\n\nExample\n\nInput\n\n\n3\n3 4\n1 2 3\n\
+  4 3 2 1\n3 3\n3 2 1\n1 2 3\n5 4\n1 3 5 3 1\n4 3 6 1\n\n\nOutput\n\n\n0\n4\n6\n\n\
+  Note\n\nBelow is given the solution to get the optimal answer for each of the example\
+  \ test cases (elements of a are underscored).\n\n  * In the first test case, c =\
+  \ [\\underline{1}, 1, \\underline{2}, 2, \\underline{3}, 3, 4]. \n  * In the second\
+  \ test case, c = [1, 2, \\underline{3}, \\underline{2}, \\underline{1}, 3]. \n \
+  \ * In the third test case, c = [\\underline{1}, 1, 3, \\underline{3}, \\underline{5},\
+  \ \\underline{3}, \\underline{1}, 4, 6]. "
+samples:
+- " ```from collections import defaultdict\nimport bisect\nfrom itertools import accumulate\n\
+  import os\nimport sys\nimport math\nfrom io import BytesIO, IOBase\n\nBUFSIZE =\
+  \ 8192\n\n\nclass FastIO(IOBase):\n    newlines = 0\n\n    def __init__(self, file):\n\
+  \        self._fd = file.fileno()\n        self.buffer = BytesIO()\n        self.writable\
+  \ = \"x\" in file.mode or \"r\" not in file.mode\n        self.write = self.buffer.write\
+  \ if self.writable else None\n\n    def read(self):\n        while True:\n     \
+  \       b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))\n      \
+  \      if not b:\n                break\n            ptr = self.buffer.tell()\n\
+  \            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)\n\
+  \        self.newlines = 0\n        return self.buffer.read()\n\n    def readline(self):\n\
+  \        while self.newlines == 0:\n            b = os.read(self._fd, max(os.fstat(self._fd).st_size,\
+  \ BUFSIZE))\n            self.newlines = b.count(b\"\\n\") + (not b)\n         \
+  \   ptr = self.buffer.tell()\n            self.buffer.seek(0, 2), self.buffer.write(b),\
+  \ self.buffer.seek(ptr)\n        self.newlines -= 1\n        return self.buffer.readline()\n\
+  \n    def flush(self):\n        if self.writable:\n            os.write(self._fd,\
+  \ self.buffer.getvalue())\n            self.buffer.truncate(0), self.buffer.seek(0)\n\
+  \n\nclass IOWrapper(IOBase):\n    def __init__(self, file):\n        self.buffer\
+  \ = FastIO(file)\n        self.flush = self.buffer.flush\n        self.writable\
+  \ = self.buffer.writable\n        self.write = lambda s: self.buffer.write(s.encode(\"\
+  ascii\"))\n        self.read = lambda: self.buffer.read().decode(\"ascii\")\n  \
+  \      self.readline = lambda: self.buffer.readline().decode(\"ascii\")\n\n\nsys.stdin,\
+  \ sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)\n\n\ndef input(): return\
+  \ sys.stdin.readline().rstrip(\"\\r\\n\")\n\n\n# ------------------- fast io --------------------\n\
+  \nt = int(input())\nfor _ in range(t):\n    n, m = map(int, input().split())\n \
+  \   a = list(map(int, input().split()))\n    b = list(map(int, input().split()))\n\
+  \    inv = 0\n    i = j = 0\n    while i < n and j < m:\n        if a[i] <= b[j]:\n\
+  \            i += 1\n        else:\n            inv += n - i\n            j += 1\n\
+  \    inv += m - j\n    print(inv)````\nQ:"
+- " ```from collections import defaultdict\nimport bisect\nfrom itertools import accumulate\n\
+  import os\nimport sys\nimport math\nfrom io import BytesIO, IOBase\n\nBUFSIZE =\
+  \ 8192\n\n\nclass FastIO(IOBase):\n    newlines = 0\n\n    def __init__(self, file):\n\
+  \        self._fd = file.fileno()\n        self.buffer = BytesIO()\n        self.writable\
+  \ = \"x\" in file.mode or \"r\" not in file.mode\n        self.write = self.buffer.write\
+  \ if self.writable else None\n\n    def read(self):\n        while True:\n     \
+  \       b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))\n      \
+  \      if not b:\n                break\n            ptr = self.buffer.tell()\n\
+  \            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)\n\
+  \        self.newlines = 0\n        return self.buffer.read()\n\n    def readline(self):\n\
+  \        while self.newlines == 0:\n            b = os.read(self._fd, max(os.fstat(self._fd).st_size,\
+  \ BUFSIZE))\n            self.newlines = b.count(b\"\\n\") + (not b)\n         \
+  \   ptr = self.buffer.tell()\n            self.buffer.seek(0, 2), self.buffer.write(b),\
+  \ self.buffer.seek(ptr)\n        self.newlines -= 1\n        return self.buffer.readline()\n\
+  \n    def flush(self):\n        if self.writable:\n            os.write(self._fd,\
+  \ self.buffer.getvalue())\n            self.buffer.truncate(0), self.buffer.seek(0)\n\
+  \n\nclass IOWrapper(IOBase):\n    def __init__(self, file):\n        self.buffer\
+  \ = FastIO(file)\n        self.flush = self.buffer.flush\n        self.writable\
+  \ = self.buffer.writable\n        self.write = lambda s: self.buffer.write(s.encode(\"\
+  ascii\"))\n        self.read = lambda: self.buffer.read().decode(\"ascii\")\n  \
+  \      self.readline = lambda: self.buffer.readline().decode(\"ascii\")\n\n\nsys.stdin,\
+  \ sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)\n\n\ndef input(): return\
+  \ sys.stdin.readline().rstrip(\"\\r\\n\")\n\n\n# ------------------- fast io --------------------\n\
+  t = int(input())\nfor _ in range(t):\n    n, m = map(int, input().split())\n   \
+  \ a = list(map(int, input().split()))\n    b = list(map(int, input().split()))\n\
+  \    res = 0\n    for i in range(len(b)):\n        for j in range(len(a)):\n   \
+  \         if a[j] > b[i]:\n                res += 1\n    print(res)```\nQ:"
+test_cases:
+  input:
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 3 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 3 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 6 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 1 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 2 2
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 6 5 2 1
+
+    2 3 1 0
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    6 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    3 2 1
+
+    1 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 2
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    6 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 5 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 6 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 1 3 1
+
+    7 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 3
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 4
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 6
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 4 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    6 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    1 2 1
+
+    2 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    4 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 2 2 1
+
+    5 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 8
+
+    2 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    2 2 3
+
+    2 2 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 3
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 1 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    1 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 2 2
+
+    4 3 6 1
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    3 2 4
+
+    10 1
+
+    1 3 2 6 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    5 3 1 1
+
+    3 4
+
+    3 3 1
+
+    1 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    5 8
+
+    2 2 2
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    1 3
+
+    3 3 1
+
+    1 2 4
+
+    10 4
+
+    2 3 2 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 4
+
+    4 3 2 1
+
+    5 3
+
+    3 2 2
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    5 3
+
+    1 2 6
+
+    4 1 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 2
+
+    2 4 4
+
+    19 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    1 4 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 2 2
+
+    4 3 6 1
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    3 2 4
+
+    10 1
+
+    2 3 2 6 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 2 3 2
+
+    3 3
+
+    3 1 2
+
+    1 2 4
+
+    5 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    1 4
+
+    1 2 3
+
+    4 3 4 1
+
+    3 3
+
+    3 2 2
+
+    1 2 1
+
+    10 4
+
+    1 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 8
+
+    2 2 2
+
+    4 2 2 1
+
+    4 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    8 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 2 1
+
+    1 2 6
+
+    12 4
+
+    2 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 1 2 1
+
+    3 3
+
+    3 2 1
+
+    2 4 4
+
+    10 3
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 4 1
+
+    5 3
+
+    3 2 2
+
+    2 2 8
+
+    18 2
+
+    1 3 2 4 1
+
+    4 4 12 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    2 2
+
+    3 2 1
+
+    2 2 4
+
+    20 4
+
+    1 6 5 2 1
+
+    3 3 2 0
+
+    '
+  - '3
+
+    5 8
+
+    2 2 2
+
+    4 2 2 1
+
+    4 3
+
+    2 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 1 2 1
+
+    5 3
+
+    3 2 1
+
+    2 4 4
+
+    10 3
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    7 4
+
+    2 1 4
+
+    4 3 2 1
+
+    5 3
+
+    3 2 2
+
+    2 2 4
+
+    10 2
+
+    1 3 3 4 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    7 4
+
+    2 1 4
+
+    6 3 2 1
+
+    5 3
+
+    3 2 2
+
+    2 2 4
+
+    10 2
+
+    1 3 3 4 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 2
+
+    1 3 3 1
+
+    3 3
+
+    3 2 1
+
+    1 3 3
+
+    5 4
+
+    1 3 7 8 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    5 8
+
+    2 1 2
+
+    4 4 2 1
+
+    4 3
+
+    2 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 5 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 5 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 3
+
+    5 4
+
+    1 3 5 5 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    8 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 8 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 2 3 1
+
+    7 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    4 4
+
+    1 3 5 3 1
+
+    2 3 8 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 3 1
+
+    1 2 3
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 2 1
+
+    2 3 1 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    4 4
+
+    1 3 5 3 1
+
+    2 6 8 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 2 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 3 1
+
+    1 2 3
+
+    10 4
+
+    3 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 3 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 3 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    3 6 5 2 2
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    2 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 6 5 2 1
+
+    2 3 1 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 3
+
+    3 2 1
+
+    1 3 3
+
+    5 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 4 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 3 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 8
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    2 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 6 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    3 2 1
+
+    1 3 3
+
+    5 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    18 2
+
+    1 3 2 4 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    3 2 1
+
+    1 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    18 2
+
+    1 3 2 2 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    16 2
+
+    1 3 2 2 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    6 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    3 2 1
+
+    2 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 2 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    16 2
+
+    1 3 2 2 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    3 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 3 9 1
+
+    '
+  - '3
+
+    3 4
+
+    1 2 6
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    1 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 5
+
+    10 4
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 5
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    2 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 2 2
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    8 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 2 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 1 1
+
+    2 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    2 2 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    2 3 5 3 1
+
+    2 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 2 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    10 4
+
+    1 3 5 3 2
+
+    2 3 8 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 2 1
+
+    1 2 6
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 3 5 1
+
+    1 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 3 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 3 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    4 4
+
+    1 3 5 3 1
+
+    2 3 7 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    8 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 4 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 3 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    4 4
+
+    1 6 5 3 1
+
+    2 6 8 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 5 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 6 5 2 2
+
+    4 3 6 1
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 6 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 1 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    3 6 5 2 2
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    2 3
+
+    3 2 1
+
+    2 2 4
+
+    20 4
+
+    1 6 5 2 1
+
+    2 3 1 0
+
+    '
+  - '3
+
+    2 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 4 1
+
+    2 2 4
+
+    1 1
+
+    1 3 2 3 1
+
+    4 6 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 2
+
+    3 4
+
+    3 2 1
+
+    1 3 3
+
+    5 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    18 2
+
+    2 3 2 4 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    3 3 1
+
+    1 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 2 8
+
+    16 2
+
+    1 3 2 2 0
+
+    4 3 12 0
+
+    '
+  - '3
+
+    7 4
+
+    1 2 3
+
+    4 3 2 1
+
+    6 3
+
+    3 2 1
+
+    2 1 8
+
+    16 2
+
+    1 3 2 2 1
+
+    4 3 12 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    2 4
+
+    1 2 6
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    1 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 1
+
+    10 4
+
+    1 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 5
+
+    11 4
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 5
+
+    5 4
+
+    1 3 5 3 1
+
+    4 3 9 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    6 2 1
+
+    2 2 4
+
+    7 2
+
+    1 3 2 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 2 2
+
+    8 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 2
+
+    1 2 3
+
+    8 4
+
+    1 3 5 3 1
+
+    4 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 6 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    2 3 5 3 1
+
+    5 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    1 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    2 3 2 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 4
+
+    1 3 5 1 1
+
+    2 2 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 4 4
+
+    10 4
+
+    1 3 5 3 2
+
+    2 3 8 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 2 1
+
+    1 2 6
+
+    12 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 4
+
+    10 4
+
+    4 3 1 3 1
+
+    7 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    1 4
+
+    1 3 3 5 1
+
+    1 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 3 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 3 1
+
+    4 3 3 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 4
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    10 2
+
+    1 3 2 4 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 3 4
+
+    4 4
+
+    1 3 5 3 1
+
+    2 3 7 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 2
+
+    8 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 2 1
+
+    5 3
+
+    3 2 1
+
+    2 4 4
+
+    19 2
+
+    1 3 2 4 1
+
+    4 3 6 0
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 3 1 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 2
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    4 4
+
+    1 6 5 3 1
+
+    2 6 8 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 4 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 4
+
+    10 1
+
+    1 3 2 5 0
+
+    4 6 3 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    4 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    7 4
+
+    1 1 3
+
+    4 3 4 1
+
+    5 3
+
+    3 2 1
+
+    2 2 4
+
+    18 2
+
+    1 3 2 4 1
+
+    4 4 12 0
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 2 2 2
+
+    3 3
+
+    3 1 2
+
+    1 2 4
+
+    5 4
+
+    1 3 5 3 1
+
+    4 2 6 1
+
+    '
+  - '3
+
+    3 4
+
+    1 3 3
+
+    4 3 2 2
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    3 6 5 3 2
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    2 3
+
+    3 2 1
+
+    2 2 4
+
+    20 4
+
+    1 6 5 2 1
+
+    2 3 2 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 1 2
+
+    3 4
+
+    3 2 1
+
+    1 6 3
+
+    5 4
+
+    2 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    6 4
+
+    1 2 3
+
+    4 3 1 1
+
+    3 4
+
+    1 2 1
+
+    2 3 3
+
+    2 4
+
+    2 3 7 5 1
+
+    2 6 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 1 1 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    10 4
+
+    1 3 5 3 1
+
+    4 0 6 1
+
+    '
+  - '3
+
+    2 4
+
+    1 2 6
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    2 3 5 3 1
+
+    8 3 6 1
+
+    '
+  - '3
+
+    1 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 2
+
+    1 2 1
+
+    10 4
+
+    1 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 5
+
+    5 4
+
+    1 4 5 3 1
+
+    4 3 9 0
+
+    '
+  - '3
+
+    5 4
+
+    1 3 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 2
+
+    1 2 3
+
+    8 4
+
+    1 3 5 3 1
+
+    4 3 11 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 2 6
+
+    10 4
+
+    1 3 5 1 1
+
+    2 2 6 0
+
+    '
+  - '3
+
+    8 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 6
+
+    3 2 1
+
+    1 2 6
+
+    12 4
+
+    2 3 5 3 1
+
+    5 3 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 4 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    2 4 4
+
+    10 3
+
+    1 3 5 2 1
+
+    2 3 0 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    1 2
+
+    1 3 3 5 1
+
+    1 3 6 0
+
+    '
+  - '3
+
+    5 4
+
+    1 2 3
+
+    4 3 2 1
+
+    3 3
+
+    3 2 2
+
+    2 3 4
+
+    4 4
+
+    1 3 5 3 1
+
+    2 3 7 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 2
+
+    8 3 3 1
+
+    3 3
+
+    3 2 1
+
+    1 2 3
+
+    5 4
+
+    1 3 7 5 1
+
+    1 6 6 0
+
+    '
+  - '3
+
+    5 6
+
+    1 2 6
+
+    4 3 1 2
+
+    3 3
+
+    3 2 2
+
+    1 2 4
+
+    10 4
+
+    1 3 5 3 1
+
+    4 4 6 1
+
+    '
+  - '3
+
+    5 4
+
+    1 2 2
+
+    4 3 2 1
+
+    3 3
+
+    3 2 1
+
+    1 3 4
+
+    1 4
+
+    1 6 5 3 1
+
+    2 6 8 1
+
+    '
+  output:
+  - '0
+
+    4
+
+    6
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '0
+
+    4
+
+    7
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '4
+
+    0
+
+    5
+
+    '
+  - '4
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    1
+
+    '
+  - '13
+
+    0
+
+    1
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '0
+
+    0
+
+    1
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '3
+
+    1
+
+    5
+
+    '
+  - '0
+
+    0
+
+    6
+
+    '
+  - '5
+
+    1
+
+    5
+
+    '
+  - '0
+
+    4
+
+    9
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '6
+
+    0
+
+    5
+
+    '
+  - '7
+
+    0
+
+    0
+
+    '
+  - '1
+
+    1
+
+    5
+
+    '
+  - '1
+
+    3
+
+    0
+
+    '
+  - '0
+
+    4
+
+    6
+
+    '
+  - '0
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    3
+
+    '
+  - '1
+
+    0
+
+    2
+
+    '
+  - '14
+
+    0
+
+    1
+
+    '
+  - '10
+
+    0
+
+    1
+
+    '
+  - '5
+
+    1
+
+    6
+
+    '
+  - '8
+
+    0
+
+    1
+
+    '
+  - '6
+
+    0
+
+    0
+
+    '
+  - '0
+
+    2
+
+    5
+
+    '
+  - '5
+
+    0
+
+    5
+
+    '
+  - '5
+
+    2
+
+    0
+
+    '
+  - '2
+
+    0
+
+    6
+
+    '
+  - '3
+
+    0
+
+    2
+
+    '
+  - '8
+
+    0
+
+    5
+
+    '
+  - '0
+
+    1
+
+    9
+
+    '
+  - '0
+
+    0
+
+    3
+
+    '
+  - '2
+
+    0
+
+    2
+
+    '
+  - '4
+
+    2
+
+    0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    '
+  - '14
+
+    0
+
+    0
+
+    '
+  - '7
+
+    2
+
+    5
+
+    '
+  - '11
+
+    0
+
+    0
+
+    '
+  - '0
+
+    3
+
+    9
+
+    '
+  - '0
+
+    0
+
+    4
+
+    '
+  - '7
+
+    0
+
+    5
+
+    '
+  - '0
+
+    3
+
+    0
+
+    '
+  - '3
+
+    2
+
+    0
+
+    '
+  - '12
+
+    0
+
+    2
+
+    '
+  - '7
+
+    0
+
+    2
+
+    '
+  - '8
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    8
+
+    '
+  - '2
+
+    2
+
+    0
+
+    '
+  - '6
+
+    0
+
+    2
+
+    '
+  - '16
+
+    0
+
+    0
+
+    '
+  - '17
+
+    0
+
+    0
+
+    '
+  - '2
+
+    0
+
+    3
+
+    '
+  - '1
+
+    2
+
+    0
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '13
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    7
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '4
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    1
+
+    '
+  - '13
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '1
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '7
+
+    0
+
+    0
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '0
+
+    4
+
+    7
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    7
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '6
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '4
+
+    0
+
+    6
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '4
+
+    0
+
+    6
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    1
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '0
+
+    4
+
+    9
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '6
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '0
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    2
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    3
+
+    0
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '1
+
+    1
+
+    5
+
+    '
+  - '0
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    3
+
+    '
+  - '1
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    1
+
+    '
+  - '14
+
+    0
+
+    1
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '11
+
+    0
+
+    1
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '5
+
+    1
+
+    6
+
+    '
+  - '8
+
+    0
+
+    1
+
+    '
+  - '6
+
+    0
+
+    5
+
+    '
+  - '0
+
+    4
+
+    11
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '6
+
+    0
+
+    0
+
+    '
+  - '5
+
+    0
+
+    5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '1
+
+    1
+
+    5
+
+    '
+  - '1
+
+    0
+
+    6
+
+    '
+  - '12
+
+    0
+
+    1
+
+    '
+  - '3
+
+    0
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    4
+
+    '
+  - '3
+
+    0
+
+    5
+
+    '
+  - '1
+
+    0
+
+    7
+
+    '
+timeout: 3.0

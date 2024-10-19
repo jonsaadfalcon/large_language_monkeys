@@ -1,0 +1,4499 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nD: Sunburn-Suntan-\n\
+  \nstory\n\nAizunyan is a second-year student who belongs to the programming contest\
+  \ club of Wakagamatsu High School, commonly known as the Prokon club. Cute like\
+  \ an angel. Aizu Nyan is planning to participate in this summer festival, so I made\
+  \ a schedule for the band to go to listen to. I'm worried about sunburn here. All\
+  \ live performances are held outdoors, but Aizu Nyan has a constitution that makes\
+  \ it easy to get sunburned, so if you are exposed to too much ultraviolet rays outdoors\
+  \ for a long time, you will get sunburned immediately. I plan to avoid UV rays as\
+  \ much as possible by evacuating indoors while there is no live performance, but\
+  \ during the live performance, it will inevitably hit the sun. Therefore, Aizu Nyan\
+  \ thought about taking measures against ultraviolet rays by applying sunscreen.\n\
+  \nproblem\n\nIf you apply sunscreen, you can get the effect for T minutes from the\
+  \ time you apply it. Sunscreen can only be applied once, so I want to use it effectively.\
+  \ Aizu Nyan is outdoors from the start time to the end time of the live, and is\
+  \ indoors at other times. You'll be given a live schedule that Aizu Nyan will listen\
+  \ to, so find the maximum amount of time you can get the sunscreen effect while\
+  \ you're outdoors.\n\nInput format\n\nThe input can be given in the following format.\n\
+  \n\nT\nN\ns_1 t_1\n...\ns_N t_N\n\n\nThe first line is given an integer T that represents\
+  \ the time it takes to get the sunscreen effect. The second line is given an integer\
+  \ N that represents the number of live concerts Aizu Nyan listens to. The following\
+  \ N lines are given the integer s_i, which represents the start time of the live\
+  \ that Aizu Nyan listens to thi, and the integer t_i, which represents the end time,\
+  \ separated by spaces.\n\nConstraint\n\n* 1 \u2264 T \u2264 10 ^ {15}\n* 1 \u2264\
+  \ N \u2264 10 ^ 5\n* 0 \u2264 s_i <t_i \u2264 10 ^ {15} (1 \u2264 i \u2264 N)\n\
+  * The start time of the (i + 1) th live is the same as or later than the end time\
+  \ of the i-th live. That is, t_i \u2264 s_ {i + 1} (1 \u2264 i <N)\n\n\n\noutput\n\
+  \nPrint one line for the maximum amount of time you can get the sunscreen effect\
+  \ while you're outdoors.\n\nInput example 1\n\n\n20\n1\n0 10\n\n\nOutput example\
+  \ 1\n\n\nTen\n\nInput example 2\n\n\n20\n1\n0 100\n\n\nOutput example 2\n\n\n20\n\
+  \nInput example 3\n\n\n9\n3\n1 5\n9 11\n13 20\n\n\nOutput example 3\n\n\n7\n\nInput\
+  \ example 4\n\n\ntwenty five\nFive\n9 12\n15 20\n21 25\n28 40\n45 60\n\n\nOutput\
+  \ example 4\n\n\ntwenty one\n\n\n\n\n\nExample\n\nInput\n\n20\n1\n0 10\n\n\nOutput\n\
+  \n10\nA: ```# AOJ 2801: Suntan\n# Python3 2018.7.11 bal4u\n\nfrom bisect import\
+  \ bisect_left\n\nT, N = int(input()), int(input())\na, s, t = [0], [0], [0]\nfor\
+  \ i in range(N):\n\t_s, _t = map(int, input().split())\n\ts.append(_s)\n\tt.append(_t)\n\
+  \ta.append(a[-1]+_t-_s)\ns.append(1<<62)\nt.append(1<<62)\nans = 0\nk = bisect_left(t,\
+  \ T, 0)-1\nfor i in range(1, N+1):\n\tx = s[i]+T\n\tk = bisect_left(t, x, k)-1\n\
+  \ty = a[k]-a[i-1]\n\tif x > s[k+1]: y += x-s[k+1]\n\tif y > ans:\n\t\tans = y;\n\
+  \t\tif ans == T: break\nprint(ans)```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nAn angel lives in the clouds above the city where Natsume lives.\
+  \ The angel, like Natsume, loves cats and often comes down to the ground to play\
+  \ with cats. To get down to the ground, the angel made a long, long staircase leading\
+  \ from the clouds to the ground. However, the angel thought that it would be boring\
+  \ to just go down every time, so he worked on the stairs so that he could make a\
+  \ sound when he stepped on the steps. Use this to get off while playing music.\n\
+  \nMusic is played using 12 kinds of sounds. This time, I will ignore the octave\
+  \ of the sound and consider only 12 types of C, C #, D, D #, E, F, F #, G, G #,\
+  \ A, A #, B. The difference between adjacent sounds is called a semitone. For example,\
+  \ raising C by a semitone gives C #, and raising C # by a semitone gives D. Conversely,\
+  \ lowering G by a semitone gives F #, and lowering F # by a semitone gives F. Note\
+  \ that raising E by a semitone results in F, and raising B by a semitone results\
+  \ in C.\n\nThe mechanism of sound output from the stairs is as follows. First, the\
+  \ stairs consist of n white boards floating in the air. One of the 12 tones is assigned\
+  \ to each of the 1st to nth boards counting from the clouds. Let's write this as\
+  \ Ti (i = 1 ... n). Also, for the sake of simplicity, consider the clouds as the\
+  \ 0th stage and the ground as the n + 1th stage (however, no scale is assigned to\
+  \ them). When the angel is in the k (k = 0 ... n) stage, the next step is to go\
+  \ to any of the k-1, k + 1, k + 2 stages that exist. However, it cannot move after\
+  \ descending to the n + 1th stage (ground), and cannot return to it after leaving\
+  \ the 0th stage (cloud). Each movement makes a sound according to the following\
+  \ rules.\n\nI got down to the k + 1 stage\nThe sound of Tk + 1 sounds.\nk + 2nd\
+  \ step\nA semitone up of Tk + 2 sounds.\nI returned to the k-1 stage\nA semitone\
+  \ lower Tk-1 sounds.\n\nInformation on the stairs T1 ... Tn and the song S1 ...\
+  \ Sm that the angel wants to play are given. At this time, another sound must not\
+  \ be played before, during, or after the song you want to play. Determine if the\
+  \ angel can play this song and descend from the clouds to the ground.\n\nNotes on\
+  \ Submission\n\nMultiple datasets are given in the above format. The first line\
+  \ of input data gives the number of datasets. Create a program that outputs the\
+  \ output for each data set in order in the above format.\n\n\n\nInput\n\nThe first\
+  \ line of input gives the number of steps n of the stairs and the length m of the\
+  \ song that the angel wants to play. The second line is the information of the stairs,\
+  \ and T1, T2, ..., Tn are given in this order. The third line is the song that the\
+  \ angel wants to play, and S1, S2, ..., Sm are given in this order. All of these\
+  \ are separated by a single space character and satisfy 1 <= n, m <= 50000.\n\n\
+  Output\n\nOutput \"Yes\" if the angel can get down to the ground while playing the\
+  \ given song, otherwise output \"No\" on one line.\n\nExample\n\nInput\n\n4\n6 4\n\
+  C E D# F G A\nC E F G\n6 4\nC E D# F G A\nC D# F G\n3 6\nC D D\nD# B D B D# C#\n\
+  8 8\nC B B B B B F F\nC B B B B B B B\n\n\nOutput\n\nYes\nNo\nYes\nNo\nA: ```dic\
+  \ = {\"C\":0, \"C#\":1, \"D\":2, \"D#\":3,\n       \"E\":4, \"F\":5, \"F#\":6, \"\
+  G\":7,\n       \"G#\":8, \"A\":9, \"A#\":10, \"B\":11}\nt = int(input())\nfor _\
+  \ in range(t):\n  n, m = map(int, input().split())\n  t_lst = [-100] + list(map(lambda\
+  \ x:dic[x],input().split()))\n  s_lst = list(map(lambda x:dic[x],input().split()))\n\
+  \  s_lst.reverse()\n  \n  def search(stack):\n    t_index, s_index = stack.pop()\n\
+  \    if s_index == m: return t_index == 0\n    if t_index <= 0 or t_index > n: return\
+  \ False\n    base = t_lst[t_index]\n    proc = s_lst[s_index]\n    diff = (proc\
+  \ - base) % 12\n    if diff == 1  :stack.append((t_index - 2, s_index + 1))\n  \
+  \  if diff == 0  :stack.append((t_index - 1, s_index + 1))\n    if diff == 11 :stack.append((t_index\
+  \ + 1, s_index + 1))\n    return False\n  stack = [(n, 0), (n - 1, 0)]\n  while\
+  \ stack:\n    if search(stack):\n      print(\"Yes\")\n      break\n  else:\n  \
+  \  print(\"No\")```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nYou are given a keyboard that consists of 26 keys. The keys are arranged\
+  \ sequentially in one row in a certain order. Each key corresponds to a unique lowercase\
+  \ Latin letter.\n\nYou have to type the word s on this keyboard. It also consists\
+  \ only of lowercase Latin letters.\n\nTo type a word, you need to type all its letters\
+  \ consecutively one by one. To type each letter you must position your hand exactly\
+  \ over the corresponding key and press it.\n\nMoving the hand between the keys takes\
+  \ time which is equal to the absolute value of the difference between positions\
+  \ of these keys (the keys are numbered from left to right). No time is spent on\
+  \ pressing the keys and on placing your hand over the first letter of the word.\n\
+  \nFor example, consider a keyboard where the letters from 'a' to 'z' are arranged\
+  \ in consecutive alphabetical order. The letters 'h', 'e', 'l' and 'o' then are\
+  \ on the positions 8, 5, 12 and 15, respectively. Therefore, it will take |5 - 8|\
+  \ + |12 - 5| + |12 - 12| + |15 - 12| = 13 units of time to type the word \"hello\"\
+  . \n\nDetermine how long it will take to print the word s.\n\nInput\n\nThe first\
+  \ line contains an integer t (1 \u2264 t \u2264 1000) \u2014 the number of test\
+  \ cases.\n\nThe next 2t lines contain descriptions of the test cases.\n\nThe first\
+  \ line of a description contains a keyboard \u2014 a string of length 26, which\
+  \ consists only of lowercase Latin letters. Each of the letters from 'a' to 'z'\
+  \ appears exactly once on the keyboard.\n\nThe second line of the description contains\
+  \ the word s. The word has a length from 1 to 50 letters inclusive and consists\
+  \ of lowercase Latin letters.\n\nOutput\n\nPrint t lines, each line containing the\
+  \ answer to the corresponding test case. The answer to the test case is the minimal\
+  \ time it takes to type the word s on the given keyboard.\n\nExample\n\nInput\n\n\
+  \n5\nabcdefghijklmnopqrstuvwxyz\nhello\nabcdefghijklmnopqrstuvwxyz\ni\nabcdefghijklmnopqrstuvwxyz\n\
+  codeforces\nqwertyuiopasdfghjklzxcvbnm\nqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\n\
+  qwertyuiopasdfghjklzxcvbnm\nabacaba\n\n\nOutput\n\n\n13\n0\n68\n0\n74\nA:"
+question: "You are given a keyboard that consists of 26 keys. The keys are arranged\
+  \ sequentially in one row in a certain order. Each key corresponds to a unique lowercase\
+  \ Latin letter.\n\nYou have to type the word s on this keyboard. It also consists\
+  \ only of lowercase Latin letters.\n\nTo type a word, you need to type all its letters\
+  \ consecutively one by one. To type each letter you must position your hand exactly\
+  \ over the corresponding key and press it.\n\nMoving the hand between the keys takes\
+  \ time which is equal to the absolute value of the difference between positions\
+  \ of these keys (the keys are numbered from left to right). No time is spent on\
+  \ pressing the keys and on placing your hand over the first letter of the word.\n\
+  \nFor example, consider a keyboard where the letters from 'a' to 'z' are arranged\
+  \ in consecutive alphabetical order. The letters 'h', 'e', 'l' and 'o' then are\
+  \ on the positions 8, 5, 12 and 15, respectively. Therefore, it will take |5 - 8|\
+  \ + |12 - 5| + |12 - 12| + |15 - 12| = 13 units of time to type the word \"hello\"\
+  . \n\nDetermine how long it will take to print the word s.\n\nInput\n\nThe first\
+  \ line contains an integer t (1 \u2264 t \u2264 1000) \u2014 the number of test\
+  \ cases.\n\nThe next 2t lines contain descriptions of the test cases.\n\nThe first\
+  \ line of a description contains a keyboard \u2014 a string of length 26, which\
+  \ consists only of lowercase Latin letters. Each of the letters from 'a' to 'z'\
+  \ appears exactly once on the keyboard.\n\nThe second line of the description contains\
+  \ the word s. The word has a length from 1 to 50 letters inclusive and consists\
+  \ of lowercase Latin letters.\n\nOutput\n\nPrint t lines, each line containing the\
+  \ answer to the corresponding test case. The answer to the test case is the minimal\
+  \ time it takes to type the word s on the given keyboard.\n\nExample\n\nInput\n\n\
+  \n5\nabcdefghijklmnopqrstuvwxyz\nhello\nabcdefghijklmnopqrstuvwxyz\ni\nabcdefghijklmnopqrstuvwxyz\n\
+  codeforces\nqwertyuiopasdfghjklzxcvbnm\nqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\n\
+  qwertyuiopasdfghjklzxcvbnm\nabacaba\n\n\nOutput\n\n\n13\n0\n68\n0\n74"
+samples:
+- " ```# AOJ 2803: Keyboard\n# Python3 2018.7.11 bal4u\n\nfrom bisect import bisect_left\n\
+  \nt = int(input())\nfor _ in range(t):\n    keyboard = input()\n    s = input()\n\
+  \    s_index = 0\n    time = 0\n    for c in keyboard:\n        while s_index <\
+  \ len(s) and s[s_index] == c:\n            s_index += 1\n        if s_index < len(s):\n\
+  \            time += abs(ord(c) - ord(s[s_index]))\n            s_index += 1\n \
+  \   print(time)```\nQ:"
+- " ```dic = {\"a\":0, \"b\":1, \"c\":2, \"d\":3, \"e\":4, \"f\":5, \"g\":6, \"h\"\
+  :7, \"i\":8, \"j\":9, \"k\":10, \"l\":11, \"m\":12, \"n\":13, \"o\":14, \"p\":15,\
+  \ \"q\":16, \"r\":17, \"s\":18, \"t\":19, \"u\":20, \"v\":21, \"w\":22, \"x\":23,\
+  \ \"y\":24, \"z\":25}\nfor _ in range(int(input())):\n  keyboard = input()\n  word\
+  \ = input()\n  time = 0\n  for i in range(1, len(word)):\n    time += abs(dic[word[i]]\
+  \ - dic[word[i-1]])\n  print(time)```\nQ:"
+test_cases:
+  input:
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    acsacnkjanscjanjkcanc
+
+    '
+  - '1
+
+    abcdefghilkjmnopqrstuvwxyz
+
+    abdes
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    acsacnkjanscjanjkcanc
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxgz
+
+    abdes
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    acsacnkjanscjanjlcanc
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    acsacnkjanscjanjlcanb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    asdeb
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    aseeb
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    acsacnkcanscjanjkcanj
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codefcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    bbdes
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    saeeb
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    acsacnkcanscjanjlcanj
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codefcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abaacba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefjhilkglnopqrstuvwxyz
+
+    abdet
+
+    '
+  - '1
+
+    aycdefbhilkjmnopqrstuvwxgz
+
+    sfdba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    iello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codefcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abaacba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    gelln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    acsacnkianscjanjclanb
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    sadfb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    iello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codefcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    ababcba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    codefordes
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abaacba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlfjihgkedcba
+
+    lelhn
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsrpponmhklihyfedcba
+
+    bseeb
+
+    '
+  - '1
+
+    zywwsutvrqponmlkjihgfedcba
+
+    jnacljnajcsnackncasca
+
+    '
+  - '1
+
+    zgxovudsrqpcnljklihyfetwba
+
+    sedba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    codefordes
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    bbacaaa
+
+    '
+  - '1
+
+    abcdefyhilkjmponqrstuvwxhz
+
+    asdea
+
+    '
+  - '1
+
+    zywwsutvrqponmlcjihgfedkba
+
+    jnacljnajcsnackncasca
+
+    '
+  - '1
+
+    zgxwdutsrqponmjklihbfeucya
+
+    sfdba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    iello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codffcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    ababcba
+
+    '
+  - '1
+
+    zyxwvvtsrqponmlkjihgfedcba
+
+    nnacljnajcrcajkncasca
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    ehllo
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    codefordes
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    bbacaaa
+
+    '
+  - '1
+
+    dexwvutsrqponmlkjihgfyzcba
+
+    aasccnkianscjanjlcanb
+
+    '
+  - '1
+
+    zhxwvuvsrqponmjklihyfedcba
+
+    bsdfa
+
+    '
+  - '5
+
+    zyxwvttsrqponmlfjihgkedcba
+
+    lelhn
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    olleh
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforces
+
+    qwertyujnpasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    ehllo
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    dodefordes
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    bbacaaa
+
+    '
+  - '1
+
+    dexwvutsrqponmlkjihgfyzcba
+
+    aatccnkianscjanjlcanb
+
+    '
+  - '1
+
+    dfxwvutsrqponmlkjihgfyzcba
+
+    aatccnkiansljanjccanb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponclljihgfedmba
+
+    codeforces
+
+    mnbvcxzljjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abcabaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    olleh
+
+    aacdefghijklmnopqrstuvvxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforcse
+
+    qwertyujnpasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gelln
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    i
+
+    zypwvutsrqxonmlljihgfedcba
+
+    codeforces
+
+    mnbvcxylkjhgfdsapoiuztrewq
+
+    qqqqqqqqpqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    ewqrtyugopasdfihjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmleh
+
+    abcxefghijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    scerofecod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefyhilkjmponsrwtuvqxhz
+
+    bedsa
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gdlln
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    i
+
+    zypwvutsrqxonmlljihgfedcba
+
+    codeforces
+
+    mnbvcxylkjhgfdsapoiuztrewq
+
+    qqqqqqqqpqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    ewqrtyugopasdfihjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponclljihgfedmba
+
+    codeforces
+
+    mnbvcxzljjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwfrtyuhopasdfghjklzxcvbnm
+
+    abcabab
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmleh
+
+    abcxefghijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdehgsilkilnopqrftuvwxyz
+
+    teaae
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmleh
+
+    abchefxgijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjmlmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmhel
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdefghhjmlmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    aacddfghijklmnopqrstuvvxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforcse
+
+    nnbvcxzlkjhgfdsapnjuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzxcvbnj
+
+    abacaba
+
+    '
+  - '1
+
+    accdehgsilkilnopqqftuvwxxz
+
+    seaae
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    zyxvvutsrqponmlkjihgfddcaa
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforcse
+
+    nnbvcxzlkjhgfdsapnjuytrewq
+
+    qqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzwcvbnj
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihggedcba
+
+    nmhel
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdefghzjmlmnopqrstuvwxyh
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwtreyuiopasefghjklzxcvbnm
+
+    aaacaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    zyxvvutsrqponilkjmhgfddcaa
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforcse
+
+    nnbvcxzlkjhgfdsapnjuytrewq
+
+    pqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzwcvbnj
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihggedcba
+
+    nmhel
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdefghzjmlmnopqrstuvwxyh
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    rqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwtreyuiopasefghjklzxcvbnm
+
+    aaacaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    zyxvvutsrqponilkjmhgfddcaa
+
+    i
+
+    zqxwvutsryponmlkiihgfedcba
+
+    coeeforcse
+
+    qwertyujnpasdfghjklzxcvbnn
+
+    pqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzwcvbnj
+
+    abcaaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    zyxvvutsrqponilkjmhgfddcaa
+
+    j
+
+    zqxwyutsrvponmlkiihgfedcba
+
+    codeforcse
+
+    qwertyujnpasdfghjklzxcvbnn
+
+    pqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzwcvbnj
+
+    abcaaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    hdllo
+
+    zyxvvutsrqponilkjmhgfddcaa
+
+    j
+
+    zqxwyutsrvponmlkiihgfedcba
+
+    codeforcse
+
+    qwertyujnpasdfghjknzxcvbnl
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqp
+
+    qdertyuiobaswfghmklzwcvpnj
+
+    abaacba
+
+    '
+  - '5
+
+    abcdefghijilmnopqrstuvwxyz
+
+    hdllo
+
+    aacddfghmjklinopqrstuvvxyz
+
+    j
+
+    abcdefghiiklmnopvrstuywxqz
+
+    coeeforcse
+
+    qwertyujnpasdfghjknzxcvbnl
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqp
+
+    qdertyuiobaswfghmklzwcvpnj
+
+    abaacba
+
+    '
+  - '5
+
+    abcdefghijilmnopqrstuvwxyz
+
+    hdllo
+
+    aacddfghmjklinopqrstuvvxyz
+
+    j
+
+    abcdefghiiklmnopvrstuywxqz
+
+    coeeforcse
+
+    qwertyujnpasdfghjknzxcvbnl
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqp
+
+    qdertyuiobaswfghmklzwcvpnj
+
+    abaacaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hlelo
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    acsacjkjanscnanjlcanb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmonpqrstuvwxyz
+
+    cnackjnajcsnajkncasca
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    coacljnajcsnajkncasca
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    baacaba
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    saeea
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hemln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwautsrqponmlkjihgfedcbv
+
+    acsacnkcanscjanjlcanj
+
+    '
+  - '1
+
+    nbcdefyhilkjmaopqrstuvwxgz
+
+    sfdba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforbes
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwerbyuiopasdfghjklzxcvtnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zywwvutsrqponmlkjihgfedcba
+
+    jnacljnajcsnackncatca
+
+    '
+  - '5
+
+    zyxwvutsrqponmakjihgfedcbl
+
+    gelln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hemll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abaacba
+
+    '
+  - '1
+
+    zhxwvuusrqponmjklihyfedcba
+
+    csdea
+
+    '
+  - '5
+
+    zyxwvutsrqponmlfjihgkedcba
+
+    kelhn
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zgxwuuterqponmjklihbfsdcya
+
+    sfdba
+
+    '
+  - '1
+
+    dexwvutsrqponmlkjihgfyzcba
+
+    acsacnkianscjanjldanb
+
+    '
+  - '1
+
+    abcdefyhilkjmponqrstuvwxhz
+
+    asdae
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gelln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    ewqrtyuiopasdfghjklzxcvbnm
+
+    abbcaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    nlleh
+
+    abcxefghijklmnopqrstuvwdyz
+
+    i
+
+    abcdefghhjllmnzpqrstuvwxyo
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwjvtsrqponmlkvihgfedcba
+
+    nnacljnajcrcajkncasca
+
+    '
+  - '1
+
+    zhxwvuvsrqponmjklihyfedcba
+
+    bscfa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    olleh
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforces
+
+    qwertyujnpasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvttsrqponmlfjihgkedcba
+
+    lnlhe
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    eholl
+
+    abcdefghijklmnopqrstuvwyyz
+
+    i
+
+    abcdefohijllmngpqrstuvwxyz
+
+    dodefordes
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    bbacaaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljihgfedcba
+
+    codeforces
+
+    mnbvcxzljjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abcabaa
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nlleh
+
+    abcxefghijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    scerofedod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    dfxwvutsrqponmlkjihgfyzcba
+
+    aatccnkiansljanjccana
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gelln
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    i
+
+    zypwvutsrqxonmlljihgfedcba
+
+    codeforces
+
+    mnbvcxylkjhgfdsapoiuztrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    ewqrtyugopasdfihjklzxcvbnm
+
+    bbacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmleh
+
+    abcxefghijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    seeqofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olleh
+
+    aacdefghijklmnopqrstuvvxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeefoqcse
+
+    qwertyujnpasdfghjklzxcvbnn
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdehgsilkilnopqrftuvwxyz
+
+    aeate
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmlfh
+
+    abchefxgijklmnupqrstovwdyz
+
+    i
+
+    abcdefghhjmlmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmelh
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdefghhjmlmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmhem
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdefghhjmlmnopqrstuvwxyz
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwtreyuiopasefghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    nmhel
+
+    abchefxgijklmnupqrstouwdyz
+
+    i
+
+    abcdsfghzjmlmnopqretuvwxyh
+
+    seerofccod
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqq
+
+    qwtreyuiopasefghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    olldh
+
+    zyxvvutsrqponilkjmhgfddcaa
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    coeeforcsf
+
+    nnbvcxzlkjhgfdsapnjuytrewq
+
+    qqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qdertyuiopaswfghmklzwcvbnj
+
+    abacaba
+
+    '
+  - '1
+
+    zxxwvutfqqponlekljshhiccca
+
+    teaae
+
+    '
+  - '1
+
+    ztxwvuxfqqponlikcjshieccma
+
+    eaaet
+
+    '
+  - '5
+
+    abcdefghijjlmnopqrstuvwxyz
+
+    hdlln
+
+    aacddfghmjklinopqrstuvvxyz
+
+    j
+
+    zqxwyutsrvponmlkiihgfedcba
+
+    codeforcse
+
+    qwertyujnpasdfghjknzxcvbnl
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrqqqqqp
+
+    qdertyuiobaswfghmklzwcvpnj
+
+    abaacba
+
+    '
+  - '1
+
+    arcdeffhilkjmnopqbstuvwxyz
+
+    abdes
+
+    '
+  - '1
+
+    zyxwvutsrqponclkjihgeedmba
+
+    acsacnkjanscjanjlcanc
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    ccacljnajcsnajknoasca
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    bnacljnajcsnnjcacaska
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqrqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    baacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hemln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abababa
+
+    '
+  - '1
+
+    zyxwautsrqponmlkjihgfedcbv
+
+    acsacnkcanrcjanjlcanj
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hdllo
+
+    abcdezghijklmnopqrstuvwxyf
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaaa
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxgz
+
+    sedba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxhz
+
+    abdes
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    acsacnkjanscjanjlcanb
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    abdes
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxzz
+
+    acsacnkjanscjanjlcanb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsrqponmhklihyfedcba
+
+    aseeb
+
+    '
+  - '1
+
+    zjxwvutsrqponmhklihyfedcba
+
+    beesa
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    cnackjnajcsnajkncasca
+
+    '
+  - '1
+
+    abcdefghilkjlnopqrstuvwxyz
+
+    abdes
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxgz
+
+    abdfs
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    cnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    abcdefyhilkjlnopqrstuvwxgz
+
+    sedba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxxz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    bnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxhz
+
+    sedba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    bnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    abcdefzhijklmnopqrstuvwxgz
+
+    acsacnkjanscjanjlcanb
+
+    '
+  - '1
+
+    zhxwvuusrqponmjklihyfedcba
+
+    asdeb
+
+    '
+  - '5
+
+    abcdekghijflmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsrqponmhklihyfedcba
+
+    asedb
+
+    '
+  - '1
+
+    abcdefyhilkhmnopqrstuvwxjz
+
+    beesa
+
+    '
+  - '1
+
+    abcdefjhilkglnopqrstuvwxyz
+
+    abdes
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxgz
+
+    sfdba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    cnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    abodefyhilkjlncpqrstuvwxgz
+
+    sedba
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    bnacljnajcsnaikncasca
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxhz
+
+    sedaa
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvwxyz
+
+    acsacnkianscjanjlcanb
+
+    '
+  - '1
+
+    abcdefzhijklmnopqrstuvwxgz
+
+    bnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    zhxwvuusrqponmjklihyfedcba
+
+    bedsa
+
+    '
+  - '5
+
+    abcdekghijflmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zhxwvutsrqponmjklihyfedcba
+
+    sadeb
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    zyxwvutsrqponmlljhhgfedcba
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsrqpnomhklihyfedcba
+
+    asedb
+
+    '
+  - '1
+
+    zjxwvutsrpponmhklihyfedcba
+
+    beesa
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    jnacljnajcsnackncasca
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstvvwxyz
+
+    cnacljnajcsnajkncasca
+
+    '
+  - '1
+
+    abwdefyhilkjlncpqrstuvoxgz
+
+    sedba
+
+    '
+  - '1
+
+    dyxwvutsrqponmlkjihgfezcba
+
+    bnacljnajcsnaikncasca
+
+    '
+  - '1
+
+    abcdefyhilkjmnopqrstuvwxhz
+
+    aades
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefzhijklmnopqrstuvwxgz
+
+    bnacljnajcnnajkscasca
+
+    '
+  - '1
+
+    zhxwvuusrqponmjklihyfedcba
+
+    aedsb
+
+    '
+  - '5
+
+    zyxwvutsrqponmlfjihgkedcba
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsrpponmhklihyfedcba
+
+    aseeb
+
+    '
+  - '1
+
+    abcdefghilkjlnopqrstuvwxyz
+
+    abdet
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    hello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujnpasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zywwvutsrqponmlkjihgfedcba
+
+    jnacljnajcsnackncasca
+
+    '
+  - '1
+
+    zgxwvutsrqponmjklihbfedcya
+
+    sfdba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstvvwxyz
+
+    cnacljnajcrnajkncasca
+
+    '
+  - '1
+
+    zgxovutsrqpcnljklihyfedwba
+
+    sedba
+
+    '
+  - '1
+
+    dyxwvutsrqponmlkjihgfezcba
+
+    acsacnkianscjanjlcanb
+
+    '
+  - '1
+
+    abcdefyhilkjmponqrstuvwxhz
+
+    aades
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gelln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghijklmnopqrstuvvxyz
+
+    acsacnkianscjanjclanb
+
+    '
+  - '1
+
+    zhxwvuusrqponmjklihyfedcba
+
+    bsdea
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    helln
+
+    abcxefghijklmnopqrstuvwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    abcdefghilkjlnopqrstuvwxyz
+
+    abeet
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    olleh
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghiiklmnopqrstuvwxyz
+
+    codeforces
+
+    qwertyujnpasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zgxwuutsrqponmjklihbfedcya
+
+    sfdba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    iello
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codffcroes
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    ababcba
+
+    '
+  - '1
+
+    zyxwvvtsrqponmlkjihgfedcba
+
+    cnacljnajcrnajkncasca
+
+    '
+  - '1
+
+    dexwvutsrqponmlkjihgfyzcba
+
+    acsacnkianscjanjlcanb
+
+    '
+  - '5
+
+    zyxwvutsrqponmlkjihgfedcba
+
+    gelln
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnoxqrstuvwpyz
+
+    codeforces
+
+    mnbvcxzlkjhgfdsapoiuytrewq
+
+    qqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    ewqrtyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    henll
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghijllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzljjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqrqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuhopasdfghjklzxcvbnm
+
+    abaacba
+
+    '
+  - '1
+
+    zhxwvuvsrqponmjklihyfedcba
+
+    bsdea
+
+    '
+  - '5
+
+    zyxwvttsrqponmlfjihgkedcba
+
+    lelhn
+
+    abcdefghijklmnopqrstuvwxyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforces
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghiklzxcvbnm
+
+    abacaba
+
+    '
+  - '5
+
+    abcdefghijklmnopqrstuvwxyz
+
+    nlleh
+
+    abcxefghijklmnopqrstuvwdyz
+
+    i
+
+    abcdefghhjllmnopqrstuvwxyz
+
+    codeforecs
+
+    mnbvcxzlkjhefdsapoiuytrgwq
+
+    qqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+    qwertyuiopasdfghjklzxcvbnm
+
+    abacaba
+
+    '
+  - '1
+
+    zjxwvutsroponmhklihyfedcba
+
+    bseeb
+
+    '
+  - '1
+
+    zyxwvutsrqponljklihgfedcba
+
+    abeet
+
+    '
+  output:
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '164
+
+    '
+  - '18
+
+    '
+  - '164
+
+    '
+  - '18
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '166
+
+    '
+  - '167
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '37
+
+    '
+  - '35
+
+    '
+  - '157
+
+    '
+  - '13
+
+    0
+
+    70
+
+    0
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '17
+
+    '
+  - '12
+
+    0
+
+    68
+
+    6
+
+    74
+
+    '
+  - '25
+
+    '
+  - '159
+
+    '
+  - '13
+
+    0
+
+    70
+
+    0
+
+    52
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    48
+
+    '
+  - '14
+
+    0
+
+    68
+
+    6
+
+    74
+
+    '
+  - '19
+
+    '
+  - '24
+
+    '
+  - '14
+
+    0
+
+    70
+
+    0
+
+    52
+
+    '
+  - '13
+
+    0
+
+    52
+
+    0
+
+    48
+
+    '
+  - '11
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '181
+
+    '
+  - '27
+
+    '
+  - '14
+
+    0
+
+    70
+
+    0
+
+    56
+
+    '
+  - '13
+
+    0
+
+    50
+
+    0
+
+    48
+
+    '
+  - '14
+
+    0
+
+    68
+
+    6
+
+    52
+
+    '
+  - '24
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '34
+
+    '
+  - '171
+
+    '
+  - '48
+
+    '
+  - '13
+
+    0
+
+    50
+
+    0
+
+    35
+
+    '
+  - '38
+
+    '
+  - '173
+
+    '
+  - '50
+
+    '
+  - '14
+
+    0
+
+    70
+
+    6
+
+    56
+
+    '
+  - '153
+
+    '
+  - '10
+
+    0
+
+    50
+
+    0
+
+    35
+
+    '
+  - '163
+
+    '
+  - '39
+
+    '
+  - '24
+
+    0
+
+    68
+
+    6
+
+    74
+
+    '
+  - '13
+
+    0
+
+    66
+
+    0
+
+    74
+
+    '
+  - '10
+
+    0
+
+    49
+
+    0
+
+    35
+
+    '
+  - '165
+
+    '
+  - '147
+
+    '
+  - '14
+
+    0
+
+    54
+
+    6
+
+    52
+
+    '
+  - '13
+
+    0
+
+    80
+
+    0
+
+    74
+
+    '
+  - '11
+
+    0
+
+    68
+
+    36
+
+    74
+
+    '
+  - '12
+
+    0
+
+    69
+
+    18
+
+    74
+
+    '
+  - '33
+
+    '
+  - '13
+
+    0
+
+    68
+
+    36
+
+    74
+
+    '
+  - '14
+
+    0
+
+    54
+
+    6
+
+    65
+
+    '
+  - '12
+
+    0
+
+    65
+
+    18
+
+    74
+
+    '
+  - '23
+
+    '
+  - '12
+
+    0
+
+    65
+
+    24
+
+    74
+
+    '
+  - '16
+
+    0
+
+    65
+
+    24
+
+    74
+
+    '
+  - '15
+
+    0
+
+    80
+
+    0
+
+    74
+
+    '
+  - '11
+
+    '
+  - '15
+
+    0
+
+    80
+
+    6
+
+    74
+
+    '
+  - '16
+
+    0
+
+    65
+
+    24
+
+    48
+
+    '
+  - '15
+
+    0
+
+    80
+
+    15
+
+    74
+
+    '
+  - '16
+
+    0
+
+    65
+
+    27
+
+    48
+
+    '
+  - '15
+
+    0
+
+    80
+
+    15
+
+    52
+
+    '
+  - '15
+
+    0
+
+    82
+
+    15
+
+    52
+
+    '
+  - '15
+
+    0
+
+    82
+
+    15
+
+    26
+
+    '
+  - '15
+
+    0
+
+    80
+
+    15
+
+    26
+
+    '
+  - '15
+
+    0
+
+    80
+
+    15
+
+    24
+
+    '
+  - '21
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '169
+
+    '
+  - '12
+
+    0
+
+    68
+
+    3
+
+    74
+
+    '
+  - '170
+
+    '
+  - '168
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    61
+
+    '
+  - '26
+
+    '
+  - '14
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '200
+
+    '
+  - '29
+
+    '
+  - '14
+
+    0
+
+    70
+
+    6
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    46
+
+    '
+  - '13
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '161
+
+    '
+  - '19
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    6
+
+    52
+
+    '
+  - '36
+
+    '
+  - '18
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '12
+
+    '
+  - '195
+
+    '
+  - '40
+
+    '
+  - '11
+
+    0
+
+    68
+
+    18
+
+    52
+
+    '
+  - '12
+
+    0
+
+    106
+
+    18
+
+    74
+
+    '
+  - '211
+
+    '
+  - '41
+
+    '
+  - '13
+
+    0
+
+    66
+
+    18
+
+    74
+
+    '
+  - '11
+
+    0
+
+    68
+
+    6
+
+    74
+
+    '
+  - '13
+
+    0
+
+    49
+
+    0
+
+    35
+
+    '
+  - '14
+
+    0
+
+    68
+
+    24
+
+    52
+
+    '
+  - '12
+
+    0
+
+    67
+
+    18
+
+    74
+
+    '
+  - '148
+
+    '
+  - '11
+
+    0
+
+    68
+
+    18
+
+    61
+
+    '
+  - '12
+
+    0
+
+    63
+
+    18
+
+    74
+
+    '
+  - '13
+
+    0
+
+    78
+
+    0
+
+    74
+
+    '
+  - '42
+
+    '
+  - '10
+
+    0
+
+    65
+
+    18
+
+    74
+
+    '
+  - '20
+
+    0
+
+    65
+
+    24
+
+    74
+
+    '
+  - '17
+
+    0
+
+    65
+
+    24
+
+    74
+
+    '
+  - '16
+
+    0
+
+    53
+
+    24
+
+    74
+
+    '
+  - '15
+
+    0
+
+    79
+
+    6
+
+    74
+
+    '
+  - '30
+
+    '
+  - '28
+
+    '
+  - '14
+
+    0
+
+    82
+
+    15
+
+    26
+
+    '
+  - '46
+
+    '
+  - '144
+
+    '
+  - '12
+
+    0
+
+    68
+
+    9
+
+    74
+
+    '
+  - '146
+
+    '
+  - '145
+
+    '
+  - '12
+
+    0
+
+    68
+
+    24
+
+    61
+
+    '
+  - '14
+
+    0
+
+    68
+
+    0
+
+    78
+
+    '
+  - '198
+
+    '
+  - '15
+
+    0
+
+    68
+
+    0
+
+    48
+
+    '
+  - '18
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '18
+
+    '
+  - '167
+
+    '
+  - '18
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '167
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '35
+
+    '
+  - '35
+
+    '
+  - '164
+
+    '
+  - '18
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '18
+
+    '
+  - '166
+
+    '
+  - '18
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '167
+
+    '
+  - '18
+
+    '
+  - '167
+
+    '
+  - '167
+
+    '
+  - '37
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '35
+
+    '
+  - '35
+
+    '
+  - '18
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '18
+
+    '
+  - '166
+
+    '
+  - '18
+
+    '
+  - '167
+
+    '
+  - '18
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '167
+
+    '
+  - '167
+
+    '
+  - '37
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '25
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '35
+
+    '
+  - '35
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '159
+
+    '
+  - '166
+
+    '
+  - '18
+
+    '
+  - '167
+
+    '
+  - '18
+
+    '
+  - '14
+
+    0
+
+    68
+
+    6
+
+    74
+
+    '
+  - '167
+
+    '
+  - '37
+
+    '
+  - '12
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '35
+
+    '
+  - '19
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '159
+
+    '
+  - '24
+
+    '
+  - '164
+
+    '
+  - '18
+
+    '
+  - '167
+
+    '
+  - '18
+
+    '
+  - '11
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '181
+
+    '
+  - '37
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '19
+
+    '
+  - '13
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '24
+
+    '
+  - '14
+
+    0
+
+    70
+
+    0
+
+    56
+
+    '
+  - '164
+
+    '
+  - '167
+
+    '
+  - '11
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '14
+
+    0
+
+    68
+
+    6
+
+    52
+
+    '
+  - '37
+
+    '
+  - '24
+
+    0
+
+    68
+
+    0
+
+    74
+
+    '
+  - '12
+
+    0
+
+    68
+
+    18
+
+    74
+
+    '
+  - '34
+
+    '
+  - '19
+
+    '
+timeout: 1.0

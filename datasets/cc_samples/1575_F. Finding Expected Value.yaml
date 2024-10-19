@@ -1,0 +1,1970 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThere are N\
+  \ boxes arranged in a row. Initially, the i-th box from the left contains a_i candies.\n\
+  \nSnuke can perform the following operation any number of times:\n\n* Choose a box\
+  \ containing at least one candy, and eat one of the candies in the chosen box.\n\
+  \n\n\nHis objective is as follows:\n\n* Any two neighboring boxes contain at most\
+  \ x candies in total.\n\n\n\nFind the minimum number of operations required to achieve\
+  \ the objective.\n\nConstraints\n\n* 2 \u2264 N \u2264 10^5\n* 0 \u2264 a_i \u2264\
+  \ 10^9\n* 0 \u2264 x \u2264 10^9\n\nInput\n\nThe input is given from Standard Input\
+  \ in the following format:\n\n\nN x\na_1 a_2 ... a_N\n\n\nOutput\n\nPrint the minimum\
+  \ number of operations required to achieve the objective.\n\nExamples\n\nInput\n\
+  \n3 3\n2 2 2\n\n\nOutput\n\n1\n\n\nInput\n\n6 1\n1 6 1 2 0 4\n\n\nOutput\n\n11\n\
+  \n\nInput\n\n5 9\n3 1 4 1 5\n\n\nOutput\n\n0\n\n\nInput\n\n2 0\n5 5\n\n\nOutput\n\
+  \n10\nA: ```n, x = map(int, input().split())\na = [0] + list(map(int, input().split()))\n\
+  \nans = 0\nfor i in range(n):\n    if a[i] + a[i+1] > x:\n        diff = (a[i] +\
+  \ a[i+1]) - x\n        ans += diff\n        a[i+1] -= diff\nprint(ans)```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nOne day Vasya heard a story:\
+  \ \"In the city of High Bertown a bus number 62 left from the bus station. It had\
+  \ n grown-ups and m kids...\"\n\nThe latter events happen to be of no importance\
+  \ to us. Vasya is an accountant and he loves counting money. So he wondered what\
+  \ maximum and minimum sum of money these passengers could have paid for the ride.\n\
+  \nThe bus fare equals one berland ruble in High Bertown. However, not everything\
+  \ is that easy \u2014 no more than one child can ride for free with each grown-up\
+  \ passenger. That means that a grown-up passenger who rides with his k (k > 0) children,\
+  \ pays overall k rubles: a ticket for himself and (k - 1) tickets for his children.\
+  \ Also, a grown-up can ride without children, in this case he only pays one ruble.\n\
+  \nWe know that in High Bertown children can't ride in a bus unaccompanied by grown-ups.\n\
+  \nHelp Vasya count the minimum and the maximum sum in Berland rubles, that all passengers\
+  \ of this bus could have paid in total.\n\nInput\n\nThe input file consists of a\
+  \ single line containing two space-separated numbers n and m (0 \u2264 n, m \u2264\
+  \ 105) \u2014 the number of the grown-ups and the number of the children in the\
+  \ bus, correspondingly.\n\nOutput\n\nIf n grown-ups and m children could have ridden\
+  \ in the bus, then print on a single line two space-separated integers \u2014 the\
+  \ minimum and the maximum possible total bus fare, correspondingly. \n\nOtherwise,\
+  \ print \"Impossible\" (without the quotes).\n\nExamples\n\nInput\n\n1 2\n\n\nOutput\n\
+  \n2 2\n\nInput\n\n0 5\n\n\nOutput\n\nImpossible\n\nInput\n\n2 2\n\n\nOutput\n\n\
+  2 3\n\nNote\n\nIn the first sample a grown-up rides with two children and pays two\
+  \ rubles.\n\nIn the second sample there are only children in the bus, so the situation\
+  \ is impossible.\n\nIn the third sample there are two cases: \n  * Each of the two\
+  \ grown-ups rides with one children and pays one ruble for the tickets. In this\
+  \ case the passengers pay two rubles in total. \n  * One of the grown-ups ride with\
+  \ two children's and pays two rubles, the another one rides alone and pays one ruble\
+  \ for himself. So, they pay three rubles in total. \nA: ```class CodeforcesTask190ASolution:\n\
+  \    def __init__(self):\n        self.result = ''\n        self.passengers = []\n\
+  \n    def read_input(self):\n        self.passengers = [int(x) for x in input().split(\"\
+  \ \")]\n\n    def process_task(self):\n        if self.passengers[0]:\n        \
+  \    if self.passengers[0] >= self.passengers[1]:\n                min_fares = self.passengers[0]\n\
+  \            else:\n                min_fares = self.passengers[1]\n           \
+  \ if self.passengers[1]:\n                max_fares = self.passengers[0] + self.passengers[1]\
+  \ - 1\n            else:\n                max_fares = self.passengers[0]\n     \
+  \       self.result = \"{0} {1}\".format(min_fares, max_fares)\n        else:\n\
+  \            if self.passengers[1]:\n                self.result = \"Impossible\"\
+  \n            else:\n                self.result = \"0 0\"\n\n    def get_result(self):\n\
+  \        return self.result\n\n\nif __name__ == \"__main__\":\n    Solution = CodeforcesTask190ASolution()\n\
+  \    Solution.read_input()\n    Solution.process_task()\n    print(Solution.get_result())```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nMr. Chanek opened a letter\
+  \ from his fellow, who is currently studying at Singanesia. Here is what it says.\n\
+  \nDefine an array b (0 \u2264 b_i < k) with n integers. While there exists a pair\
+  \ (i, j) such that b_i \u2260 b_j, do the following operation:\n\n  * Randomly pick\
+  \ a number i satisfying 0 \u2264 i < n. Note that each number i has a probability\
+  \ of 1/n to be picked. \n  * Randomly Pick a number j satisfying 0 \u2264 j < k.\
+  \ \n  * Change the value of b_i to j. It is possible for b_i to be changed to the\
+  \ same value. \n\n\n\nDenote f(b) as the expected number of operations done to b\
+  \ until all elements of b are equal. \n\nYou are given two integers n and k, and\
+  \ an array a (-1 \u2264 a_i < k) of n integers. \n\nFor every index i with a_i =\
+  \ -1, replace a_i with a random number j satisfying 0 \u2264 j < k. Let c be the\
+  \ number of occurrences of -1 in a. There are k^c possibilites of a after the replacement,\
+  \ each with equal probability of being the final array.\n\nFind the expected value\
+  \ of f(a) modulo 10^9 + 7. \n\nFormally, let M = 10^9 + 7. It can be shown that\
+  \ the answer can be expressed as an irreducible fraction p/q, where p and q are\
+  \ integers and q not \u2261 0 \\pmod{M}. Output the integer equal to p \u22C5 q^{-1}\
+  \ mod M. In other words, output such an integer x that 0 \u2264 x < M and x \u22C5\
+  \ q \u2261 p \\pmod{M}.\n\nAfter reading the letter, Mr. Chanek gave the task to\
+  \ you. Solve it for the sake of their friendship!\n\nInput\n\nThe first line contains\
+  \ two integers n and k (2 \u2264 n \u2264 10^5, 2 \u2264 k \u2264 10^9). \n\nThe\
+  \ second line contains n integers a_1, a_2, \u2026, a_n (-1 \u2264 a_i < k).\n\n\
+  Output\n\nOutput an integer denoting the expected value of f(a) modulo 10^9 + 7.\n\
+  \nExamples\n\nInput\n\n\n2 2\n0 1\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n2 2\n0 -1\n\
+  \n\nOutput\n\n\n1\n\n\nInput\n\n\n3 3\n0 1 1\n\n\nOutput\n\n\n12\n\n\nInput\n\n\n\
+  3 3\n-1 -1 -1\n\n\nOutput\n\n\n11\n\n\nInput\n\n\n10 9\n-1 0 -1 1 1 2 2 3 3 3\n\n\
+  \nOutput\n\n\n652419213\nA:"
+question: "Mr. Chanek opened a letter from his fellow, who is currently studying at\
+  \ Singanesia. Here is what it says.\n\nDefine an array b (0 \u2264 b_i < k) with\
+  \ n integers. While there exists a pair (i, j) such that b_i \u2260 b_j, do the\
+  \ following operation:\n\n  * Randomly pick a number i satisfying 0 \u2264 i < n.\
+  \ Note that each number i has a probability of 1/n to be picked. \n  * Randomly\
+  \ Pick a number j satisfying 0 \u2264 j < k. \n  * Change the value of b_i to j.\
+  \ It is possible for b_i to be changed to the same value. \n\n\n\nDenote f(b) as\
+  \ the expected number of operations done to b until all elements of b are equal.\
+  \ \n\nYou are given two integers n and k, and an array a (-1 \u2264 a_i < k) of\
+  \ n integers. \n\nFor every index i with a_i = -1, replace a_i with a random number\
+  \ j satisfying 0 \u2264 j < k. Let c be the number of occurrences of -1 in a. There\
+  \ are k^c possibilites of a after the replacement, each with equal probability of\
+  \ being the final array.\n\nFind the expected value of f(a) modulo 10^9 + 7. \n\n\
+  Formally, let M = 10^9 + 7. It can be shown that the answer can be expressed as\
+  \ an irreducible fraction p/q, where p and q are integers and q not \u2261 0 \\\
+  pmod{M}. Output the integer equal to p \u22C5 q^{-1} mod M. In other words, output\
+  \ such an integer x that 0 \u2264 x < M and x \u22C5 q \u2261 p \\pmod{M}.\n\nAfter\
+  \ reading the letter, Mr. Chanek gave the task to you. Solve it for the sake of\
+  \ their friendship!\n\nInput\n\nThe first line contains two integers n and k (2\
+  \ \u2264 n \u2264 10^5, 2 \u2264 k \u2264 10^9). \n\nThe second line contains n\
+  \ integers a_1, a_2, \u2026, a_n (-1 \u2264 a_i < k).\n\nOutput\n\nOutput an integer\
+  \ denoting the expected value of f(a) modulo 10^9 + 7.\n\nExamples\n\nInput\n\n\n\
+  2 2\n0 1\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n2 2\n0 -1\n\n\nOutput\n\n\n1\n\n\nInput\n\
+  \n\n3 3\n0 1 1\n\n\nOutput\n\n\n12\n\n\nInput\n\n\n3 3\n-1 -1 -1\n\n\nOutput\n\n\
+  \n11\n\n\nInput\n\n\n10 9\n-1 0 -1 1 1 2 2 3 3 3\n\n\nOutput\n\n\n652419213"
+samples:
+- " ```import random\n\nclass CodeforcesTask143ASolution:\n    def __init__(self):\n\
+  \        self.result = ''\n\n    def read_input(self):\n        self.n, self.k =\
+  \ map(int, input().split(\" \"))\n        self.a = list(map(int, input().split(\"\
+  \ \")))\n\n    def process_task(self):\n        self.a = [x if x != -1 else random.randint(0,\
+  \ self.k-1) for x in self.a]\n        self.count = self.a.count(-1)\n        self.total\
+  \ = self.k ** self.count\n        self.result = str(sum(self.k ** i for i in range(self.count+1))\
+  \ * self.total % (10**9 + 7))\n\n    def get_result(self):\n        return self.result\n\
+  \n\nif __name__ == \"__main__\":\n    Solution = CodeforcesTask143ASolution()\n\
+  \    Solution.read_input()\n    Solution.process_task()\n    print(Solution.get_result())```\n\
+  \n\n```python\n```\nQ:"
+- " ```class CodeforcesTask1914ASolution:\n    def __init__(self):\n        self.result\
+  \ = ''\n        self.n = 0\n        self.k = 0\n        self.a = []\n\n    def read_input(self):\n\
+  \        self.n, self.k = map(int, input().split())\n        self.a = list(map(int,\
+  \ input().split()))\n\n    def process_task(self):\n        MOD = 10**9 + 7\n  \
+  \      c = self.a.count(-1)\n        if c > 0:\n            self.a = [random.randint(0,\
+  \ self.k-1) for _ in range(c)]\n        f = [0] * (self.k + 1)\n        for i in\
+  \ range(1, self.k + 1):\n            f[i] = 1\n        for i in range(self.n):\n\
+  \            if self.a[i] != -1:\n                f[self.a[i]] += f[self.a[i] -\
+  \ 1]\n        self.result = str(f[self.k] % MOD)\n\n    def get_result(self):\n\
+  \        return self.result\n\n\nif __name__ == \"__main__\":\n    Solution = CodeforcesTask1914ASolution()\n\
+  \    Solution.read_input()\n    Solution.process_task()\n    print(Solution.get_result())```\n\
+  Q:"
+test_cases:
+  input:
+  - '10 9
+
+    -1 0 -1 1 1 2 2 3 3 3
+
+    '
+  - '3 3
+
+    -1 -1 -1
+
+    '
+  - '2 2
+
+    0 -1
+
+    '
+  - '3 3
+
+    0 1 1
+
+    '
+  - '2 2
+
+    0 1
+
+    '
+  - '2 1684
+
+    -1 -1
+
+    '
+  - '2 2000
+
+    1486 -1
+
+    '
+  - '2 2000
+
+    -1 1990
+
+    '
+  - '2 1973
+
+    818 208
+
+    '
+  - '2 1105
+
+    -1 -1
+
+    '
+  - '2 551
+
+    -1 -1
+
+    '
+  - '2 2
+
+    1 1
+
+    '
+  - '2 434
+
+    424 377
+
+    '
+  - '2 63
+
+    23 52
+
+    '
+  - '2 927
+
+    852 -1
+
+    '
+  - '2 33
+
+    2 27
+
+    '
+  - '2 1626
+
+    1312 -1
+
+    '
+  - '2 838
+
+    -1 753
+
+    '
+  - '2 2
+
+    -1 -1
+
+    '
+  - '2 2
+
+    -1 0
+
+    '
+  - '2 1421
+
+    326 -1
+
+    '
+  - '2 1059
+
+    616 151
+
+    '
+  - '2 2
+
+    0 0
+
+    '
+  - '2 1408
+
+    -1 566
+
+    '
+  - '2 2000
+
+    -1 -1
+
+    '
+  - '2 900
+
+    468 702
+
+    '
+  - '2 2000
+
+    33 -1
+
+    '
+  - '2 660
+
+    -1 -1
+
+    '
+  - '2 6
+
+    3 3
+
+    '
+  - '2 68
+
+    -1 -1
+
+    '
+  - '2 2000
+
+    1280 -1
+
+    '
+  - '1 2000
+
+    -1 1990
+
+    '
+  - '2 1973
+
+    818 260
+
+    '
+  - '2 2128
+
+    -1 -1
+
+    '
+  - '2 434
+
+    845 377
+
+    '
+  - '2 63
+
+    23 60
+
+    '
+  - '2 32
+
+    2 27
+
+    '
+  - '2 1626
+
+    2014 -1
+
+    '
+  - '2 838
+
+    -1 366
+
+    '
+  - '2 4
+
+    -1 0
+
+    '
+  - '2 1421
+
+    554 -1
+
+    '
+  - '2 1059
+
+    23 151
+
+    '
+  - '2 4
+
+    0 1
+
+    '
+  - '2 1408
+
+    -1 357
+
+    '
+  - '2 275
+
+    -1 -1
+
+    '
+  - '2 6
+
+    2 3
+
+    '
+  - '10 9
+
+    -1 0 -1 1 1 2 2 3 4 3
+
+    '
+  - '2 2
+
+    1 -1
+
+    '
+  - '3 3
+
+    0 1 0
+
+    '
+  - '2 109
+
+    -1 -1
+
+    '
+  - '2 311
+
+    2014 -1
+
+    '
+  - '2 449
+
+    554 -1
+
+    '
+  - '2 1250
+
+    23 151
+
+    '
+  - '2 10
+
+    2 3
+
+    '
+  - '3 3
+
+    0 1 -1
+
+    '
+  - '2 3
+
+    -1 1
+
+    '
+  - '10 9
+
+    -1 0 -1 1 0 2 2 3 4 5
+
+    '
+  - '3 4
+
+    0 1 0
+
+    '
+  - '3 9
+
+    -1 0 -1 1 0 2 2 3 4 5
+
+    '
+  - '3 6
+
+    0 1 0
+
+    '
+  - '2 772
+
+    337 -1
+
+    '
+  - '2 18
+
+    2 3
+
+    '
+  - '2 1231
+
+    15 110
+
+    '
+  - '2 1783
+
+    15 110
+
+    '
+  - '2 507
+
+    247 214
+
+    '
+  - '2 8
+
+    1 5
+
+    '
+  - '2 9
+
+    1 5
+
+    '
+  - '2 328
+
+    -1 -1
+
+    '
+  - '2 1282
+
+    -1 -1
+
+    '
+  - '2 523
+
+    852 -1
+
+    '
+  - '2 33
+
+    4 27
+
+    '
+  - '2 900
+
+    221 702
+
+    '
+  - '2 1396
+
+    33 -1
+
+    '
+  - '10 4
+
+    -1 0 -1 1 1 2 2 3 3 3
+
+    '
+  - '3 3
+
+    0 2 1
+
+    '
+  - '2 240
+
+    1280 -1
+
+    '
+  - '2 378
+
+    818 260
+
+    '
+  - '2 29
+
+    2 27
+
+    '
+  - '2 1347
+
+    -1 366
+
+    '
+  - '2 1551
+
+    -1 357
+
+    '
+  - '10 9
+
+    -1 0 -1 1 1 1 2 3 4 3
+
+    '
+  - '2 311
+
+    2014 0
+
+    '
+  - '2 75
+
+    554 -1
+
+    '
+  - '3 3
+
+    -1 1 -1
+
+    '
+  - '2 84
+
+    24 114
+
+    '
+  - '10 13
+
+    -1 0 -1 1 0 2 2 3 4 5
+
+    '
+  - '2 111
+
+    337 -1
+
+    '
+  - '3 9
+
+    -1 0 0 -1 -1 2 2 3 4 5
+
+    '
+  - '2 512
+
+    -1 -1
+
+    '
+  - '2 757
+
+    852 -1
+
+    '
+  - '2 1626
+
+    1972 0
+
+    '
+  - '2 83
+
+    -1 337
+
+    '
+  - '2 238
+
+    1280 -1
+
+    '
+  - '2 1347
+
+    0 366
+
+    '
+  - '2 59
+
+    -1 0
+
+    '
+  - '2 130
+
+    554 -1
+
+    '
+  - '3 4
+
+    -1 1 -1
+
+    '
+  - '10 13
+
+    -1 0 0 1 0 2 2 3 4 5
+
+    '
+  - '2 22
+
+    24 114
+
+    '
+  - '2 1148
+
+    116 -1
+
+    '
+  - '2 1264
+
+    15 111
+
+    '
+  - '2 483
+
+    15 111
+
+    '
+  - '3 14
+
+    -1 0 -1 -1 -1 2 4 1 4 5
+
+    '
+  - '2 2829
+
+    -1 -1
+
+    '
+  - '2 1267
+
+    306 702
+
+    '
+  - '2 463
+
+    1280 -1
+
+    '
+  - '2 53
+
+    1230 260
+
+    '
+  - '2 18
+
+    -1 0
+
+    '
+  - '3 5
+
+    -1 1 -1
+
+    '
+  - '2 2000
+
+    85 0
+
+    '
+  - '2 62
+
+    18 114
+
+    '
+  - '2 1604
+
+    23 110
+
+    '
+  - '2 762
+
+    266 107
+
+    '
+  - '2 1148
+
+    116 0
+
+    '
+  - '2 318
+
+    15 111
+
+    '
+  - '2 24
+
+    1 3
+
+    '
+  - '2 754
+
+    290 218
+
+    '
+  - '2 113
+
+    1557 0
+
+    '
+  - '2 1672
+
+    306 702
+
+    '
+  - '2 729
+
+    1280 -1
+
+    '
+  - '2 86
+
+    731 -1
+
+    '
+  - '3 6
+
+    -1 1 -1
+
+    '
+  - '2 3078
+
+    85 0
+
+    '
+  - '2 887
+
+    3 -1
+
+    '
+  - '2 117
+
+    266 107
+
+    '
+  - '3 9
+
+    0 2 0
+
+    '
+  - '2 78
+
+    1326 0
+
+    '
+  - '2 667
+
+    247 2
+
+    '
+  - '5 14
+
+    -1 1 -1 -1 -1 2 4 1 4 5
+
+    '
+  - '2 2166
+
+    -1 584
+
+    '
+  - '2 3078
+
+    85 -1
+
+    '
+  - '2 115
+
+    266 107
+
+    '
+  - '2 499
+
+    8 001
+
+    '
+  - '2 78
+
+    1326 -1
+
+    '
+  - '10 9
+
+    -1 0 -1 0 2 0 2 4 4 5
+
+    '
+  - '2 260
+
+    19 011
+
+    '
+  - '2 6178
+
+    1408 0
+
+    '
+  - '2 5
+
+    1 0
+
+    '
+  - '2 7
+
+    2126 260
+
+    '
+  - '10 9
+
+    -1 0 -1 0 2 0 0 4 4 5
+
+    '
+  - '2 20
+
+    -1 1
+
+    '
+  - '2 1113
+
+    16 1
+
+    '
+  - '2 205
+
+    15 001
+
+    '
+  - '2 99
+
+    833 -1
+
+    '
+  - '2 1215
+
+    1 -1
+
+    '
+  - '2 2094
+
+    -1 518
+
+    '
+  - '2 1679
+
+    16 1
+
+    '
+  - '2 940
+
+    0 011
+
+    '
+  - '2 1219
+
+    163 272
+
+    '
+  - '2 15
+
+    1 0
+
+    '
+  - '2 1921
+
+    74 315
+
+    '
+  - '2 2234
+
+    16 1
+
+    '
+  - '2 267
+
+    15 011
+
+    '
+  - '2 23
+
+    833 0
+
+    '
+  - '2 820
+
+    247 2
+
+    '
+  - '3 14
+
+    0 1 0 -1 -1 2 4 12 2 0
+
+    '
+  - '2 1215
+
+    2 0
+
+    '
+  - '2 2773
+
+    16 1
+
+    '
+  - '2 170
+
+    30 53
+
+    '
+  - '2 5348
+
+    6436 0
+
+    '
+  - '2 21
+
+    2444 260
+
+    '
+  - '2 3357
+
+    70 0
+
+    '
+  - '2 6331
+
+    6436 0
+
+    '
+  - '2 2262
+
+    74 978
+
+    '
+  - '2 437
+
+    27 010
+
+    '
+  - '2 1802
+
+    2435 0
+
+    '
+  - '2 6331
+
+    6436 -1
+
+    '
+  - '2 3473
+
+    74 978
+
+    '
+  - '2 2094
+
+    0 2
+
+    '
+  - '2 340
+
+    13 102
+
+    '
+  - '2 3200
+
+    10928 -1
+
+    '
+  - '2 119
+
+    27 111
+
+    '
+  - '2 3200
+
+    10928 0
+
+    '
+  - '2 172
+
+    27 111
+
+    '
+  - '2 36
+
+    8 110
+
+    '
+  - '2 45
+
+    8 111
+
+    '
+  - '2 49
+
+    3 111
+
+    '
+  - '2 1381
+
+    -1 1990
+
+    '
+  - '2 1038
+
+    818 208
+
+    '
+  - '2 126
+
+    852 -1
+
+    '
+  - '2 54
+
+    4 27
+
+    '
+  - '2 1629
+
+    -1 753
+
+    '
+  - '2 1421
+
+    326 0
+
+    '
+  - '2 825
+
+    616 151
+
+    '
+  - '2 1236
+
+    -1 566
+
+    '
+  - '6 9
+
+    -1 0 -1 1 1 2 2 3 3 3
+
+    '
+  - '2 816
+
+    845 377
+
+    '
+  - '2 412
+
+    -1 -1
+
+    '
+  - '2 35
+
+    142 108
+
+    '
+  - '2 31
+
+    2 3
+
+    '
+  - '3 8
+
+    0 1 0
+
+    '
+  - '2 486
+
+    337 -1
+
+    '
+  - '3 8
+
+    -1 0 -1 0 0 2 2 3 4 5
+
+    '
+  - '2 1216
+
+    15 110
+
+    '
+  - '2 1465
+
+    15 110
+
+    '
+  - '2 2
+
+    -1 1
+
+    '
+  - '1 2000
+
+    1280 -1
+
+    '
+  - '1 2000
+
+    -2 1990
+
+    '
+  - '1 2128
+
+    -1 -1
+
+    '
+  - '2 434
+
+    142 377
+
+    '
+  - '2 63
+
+    23 114
+
+    '
+  - '1 838
+
+    -1 366
+
+    '
+  - '2 4
+
+    -1 1
+
+    '
+  - '10 9
+
+    -1 0 -1 1 0 2 2 3 4 3
+
+    '
+  - '2 2
+
+    2 -1
+
+    '
+  - '1 2000
+
+    1280 0
+
+    '
+  - '1 1986
+
+    -2 1990
+
+    '
+  - '2 434
+
+    142 67
+
+    '
+  - '2 63
+
+    24 114
+
+    '
+  - '2 311
+
+    3222 -1
+
+    '
+  - '2 449
+
+    678 -1
+
+    '
+  - '2 1250
+
+    23 181
+
+    '
+  - '2 10
+
+    3 3
+
+    '
+  - '2 2
+
+    2 0
+
+    '
+  - '1 1588
+
+    1280 0
+
+    '
+  - '2 434
+
+    142 108
+
+    '
+  - '1 63
+
+    24 114
+
+    '
+  - '2 3
+
+    -1 0
+
+    '
+  - '2 449
+
+    337 -1
+
+    '
+  - '2 1250
+
+    23 110
+
+    '
+  - '2 18
+
+    3 3
+
+    '
+  - '2 2
+
+    2 1
+
+    '
+  - '1 1588
+
+    1280 -1
+
+    '
+  - '2 434
+
+    277 108
+
+    '
+  - '2 1250
+
+    15 110
+
+    '
+  - '3 9
+
+    -1 0 -1 0 0 2 2 3 4 5
+
+    '
+  - '2 2
+
+    3 1
+
+    '
+  - '1 1588
+
+    1326 -1
+
+    '
+  - '2 434
+
+    277 214
+
+    '
+  output:
+  - '652419213
+
+    '
+  - '11
+
+    '
+  - '1
+
+    '
+  - '12
+
+    '
+  - '2
+
+    '
+  - '1683
+
+    '
+  - '1999
+
+    '
+  - '1999
+
+    '
+  - '1973
+
+    '
+  - '1104
+
+    '
+  - '550
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+  - '63
+
+    '
+  - '926
+
+    '
+  - '33
+
+    '
+  - '1625
+
+    '
+  - '837
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1420
+
+    '
+  - '1059
+
+    '
+  - '0
+
+    '
+  - '1407
+
+    '
+  - '1999
+
+    '
+  - '900
+
+    '
+  - '1999
+
+    '
+  - '659
+
+    '
+  - '0
+
+    '
+  - '67
+
+    '
+  - '1999
+
+    '
+  - '0
+
+    '
+  - '1973
+
+    '
+  - '2127
+
+    '
+  - '434
+
+    '
+  - '63
+
+    '
+  - '32
+
+    '
+  - '1625
+
+    '
+  - '837
+
+    '
+  - '3
+
+    '
+  - '1420
+
+    '
+  - '1059
+
+    '
+  - '4
+
+    '
+  - '1407
+
+    '
+  - '274
+
+    '
+  - '6
+
+    '
+  - '688133507
+
+    '
+  - '1
+
+    '
+  - '12
+
+    '
+  - '108
+
+    '
+  - '310
+
+    '
+  - '448
+
+    '
+  - '1250
+
+    '
+  - '10
+
+    '
+  - '500000016
+
+    '
+  - '2
+
+    '
+  - '295276363
+
+    '
+  - '20
+
+    '
+  - '92
+
+    '
+  - '42
+
+    '
+  - '771
+
+    '
+  - '18
+
+    '
+  - '1231
+
+    '
+  - '1783
+
+    '
+  - '507
+
+    '
+  - '8
+
+    '
+  - '9
+
+    '
+  - '327
+
+    '
+  - '1281
+
+    '
+  - '522
+
+    '
+  - '33
+
+    '
+  - '900
+
+    '
+  - '1395
+
+    '
+  - '571792314
+
+    '
+  - '500000017
+
+    '
+  - '239
+
+    '
+  - '378
+
+    '
+  - '29
+
+    '
+  - '1346
+
+    '
+  - '1550
+
+    '
+  - '259562069
+
+    '
+  - '311
+
+    '
+  - '74
+
+    '
+  - '11
+
+    '
+  - '84
+
+    '
+  - '799260863
+
+    '
+  - '110
+
+    '
+  - '80
+
+    '
+  - '511
+
+    '
+  - '756
+
+    '
+  - '1626
+
+    '
+  - '82
+
+    '
+  - '237
+
+    '
+  - '1347
+
+    '
+  - '58
+
+    '
+  - '129
+
+    '
+  - '500000023
+
+    '
+  - '624657679
+
+    '
+  - '22
+
+    '
+  - '1147
+
+    '
+  - '1264
+
+    '
+  - '483
+
+    '
+  - '500000218
+
+    '
+  - '2828
+
+    '
+  - '1267
+
+    '
+  - '462
+
+    '
+  - '53
+
+    '
+  - '17
+
+    '
+  - '30
+
+    '
+  - '2000
+
+    '
+  - '62
+
+    '
+  - '1604
+
+    '
+  - '762
+
+    '
+  - '1148
+
+    '
+  - '318
+
+    '
+  - '24
+
+    '
+  - '754
+
+    '
+  - '113
+
+    '
+  - '1672
+
+    '
+  - '728
+
+    '
+  - '85
+
+    '
+  - '500000046
+
+    '
+  - '3078
+
+    '
+  - '886
+
+    '
+  - '117
+
+    '
+  - '90
+
+    '
+  - '78
+
+    '
+  - '667
+
+    '
+  - '250042203
+
+    '
+  - '2165
+
+    '
+  - '3077
+
+    '
+  - '115
+
+    '
+  - '499
+
+    '
+  - '77
+
+    '
+  - '652419213
+
+    '
+  - '260
+
+    '
+  - '6178
+
+    '
+  - '5
+
+    '
+  - '7
+
+    '
+  - '938133457
+
+    '
+  - '19
+
+    '
+  - '1113
+
+    '
+  - '205
+
+    '
+  - '98
+
+    '
+  - '1214
+
+    '
+  - '2093
+
+    '
+  - '1679
+
+    '
+  - '940
+
+    '
+  - '1219
+
+    '
+  - '15
+
+    '
+  - '1921
+
+    '
+  - '2234
+
+    '
+  - '267
+
+    '
+  - '23
+
+    '
+  - '820
+
+    '
+  - '210
+
+    '
+  - '1215
+
+    '
+  - '2773
+
+    '
+  - '170
+
+    '
+  - '5348
+
+    '
+  - '21
+
+    '
+  - '3357
+
+    '
+  - '6331
+
+    '
+  - '2262
+
+    '
+  - '437
+
+    '
+  - '1802
+
+    '
+  - '6330
+
+    '
+  - '3473
+
+    '
+  - '2094
+
+    '
+  - '340
+
+    '
+  - '3199
+
+    '
+  - '119
+
+    '
+  - '3200
+
+    '
+  - '172
+
+    '
+  - '36
+
+    '
+  - '45
+
+    '
+  - '49
+
+    '
+  - '1380
+
+    '
+  - '1038
+
+    '
+  - '125
+
+    '
+  - '54
+
+    '
+  - '1628
+
+    '
+  - '1421
+
+    '
+  - '825
+
+    '
+  - '1235
+
+    '
+  - '68198
+
+    '
+  - '816
+
+    '
+  - '411
+
+    '
+  - '35
+
+    '
+  - '31
+
+    '
+  - '72
+
+    '
+  - '485
+
+    '
+  - '500000077
+
+    '
+  - '1216
+
+    '
+  - '1465
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+  - '63
+
+    '
+  - '0
+
+    '
+  - '3
+
+    '
+  - '688133507
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+  - '63
+
+    '
+  - '310
+
+    '
+  - '448
+
+    '
+  - '1250
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '448
+
+    '
+  - '1250
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+  - '1250
+
+    '
+  - '92
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '434
+
+    '
+timeout: 3.0

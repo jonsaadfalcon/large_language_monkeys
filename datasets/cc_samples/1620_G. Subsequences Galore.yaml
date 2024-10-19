@@ -1,0 +1,3906 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou are given\
+  \ a string a, consisting of n characters, n is even. For each i from 1 to n a_i\
+  \ is one of 'A', 'B' or 'C'.\n\nA bracket sequence is a string containing only characters\
+  \ \"(\" and \")\". A regular bracket sequence is a bracket sequence that can be\
+  \ transformed into a correct arithmetic expression by inserting characters \"1\"\
+  \ and \"+\" between the original characters of the sequence. For example, bracket\
+  \ sequences \"()()\" and \"(())\" are regular (the resulting expressions are: \"\
+  (1)+(1)\" and \"((1+1)+1)\"), and \")(\", \"(\" and \")\" are not.\n\nYou want to\
+  \ find a string b that consists of n characters such that: \n\n  * b is a regular\
+  \ bracket sequence; \n  * if for some i and j (1 \u2264 i, j \u2264 n) a_i=a_j,\
+  \ then b_i=b_j. \n\n\n\nIn other words, you want to replace all occurrences of 'A'\
+  \ with the same type of bracket, then all occurrences of 'B' with the same type\
+  \ of bracket and all occurrences of 'C' with the same type of bracket.\n\nYour task\
+  \ is to determine if such a string b exists.\n\nInput\n\nThe first line contains\
+  \ a single integer t (1 \u2264 t \u2264 1000) \u2014 the number of testcases.\n\n\
+  Then the descriptions of t testcases follow.\n\nThe only line of each testcase contains\
+  \ a string a. a consists only of uppercase letters 'A', 'B' and 'C'. Let n be the\
+  \ length of a. It is guaranteed that n is even and 2 \u2264 n \u2264 50.\n\nOutput\n\
+  \nFor each testcase print \"YES\" if there exists such a string b that: \n\n  *\
+  \ b is a regular bracket sequence; \n  * if for some i and j (1 \u2264 i, j \u2264\
+  \ n) a_i=a_j, then b_i=b_j. \n\n\n\nOtherwise, print \"NO\".\n\nYou may print every\
+  \ letter in any case you want (so, for example, the strings yEs, yes, Yes and YES\
+  \ are all recognized as positive answer).\n\nExample\n\nInput\n\n\n4\nAABBAC\nCACA\n\
+  BBBBAC\nABCA\n\n\nOutput\n\n\nYES\nYES\nNO\nNO\n\nNote\n\nIn the first testcase\
+  \ one of the possible strings b is \"(())()\".\n\nIn the second testcase one of\
+  \ the possible strings b is \"()()\".\nA: ```from typing import Callable, Iterator,\
+  \ TypeVar, cast\n\n_F = TypeVar(\"_F\", bound=Callable[[], None])\n\n\ndef repeater(func:\
+  \ _F) -> _F:\n    def wrapper():\n        for _ in range(int(input())):\n      \
+  \      func()\n\n    return cast(_F, wrapper)\n\n\ndef get_num_input() -> Iterator[int]:\n\
+  \    return map(int, input().split())\n\n\n@repeater\ndef main() -> None:\n    #\
+  \ input()\n\n    group: str = \"ABC\"\n    pair: str = \"()\"\n\n    string: str\
+  \ = input()\n\n    index: int\n    for index in [0, -1]:\n        group = group.replace(string[index],\
+  \ \"\")\n        string = string.replace(string[index], pair[index])\n\n    string\
+  \ = string.replace(group, pair[string.count(\"(\") > string.count(\")\")])\n\n \
+  \   while string.count(\"(\") == string.count(\")\") and pair in string:\n     \
+  \   string = string.replace(pair, \"\")\n\n    print(\"NO\" if string else \"YES\"\
+  )\n\n\nif __name__ == \"__main__\":\n    main()```\nQ: Write python code to solve\
+  \ the following coding problem that obeys the constraints and passes the example\
+  \ test cases. The output code needs to read from and write to standard IO. Please\
+  \ wrap your code answer using ```:\nMarcin is a coach in his university. There are\
+  \ n students who want to attend a training camp. Marcin is a smart coach, so he\
+  \ wants to send only the students that can work calmly with each other.\n\nLet's\
+  \ focus on the students. They are indexed with integers from 1 to n. Each of them\
+  \ can be described with two integers a_i and b_i; b_i is equal to the skill level\
+  \ of the i-th student (the higher, the better). Also, there are 60 known algorithms,\
+  \ which are numbered with integers from 0 to 59. If the i-th student knows the j-th\
+  \ algorithm, then the j-th bit (2^j) is set in the binary representation of a_i.\
+  \ Otherwise, this bit is not set.\n\nStudent x thinks that he is better than student\
+  \ y if and only if x knows some algorithm which y doesn't know. Note that two students\
+  \ can think that they are better than each other. A group of students can work together\
+  \ calmly if no student in this group thinks that he is better than everyone else\
+  \ in this group.\n\nMarcin wants to send a group of at least two students which\
+  \ will work together calmly and will have the maximum possible sum of the skill\
+  \ levels. What is this sum?\n\nInput\n\nThe first line contains one integer n (1\
+  \ \u2264 n \u2264 7000) \u2014 the number of students interested in the camp.\n\n\
+  The second line contains n integers. The i-th of them is a_i (0 \u2264 a_i < 2^{60}).\n\
+  \nThe third line contains n integers. The i-th of them is b_i (1 \u2264 b_i \u2264\
+  \ 10^9).\n\nOutput\n\nOutput one integer which denotes the maximum sum of b_i over\
+  \ the students in a group of students which can work together calmly. If no group\
+  \ of at least two students can work together calmly, print 0.\n\nExamples\n\nInput\n\
+  \n\n4\n3 2 3 6\n2 8 5 10\n\n\nOutput\n\n\n15\n\n\nInput\n\n\n3\n1 2 3\n1 2 3\n\n\
+  \nOutput\n\n\n0\n\n\nInput\n\n\n1\n0\n1\n\n\nOutput\n\n\n0\n\nNote\n\nIn the first\
+  \ sample test, it's optimal to send the first, the second and the third student\
+  \ to the camp. It's also possible to send only the first and the third student,\
+  \ but they'd have a lower sum of b_i.\n\nIn the second test, in each group of at\
+  \ least two students someone will always think that he is better than everyone else\
+  \ in the subset.\nA: ```from collections import Counter\n\ndef main():\n\tn = int(input())\n\
+  \ta = list(map(int, input().split()))\n\tb = list(map(int, input().split()))\n\t\
+  rv = 0\n\tnums = {}\n\tfor i in range(len(a)):\n\t\tif a[i] not in nums:\n\t\t\t\
+  nums[a[i]] = []\n\t\tnums[a[i]].append(i)\n\tvisited = set()\n\tfor num in nums:\n\
+  \t\tif len(nums[num]) > 1:\n\t\t\ti = nums[num][0]\n\t\t\tj = nums[num][1]\n\t\t\
+  \tif i not in visited:\n\t\t\t\tvisited.add(i)\n\t\t\t\trv += b[i]\n\t\t\tif j not\
+  \ in visited:\n\t\t\t\tvisited.add(j)\n\t\t\t\trv += b[j]\n\t\t\tfor k in range(len(a)):\n\
+  \t\t\t\tif(k in visited):\n\t\t\t\t\tcontinue\n\t\t\t\tif(a[i] | a[k] == a[i]):\n\
+  \t\t\t\t\tvisited.add(k)\n\t\t\t\t\trv += b[k]\n\treturn rv\n\n\n\nprint(main())```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nFor a sequence of strings\
+  \ [t_1, t_2, ..., t_m], let's define the function f([t_1, t_2, ..., t_m]) as the\
+  \ number of different strings (including the empty string) that are subsequences\
+  \ of at least one string t_i. f([]) = 0 (i. e. the number of such strings for an\
+  \ empty sequence is 0).\n\nYou are given a sequence of strings [s_1, s_2, ..., s_n].\
+  \ Every string in this sequence consists of lowercase Latin letters and is sorted\
+  \ (i. e., each string begins with several (maybe zero) characters a, then several\
+  \ (maybe zero) characters b, ..., ends with several (maybe zero) characters z).\n\
+  \nFor each of 2^n subsequences of [s_1, s_2, ..., s_n], calculate the value of the\
+  \ function f modulo 998244353.\n\nInput\n\nThe first line contains one integer n\
+  \ (1 \u2264 n \u2264 23) \u2014 the number of strings.\n\nThen n lines follow. The\
+  \ i-th line contains the string s_i (1 \u2264 |s_i| \u2264 2 \u22C5 10^4), consisting\
+  \ of lowercase Latin letters. Each string s_i is sorted.\n\nOutput\n\nSince printing\
+  \ up to 2^{23} integers would be really slow, you should do the following:\n\nFor\
+  \ each of the 2^n subsequences (which we denote as [s_{i_1}, s_{i_2}, ..., s_{i_k}]),\
+  \ calculate f([s_{i_1}, s_{i_2}, ..., s_{i_k}]), take it modulo 998244353, then\
+  \ multiply it by k \u22C5 (i_1 + i_2 + ... + i_k). Print the XOR of all 2^n integers\
+  \ you get.\n\nThe indices i_1, i_2, ..., i_k in the description of each subsequences\
+  \ are 1-indexed (i. e. are from 1 to n).\n\nExamples\n\nInput\n\n\n3\na\nb\nc\n\n\
+  \nOutput\n\n\n92\n\n\nInput\n\n\n2\naa\na\n\n\nOutput\n\n\n21\n\n\nInput\n\n\n2\n\
+  a\na\n\n\nOutput\n\n\n10\n\n\nInput\n\n\n2\nabcd\naabb\n\n\nOutput\n\n\n124\n\n\n\
+  Input\n\n\n3\nddd\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\
+  aaaaaaaabbbbbbbbbbbcccccccccccciiiiiiiiiiiiiiiiiiiiiiooooooooooqqqqqqqqqqqqqqqqqqvvvvvzzzzzzzzzzzz\n\
+  \n\nOutput\n\n\n15706243380\nA:"
+question: "For a sequence of strings [t_1, t_2, ..., t_m], let's define the function\
+  \ f([t_1, t_2, ..., t_m]) as the number of different strings (including the empty\
+  \ string) that are subsequences of at least one string t_i. f([]) = 0 (i. e. the\
+  \ number of such strings for an empty sequence is 0).\n\nYou are given a sequence\
+  \ of strings [s_1, s_2, ..., s_n]. Every string in this sequence consists of lowercase\
+  \ Latin letters and is sorted (i. e., each string begins with several (maybe zero)\
+  \ characters a, then several (maybe zero) characters b, ..., ends with several (maybe\
+  \ zero) characters z).\n\nFor each of 2^n subsequences of [s_1, s_2, ..., s_n],\
+  \ calculate the value of the function f modulo 998244353.\n\nInput\n\nThe first\
+  \ line contains one integer n (1 \u2264 n \u2264 23) \u2014 the number of strings.\n\
+  \nThen n lines follow. The i-th line contains the string s_i (1 \u2264 |s_i| \u2264\
+  \ 2 \u22C5 10^4), consisting of lowercase Latin letters. Each string s_i is sorted.\n\
+  \nOutput\n\nSince printing up to 2^{23} integers would be really slow, you should\
+  \ do the following:\n\nFor each of the 2^n subsequences (which we denote as [s_{i_1},\
+  \ s_{i_2}, ..., s_{i_k}]), calculate f([s_{i_1}, s_{i_2}, ..., s_{i_k}]), take it\
+  \ modulo 998244353, then multiply it by k \u22C5 (i_1 + i_2 + ... + i_k). Print\
+  \ the XOR of all 2^n integers you get.\n\nThe indices i_1, i_2, ..., i_k in the\
+  \ description of each subsequences are 1-indexed (i. e. are from 1 to n).\n\nExamples\n\
+  \nInput\n\n\n3\na\nb\nc\n\n\nOutput\n\n\n92\n\n\nInput\n\n\n2\naa\na\n\n\nOutput\n\
+  \n\n21\n\n\nInput\n\n\n2\na\na\n\n\nOutput\n\n\n10\n\n\nInput\n\n\n2\nabcd\naabb\n\
+  \n\nOutput\n\n\n124\n\n\nInput\n\n\n3\nddd\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\
+  aaaaaaaabbbbbbbbbbbcccccccccccciiiiiiiiiiiiiiiiiiiiiiooooooooooqqqqqqqqqqqqqqqqqqvvvvvzzzzzzzzzzzz\n\
+  \n\nOutput\n\n\n15706243380"
+samples:
+- " ```from collections import Counter\nimport itertools\n\nMOD = 998244353\n\ndef\
+  \ main():\n\tn = int(input())\n\ts = [input() for _ in range(n)]\n\tans = 0\n\t\
+  for k in range(1, n + 1):\n\t\tfor subs in itertools.combinations(range(n), k):\n\
+  \t\t\tsub = ''.join([s[i] for i in subs])\n\t\t\tc = Counter(sub)\n\t\t\tf = sum((v\
+  \ + 1) * len([x for x in c if x > 0]) for v in c.values())\n\t\t\tans ^= (f * k\
+  \ * sum(subs)) % MOD\n\treturn ans\n\nprint(main())```\nQ:"
+- " ```from functools import lru_cache\n\ndef main():\n    n = int(input())\n    s\
+  \ = [input() for _ in range(n)]\n\n    @lru_cache(None)\n    def f(i, j):\n    \
+  \    if i == j:\n            return 1\n        if j < i:\n            return 0\n\
+  \        res = 0\n        for k in range(i, j + 1):\n            res += f(i, k -\
+  \ 1) * f(k + 1, j)\n        return res\n\n    @lru_cache(None)\n    def g(i, j,\
+  \ k):\n        if i > j:\n            return 0\n        if k == 0:\n           \
+  \ return 1\n        res = 0\n        for m in range(i, j + 1):\n            if s[m\
+  \ - 1][k - 1] == s[m][k - 1]:\n                res += g(i, m - 1, k - 1) * g(m +\
+  \ 1, j, k - 1)\n        return res\n\n    res = 0\n    for i in range(2 ** n):\n\
+  \        sub = [s[j - 1] for j in range(1, n + 1) if (i >> j - 1) & 1]\n       \
+  \ res += f(0, n - 1) * g(0, n - 1, 0) * (n - (sub.count('') - 1))\n    print(res\
+  \ % 998244353)\n\nif __name__ == \"__main__\":\n    main()```\n\n\n```python\n```\n\
+  Q:"
+test_cases:
+  input:
+  - '2
+
+    a
+
+    a
+
+    '
+  - '3
+
+    ddd
+
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+    aaaaaaaabbbbbbbbbbbcccccccccccciiiiiiiiiiiiiiiiiiiiiiooooooooooqqqqqqqqqqqqqqqqqqvvvvvzzzzzzzzzzzz
+
+    '
+  - '2
+
+    aa
+
+    a
+
+    '
+  - '3
+
+    a
+
+    b
+
+    c
+
+    '
+  - '2
+
+    abcd
+
+    aabb
+
+    '
+  - '10
+
+    o
+
+    bhkqtwx
+
+    aadfhmnost
+
+    klz
+
+    ls
+
+    bccijquvw
+
+    ghhjklsv
+
+    jlmouuv
+
+    jx
+
+    ggttx
+
+    '
+  - '11
+
+    cnp
+
+    abgkkmnzz
+
+    elnoy
+
+    dgghiknprw
+
+    gkooqvxyy
+
+    efmmvwx
+
+    mss
+
+    akq
+
+    efluy
+
+    fgnnswx
+
+    dlms
+
+    '
+  - '6
+
+    agjlpuy
+
+    aatux
+
+    cjmnprrs
+
+    ceqqv
+
+    bgii
+
+    dglwz
+
+    '
+  - '4
+
+    dfns
+
+    oty
+
+    hkm
+
+    blqsy
+
+    '
+  - '2
+
+    ffhjorstx
+
+    deghhptvx
+
+    '
+  - '5
+
+    egkprtwz
+
+    ikmmsvv
+
+    ddkqtx
+
+    d
+
+    cu
+
+    '
+  - '7
+
+    ehtwx
+
+    asz
+
+    adgnnsy
+
+    bdhiirrtu
+
+    nnpvww
+
+    giilqswzz
+
+    dhlqquwxz
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadgghi
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djy
+
+    fu
+
+    gvy
+
+    bijlnsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '18
+
+    jnoq
+
+    bceekmor
+
+    goqvvv
+
+    jwx
+
+    gns
+
+    vx
+
+    aahvw
+
+    adg
+
+    abcefio
+
+    aiirsvvv
+
+    emmnnpsy
+
+    gp
+
+    adddfppsvx
+
+    aghmmnoqr
+
+    bcdfijotv
+
+    abchrrw
+
+    bfkuwxyz
+
+    bcejll
+
+    '
+  - '9
+
+    djkmnopruw
+
+    ccdgrs
+
+    fhnnnruvw
+
+    zz
+
+    jkm
+
+    w
+
+    nnq
+
+    bccimtu
+
+    bo
+
+    '
+  - '3
+
+    iiwx
+
+    ceffgnpty
+
+    bvz
+
+    '
+  - '12
+
+    befkkmnt
+
+    gi
+
+    cdosxy
+
+    bcx
+
+    acdhlnqsss
+
+    fopyz
+
+    adgkmn
+
+    aabccgmxx
+
+    aaffmmsvvx
+
+    gimy
+
+    cm
+
+    z
+
+    '
+  - '15
+
+    m
+
+    cghjx
+
+    bp
+
+    dfhhkru
+
+    bdfijkkqwy
+
+    adeefmq
+
+    q
+
+    bqu
+
+    beefhklpwx
+
+    cw
+
+    cqrrtwwy
+
+    bddffotyy
+
+    gos
+
+    bflowwyyz
+
+    gjx
+
+    '
+  - '16
+
+    e
+
+    qz
+
+    chmv
+
+    wx
+
+    aabbguw
+
+    mpssz
+
+    mnnp
+
+    nprrruvv
+
+    chhipstw
+
+    ax
+
+    adhklostv
+
+    jq
+
+    hlnqsstv
+
+    f
+
+    ajostu
+
+    efhqsty
+
+    '
+  - '13
+
+    aahijklr
+
+    cikty
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    aeejlqqqv
+
+    cdeinrsy
+
+    jkmow
+
+    ggoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '14
+
+    lmz
+
+    abc
+
+    chkw
+
+    beflmprrt
+
+    aaijkrrs
+
+    acddeehhln
+
+    acijkz
+
+    fknsz
+
+    adfgklpquz
+
+    ejklqtvw
+
+    abegkllqty
+
+    bqw
+
+    dgiilqrvxy
+
+    hhiiv
+
+    '
+  - '19
+
+    bbbggiou
+
+    stuyz
+
+    uw
+
+    eggjlln
+
+    ccfijjs
+
+    fggjnu
+
+    bfw
+
+    euw
+
+    l
+
+    giwx
+
+    g
+
+    dffgiknqsv
+
+    aceux
+
+    loqqsx
+
+    aabcdpssv
+
+    hmsv
+
+    bfghitwx
+
+    ruwxz
+
+    bkowzz
+
+    '
+  - '8
+
+    dfiinnqtuy
+
+    dfjkmqtvwx
+
+    cgsx
+
+    entwxz
+
+    achimnpqs
+
+    effjmnopx
+
+    ilmt
+
+    blorsuuwxx
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsv
+
+    dstuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvx
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    dffhps
+
+    bbegio
+
+    '
+  - '1
+
+    v
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    prwx
+
+    ekmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '5
+
+    egkortwz
+
+    ikmmsvv
+
+    ddkqtx
+
+    d
+
+    cu
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadgghi
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djy
+
+    fu
+
+    gvy
+
+    bijlmsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '3
+
+    ijwx
+
+    ceffgnpty
+
+    bvz
+
+    '
+  - '12
+
+    befkkmnt
+
+    gi
+
+    cdosxy
+
+    bcx
+
+    acdhlnqsss
+
+    fopyz
+
+    adhkmn
+
+    aabccgmxx
+
+    aaffmmsvvx
+
+    gimy
+
+    cm
+
+    z
+
+    '
+  - '13
+
+    aahijklr
+
+    cikty
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    aeejlqqqv
+
+    cdeinrsy
+
+    jlmow
+
+    ggoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '14
+
+    lmz
+
+    abc
+
+    chkw
+
+    beflmprrt
+
+    aaijkrrs
+
+    acddeehhln
+
+    acijkz
+
+    fknsz
+
+    adfgklpquy
+
+    ejklqtvw
+
+    abegkllqty
+
+    bqw
+
+    dgiilqrvxy
+
+    hhiiv
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsv
+
+    dstuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    dffhps
+
+    bbegio
+
+    '
+  - '1
+
+    w
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    prwy
+
+    ekmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '3
+
+    a
+
+    b
+
+    b
+
+    '
+  - '2
+
+    abcd
+
+    aaab
+
+    '
+  - '3
+
+    ijvx
+
+    ceffgnpty
+
+    bvz
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    prwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '3
+
+    a
+
+    c
+
+    b
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    qrwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bjps
+
+    qrwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '3
+
+    a
+
+    a
+
+    e
+
+    '
+  - '10
+
+    o
+
+    bhkqtwx
+
+    aadfhmnoss
+
+    klz
+
+    ls
+
+    bccijquvw
+
+    ghhjklsv
+
+    jlmouuv
+
+    jx
+
+    ggttx
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadgghi
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djz
+
+    fu
+
+    gvy
+
+    bijlnsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '9
+
+    djkmnopruw
+
+    ccdgrs
+
+    fhnnnruvw
+
+    zz
+
+    jkm
+
+    w
+
+    nnq
+
+    bccimuu
+
+    bo
+
+    '
+  - '3
+
+    iiwx
+
+    ceffgnpty
+
+    avz
+
+    '
+  - '16
+
+    e
+
+    qz
+
+    chmv
+
+    wx
+
+    aabbguw
+
+    mpssz
+
+    mnnp
+
+    nprrruvv
+
+    chhipstw
+
+    ax
+
+    adhklostv
+
+    jr
+
+    hlnqsstv
+
+    f
+
+    ajostu
+
+    efhqsty
+
+    '
+  - '13
+
+    aahijklr
+
+    ciksy
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    aeejlqqqv
+
+    cdeinrsy
+
+    jkmow
+
+    ggoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '19
+
+    bbbggiou
+
+    stuyz
+
+    uw
+
+    eggjlln
+
+    ccfijjs
+
+    fggjnu
+
+    bfw
+
+    euw
+
+    l
+
+    giww
+
+    g
+
+    dffgiknqsv
+
+    aceux
+
+    loqqsx
+
+    aabcdpssv
+
+    hmsv
+
+    bfghitwx
+
+    ruwxz
+
+    bkowzz
+
+    '
+  - '8
+
+    dfiinnqtuy
+
+    dfjkmqtvwx
+
+    cgsx
+
+    entwxz
+
+    achimnpqs
+
+    effjmnopx
+
+    ilmt
+
+    blprsuuwxx
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsu
+
+    dstuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvx
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    dffhps
+
+    bbegio
+
+    '
+  - '2
+
+    a
+
+    b
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadggii
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djy
+
+    fu
+
+    gvy
+
+    bijlmsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '12
+
+    befkkmnt
+
+    gi
+
+    cdosxy
+
+    ccx
+
+    acdhlnqsss
+
+    fopyz
+
+    adhkmn
+
+    aabccgmxx
+
+    aaffmmsvvx
+
+    gimy
+
+    cm
+
+    z
+
+    '
+  - '14
+
+    lmz
+
+    abc
+
+    chkw
+
+    beflmprrt
+
+    aaijkrrs
+
+    acddeehhln
+
+    acijkz
+
+    fknsz
+
+    adfgklpquy
+
+    ejklqtvw
+
+    abehkllqty
+
+    bqw
+
+    dgiilqrvxy
+
+    hhiiv
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsv
+
+    dstuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefjww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    prwy
+
+    ekmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '3
+
+    b
+
+    c
+
+    b
+
+    '
+  - '5
+
+    egkortwz
+
+    ikmmsvv
+
+    ddkqtx
+
+    c
+
+    bu
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    qrwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    s
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '9
+
+    djkmnopruw
+
+    ccdgrs
+
+    fhnnnquvw
+
+    zz
+
+    jkm
+
+    w
+
+    nnq
+
+    bccimuu
+
+    bo
+
+    '
+  - '3
+
+    iiwy
+
+    ceffgnpty
+
+    bvz
+
+    '
+  - '13
+
+    aahijklr
+
+    ciksy
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    aeejlqqqv
+
+    cdeinrsy
+
+    jkmow
+
+    ghoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '2
+
+    b
+
+    b
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadggii
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djz
+
+    fu
+
+    gvy
+
+    bijlmsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsv
+
+    dttuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefjww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqsxz
+
+    bips
+
+    prwy
+
+    ekmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '3
+
+    b
+
+    b
+
+    b
+
+    '
+  - '13
+
+    aahijklr
+
+    diksy
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    aeejlqqqv
+
+    cdeinrsy
+
+    jkmow
+
+    ghoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    bdeggv
+
+    np
+
+    v
+
+    aadggii
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djz
+
+    fu
+
+    gvy
+
+    bijlmsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsw
+
+    dttuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '3
+
+    ijwy
+
+    ceffgnoty
+
+    bvz
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    bdeggv
+
+    np
+
+    v
+
+    aadggii
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djz
+
+    fu
+
+    gvy
+
+    bijlmsuz
+
+    s
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    ij
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsw
+
+    dttuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    ij
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsw
+
+    dttuu
+
+    aaijnsst
+
+    t
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '17
+
+    borv
+
+    acr
+
+    ij
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsw
+
+    dttuu
+
+    aaijnsst
+
+    t
+
+    o
+
+    admpq
+
+    jktvvy
+
+    efiknsuuz
+
+    ehjkkmnoqw
+
+    defhps
+
+    bbegio
+
+    '
+  - '6
+
+    agilpuy
+
+    aatux
+
+    cjmnprrs
+
+    ceqqv
+
+    bgii
+
+    dglwz
+
+    '
+  - '4
+
+    dfns
+
+    oty
+
+    hkm
+
+    alqsy
+
+    '
+  - '2
+
+    ffhjorttx
+
+    deghhptvx
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadgghi
+
+    ggq
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djy
+
+    fu
+
+    gvy
+
+    bijlnsuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '18
+
+    jnoq
+
+    bceekmor
+
+    goqvvv
+
+    jwx
+
+    gns
+
+    vx
+
+    aahvw
+
+    adg
+
+    abcefio
+
+    aiirsvvw
+
+    emmnnpsy
+
+    gp
+
+    adddfppsvx
+
+    aghmmnoqr
+
+    bcdfijotv
+
+    abchrrw
+
+    bfkuwxyz
+
+    bcejll
+
+    '
+  - '9
+
+    djkmnopruw
+
+    ccdgrs
+
+    fhnnnruuw
+
+    zz
+
+    jkm
+
+    w
+
+    nnq
+
+    bccimtu
+
+    bo
+
+    '
+  - '12
+
+    befkkmnt
+
+    gi
+
+    bdosxy
+
+    bcx
+
+    acdhlnqsss
+
+    fopyz
+
+    adgkmn
+
+    aabccgmxx
+
+    aaffmmsvvx
+
+    gimy
+
+    cm
+
+    z
+
+    '
+  - '19
+
+    bbbggiou
+
+    stuyz
+
+    uw
+
+    eggjlln
+
+    ccfijjs
+
+    fggjnu
+
+    bfw
+
+    euw
+
+    m
+
+    giwx
+
+    g
+
+    dffgiknqsv
+
+    aceux
+
+    loqqsx
+
+    aabcdpssv
+
+    hmsv
+
+    bfghitwx
+
+    ruwxz
+
+    bkowzz
+
+    '
+  - '8
+
+    dfiinnqtuy
+
+    dfjkmqtvwx
+
+    cgsx
+
+    entwxz
+
+    achimnpqs
+
+    effjmnoqx
+
+    ilmt
+
+    blorsuuwxx
+
+    '
+  - '17
+
+    borw
+
+    acr
+
+    jj
+
+    eemmnoww
+
+    hjjo
+
+    aeflx
+
+    ejlsv
+
+    dstuu
+
+    aaijnsst
+
+    s
+
+    o
+
+    admpq
+
+    jktvvx
+
+    efikosuuz
+
+    ehjkkmnoqw
+
+    dffhps
+
+    bbegio
+
+    '
+  - '5
+
+    egkortwz
+
+    ikmmtvv
+
+    ddkqtx
+
+    d
+
+    cu
+
+    '
+  - '20
+
+    aellqsu
+
+    ccfjkoszz
+
+    cdeggv
+
+    np
+
+    v
+
+    aadgghi
+
+    ggp
+
+    au
+
+    dgllppqswx
+
+    definrtuvw
+
+    q
+
+    fhmmt
+
+    djy
+
+    fu
+
+    gvy
+
+    bijlmtuz
+
+    r
+
+    dkmt
+
+    eegoqxxyz
+
+    eflprsy
+
+    '
+  - '3
+
+    ijwx
+
+    ceffgnpty
+
+    cvz
+
+    '
+  - '13
+
+    aahijklr
+
+    cikty
+
+    v
+
+    acdkors
+
+    aghxy
+
+    e
+
+    bcjlosuuwz
+
+    beejlqqqv
+
+    cdeinrsy
+
+    jlmow
+
+    ggoprsxz
+
+    e
+
+    acilsuuvz
+
+    '
+  - '14
+
+    lmz
+
+    abc
+
+    chkw
+
+    beflmprrt
+
+    aaijkrrs
+
+    acddeehhln
+
+    acijkz
+
+    fknsz
+
+    adfgklpquy
+
+    ejklqtvw
+
+    abegkllqty
+
+    bqw
+
+    dgiilqrvxy
+
+    hhiiw
+
+    '
+  - '2
+
+    abcd
+
+    aaaa
+
+    '
+  - "0\n\N\n"
+  - '21
+
+    k
+
+    kkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bips
+
+    prwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '21
+
+    k
+
+    jkklq
+
+    gkpuvxz
+
+    bchnrtw
+
+    aefkww
+
+    ce
+
+    jy
+
+    hmv
+
+    bhmpqrxz
+
+    bipt
+
+    qrwy
+
+    dkmqv
+
+    chlmxy
+
+    dfy
+
+    t
+
+    abegiyy
+
+    x
+
+    ep
+
+    bbbcdikuux
+
+    abcelntwyz
+
+    u
+
+    '
+  - '5
+
+    egkortwz
+
+    ikmmsvv
+
+    ddkqtx
+
+    d
+
+    bu
+
+    '
+  - '1
+
+    x
+
+    '
+  - '1
+
+    y
+
+    '
+  - '3
+
+    a
+
+    c
+
+    c
+
+    '
+  - '1
+
+    u
+
+    '
+  - '3
+
+    a
+
+    c
+
+    d
+
+    '
+  - '1
+
+    t
+
+    '
+  - '3
+
+    a
+
+    c
+
+    e
+
+    '
+  - '1
+
+    s
+
+    '
+  - '3
+
+    a
+
+    b
+
+    e
+
+    '
+  - '1
+
+    r
+
+    '
+  - '1
+
+    q
+
+    '
+  - '3
+
+    a
+
+    a
+
+    d
+
+    '
+  - '1
+
+    p
+
+    '
+  - '3
+
+    a
+
+    b
+
+    d
+
+    '
+  - '1
+
+    o
+
+    '
+  - '1
+
+    n
+
+    '
+  - '1
+
+    m
+
+    '
+  - '1
+
+    l
+
+    '
+  - '1
+
+    k
+
+    '
+  - '1
+
+    z
+
+    '
+  - '3
+
+    a
+
+    d
+
+    e
+
+    '
+  - '3
+
+    a
+
+    c
+
+    a
+
+    '
+  - '3
+
+    b
+
+    c
+
+    d
+
+    '
+  - '3
+
+    a
+
+    a
+
+    c
+
+    '
+  - '1
+
+    j
+
+    '
+  - '1
+
+    i
+
+    '
+  - '1
+
+    h
+
+    '
+  - '1
+
+    g
+
+    '
+  - '1
+
+    f
+
+    '
+  - '3
+
+    a
+
+    e
+
+    e
+
+    '
+  - '3
+
+    c
+
+    c
+
+    d
+
+    '
+  - '3
+
+    a
+
+    a
+
+    b
+
+    '
+  - '1
+
+    e
+
+    '
+  - '1
+
+    d
+
+    '
+  - '1
+
+    c
+
+    '
+  - '1
+
+    b
+
+    '
+  - '1
+
+    a
+
+    '
+  - '3
+
+    iiwy
+
+    ceffgnoty
+
+    bvz
+
+    '
+  - '3
+
+    b
+
+    a
+
+    b
+
+    '
+  - '3
+
+    c
+
+    b
+
+    d
+
+    '
+  - '3
+
+    c
+
+    a
+
+    b
+
+    '
+  - '3
+
+    d
+
+    b
+
+    d
+
+    '
+  - '3
+
+    c
+
+    a
+
+    a
+
+    '
+  - '3
+
+    d
+
+    a
+
+    d
+
+    '
+  - '3
+
+    b
+
+    a
+
+    a
+
+    '
+  - '3
+
+    d
+
+    a
+
+    e
+
+    '
+  - '3
+
+    b
+
+    b
+
+    a
+
+    '
+  - '3
+
+    d
+
+    a
+
+    f
+
+    '
+  - '3
+
+    b
+
+    b
+
+    c
+
+    '
+  - '3
+
+    d
+
+    a
+
+    g
+
+    '
+  - '3
+
+    b
+
+    c
+
+    c
+
+    '
+  - '3
+
+    d
+
+    a
+
+    h
+
+    '
+  - '3
+
+    a
+
+    d
+
+    c
+
+    '
+  - '3
+
+    c
+
+    a
+
+    h
+
+    '
+  - '3
+
+    d
+
+    a
+
+    i
+
+    '
+  - '3
+
+    d
+
+    b
+
+    i
+
+    '
+  - '3
+
+    c
+
+    b
+
+    i
+
+    '
+  - '3
+
+    c
+
+    c
+
+    i
+
+    '
+  - '3
+
+    c
+
+    c
+
+    h
+
+    '
+  - '3
+
+    b
+
+    c
+
+    h
+
+    '
+  - '3
+
+    b
+
+    c
+
+    g
+
+    '
+  - '3
+
+    c
+
+    c
+
+    g
+
+    '
+  - '3
+
+    c
+
+    b
+
+    g
+
+    '
+  - '3
+
+    b
+
+    b
+
+    g
+
+    '
+  - '3
+
+    b
+
+    c
+
+    f
+
+    '
+  - '3
+
+    b
+
+    d
+
+    f
+
+    '
+  - '3
+
+    b
+
+    d
+
+    e
+
+    '
+  - '3
+
+    b
+
+    e
+
+    e
+
+    '
+  - '3
+
+    b
+
+    f
+
+    e
+
+    '
+  - '3
+
+    c
+
+    e
+
+    e
+
+    '
+  - '3
+
+    c
+
+    f
+
+    e
+
+    '
+  - '3
+
+    c
+
+    g
+
+    e
+
+    '
+  - '3
+
+    c
+
+    g
+
+    d
+
+    '
+  - '3
+
+    b
+
+    g
+
+    d
+
+    '
+  - '3
+
+    c
+
+    f
+
+    d
+
+    '
+  - '3
+
+    b
+
+    f
+
+    d
+
+    '
+  - '3
+
+    b
+
+    e
+
+    d
+
+    '
+  - '3
+
+    b
+
+    e
+
+    c
+
+    '
+  - '3
+
+    b
+
+    d
+
+    d
+
+    '
+  - '3
+
+    b
+
+    c
+
+    e
+
+    '
+  - '3
+
+    c
+
+    c
+
+    e
+
+    '
+  - '3
+
+    d
+
+    c
+
+    e
+
+    '
+  - '3
+
+    d
+
+    d
+
+    e
+
+    '
+  - '3
+
+    c
+
+    d
+
+    e
+
+    '
+  - '3
+
+    c
+
+    d
+
+    f
+
+    '
+  - '3
+
+    c
+
+    e
+
+    f
+
+    '
+  - '3
+
+    c
+
+    f
+
+    f
+
+    '
+  - '3
+
+    b
+
+    f
+
+    f
+
+    '
+  - '3
+
+    b
+
+    f
+
+    g
+
+    '
+  - '3
+
+    c
+
+    f
+
+    g
+
+    '
+  - '3
+
+    d
+
+    f
+
+    e
+
+    '
+  - '3
+
+    e
+
+    f
+
+    e
+
+    '
+  - '3
+
+    f
+
+    f
+
+    e
+
+    '
+  - '3
+
+    f
+
+    f
+
+    d
+
+    '
+  - '3
+
+    f
+
+    e
+
+    d
+
+    '
+  - '3
+
+    f
+
+    e
+
+    e
+
+    '
+  - '3
+
+    e
+
+    f
+
+    f
+
+    '
+  - '3
+
+    e
+
+    f
+
+    g
+
+    '
+  - '3
+
+    e
+
+    e
+
+    g
+
+    '
+  - '3
+
+    f
+
+    e
+
+    g
+
+    '
+  - '3
+
+    e
+
+    d
+
+    g
+
+    '
+  - '3
+
+    e
+
+    e
+
+    f
+
+    '
+  - '3
+
+    e
+
+    d
+
+    f
+
+    '
+  - '3
+
+    d
+
+    d
+
+    f
+
+    '
+  - '3
+
+    d
+
+    d
+
+    g
+
+    '
+  - '3
+
+    c
+
+    d
+
+    g
+
+    '
+  - '3
+
+    d
+
+    e
+
+    g
+
+    '
+  - '3
+
+    g
+
+    e
+
+    g
+
+    '
+  - '3
+
+    h
+
+    e
+
+    g
+
+    '
+  - '3
+
+    h
+
+    d
+
+    g
+
+    '
+  - '3
+
+    h
+
+    d
+
+    f
+
+    '
+  - '3
+
+    g
+
+    d
+
+    f
+
+    '
+  - '3
+
+    g
+
+    d
+
+    g
+
+    '
+  - '3
+
+    g
+
+    c
+
+    g
+
+    '
+  - '3
+
+    g
+
+    d
+
+    h
+
+    '
+  - '3
+
+    g
+
+    e
+
+    h
+
+    '
+  - '3
+
+    f
+
+    d
+
+    g
+
+    '
+  - '3
+
+    f
+
+    d
+
+    f
+
+    '
+  - '3
+
+    g
+
+    e
+
+    f
+
+    '
+  - '3
+
+    h
+
+    e
+
+    f
+
+    '
+  - '3
+
+    h
+
+    f
+
+    f
+
+    '
+  - '3
+
+    h
+
+    f
+
+    e
+
+    '
+  - '3
+
+    g
+
+    f
+
+    e
+
+    '
+  - '3
+
+    g
+
+    e
+
+    e
+
+    '
+  - '3
+
+    i
+
+    e
+
+    f
+
+    '
+  - '3
+
+    j
+
+    e
+
+    f
+
+    '
+  - '3
+
+    i
+
+    f
+
+    f
+
+    '
+  - '3
+
+    i
+
+    f
+
+    e
+
+    '
+  - '3
+
+    i
+
+    f
+
+    d
+
+    '
+  output:
+  - '10'
+  - '15706243380'
+  - '21'
+  - '92'
+  - '124'
+  - '486984'
+  - '1547476'
+  - '4942'
+  - '3389'
+  - '4944'
+  - '2647'
+  - '92058'
+  - '7423800'
+  - '2361812'
+  - '717012'
+  - '6604'
+  - '2052956'
+  - '1374160'
+  - '3601600'
+  - '3830984'
+  - '7423524'
+  - '1821732'
+  - '462000'
+  - '2454176'
+  - '2'
+  - '10174976
+
+    '
+  - '2647'
+  - '5096760'
+  - '6432'
+  - '1845432'
+  - '2816168'
+  - '3561516'
+  - '119476'
+  - '2'
+  - '11066488'
+  - '40'
+  - '120'
+  - '6622'
+  - '8548136'
+  - '92'
+  - '10195736'
+  - '15514464'
+  - '60'
+  - '350260'
+  - '4381240'
+  - '741700'
+  - '6604'
+  - '2790520'
+  - '3432012'
+  - '6289844'
+  - '466858'
+  - '2513568'
+  - '20'
+  - '5928240'
+  - '2026828'
+  - '7091880'
+  - '2648324'
+  - '10479912'
+  - '42'
+  - '2747'
+  - '9911056'
+  - '684652'
+  - '6596'
+  - '1468656'
+  - '10'
+  - '5963376'
+  - '37448'
+  - '2402680'
+  - '44'
+  - '1724116'
+  - '2620464'
+  - '709104'
+  - '6616'
+  - '1578448'
+  - '2982620'
+  - '2263388'
+  - '1319356'
+  - '7526'
+  - '3389'
+  - '3504'
+  - '1746856'
+  - '2643044'
+  - '540244'
+  - '1565556'
+  - '198624'
+  - '530948'
+  - '3596784'
+  - '29805'
+  - '7311920'
+  - '6572'
+  - '2482756'
+  - '727892'
+  - '104'
+  - '0'
+  - '14358808'
+  - '8487792'
+  - '2647'
+  - '2'
+  - '2'
+  - '40'
+  - '2'
+  - '92'
+  - '2'
+  - '92'
+  - '2'
+  - '92'
+  - '2'
+  - '2'
+  - '60'
+  - '2'
+  - '92'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '92'
+  - '42'
+  - '92'
+  - '60'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '40'
+  - '60'
+  - '60'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '2'
+  - '6596'
+  - '42'
+  - '92'
+  - '92'
+  - '42'
+  - '40'
+  - '42'
+  - '40'
+  - '92'
+  - '60'
+  - '92'
+  - '60'
+  - '92'
+  - '40'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '60'
+  - '60'
+  - '92'
+  - '92'
+  - '60'
+  - '92'
+  - '60'
+  - '92'
+  - '92'
+  - '92'
+  - '40'
+  - '92'
+  - '40'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '40'
+  - '92'
+  - '60'
+  - '92'
+  - '60'
+  - '92'
+  - '92'
+  - '92'
+  - '40'
+  - '40'
+  - '92'
+  - '92'
+  - '92'
+  - '42'
+  - '60'
+  - '60'
+  - '92'
+  - '40'
+  - '40'
+  - '92'
+  - '60'
+  - '92'
+  - '92'
+  - '60'
+  - '92'
+  - '60'
+  - '60'
+  - '92'
+  - '92'
+  - '42'
+  - '92'
+  - '92'
+  - '92'
+  - '92'
+  - '42'
+  - '42'
+  - '92'
+  - '92'
+  - '92'
+  - '42'
+  - '92'
+  - '92'
+  - '40'
+  - '92'
+  - '92'
+  - '40'
+  - '92'
+  - '92'
+  - '40'
+  - '92'
+  - '92'
+timeout: 10.0

@@ -1,0 +1,5893 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThe surveyor\
+  \ starship Hakodate-maru is famous for her two fuel containers with unbounded capacities.\
+  \ They hold the same type of atomic fuel balls.\n\nThere, however, is an inconvenience.\
+  \ The shapes of the fuel containers #1 and #2 are always cubic and regular tetrahedral\
+  \ respectively. Both of the fuel containers should be either empty or filled according\
+  \ to their shapes. Otherwise, the fuel balls become extremely unstable and may explode\
+  \ in the fuel containers. Thus, the number of fuel balls for the container #1 should\
+  \ be a cubic number (n3 for some n = 0, 1, 2, 3,... ) and that for the container\
+  \ #2 should be a tetrahedral number ( n(n + 1)(n + 2)/6 for some n = 0, 1, 2, 3,...\
+  \ ).\n\nHakodate-maru is now at the star base Goryokaku preparing for the next mission\
+  \ to create a precise and detailed chart of stars and interstellar matters. Both\
+  \ of the fuel containers are now empty. Commander Parus of Goryokaku will soon send\
+  \ a message to Captain Future of Hakodate-maru on how many fuel balls Goryokaku\
+  \ can supply. Captain Future should quickly answer to Commander Parus on how many\
+  \ fuel balls she requests before her ship leaves Goryokaku. Of course, Captain Future\
+  \ and her omcers want as many fuel balls as possible.\n\nFor example, consider the\
+  \ case Commander Parus offers 151200 fuel balls. If only the fuel container #1 were\
+  \ available (i.e. ifthe fuel container #2 were unavailable), at most 148877 fuel\
+  \ balls could be put into the fuel container since 148877 = 53 \xD7 53 \xD7 53 <\
+  \ 151200 < 54 \xD7 54 \xD7 54 . If only the fuel container #2 were available, at\
+  \ most 147440 fuel balls could be put into the fuel container since 147440 = 95\
+  \ \xD7 96 \xD7 97/6 < 151200 < 96 \xD7 97 \xD7 98/6 . Using both of the fuel containers\
+  \ #1 and #2, 151200 fuel balls can be put into the fuel containers since 151200\
+  \ = 39 \xD7 39 \xD7 39 + 81 \xD7 82 \xD7 83/6 . In this case, Captain Future's answer\
+  \ should be \"151200\".\n\nCommander Parus's offer cannot be greater than 151200\
+  \ because of the capacity of the fuel storages of Goryokaku. Captain Future and\
+  \ her omcers know that well.\n\nYou are a fuel engineer assigned to Hakodate-maru.\
+  \ Your duty today is to help Captain Future with calculating the number of fuel\
+  \ balls she should request.\n\n\n\nInput\n\nThe input is a sequence of at most 1024\
+  \ positive integers. Each line contains a single integer. The sequence is followed\
+  \ by a zero, which indicates the end of data and should not be treated as input.\
+  \ You may assume that none of the input integers is greater than 151200.\n\nOutput\n\
+  \nThe output is composed of lines, each containing a single integer. Each output\
+  \ integer should be the greatest integer that is the sum of a nonnegative cubic\
+  \ number and a nonnegative tetrahedral number and that is not greater than the corresponding\
+  \ input number. No other characters should appear in the output.\n\nExample\n\n\
+  Input\n\n100\n64\n50\n20\n151200\n0\n\n\nOutput\n\n99\n64\n47\n20\n151200\nA: ```if\
+  \ __name__ == '__main__':\n    while True:\n        num = int(input())\n       \
+  \ if num == 0:\n            break\n\n        ans = 999999999\n        for c in range(54):\n\
+  \            cubic = c * c * c\n            if cubic > num:\n                break\n\
+  \            for t in range(96):\n                tetra = (t * (t+1) * (t+2)) //\
+  \ 6\n                if cubic + tetra > num:\n                    break\n      \
+  \          if abs(cubic + tetra - num) < abs(num - ans):\n                    ans\
+  \ = cubic + tetra\n        print(ans)```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nYou desperately need to build some string t. For that you've\
+  \ got n more strings s1, s2, ..., sn. To build string t, you are allowed to perform\
+  \ exactly |t| (|t| is the length of string t) operations on these strings. Each\
+  \ operation looks like that:\n\n  1. choose any non-empty string from strings s1,\
+  \ s2, ..., sn; \n  2. choose an arbitrary character from the chosen string and write\
+  \ it on a piece of paper; \n  3. remove the chosen character from the chosen string.\
+  \ \n\n\n\nNote that after you perform the described operation, the total number\
+  \ of characters in strings s1, s2, ..., sn decreases by 1. We are assumed to build\
+  \ string t, if the characters, written on the piece of paper, in the order of performed\
+  \ operations form string t.\n\nThere are other limitations, though. For each string\
+  \ si you know number ai \u2014 the maximum number of characters you are allowed\
+  \ to delete from string si. You also know that each operation that results in deleting\
+  \ a character from string si, costs i rubles. That is, an operation on string s1\
+  \ is the cheapest (it costs 1 ruble), and the operation on string sn is the most\
+  \ expensive one (it costs n rubles).\n\nYour task is to count the minimum amount\
+  \ of money (in rubles) you will need to build string t by the given rules. Consider\
+  \ the cost of building string t to be the sum of prices of the operations you use.\n\
+  \nInput\n\nThe first line of the input contains string t \u2014 the string that\
+  \ you need to build.\n\nThe second line contains a single integer n (1 \u2264 n\
+  \ \u2264 100) \u2014 the number of strings to which you are allowed to apply the\
+  \ described operation. Each of the next n lines contains a string and an integer.\
+  \ The i-th line contains space-separated string si and integer ai (0 \u2264 ai \u2264\
+  \ 100). Number ai represents the maximum number of characters that can be deleted\
+  \ from string si.\n\nAll strings in the input only consist of lowercase English\
+  \ letters. All strings are non-empty. The lengths of all strings do not exceed 100\
+  \ characters.\n\nOutput\n\nPrint a single number \u2014 the minimum money (in rubles)\
+  \ you need in order to build string t. If there is no solution, print -1.\n\nExamples\n\
+  \nInput\n\nbbaze\n3\nbzb 2\naeb 3\nba 10\n\n\nOutput\n\n8\n\n\nInput\n\nabacaba\n\
+  4\naba 2\nbcc 1\ncaa 2\nbbb 5\n\n\nOutput\n\n18\n\n\nInput\n\nxyz\n4\naxx 8\nza\
+  \ 1\nefg 4\nt 1\n\n\nOutput\n\n-1\n\nNote\n\nNotes to the samples:\n\nIn the first\
+  \ sample from the first string you should take characters \"b\" and \"z\" with price\
+  \ 1 ruble, from the second string characters \"a\", \"e\" \u0438 \"b\" with price\
+  \ 2 rubles. The price of the string t in this case is 2\xB71 + 3\xB72 = 8.\n\nIn\
+  \ the second sample from the first string you should take two characters \"a\" with\
+  \ price 1 ruble, from the second string character \"c\" with price 2 rubles, from\
+  \ the third string two characters \"a\" with price 3 rubles, from the fourth string\
+  \ two characters \"b\" with price 4 rubles. The price of the string t in this case\
+  \ is 2\xB71 + 1\xB72 + 2\xB73 + 2\xB74 = 18.\n\nIn the third sample the solution\
+  \ doesn't exist because there is no character \"y\" in given strings.\nA: ```class\
+  \ Edge:\n    def __init__(self, to, cost, capacity, next_edge):\n        self.to\
+  \ = to\n        self.cost = cost\n        self.origin_cost = cost\n        self.capacity\
+  \ = capacity\n        self.next_edge = next_edge\n        self.pair = None\n\n\n\
+  class MinCostMaxFlow:\n    def __init__(self, max_node):\n        self.null = Edge(0,\
+  \ 0, 0, None)\n        self.max_node = max_node + 3\n        self.total_cost = 0\n\
+  \        self.current_cost = 0\n        self.visited = [False] * self.max_node\n\
+  \        self.arc_list = []\n        self.edge_head = [self.null] * self.max_node\n\
+  \        self.source = max_node + 1\n        self.sink = max_node + 2\n\n    def\
+  \ AddArcWithCapacityAndUnitCost(self, start_node, end_node, capacity, cost):\n \
+  \       self.edge_head[start_node] = Edge(end_node, cost, capacity, self.edge_head[start_node])\n\
+  \        self.edge_head[end_node] = Edge(start_node, -cost, 0, self.edge_head[end_node])\n\
+  \        self.edge_head[start_node].pair = self.edge_head[end_node]\n        self.edge_head[end_node].pair\
+  \ = self.edge_head[start_node]\n        if start_node != self.source and start_node\
+  \ != self.sink and end_node != self.source and end_node != self.sink:\n        \
+  \    self.arc_list.append(self.edge_head[end_node])\n\n    def NumArcs(self):\n\
+  \        return len(self.arc_list)\n\n    def Tail(self, index):\n        return\
+  \ self.arc_list[index].to\n\n    def Head(self, index):\n        return self.arc_list[index].pair.to\n\
+  \n    def UnitCost(self, index):\n        return self.arc_list[index].pair.origin_cost\n\
+  \n    def Flow(self, index):\n        return self.arc_list[index].capacity\n\n \
+  \   def OptimalFlow(self):\n        edge = self.edge_head[self.sink]\n        total_flow\
+  \ = 0\n        while id(edge) != id(self.null):\n            total_flow += edge.capacity\n\
+  \            edge = edge.next_edge\n        return total_flow\n\n    def OptimalCost(self):\n\
+  \        return self.total_cost\n\n    def SetNodeSupply(self, node, supply):\n\
+  \        if supply > 0:\n            self.AddArcWithCapacityAndUnitCost(self.source,\
+  \ node, supply, 0)\n        elif supply < 0:\n            self.AddArcWithCapacityAndUnitCost(node,\
+  \ self.sink, -supply, 0)\n\n    def aug(self, node_id, total_flow):\n        if\
+  \ node_id == self.sink:\n            self.total_cost += self.current_cost * total_flow\n\
+  \            return total_flow\n        self.visited[node_id] = True\n        flow\
+  \ = total_flow\n        edge = self.edge_head[node_id]\n        while id(edge) !=\
+  \ id(self.null):\n            if edge.capacity > 0 and edge.cost == 0 and not self.visited[edge.to]:\n\
+  \                delta = self.aug(edge.to, min(flow, edge.capacity))\n         \
+  \       edge.capacity -= delta\n                edge.pair.capacity += delta\n  \
+  \              flow -= delta\n                if flow == 0:\n                  \
+  \  return total_flow\n            edge = edge.next_edge\n        return total_flow\
+  \ - flow\n\n    def modify_label(self):\n        min_cost = 1 << 63\n        for\
+  \ node_id in range(0, self.max_node):\n            if not self.visited[node_id]:\n\
+  \                continue\n            edge = self.edge_head[node_id]\n        \
+  \    while id(edge) != id(self.null):\n                if edge.capacity > 0 and\
+  \ not self.visited[edge.to] and edge.cost < min_cost:\n                    min_cost\
+  \ = edge.cost\n                edge = edge.next_edge\n        if min_cost == 1 <<\
+  \ 63:\n            return False\n        for node_id in range(0, self.max_node):\n\
+  \            if not self.visited[node_id]:\n                continue\n         \
+  \   edge = self.edge_head[node_id]\n            while id(edge) != id(self.null):\n\
+  \                edge.cost -= min_cost\n                edge.pair.cost += min_cost\n\
+  \                edge = edge.next_edge\n        self.current_cost += min_cost\n\
+  \        return True\n\n    def Solve(self):\n        while True:\n            while\
+  \ True:\n                self.visited = [False] * self.max_node\n              \
+  \  if self.aug(self.source, 1 << 63) == 0:\n                    break\n        \
+  \    if not self.modify_label():\n                break\n        return self.total_cost\n\
+  \n\ndef main():\n    s = input()\n    n = int(input())\n    source = 0\n    sink\
+  \ = n + 26 + 1\n    mcmf = MinCostMaxFlow(n + 28)\n    length = len(s)\n    num\
+  \ = [0] * 29\n    for i in range(0, length):\n        num[ord(s[i]) - ord('a') +\
+  \ 1] += 1\n    for i in range(1, 27):\n        if num[i] > 0:\n            mcmf.AddArcWithCapacityAndUnitCost(i,\
+  \ sink, num[i], 0)\n    for i in range(1, n + 1):\n        s, used = input().split('\
+  \ ')\n        mcmf.AddArcWithCapacityAndUnitCost(source, 26 + i, int(used), 0)\n\
+  \        num = [0] * 29\n        for j in range(0, len(s)):\n            num[ord(s[j])\
+  \ - ord('a') + 1] += 1\n        for j in range(1, 27):\n            if num[j] >\
+  \ 0:\n                mcmf.AddArcWithCapacityAndUnitCost(26 + i, j, num[j], i)\n\
+  \    mcmf.SetNodeSupply(source, 1 << 63)\n    mcmf.SetNodeSupply(sink, -(1 << 63))\n\
+  \    mcmf.Solve()\n    if mcmf.OptimalFlow() != length:\n        print(\"-1\")\n\
+  \    else:\n        print(mcmf.OptimalCost())\n\n\nif __name__ == '__main__':\n\
+  \    main()```\nQ: Write python code to solve the following coding problem that\
+  \ obeys the constraints and passes the example test cases. The output code needs\
+  \ to read from and write to standard IO. Please wrap your code answer using ```:\n\
+  A total of n depots are located on a number line. Depot i lies at the point x_i\
+  \ for 1 \u2264 i \u2264 n.\n\nYou are a salesman with n bags of goods, attempting\
+  \ to deliver one bag to each of the n depots. You and the n bags are initially at\
+  \ the origin 0. You can carry up to k bags at a time. You must collect the required\
+  \ number of goods from the origin, deliver them to the respective depots, and then\
+  \ return to the origin to collect your next batch of goods.\n\nCalculate the minimum\
+  \ distance you need to cover to deliver all the bags of goods to the depots. You\
+  \ do not have to return to the origin after you have delivered all the bags.\n\n\
+  Input\n\nEach test contains multiple test cases. The first line contains the number\
+  \ of test cases t (1 \u2264 t \u2264 10 500). Description of the test cases follows.\n\
+  \nThe first line of each test case contains two integers n and k (1 \u2264 k \u2264\
+  \ n \u2264 2 \u22C5 10^5).\n\nThe second line of each test case contains n integers\
+  \ x_1, x_2, \u2026, x_n (-10^9 \u2264 x_i \u2264 10^9). It is possible that some\
+  \ depots share the same position.\n\nIt is guaranteed that the sum of n over all\
+  \ test cases does not exceed 2 \u22C5 10^5.\n\nOutput\n\nFor each test case, output\
+  \ a single integer denoting the minimum distance you need to cover to deliver all\
+  \ the bags of goods to the depots. \n\nExample\n\nInput\n\n\n4\n5 1\n1 2 3 4 5\n\
+  9 3\n-5 -10 -15 6 5 8 3 7 4\n5 3\n2 2 3 3 3\n4 2\n1000000000 1000000000 1000000000\
+  \ 1000000000\n\n\nOutput\n\n\n25\n41\n7\n3000000000\n\nNote\n\nIn the first test\
+  \ case, you can carry only one bag at a time. Thus, the following is a solution\
+  \ sequence that gives a minimum travel distance: 0 \u2192 2 \u2192 0 \u2192 4 \u2192\
+  \ 0 \u2192 3 \u2192 0 \u2192 1 \u2192 0 \u2192 5, where each 0 means you go the\
+  \ origin and grab one bag, and each positive integer means you deliver the bag to\
+  \ a depot at this coordinate, giving a total distance of 25 units. It must be noted\
+  \ that there are other sequences that give the same distance.\n\nIn the second test\
+  \ case, you can follow the following sequence, among multiple such sequences, to\
+  \ travel minimum distance: 0 \u2192 6 \u2192 8 \u2192 7 \u2192 0 \u2192 5 \u2192\
+  \ 4 \u2192 3 \u2192 0 \u2192 (-5) \u2192 (-10) \u2192 (-15), with distance 41. It\
+  \ can be shown that 41 is the optimal distance for this test case.\nA:"
+question: "A total of n depots are located on a number line. Depot i lies at the point\
+  \ x_i for 1 \u2264 i \u2264 n.\n\nYou are a salesman with n bags of goods, attempting\
+  \ to deliver one bag to each of the n depots. You and the n bags are initially at\
+  \ the origin 0. You can carry up to k bags at a time. You must collect the required\
+  \ number of goods from the origin, deliver them to the respective depots, and then\
+  \ return to the origin to collect your next batch of goods.\n\nCalculate the minimum\
+  \ distance you need to cover to deliver all the bags of goods to the depots. You\
+  \ do not have to return to the origin after you have delivered all the bags.\n\n\
+  Input\n\nEach test contains multiple test cases. The first line contains the number\
+  \ of test cases t (1 \u2264 t \u2264 10 500). Description of the test cases follows.\n\
+  \nThe first line of each test case contains two integers n and k (1 \u2264 k \u2264\
+  \ n \u2264 2 \u22C5 10^5).\n\nThe second line of each test case contains n integers\
+  \ x_1, x_2, \u2026, x_n (-10^9 \u2264 x_i \u2264 10^9). It is possible that some\
+  \ depots share the same position.\n\nIt is guaranteed that the sum of n over all\
+  \ test cases does not exceed 2 \u22C5 10^5.\n\nOutput\n\nFor each test case, output\
+  \ a single integer denoting the minimum distance you need to cover to deliver all\
+  \ the bags of goods to the depots. \n\nExample\n\nInput\n\n\n4\n5 1\n1 2 3 4 5\n\
+  9 3\n-5 -10 -15 6 5 8 3 7 4\n5 3\n2 2 3 3 3\n4 2\n1000000000 1000000000 1000000000\
+  \ 1000000000\n\n\nOutput\n\n\n25\n41\n7\n3000000000\n\nNote\n\nIn the first test\
+  \ case, you can carry only one bag at a time. Thus, the following is a solution\
+  \ sequence that gives a minimum travel distance: 0 \u2192 2 \u2192 0 \u2192 4 \u2192\
+  \ 0 \u2192 3 \u2192 0 \u2192 1 \u2192 0 \u2192 5, where each 0 means you go the\
+  \ origin and grab one bag, and each positive integer means you deliver the bag to\
+  \ a depot at this coordinate, giving a total distance of 25 units. It must be noted\
+  \ that there are other sequences that give the same distance.\n\nIn the second test\
+  \ case, you can follow the following sequence, among multiple such sequences, to\
+  \ travel minimum distance: 0 \u2192 6 \u2192 8 \u2192 7 \u2192 0 \u2192 5 \u2192\
+  \ 4 \u2192 3 \u2192 0 \u2192 (-5) \u2192 (-10) \u2192 (-15), with distance 41. It\
+  \ can be shown that 41 is the optimal distance for this test case."
+samples:
+- " ```if __name__ == '__main__':\n    t = int(input())\n    for _ in range(t):\n\
+  \        n, k = map(int, input().split())\n        x = list(map(int, input().split()))\n\
+  \        x.sort()\n        res = 0\n        for i in range(0, n, k):\n         \
+  \   res += abs(x[i+k-1] - x[i])\n        print(res)```````\nQ:"
+- " ```import heapq\ndef main():\n    t = int(input())\n    for _ in range(t):\n \
+  \       n, k = map(int, input().split())\n        x = list(map(int, input().split()))\n\
+  \        x.sort()\n        dp = [float('inf')] * (n + 1)\n        dp[0] = 0\n  \
+  \      pq = [(0, 0)]\n        while pq:\n            dist, pos = heapq.heappop(pq)\n\
+  \            if dist > dp[pos]:\n                continue\n            for i in\
+  \ range(1, min(k + 1, n - pos + 1)):\n                if pos + i > n:\n        \
+  \            break\n                new_dist = dp[pos] + abs(x[pos + i - 1] - x[pos\
+  \ - 1])\n                if new_dist < dp[pos + i]:\n                    dp[pos\
+  \ + i] = new_dist\n                    heapq.heappush(pq, (new_dist, pos + i))\n\
+  \        print(dp[-1])\n\nif __name__ == '__main__':\n    main()```A: ```import\
+  \ heapq\ndef main():\n    t = int(input())\n    for _ in range(t):\n        n, k\
+  \ = map(int, input().split())\n        x = list(map(int, input().split()))\n   \
+  \     x.sort()\n        dp = [float('inf')] * (n + 1)\n        dp[0] = 0\n     \
+  \   pq = [(0, 0)]\n        while pq:\n            dist, pos = heapq.heappop(pq)\n\
+  \            if dist > dp[pos]:\n                continue\n            for i in\
+  \ range(1, min(k + 1, n - pos + 1)):\n                if pos + i > n:\n        \
+  \            break\n                new_dist = dp[pos] + abs(x[pos + i - 1] - x[pos\
+  \ - 1])\n                if new_dist < dp[pos + i]:\n                    dp[pos\
+  \ + i] = new_dist\n                    heapq.heappush(pq, (new_dist, pos + i))\n\
+  \        print(dp[-1])\n\nif __name__ == '__main__':\n    main()```A: ```import\
+  \ heapq\ndef main():\n    t = int(input())\n    for _ in range(t):\n        n, k\
+  \ = map(int, input().split())\n        x = list(map(int, input().split()))\n   \
+  \     x.sort()\n        dp = [float('inf')] * (n + 1)\n        dp[0] = 0\n     \
+  \   pq = [(0, 0)]\n        while pq:\n            dist, pos = heapq.heappop(pq)\n\
+  \            if dist > dp[pos]:\n                continue\n            for i in\
+  \ range(1, min(k + 1, n - pos + 1)):\n                if pos + i > n:\n        \
+  \            break\n                new_dist = dp[pos] + abs(x[pos + i - 1] - x[pos\
+  \ - 1])\n                if new_dist < dp[pos + i]:\n                    dp[pos\
+  \ + i] = new_dist\n                    heapq.heappush(pq, (new_dist, pos + i))\n\
+  \        print(dp[-1])\n\nif __name__ == '__main__':\n    main()```A: ```import\
+  \ heapq\ndef main():\n    t = int(input())\n    for _ in range(t):\n        n, k\
+  \ = map(int, input().split())\n        x = list(map(int, input().split()))\n   \
+  \     x.sort()\n        dp = [float('inf')] * (n + 1)\n        dp[0] = 0\n     \
+  \   pq = [(0, 0)]\n        while pq:\n            dist, pos = heapq.heappop(pq)\n\
+  \            if dist > dp[pos]:\n                continue\n            for i in\
+  \ range(1, min(k + 1, n - pos + 1)):\n                if pos + i > n:\n        \
+  \            break\n                new_dist = dp[pos] + abs(x[pos + i - 1] - x[pos\
+  \ - 1])\n                if new_dist < dp[pos + i]:\n                    dp[pos\
+  \ + i] = new_dist\n                    heapq.heappush(pq, (new_dist, pos + i))\n\
+  \        print(dp[-1])\n\nif __name__ == '__main__':\n    main()```A: ```import\
+  \ heapq\ndef main():\n    t = int(input())\n    for _ in range(t):\n        n, k\
+  \ = map(int, input().split())\n        x = list(map(int, input().split()))\n   \
+  \     x.sort()\n        dp = [float('inf')] * (n + 1)\n        dp[0] = 0\n     \
+  \   pq = [(0, 0)]\n        while pq:\n            dist, pos = heapq.heappop(pq)\n\
+  \            if dist > dp[pos]:\n                continue\n            for i in\
+  \ range(1, min(k + 1, n - pos + 1)):\n                if pos + i > n:\n        \
+  \            break\n                new_dist = dp[pos] + abs(x[pos + i -"
+test_cases:
+  input:
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 1 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -22 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -12 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -12 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 0
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 4 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    0000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 2 5
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 2 3 3 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    2 3 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 4
+
+    5 1
+
+    2 2 2 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -15 5 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -22 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 3 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 0
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -25 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 5
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 5 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 2 3 3 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -4 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 3
+
+    -14 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 8
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 6 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 0 3 4 5
+
+    9 3
+
+    -9 -18 -1 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -22 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -12 -6 6 6 8 3 9 3
+
+    5 3
+
+    1 2 6 3 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 0 8 3 7 0
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 0 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000001000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 5
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 0 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 10 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -13 -15 6 5 8 3 12 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 7
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000001000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 8
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1010000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 0
+
+    5 1
+
+    2 4 2 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 6 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 1 5 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1010000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -22 -6 6 6 0 3 7 4
+
+    5 3
+
+    1 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 -1 8 3 7 0
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -25 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 0
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 0 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -8 6 5 8 3 7 4
+
+    5 3
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000010 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 5
+
+    5 3
+
+    2 2 3 2 5
+
+    4 3
+
+    1000000000 1000000000 1000010000 1001010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 4
+
+    -5 -10 -15 10 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -4 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 1
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -13 -15 6 5 8 3 12 4
+
+    5 1
+
+    2 0 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 8
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1010010000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 11 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 1 5 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 4 5
+
+    9 3
+
+    -9 -25 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1010100000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 1 1
+
+    9 3
+
+    -9 -22 -6 6 6 0 3 7 4
+
+    5 3
+
+    1 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -25 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 0
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 0 4
+
+    5 3
+
+    2 4 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -8 6 5 8 3 7 4
+
+    5 3
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1010000000 1000000010 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -4 -15 2 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 1
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -13 -15 6 5 1 3 12 4
+
+    5 1
+
+    2 0 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 3
+
+    -14 -18 -13 6 2 8 3 7 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 11 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 1 8 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 4 5
+
+    9 3
+
+    -9 -25 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 0 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 1 1
+
+    9 3
+
+    -9 -22 -6 6 6 0 3 7 4
+
+    5 3
+
+    2 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -12 -6 6 6 7 3 9 3
+
+    5 3
+
+    1 2 7 5 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 3
+
+    -14 -18 -13 6 2 8 6 7 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000000 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 4 7
+
+    9 3
+
+    -9 -25 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 0 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 0 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1001000000 1000000000 1010100000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 1 1
+
+    9 3
+
+    -9 -22 -6 6 6 0 3 7 4
+
+    5 4
+
+    2 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -12 -6 6 6 7 3 9 3
+
+    5 2
+
+    1 2 7 5 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 6
+
+    -14 -18 -13 6 2 8 6 7 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000000 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 5 7
+
+    9 3
+
+    -9 -25 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 0 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 8 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 0 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1001000000 1000000000 1010100000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -10 -6 6 6 7 3 9 3
+
+    5 2
+
+    1 2 7 5 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 10
+
+    9 3
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000001 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 6
+
+    -14 -18 -13 6 2 8 6 11 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 10
+
+    9 5
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000001 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 5 5
+
+    9 4
+
+    -5 -6 -15 10 5 8 4 0 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 5 5
+
+    9 4
+
+    -5 -6 -15 10 5 8 4 0 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    4 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    0 0 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    4 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    0 0 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 4 7
+
+    5 1
+
+    4 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 3 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 7
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    0000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 1
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 4 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 2 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 0 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 1
+
+    2 4 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 1
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    1 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 12 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 1 3 4 3
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 0 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 9 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 1
+
+    9 3
+
+    -9 -22 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 0
+
+    9 3
+
+    -9 -12 -6 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 6 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 4 4
+
+    5 3
+
+    2 2 5 6 3
+
+    4 2
+
+    0000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 5
+
+    9 3
+
+    -5 -10 -23 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 4
+
+    -5 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 16 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -14 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000001 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 3 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    -1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 9 7 8 3 7 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 4
+
+    5 1
+
+    2 2 2 10 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 0
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 5 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 5
+
+    9 3
+
+    -9 -18 -1 6 6 8 3 7 4
+
+    5 5
+
+    1 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 1 4 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 0 3 4 1
+
+    9 3
+
+    -9 -18 -15 5 6 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -25 3 5 8 3 7 4
+
+    5 3
+
+    2 2 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 2
+
+    2 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000001000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    2 2 3 7 5
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 0 3 4 9
+
+    9 3
+
+    -5 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 0000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 2 2
+
+    9 3
+
+    -14 -18 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 7
+
+    5 1
+
+    2 3 3 0 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 7 4
+
+    5 1
+
+    4 2 3 5 3
+
+    4 3
+
+    1000000000 1000001000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 8
+
+    5 6
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -10 -12 6 14 8 3 7 0
+
+    5 1
+
+    2 2 2 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -18 -15 6 0 8 3 7 4
+
+    5 3
+
+    1 2 6 3 4
+
+    4 2
+
+    1000000001 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 0 8 3 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000001000 1000000000 1001000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 5
+
+    9 3
+
+    -5 -10 -9 6 2 8 3 0 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -8 6 5 8 3 7 4
+
+    5 5
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 2
+
+    -5 -10 -15 6 5 8 3 7 5
+
+    5 3
+
+    2 2 3 2 5
+
+    4 3
+
+    1000000000 1000000000 1000010000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 3
+
+    -5 -10 -15 10 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1001000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 6 4 5
+
+    9 3
+
+    -9 -4 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 2 5 3 2
+
+    4 2
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -13 -15 6 4 8 3 12 4
+
+    5 1
+
+    2 2 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 8 5
+
+    9 3
+
+    -9 -18 -15 6 5 8 3 7 8
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1010000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 6 5
+
+    9 3
+
+    -5 -10 -12 6 7 8 3 7 0
+
+    5 1
+
+    2 4 2 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 4 4 5
+
+    9 3
+
+    -5 -10 -15 6 -1 8 3 7 0
+
+    5 3
+
+    2 2 3 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 0
+
+    9 3
+
+    -5 -10 -15 6 2 8 3 0 4
+
+    5 3
+
+    2 2 3 8 3
+
+    4 3
+
+    1000000000 1000000001 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 9
+
+    9 3
+
+    -5 -18 -8 6 5 8 3 7 4
+
+    5 2
+
+    4 2 5 3 3
+
+    4 2
+
+    1000000000 1000000000 1000000010 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 6
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 5
+
+    5 3
+
+    2 2 3 2 5
+
+    4 3
+
+    1000000000 1000000000 1000010000 1001010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 4
+
+    -5 -10 -15 10 5 8 3 7 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1010110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -4 -15 6 5 8 3 7 8
+
+    5 3
+
+    2 2 5 3 2
+
+    4 1
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 7 2
+
+    9 3
+
+    -14 -18 -13 6 5 8 3 7 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000100000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 4 5
+
+    9 3
+
+    -9 -18 -15 1 5 8 3 7 8
+
+    5 3
+
+    1 2 5 0 2
+
+    4 2
+
+    1000000000 1000000000 1010010000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 11 5
+
+    9 3
+
+    -9 -18 -15 6 6 8 3 7 4
+
+    5 3
+
+    1 1 5 3 2
+
+    4 4
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -6 -6 6 5 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1000000000 1000000000 1010100000
+
+    '
+  - '4
+
+    5 2
+
+    1 1 3 1 1
+
+    9 3
+
+    -9 -22 -6 6 6 0 3 7 4
+
+    5 3
+
+    1 3 6 0 4
+
+    4 2
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 2
+
+    -5 -10 -25 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -18 -15 6 5 1 3 12 4
+
+    5 1
+
+    2 0 3 5 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 6
+
+    4 5
+
+    1000000000 1000000000 1000000010 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 3 3 11 5
+
+    9 3
+
+    -9 -18 -26 6 6 8 3 7 4
+
+    5 3
+
+    1 1 8 3 2
+
+    4 2
+
+    1001000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    2 1 3 4 1
+
+    9 3
+
+    -9 -18 -6 6 5 8 3 7 4
+
+    5 3
+
+    1 1 6 3 4
+
+    4 2
+
+    1000000000 1001000000 1000000000 1010100000
+
+    '
+  - '4
+
+    5 1
+
+    1 1 3 4 1
+
+    9 3
+
+    -9 -14 -6 6 6 7 3 9 3
+
+    5 3
+
+    1 2 7 5 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 2
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -9 -4 -15 2 1 8 3 7 4
+
+    5 4
+
+    2 2 5 3 2
+
+    4 1
+
+    1000000000 1000100000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 3
+
+    -5 -13 -15 6 5 1 3 12 4
+
+    5 1
+
+    1 0 3 5 3
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 6
+
+    4 5
+
+    1000000000 1000000000 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000100001 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 1
+
+    -7 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000000 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 0 3 4 1
+
+    9 3
+
+    -9 -10 -6 6 6 7 3 9 3
+
+    5 2
+
+    1 2 7 5 4
+
+    4 1
+
+    1000000010 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 10
+
+    9 3
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000001 1000000000 1000000000 1000010100
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 8 5
+
+    9 4
+
+    -5 -6 -15 10 5 8 4 0 0
+
+    5 3
+
+    2 7 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 0
+
+    9 6
+
+    -14 -18 -13 6 2 8 6 11 4
+
+    5 3
+
+    4 2 5 3 2
+
+    4 2
+
+    1000000000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 1
+
+    -5 -10 -20 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 10
+
+    9 5
+
+    -5 -10 -20 6 5 9 1 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000001 1000000000 1000000000 1000000100
+
+    '
+  - '4
+
+    5 1
+
+    0 2 3 4 5
+
+    9 1
+
+    -2 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    2 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 5 5
+
+    9 4
+
+    -5 -6 -15 10 5 8 4 0 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000111000
+
+    '
+  - '4
+
+    5 2
+
+    0 2 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 14 7
+
+    5 1
+
+    4 3 3 5 3
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 5 5
+
+    9 4
+
+    -5 -4 -15 10 3 8 4 0 4
+
+    5 3
+
+    2 7 3 3 3
+
+    4 5
+
+    1000000000 1000000000 1000000000 1000110000
+
+    '
+  - '4
+
+    5 1
+
+    0 0 3 4 5
+
+    9 1
+
+    -5 -10 -15 6 7 8 3 4 7
+
+    5 1
+
+    4 3 3 5 1
+
+    4 5
+
+    1000000000 1000000001 1000000010 1010010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 5 4
+
+    5 3
+
+    2 2 5 3 3
+
+    4 2
+
+    1000001000 1000000000 1000000000 1000000000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 5
+
+    9 3
+
+    -5 -10 -15 6 3 8 0 7 4
+
+    5 3
+
+    2 2 3 4 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  - '4
+
+    5 1
+
+    1 2 3 4 2
+
+    9 3
+
+    -5 -10 -15 6 5 8 3 7 4
+
+    5 3
+
+    2 4 3 3 3
+
+    4 3
+
+    1000000000 1000000000 1000000000 1000010000
+
+    '
+  output:
+  - '25
+
+    41
+
+    7
+
+    3000000000
+
+    '
+  - '25
+
+    41
+
+    7
+
+    3000010000
+
+    '
+  - '25
+
+    41
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    41
+
+    8
+
+    3000010000
+
+    '
+  - '25
+
+    41
+
+    23
+
+    3000010000
+
+    '
+  - '25
+
+    41
+
+    10
+
+    3000010000
+
+    '
+  - '25
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '30
+
+    41
+
+    10
+
+    3000010000
+
+    '
+  - '25
+
+    41
+
+    25
+
+    3000010000
+
+    '
+  - '25
+
+    43
+
+    25
+
+    3000010000
+
+    '
+  - '27
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '23
+
+    43
+
+    25
+
+    3000010000
+
+    '
+  - '23
+
+    40
+
+    25
+
+    3000010000
+
+    '
+  - '27
+
+    46
+
+    9
+
+    3000000000
+
+    '
+  - '21
+
+    40
+
+    25
+
+    3000010000
+
+    '
+  - '23
+
+    46
+
+    9
+
+    3000000000
+
+    '
+  - '23
+
+    46
+
+    10
+
+    3000000000
+
+    '
+  - '16
+
+    46
+
+    10
+
+    3000000000
+
+    '
+  - '16
+
+    46
+
+    10
+
+    3000000010
+
+    '
+  - '16
+
+    50
+
+    10
+
+    3000000010
+
+    '
+  - '16
+
+    40
+
+    10
+
+    3000000010
+
+    '
+  - '16
+
+    40
+
+    10
+
+    7000000010
+
+    '
+  - '25
+
+    41
+
+    7
+
+    3000000000
+
+    '
+  - '25
+
+    41
+
+    7
+
+    3000010100
+
+    '
+  - '13
+
+    41
+
+    8
+
+    3000010000
+
+    '
+  - '25
+
+    39
+
+    9
+
+    3000000000
+
+    '
+  - '29
+
+    41
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    41
+
+    9
+
+    3000010000
+
+    '
+  - '25
+
+    41
+
+    23
+
+    1000010000
+
+    '
+  - '30
+
+    41
+
+    10
+
+    3000110000
+
+    '
+  - '23
+
+    41
+
+    25
+
+    3000010000
+
+    '
+  - '25
+
+    43
+
+    27
+
+    3000010000
+
+    '
+  - '27
+
+    44
+
+    7
+
+    3000000000
+
+    '
+  - '23
+
+    40
+
+    23
+
+    3000010000
+
+    '
+  - '27
+
+    46
+
+    9
+
+    3001000000
+
+    '
+  - '25
+
+    46
+
+    10
+
+    3000000000
+
+    '
+  - '16
+
+    44
+
+    10
+
+    3000000000
+
+    '
+  - '16
+
+    46
+
+    8
+
+    3000000000
+
+    '
+  - '16
+
+    50
+
+    12
+
+    3000000010
+
+    '
+  - '13
+
+    41
+
+    7
+
+    3000000000
+
+    '
+  - '25
+
+    51
+
+    7
+
+    3000010100
+
+    '
+  - '29
+
+    39
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    11
+
+    3000000000
+
+    '
+  - '27
+
+    41
+
+    23
+
+    1000010000
+
+    '
+  - '30
+
+    41
+
+    13
+
+    3000110000
+
+    '
+  - '25
+
+    41
+
+    9
+
+    3000100000
+
+    '
+  - '20
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    45
+
+    27
+
+    3000010000
+
+    '
+  - '25
+
+    44
+
+    9
+
+    3000010000
+
+    '
+  - '27
+
+    46
+
+    7
+
+    3000000000
+
+    '
+  - '30
+
+    46
+
+    9
+
+    3001000000
+
+    '
+  - '21
+
+    46
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    46
+
+    10
+
+    3000000001
+
+    '
+  - '16
+
+    44
+
+    8
+
+    3000000000
+
+    '
+  - '16
+
+    50
+
+    8
+
+    3000000010
+
+    '
+  - '16
+
+    42
+
+    10
+
+    7000000010
+
+    '
+  - '13
+
+    37
+
+    7
+
+    3000000000
+
+    '
+  - '13
+
+    39
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    37
+
+    8
+
+    3000010000
+
+    '
+  - '30
+
+    45
+
+    13
+
+    3000110000
+
+    '
+  - '23
+
+    49
+
+    25
+
+    3000010000
+
+    '
+  - '25
+
+    57
+
+    27
+
+    3000010000
+
+    '
+  - '23
+
+    45
+
+    25
+
+    3000010000
+
+    '
+  - '27
+
+    46
+
+    7
+
+    3010000000
+
+    '
+  - '23
+
+    40
+
+    27
+
+    3000010000
+
+    '
+  - '30
+
+    46
+
+    7
+
+    3001000000
+
+    '
+  - '27
+
+    46
+
+    10
+
+    3000000001
+
+    '
+  - '16
+
+    44
+
+    8
+
+    3010000000
+
+    '
+  - '16
+
+    44
+
+    8
+
+    3000000010
+
+    '
+  - '13
+
+    39
+
+    7
+
+    3000000000
+
+    '
+  - '25
+
+    53
+
+    7
+
+    3000010100
+
+    '
+  - '19
+
+    37
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    11
+
+    3000000010
+
+    '
+  - '25
+
+    41
+
+    9
+
+    3001010000
+
+    '
+  - '30
+
+    43
+
+    13
+
+    3000110000
+
+    '
+  - '25
+
+    41
+
+    9
+
+    7000100000
+
+    '
+  - '23
+
+    49
+
+    21
+
+    3000010000
+
+    '
+  - '25
+
+    57
+
+    27
+
+    1000010000
+
+    '
+  - '27
+
+    46
+
+    7
+
+    3010010000
+
+    '
+  - '35
+
+    46
+
+    7
+
+    3001000000
+
+    '
+  - '27
+
+    53
+
+    10
+
+    3000000001
+
+    '
+  - '16
+
+    44
+
+    8
+
+    3010100000
+
+    '
+  - '11
+
+    44
+
+    8
+
+    3000000010
+
+    '
+  - '25
+
+    53
+
+    8
+
+    3000010100
+
+    '
+  - '19
+
+    37
+
+    10
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    11
+
+    3010000000
+
+    '
+  - '25
+
+    39
+
+    9
+
+    7000100000
+
+    '
+  - '23
+
+    47
+
+    21
+
+    3000010000
+
+    '
+  - '20
+
+    42
+
+    9
+
+    3000000000
+
+    '
+  - '35
+
+    46
+
+    10
+
+    3001000000
+
+    '
+  - '27
+
+    53
+
+    8
+
+    3000000001
+
+    '
+  - '11
+
+    44
+
+    10
+
+    3000000010
+
+    '
+  - '16
+
+    42
+
+    11
+
+    7000000010
+
+    '
+  - '25
+
+    48
+
+    8
+
+    3000010100
+
+    '
+  - '20
+
+    46
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    57
+
+    27
+
+    1010010000
+
+    '
+  - '29
+
+    53
+
+    8
+
+    3000000001
+
+    '
+  - '16
+
+    42
+
+    8
+
+    3010100000
+
+    '
+  - '11
+
+    44
+
+    6
+
+    3000000010
+
+    '
+  - '16
+
+    42
+
+    17
+
+    7000000010
+
+    '
+  - '20
+
+    34
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    135
+
+    27
+
+    1010010000
+
+    '
+  - '31
+
+    53
+
+    8
+
+    3000000001
+
+    '
+  - '20
+
+    42
+
+    8
+
+    3010100000
+
+    '
+  - '16
+
+    40
+
+    17
+
+    7000000010
+
+    '
+  - '30
+
+    48
+
+    8
+
+    3000010100
+
+    '
+  - '20
+
+    40
+
+    9
+
+    3000000000
+
+    '
+  - '30
+
+    40
+
+    8
+
+    3000010100
+
+    '
+  - '27
+
+    43
+
+    13
+
+    3000110000
+
+    '
+  - '23
+
+    135
+
+    27
+
+    1010010000
+
+    '
+  - '27
+
+    43
+
+    13
+
+    1000110000
+
+    '
+  - '23
+
+    135
+
+    31
+
+    1010010000
+
+    '
+  - '19
+
+    135
+
+    31
+
+    1010010000
+
+    '
+  - '19
+
+    115
+
+    31
+
+    1010010000
+
+    '
+  - '23
+
+    41
+
+    7
+
+    3000010000
+
+    '
+  - '27
+
+    41
+
+    9
+
+    3000000000
+
+    '
+  - '18
+
+    41
+
+    10
+
+    3000010000
+
+    '
+  - '27
+
+    41
+
+    7
+
+    3000010000
+
+    '
+  - '21
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    41
+
+    29
+
+    3000010000
+
+    '
+  - '25
+
+    43
+
+    25
+
+    7000010000
+
+    '
+  - '23
+
+    43
+
+    23
+
+    3000010000
+
+    '
+  - '23
+
+    48
+
+    25
+
+    3000010000
+
+    '
+  - '18
+
+    40
+
+    25
+
+    3000010000
+
+    '
+  - '23
+
+    46
+
+    7
+
+    3000000000
+
+    '
+  - '25
+
+    48
+
+    10
+
+    3000000000
+
+    '
+  - '18
+
+    50
+
+    10
+
+    3000000010
+
+    '
+  - '14
+
+    40
+
+    10
+
+    3000000010
+
+    '
+  - '30
+
+    41
+
+    7
+
+    3000010100
+
+    '
+  - '25
+
+    39
+
+    10
+
+    3000000000
+
+    '
+  - '29
+
+    49
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    42
+
+    9
+
+    3000000000
+
+    '
+  - '38
+
+    41
+
+    10
+
+    3000110000
+
+    '
+  - '25
+
+    44
+
+    9
+
+    3000000001
+
+    '
+  - '25
+
+    40
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    47
+
+    25
+
+    3000010000
+
+    '
+  - '23
+
+    40
+
+    28
+
+    3000010000
+
+    '
+  - '18
+
+    46
+
+    9
+
+    3001000000
+
+    '
+  - '23
+
+    46
+
+    5
+
+    3000000000
+
+    '
+  - '21
+
+    46
+
+    10
+
+    3000000000
+
+    '
+  - '14
+
+    44
+
+    10
+
+    3000000000
+
+    '
+  - '25
+
+    49
+
+    7
+
+    3000010100
+
+    '
+  - '15
+
+    41
+
+    8
+
+    3000010000
+
+    '
+  - '31
+
+    39
+
+    8
+
+    3000010000
+
+    '
+  - '25
+
+    44
+
+    11
+
+    3000000000
+
+    '
+  - '30
+
+    41
+
+    13
+
+    1000110000
+
+    '
+  - '17
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    45
+
+    19
+
+    3000010000
+
+    '
+  - '23
+
+    43
+
+    29
+
+    3000010000
+
+    '
+  - '27
+
+    46
+
+    5
+
+    3000000000
+
+    '
+  - '23
+
+    50
+
+    23
+
+    3000010000
+
+    '
+  - '25
+
+    42
+
+    10
+
+    3000000001
+
+    '
+  - '13
+
+    39
+
+    8
+
+    3001000000
+
+    '
+  - '29
+
+    32
+
+    8
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    5
+
+    3000000000
+
+    '
+  - '25
+
+    63
+
+    9
+
+    3000010000
+
+    '
+  - '30
+
+    45
+
+    13
+
+    3001000000
+
+    '
+  - '30
+
+    41
+
+    9
+
+    3000100000
+
+    '
+  - '23
+
+    47
+
+    25
+
+    3000010000
+
+    '
+  - '25
+
+    57
+
+    27
+
+    3010010000
+
+    '
+  - '32
+
+    46
+
+    7
+
+    3010000000
+
+    '
+  - '26
+
+    40
+
+    27
+
+    3000010000
+
+    '
+  - '15
+
+    39
+
+    7
+
+    3000000000
+
+    '
+  - '19
+
+    37
+
+    12
+
+    3000010000
+
+    '
+  - '29
+
+    44
+
+    15
+
+    3000000010
+
+    '
+  - '26
+
+    41
+
+    9
+
+    3001010000
+
+    '
+  - '30
+
+    43
+
+    13
+
+    3010110000
+
+    '
+  - '25
+
+    43
+
+    9
+
+    7000100000
+
+    '
+  - '23
+
+    44
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    57
+
+    27
+
+    1000100000
+
+    '
+  - '27
+
+    44
+
+    7
+
+    3010010000
+
+    '
+  - '35
+
+    46
+
+    7
+
+    1001000000
+
+    '
+  - '16
+
+    35
+
+    8
+
+    3010100000
+
+    '
+  - '7
+
+    44
+
+    8
+
+    3000000010
+
+    '
+  - '25
+
+    73
+
+    8
+
+    3000010100
+
+    '
+  - '23
+
+    50
+
+    21
+
+    3000010000
+
+    '
+  - '25
+
+    57
+
+    32
+
+    1000010000
+
+    '
+  - '35
+
+    54
+
+    10
+
+    3001000000
+
+    '
+  - '18
+
+    44
+
+    8
+
+    3010100000
+
+    '
+  - '16
+
+    44
+
+    11
+
+    7000000010
+
+    '
+  - '13
+
+    48
+
+    8
+
+    3000010100
+
+    '
+  - '25
+
+    37
+
+    9
+
+    7000100000
+
+    '
+  - '23
+
+    47
+
+    19
+
+    3000010000
+
+    '
+  - '25
+
+    57
+
+    32
+
+    1010010000
+
+    '
+  - '25
+
+    48
+
+    8
+
+    3000100001
+
+    '
+  - '25
+
+    139
+
+    27
+
+    1010010000
+
+    '
+  - '14
+
+    40
+
+    17
+
+    7000000010
+
+    '
+  - '28
+
+    48
+
+    8
+
+    3000010100
+
+    '
+  - '30
+
+    35
+
+    13
+
+    3000110000
+
+    '
+  - '16
+
+    40
+
+    9
+
+    3000000000
+
+    '
+  - '25
+
+    140
+
+    27
+
+    1010010000
+
+    '
+  - '30
+
+    40
+
+    8
+
+    3000000100
+
+    '
+  - '23
+
+    129
+
+    27
+
+    1010010000
+
+    '
+  - '27
+
+    43
+
+    13
+
+    1000111000
+
+    '
+  - '11
+
+    135
+
+    31
+
+    1010010000
+
+    '
+  - '27
+
+    41
+
+    13
+
+    1000110000
+
+    '
+  - '19
+
+    115
+
+    27
+
+    1010010000
+
+    '
+  - '25
+
+    41
+
+    9
+
+    3000001000
+
+    '
+  - '25
+
+    39
+
+    8
+
+    3000010000
+
+    '
+  - '20
+
+    41
+
+    10
+
+    3000010000
+
+    '
+timeout: 1.0

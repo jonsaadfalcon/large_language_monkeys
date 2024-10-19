@@ -1,0 +1,4838 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou have N\
+  \ items and a bag of strength W. The i-th item has a weight of w_i and a value of\
+  \ v_i.\n\nYou will select some of the items and put them in the bag. Here, the total\
+  \ weight of the selected items needs to be at most W.\n\nYour objective is to maximize\
+  \ the total value of the selected items.\n\nConstraints\n\n* 1 \u2264 N \u2264 100\n\
+  * 1 \u2264 W \u2264 10^9\n* 1 \u2264 w_i \u2264 10^9\n* For each i = 2,3,...,N,\
+  \ w_1 \u2264 w_i \u2264 w_1 + 3.\n* 1 \u2264 v_i \u2264 10^7\n* W, each w_i and\
+  \ v_i are integers.\n\nInput\n\nInput is given from Standard Input in the following\
+  \ format:\n\n\nN W\nw_1 v_1\nw_2 v_2\n:\nw_N v_N\n\n\nOutput\n\nPrint the maximum\
+  \ possible total value of the selected items.\n\nExamples\n\nInput\n\n4 6\n2 1\n\
+  3 4\n4 10\n3 4\n\n\nOutput\n\n11\n\n\nInput\n\n4 6\n2 1\n3 7\n4 10\n3 6\n\n\nOutput\n\
+  \n13\n\n\nInput\n\n4 10\n1 100\n1 100\n1 100\n1 100\n\n\nOutput\n\n400\n\n\nInput\n\
+  \n4 1\n10 100\n10 100\n10 100\n10 100\n\n\nOutput\n\n0\nA: ```# -*- coding: utf-8\
+  \ -*-\nfrom itertools import accumulate, product\nfrom operator import itemgetter\n\
+  \ndef inpl(): return tuple(map(int, input().split()))\nN, W = inpl()\nI = [inpl()\
+  \ for _ in range(N)]\nw1 = I[0][0]\nA = {w1 + x: [] for x in range(4)}\n\nfor w,\
+  \ v in I:\n    A[w].append(v)\n\nfor k, v in A.items():\n    A[k] = [0] + list(accumulate(sorted(v,\
+  \ reverse=True)))\n\nres = 0\ng0 = itemgetter(0)\ng1 = itemgetter(1)\n\nfor L in\
+  \ product(enumerate(A[w1]),\n                 enumerate(A[w1+1]),\n            \
+  \     enumerate(A[w1+2]),\n                 enumerate(A[w1+3])):\n    if sum([(w1+i)*l\
+  \ for i, l in enumerate(map(g0, L))]) <= W:\n        res = max(res, sum(map(g1,\
+  \ L)))\n\nprint(res)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nPhoenix has a string s consisting of lowercase Latin letters. He wants to\
+  \ distribute all the letters of his string into k non-empty strings a_1, a_2, ...,\
+  \ a_k such that every letter of s goes to exactly one of the strings a_i. The strings\
+  \ a_i do not need to be substrings of s. Phoenix can distribute letters of s and\
+  \ rearrange the letters within each string a_i however he wants.\n\nFor example,\
+  \ if s =  baba and k=2, Phoenix may distribute the letters of his string in many\
+  \ ways, such as: \n\n  * ba and ba\n  * a and abb\n  * ab and ab\n  * aa and bb\n\
+  \n\n\nBut these ways are invalid: \n\n  * baa and ba\n  * b and ba\n  * baba and\
+  \ empty string (a_i should be non-empty) \n\n\n\nPhoenix wants to distribute the\
+  \ letters of his string s into k strings a_1, a_2, ..., a_k to minimize the lexicographically\
+  \ maximum string among them, i. e. minimize max(a_1, a_2, ..., a_k). Help him find\
+  \ the optimal distribution and print the minimal possible value of max(a_1, a_2,\
+  \ ..., a_k).\n\nString x is lexicographically less than string y if either x is\
+  \ a prefix of y and x \u2260 y, or there exists an index i (1 \u2264 i \u2264 min(|x|,\
+  \ |y|)) such that x_i < y_i and for every j (1 \u2264 j < i) x_j = y_j. Here |x|\
+  \ denotes the length of the string x.\n\nInput\n\nThe input consists of multiple\
+  \ test cases. The first line contains an integer t (1 \u2264 t \u2264 1000) \u2014\
+  \ the number of test cases. Each test case consists of two lines.\n\nThe first line\
+  \ of each test case consists of two integers n and k (1 \u2264 k \u2264 n \u2264\
+  \ 10^5) \u2014 the length of string s and the number of non-empty strings, into\
+  \ which Phoenix wants to distribute letters of s, respectively.\n\nThe second line\
+  \ of each test case contains a string s of length n consisting only of lowercase\
+  \ Latin letters.\n\nIt is guaranteed that the sum of n over all test cases is \u2264\
+  \ 10^5.\n\nOutput\n\nPrint t answers \u2014 one per test case. The i-th answer should\
+  \ be the minimal possible value of max(a_1, a_2, ..., a_k) in the i-th test case.\n\
+  \nExample\n\nInput\n\n\n6\n4 2\nbaba\n5 2\nbaacb\n5 3\nbaacb\n5 3\naaaaa\n6 4\n\
+  aaxxzz\n7 1\nphoenix\n\n\nOutput\n\n\nab\nabbc\nb\naa\nx\nehinopx\n\nNote\n\nIn\
+  \ the first test case, one optimal solution is to distribute baba into ab and ab.\
+  \ \n\nIn the second test case, one optimal solution is to distribute baacb into\
+  \ abbc and a.\n\nIn the third test case, one optimal solution is to distribute baacb\
+  \ into ac, ab, and b.\n\nIn the fourth test case, one optimal solution is to distribute\
+  \ aaaaa into aa, aa, and a.\n\nIn the fifth test case, one optimal solution is to\
+  \ distribute aaxxzz into az, az, x, and x.\n\nIn the sixth test case, one optimal\
+  \ solution is to distribute phoenix into ehinopx.\nA: ```import sys\ninput = sys.stdin.readline\n\
+  '''\nn, m = map(int, input().split())\nn = int(input())\nA = list(map(int, input().split()))\n\
+  S = input().strip()\nfor CASES in range(int(input())):\nsys.stdout.write(\" \".join(map(str,ans))+\"\
+  \\n\")\n'''\ninf = 100000000000000000  # 1e17\nmod = 998244353\n\n\n\nfor CASES\
+  \ in range(int(input())):\n    n, m = map(int, input().split())\n    S = input().strip()\n\
+  \    S = sorted(list(S))\n    # print(S)\n\n    if S[0]!=S[m-1]:\n        print(S[m-1])\n\
+  \    else:\n        ANS1=\"\".join(map(str,S[0]))+\"\".join(map(str,S[m:]))\n  \
+  \      ANS2=\"\"\n        for i in range(m):\n            ANS2=max(ANS2,\"\".join(map(str,S[i::m])))\n\
+  \n        ANS=min(ANS1,ANS2)\n        print(ANS)```\nQ: Write python code to solve\
+  \ the following coding problem that obeys the constraints and passes the example\
+  \ test cases. The output code needs to read from and write to standard IO. Please\
+  \ wrap your code answer using ```:\nA group of n alpinists has just reached the\
+  \ foot of the mountain. The initial difficulty of climbing this mountain can be\
+  \ described as an integer d.\n\nEach alpinist can be described by two integers s\
+  \ and a, where s is his skill of climbing mountains and a is his neatness.\n\nAn\
+  \ alpinist of skill level s is able to climb a mountain of difficulty p only if\
+  \ p \u2264 s. As an alpinist climbs a mountain, they affect the path and thus may\
+  \ change mountain difficulty. Specifically, if an alpinist of neatness a climbs\
+  \ a mountain of difficulty p the difficulty of this mountain becomes max(p, a).\
+  \ \n\nAlpinists will climb the mountain one by one. And before the start, they wonder,\
+  \ what is the maximum number of alpinists who will be able to climb the mountain\
+  \ if they choose the right order. As you are the only person in the group who does\
+  \ programming, you are to answer the question.\n\nNote that after the order is chosen,\
+  \ each alpinist who can climb the mountain, must climb the mountain at that time.\
+  \ \n\nInput\n\nThe first line contains two integers n and d (1 \u2264 n \u2264 500\
+  \ 000; 0 \u2264 d \u2264 10^9) \u2014 the number of alpinists and the initial difficulty\
+  \ of the mountain.\n\nEach of the next n lines contains two integers s_i and a_i\
+  \ (0 \u2264 s_i, a_i \u2264 10^9) that define the skill of climbing and the neatness\
+  \ of the i-th alpinist.\n\nOutput\n\nPrint one integer equal to the maximum number\
+  \ of alpinists who can climb the mountain if they choose the right order to do so.\n\
+  \nExamples\n\nInput\n\n\n3 2\n2 6\n3 5\n5 7\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n\
+  3 3\n2 4\n6 4\n4 6\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n5 0\n1 5\n4 8\n2 7\n7 6\n\
+  3 2\n\n\nOutput\n\n\n3\n\nNote\n\nIn the first example, alpinists 2 and 3 can climb\
+  \ the mountain if they go in this order. There is no other way to achieve the answer\
+  \ of 2.\n\nIn the second example, alpinist 1 is not able to climb because of the\
+  \ initial difficulty of the mountain, while alpinists 2 and 3 can go up in any order.\n\
+  \nIn the third example, the mountain can be climbed by alpinists 5, 3 and 4 in this\
+  \ particular order. There is no other way to achieve optimal answer.\nA:"
+question: "A group of n alpinists has just reached the foot of the mountain. The initial\
+  \ difficulty of climbing this mountain can be described as an integer d.\n\nEach\
+  \ alpinist can be described by two integers s and a, where s is his skill of climbing\
+  \ mountains and a is his neatness.\n\nAn alpinist of skill level s is able to climb\
+  \ a mountain of difficulty p only if p \u2264 s. As an alpinist climbs a mountain,\
+  \ they affect the path and thus may change mountain difficulty. Specifically, if\
+  \ an alpinist of neatness a climbs a mountain of difficulty p the difficulty of\
+  \ this mountain becomes max(p, a). \n\nAlpinists will climb the mountain one by\
+  \ one. And before the start, they wonder, what is the maximum number of alpinists\
+  \ who will be able to climb the mountain if they choose the right order. As you\
+  \ are the only person in the group who does programming, you are to answer the question.\n\
+  \nNote that after the order is chosen, each alpinist who can climb the mountain,\
+  \ must climb the mountain at that time. \n\nInput\n\nThe first line contains two\
+  \ integers n and d (1 \u2264 n \u2264 500 000; 0 \u2264 d \u2264 10^9) \u2014 the\
+  \ number of alpinists and the initial difficulty of the mountain.\n\nEach of the\
+  \ next n lines contains two integers s_i and a_i (0 \u2264 s_i, a_i \u2264 10^9)\
+  \ that define the skill of climbing and the neatness of the i-th alpinist.\n\nOutput\n\
+  \nPrint one integer equal to the maximum number of alpinists who can climb the mountain\
+  \ if they choose the right order to do so.\n\nExamples\n\nInput\n\n\n3 2\n2 6\n\
+  3 5\n5 7\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n3 3\n2 4\n6 4\n4 6\n\n\nOutput\n\n\n\
+  2\n\n\nInput\n\n\n5 0\n1 5\n4 8\n2 7\n7 6\n3 2\n\n\nOutput\n\n\n3\n\nNote\n\nIn\
+  \ the first example, alpinists 2 and 3 can climb the mountain if they go in this\
+  \ order. There is no other way to achieve the answer of 2.\n\nIn the second example,\
+  \ alpinist 1 is not able to climb because of the initial difficulty of the mountain,\
+  \ while alpinists 2 and 3 can go up in any order.\n\nIn the third example, the mountain\
+  \ can be climbed by alpinists 5, 3 and 4 in this particular order. There is no other\
+  \ way to achieve optimal answer."
+samples:
+- " ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque()\nfor s, a in alpinists:\n    if s > d:\n        q.append((s,\
+  \ a))\nd = 0\nres = 0\nwhile q:\n    s, a = q.popleft()\n    if d < s:\n       \
+  \ d = s\n        res += 1\n    if a > d:\n        q.append((a, a))\nd = 0\nprint(res)```\
+  \ A: ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque"
+- " ```# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return\
+  \ tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in\
+  \ range(n)]\nq = deque([d])\nans = 0\nwhile q:\n    d = q.popleft()\n    if d ==\
+  \ 0:\n        ans += 1\n    for s, a in alpinists:\n        if s <= d <= a:\n  \
+  \          q.append(max(d, a))\nprint(ans)```\n\n\n```python\n# -*- coding: utf-8\
+  \ -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int, input().split()))\n\
+  n, d = inpl()\nalpinists = [inpl() for _ in range(n)]\nq = deque([(0, 0)])\nans\
+  \ = 0\nwhile q:\n    d, i = q.popleft()\n    if d == 0:\n        ans += 1\n    for\
+  \ s, a in alpinists[i:]:\n        if s <= d <= a:\n            q.append((max(d,\
+  \ a), i+1))\nprint(ans)\n```\n\n\n```python\n# -*- coding: utf-8 -*-\nfrom collections\
+  \ import deque\n\ndef inpl(): return tuple(map(int, input().split()))\nn, d = inpl()\n\
+  alpinists = [inpl() for _ in range(n)]\nq = deque([(0, 0)])\nans = 0\nwhile q:\n\
+  \    d, i = q.popleft()\n    if d == 0:\n        ans += 1\n    for s, a in alpinists[i:]:\n\
+  \        if s <= d <= a:\n            q.append((max(d, a), i+1))\nprint(ans)\n```\n\
+  \n\n```python\n# -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl():\
+  \ return tuple(map(int, input().split()))\nn, d = inpl()\nalpinists = [inpl() for\
+  \ _ in range(n)]\nq = deque([(0, 0)])\nans = 0\nwhile q:\n    d, i = q.popleft()\n\
+  \    if d == 0:\n        ans += 1\n    for s, a in alpinists[i:]:\n        if s\
+  \ <= d <= a:\n            q.append((max(d, a), i+1))\nprint(ans)\n```\n\n\n```python\n\
+  # -*- coding: utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int,\
+  \ input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in range(n)]\nq =\
+  \ deque([(0, 0)])\nans = 0\nwhile q:\n    d, i = q.popleft()\n    if d == 0:\n \
+  \       ans += 1\n    for s, a in alpinists[i:]:\n        if s <= d <= a:\n    \
+  \        q.append((max(d, a), i+1))\nprint(ans)\n```\n\n\n```python\n# -*- coding:\
+  \ utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int,\
+  \ input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in range(n)]\nq =\
+  \ deque([(0, 0)])\nans = 0\nwhile q:\n    d, i = q.popleft()\n    if d == 0:\n \
+  \       ans += 1\n    for s, a in alpinists[i:]:\n        if s <= d <= a:\n    \
+  \        q.append((max(d, a), i+1))\nprint(ans)\n```\n\n\n```python\n# -*- coding:\
+  \ utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int,\
+  \ input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in range(n)]\nq =\
+  \ deque([(0, 0)])\nans = 0\nwhile q:\n    d, i = q.popleft()\n    if d == 0:\n \
+  \       ans += 1\n    for s, a in alpinists[i:]:\n        if s <= d <= a:\n    \
+  \        q.append((max(d, a), i+1))\nprint(ans)\n```\n\n\n```python\n# -*- coding:\
+  \ utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int,\
+  \ input().split()))\nn, d = inpl()\nalpinists = [inpl() for _ in range(n)]\nq =\
+  \ deque([(0, 0)])\nans = 0\nwhile q:\n    d, i = q.popleft()\n    if d == 0:\n \
+  \       ans += 1\n    for s, a in alpinists[i:]:\n        if s <= d <= a:\n    \
+  \        q.append((max(d, a), i+1))\nprint(ans)\n```\n\n\n```python\n# -*- coding:\
+  \ utf-8 -*-\nfrom collections import deque\n\ndef inpl(): return tuple(map(int,\
+  \ input().split()))\n"
+test_cases:
+  input:
+  - '3 2
+
+    2 6
+
+    3 5
+
+    5 7
+
+    '
+  - '5 0
+
+    1 5
+
+    4 8
+
+    2 7
+
+    7 6
+
+    3 2
+
+    '
+  - '3 3
+
+    2 4
+
+    6 4
+
+    4 6
+
+    '
+  - '10 5
+
+    18 2
+
+    14 6
+
+    12 9
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    17 3
+
+    13 7
+
+    29 1
+
+    '
+  - '10 5
+
+    29 23
+
+    24 11
+
+    28 8
+
+    26 7
+
+    14 1
+
+    12 6
+
+    27 22
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    24 14
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 13
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    8 22
+
+    11 29
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 5
+
+    8 14
+
+    1 13
+
+    3 17
+
+    2 18
+
+    6 12
+
+    10 7
+
+    24 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    18 18
+
+    5 18
+
+    18 18
+
+    18 18
+
+    18 18
+
+    2 18
+
+    2 2
+
+    11 5
+
+    '
+  - '10 5
+
+    6 11
+
+    20 10
+
+    4 25
+
+    4 14
+
+    27 29
+
+    17 25
+
+    20 1
+
+    15 15
+
+    28 17
+
+    10 30
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 17
+
+    29 28
+
+    4 23
+
+    20 24
+
+    14 18
+
+    16 25
+
+    9 30
+
+    '
+  - '10 5
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    11 22
+
+    28 2
+
+    4 24
+
+    17 16
+
+    13 18
+
+    '
+  - '10 5
+
+    18 3
+
+    24 4
+
+    16 12
+
+    27 16
+
+    21 5
+
+    30 4
+
+    26 0
+
+    7 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 3
+
+    1 7
+
+    '
+  - '10 5
+
+    18 2
+
+    14 6
+
+    12 9
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    16 3
+
+    13 7
+
+    29 1
+
+    '
+  - '10 5
+
+    29 23
+
+    24 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    12 6
+
+    27 22
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    24 3
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 13
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    8 22
+
+    11 44
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    3 17
+
+    2 18
+
+    6 12
+
+    10 7
+
+    24 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    27 18
+
+    5 18
+
+    18 18
+
+    18 18
+
+    18 18
+
+    2 18
+
+    2 2
+
+    11 5
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    11 22
+
+    28 2
+
+    4 24
+
+    17 16
+
+    13 18
+
+    '
+  - '2 4
+
+    2 1
+
+    1 7
+
+    '
+  - '5 0
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 2
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 18
+
+    5 18
+
+    18 18
+
+    18 18
+
+    21 18
+
+    2 18
+
+    2 2
+
+    11 5
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 0000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 5
+
+    6 11
+
+    20 10
+
+    4 25
+
+    4 14
+
+    27 29
+
+    17 25
+
+    19 1
+
+    15 15
+
+    28 17
+
+    10 30
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 7
+
+    29 28
+
+    4 23
+
+    20 24
+
+    14 18
+
+    16 25
+
+    9 30
+
+    '
+  - '10 5
+
+    18 3
+
+    24 4
+
+    16 12
+
+    27 16
+
+    21 5
+
+    30 4
+
+    32 0
+
+    7 3
+
+    21 5
+
+    19 5
+
+    '
+  - '0 2
+
+    2 6
+
+    3 5
+
+    5 7
+
+    '
+  - '3 3
+
+    2 4
+
+    7 4
+
+    4 6
+
+    '
+  - '10 5
+
+    18 2
+
+    14 6
+
+    12 9
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    16 3
+
+    13 7
+
+    54 1
+
+    '
+  - '10 5
+
+    29 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    12 6
+
+    27 22
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    24 1
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 13
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    8 22
+
+    5 44
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 0000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 17
+
+    2 18
+
+    6 12
+
+    10 7
+
+    24 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    27 18
+
+    5 18
+
+    18 18
+
+    18 18
+
+    21 18
+
+    2 18
+
+    2 2
+
+    11 5
+
+    '
+  - '10 5
+
+    6 11
+
+    20 2
+
+    4 25
+
+    4 14
+
+    27 29
+
+    17 25
+
+    19 1
+
+    15 15
+
+    28 17
+
+    10 30
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 7
+
+    29 8
+
+    4 23
+
+    20 24
+
+    14 18
+
+    16 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    5 22
+
+    28 2
+
+    4 24
+
+    17 16
+
+    13 18
+
+    '
+  - '10 5
+
+    18 3
+
+    24 4
+
+    16 12
+
+    27 16
+
+    21 5
+
+    30 4
+
+    32 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    1 3
+
+    '
+  - '0 2
+
+    2 6
+
+    3 5
+
+    5 14
+
+    '
+  - '5 0
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 0
+
+    '
+  - '3 6
+
+    2 4
+
+    7 4
+
+    4 6
+
+    '
+  - '10 5
+
+    18 2
+
+    2 6
+
+    12 9
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    16 3
+
+    13 7
+
+    54 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    12 6
+
+    27 22
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    6 1
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 13
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    2 22
+
+    5 44
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1000000000 0000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 17
+
+    2 17
+
+    6 12
+
+    10 7
+
+    24 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 7
+
+    29 8
+
+    3 23
+
+    20 24
+
+    14 18
+
+    16 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    5 22
+
+    7 2
+
+    4 24
+
+    17 16
+
+    13 18
+
+    '
+  - '10 5
+
+    18 3
+
+    24 4
+
+    16 12
+
+    27 16
+
+    21 5
+
+    30 1
+
+    32 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    1 6
+
+    '
+  - '0 2
+
+    2 4
+
+    3 5
+
+    5 14
+
+    '
+  - '3 0
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 0
+
+    '
+  - '3 6
+
+    2 4
+
+    7 8
+
+    4 6
+
+    '
+  - '10 5
+
+    18 2
+
+    2 6
+
+    12 9
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    16 3
+
+    9 7
+
+    54 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    12 6
+
+    49 22
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    3 1
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 13
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    2 8
+
+    5 44
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1000000000 0000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 17
+
+    1 17
+
+    6 12
+
+    10 7
+
+    24 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 18
+
+    5 18
+
+    18 18
+
+    18 18
+
+    21 18
+
+    2 18
+
+    2 2
+
+    11 1
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 14
+
+    29 8
+
+    3 23
+
+    20 24
+
+    14 18
+
+    16 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    5 22
+
+    7 0
+
+    4 24
+
+    17 16
+
+    13 18
+
+    '
+  - '10 5
+
+    18 3
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 1
+
+    32 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    2 6
+
+    '
+  - '0 3
+
+    2 4
+
+    3 5
+
+    5 14
+
+    '
+  - '3 1
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 0
+
+    '
+  - '3 6
+
+    2 4
+
+    7 8
+
+    8 6
+
+    '
+  - '10 5
+
+    18 2
+
+    2 6
+
+    12 15
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    16 3
+
+    9 7
+
+    54 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    12 6
+
+    49 33
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 0
+
+    6 2
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    4 23
+
+    2 8
+
+    5 44
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1100000000 0000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 17
+
+    1 17
+
+    6 12
+
+    10 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 18
+
+    5 18
+
+    18 18
+
+    27 18
+
+    21 18
+
+    2 18
+
+    2 2
+
+    11 1
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 14
+
+    29 8
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    0 25
+
+    21 13
+
+    14 21
+
+    5 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 18
+
+    '
+  - '10 3
+
+    18 3
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 1
+
+    32 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    2 9
+
+    '
+  - '0 3
+
+    2 4
+
+    0 5
+
+    5 14
+
+    '
+  - '3 1
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 -1
+
+    '
+  - '3 6
+
+    2 4
+
+    7 8
+
+    16 6
+
+    '
+  - '10 5
+
+    18 2
+
+    2 6
+
+    12 15
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    3 3
+
+    9 7
+
+    54 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    24 6
+
+    49 33
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 1
+
+    6 2
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    2 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    5 44
+
+    '
+  - '10 1000000000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1100000000 0000000000
+
+    1000000000 1000000000
+
+    1000001000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    10 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    11 15
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 18
+
+    5 18
+
+    18 18
+
+    27 18
+
+    7 18
+
+    2 18
+
+    2 2
+
+    11 1
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 14
+
+    27 8
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 25
+
+    21 13
+
+    14 21
+
+    5 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 18
+
+    '
+  - '10 3
+
+    18 3
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 1
+
+    33 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    2 15
+
+    '
+  - '0 3
+
+    2 4
+
+    0 6
+
+    5 14
+
+    '
+  - '3 2
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 6
+
+    3 -1
+
+    '
+  - '3 6
+
+    2 4
+
+    13 8
+
+    16 6
+
+    '
+  - '10 5
+
+    17 2
+
+    2 6
+
+    12 15
+
+    4 10
+
+    22 0
+
+    8 11
+
+    5 24
+
+    3 3
+
+    9 7
+
+    54 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    24 6
+
+    56 33
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '1 1
+
+    6 3
+
+    '
+  - '10 5
+
+    3 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    5 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1100000000 0000000000
+
+    1000000000 1000000000
+
+    1000001000 1000000000
+
+    1000000000 1000000000
+
+    '
+  - '10 8
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    10 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    11 6
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 18
+
+    5 18
+
+    18 18
+
+    27 18
+
+    7 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 14
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 25
+
+    10 13
+
+    14 21
+
+    5 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 18
+
+    '
+  - '10 3
+
+    18 3
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    2 20
+
+    '
+  - '0 3
+
+    2 4
+
+    0 12
+
+    5 14
+
+    '
+  - '3 2
+
+    1 5
+
+    4 8
+
+    2 7
+
+    1 12
+
+    3 -1
+
+    '
+  - '3 6
+
+    2 4
+
+    13 8
+
+    16 1
+
+    '
+  - '10 5
+
+    34 23
+
+    42 11
+
+    28 9
+
+    26 7
+
+    14 1
+
+    24 6
+
+    79 33
+
+    15 5
+
+    21 2
+
+    18 4
+
+    '
+  - '10 1
+
+    3 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    5 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1000000000
+
+    1100000000 0000000000
+
+    1000000000 1000000000
+
+    1000001000 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    10 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    11 6
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 21
+
+    5 18
+
+    18 18
+
+    27 18
+
+    7 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '10 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 25
+
+    10 13
+
+    14 21
+
+    5 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 36
+
+    '
+  - '10 3
+
+    18 3
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 0
+
+    33 -1
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 4
+
+    2 1
+
+    1 20
+
+    '
+  - '0 3
+
+    2 4
+
+    1 12
+
+    5 14
+
+    '
+  - '3 2
+
+    1 5
+
+    4 13
+
+    2 7
+
+    1 12
+
+    3 -1
+
+    '
+  - '3 8
+
+    2 4
+
+    13 8
+
+    16 1
+
+    '
+  - '10 1
+
+    3 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1010000000
+
+    1100000000 0000000000
+
+    1000000000 1000000000
+
+    1000001000 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    10 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    7 6
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 21
+
+    5 18
+
+    23 18
+
+    27 18
+
+    7 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '3 5
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 25
+
+    10 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 36
+
+    '
+  - '10 3
+
+    18 0
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 0
+
+    33 -1
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 6
+
+    2 1
+
+    1 20
+
+    '
+  - '1 3
+
+    2 4
+
+    0 12
+
+    5 14
+
+    '
+  - '3 2
+
+    1 5
+
+    1 13
+
+    2 7
+
+    1 12
+
+    3 -1
+
+    '
+  - '3 14
+
+    2 4
+
+    13 8
+
+    16 1
+
+    '
+  - '10 1
+
+    1 30
+
+    7 10
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1010000000
+
+    1100000000 0000000100
+
+    1000000000 1000000000
+
+    1000001000 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    16 7
+
+    13 5
+
+    9 23
+
+    4 28
+
+    7 6
+
+    '
+  - '10 5
+
+    11 18
+
+    18 11
+
+    9 21
+
+    5 18
+
+    23 18
+
+    27 18
+
+    2 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '3 1
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 25
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 17
+
+    10 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 36
+
+    '
+  - '10 3
+
+    18 0
+
+    24 4
+
+    16 16
+
+    27 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '2 9
+
+    2 1
+
+    1 20
+
+    '
+  - '1 3
+
+    3 4
+
+    0 12
+
+    5 14
+
+    '
+  - '3 2
+
+    1 5
+
+    1 13
+
+    2 7
+
+    1 12
+
+    1 -1
+
+    '
+  - '3 14
+
+    1 4
+
+    13 8
+
+    16 1
+
+    '
+  - '10 1
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    1 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1001000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1010000000
+
+    1100000000 0000000100
+
+    1000000000 1000000001
+
+    1000001000 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    16 7
+
+    13 5
+
+    9 23
+
+    4 13
+
+    7 6
+
+    '
+  - '10 5
+
+    11 30
+
+    18 11
+
+    9 21
+
+    5 18
+
+    23 18
+
+    27 18
+
+    2 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '3 1
+
+    7 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 44
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 28
+
+    10 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    17 16
+
+    13 36
+
+    '
+  - '10 3
+
+    18 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '1 3
+
+    3 4
+
+    1 12
+
+    5 14
+
+    '
+  - '3 2
+
+    1 9
+
+    1 13
+
+    2 7
+
+    1 12
+
+    1 -1
+
+    '
+  - '10 1
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    0 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1101000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1010000000
+
+    1100000000 0000000100
+
+    1000000000 1000000001
+
+    1000001000 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    16 7
+
+    13 9
+
+    9 23
+
+    4 13
+
+    7 6
+
+    '
+  - '10 5
+
+    11 30
+
+    18 11
+
+    9 21
+
+    5 18
+
+    23 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 2
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 44
+
+    9 30
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 28
+
+    10 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    21 16
+
+    13 36
+
+    '
+  - '10 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    21 5
+
+    19 5
+
+    '
+  - '1 3
+
+    3 4
+
+    1 12
+
+    5 5
+
+    '
+  - '3 2
+
+    1 9
+
+    1 13
+
+    2 7
+
+    1 8
+
+    1 -1
+
+    '
+  - '10 2
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    0 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 1000001000
+
+    1000000000 1000000000
+
+    1101000000 1000000000
+
+    1000000000 1000000010
+
+    1000000000 1000000000
+
+    1000000000 1000000000
+
+    1000000001 1010000000
+
+    1100000000 0000000100
+
+    1000000000 1000000001
+
+    1000001001 1000000000
+
+    1000000000 1001000000
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    16 7
+
+    13 9
+
+    9 23
+
+    4 13
+
+    7 4
+
+    '
+  - '10 5
+
+    11 30
+
+    18 11
+
+    9 21
+
+    5 18
+
+    23 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 3
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 0
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 44
+
+    9 29
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 28
+
+    14 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    21 16
+
+    13 36
+
+    '
+  - '10 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    17 5
+
+    19 5
+
+    '
+  - '1 3
+
+    3 4
+
+    1 12
+
+    5 4
+
+    '
+  - '3 2
+
+    1 9
+
+    1 25
+
+    2 7
+
+    1 8
+
+    1 -1
+
+    '
+  - '7 2
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    14 5
+
+    0 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 2
+
+    8 14
+
+    1 13
+
+    6 28
+
+    1 17
+
+    6 12
+
+    16 7
+
+    13 9
+
+    9 23
+
+    4 13
+
+    14 4
+
+    '
+  - '10 5
+
+    11 30
+
+    18 11
+
+    9 21
+
+    5 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 3
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 18
+
+    11 44
+
+    9 29
+
+    '
+  - '10 0
+
+    18 15
+
+    27 12
+
+    1 28
+
+    14 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    21 16
+
+    20 36
+
+    '
+  - '3 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    17 5
+
+    19 5
+
+    '
+  - '1 3
+
+    3 4
+
+    0 12
+
+    5 4
+
+    '
+  - '3 2
+
+    1 9
+
+    1 25
+
+    2 7
+
+    1 8
+
+    0 -1
+
+    '
+  - '7 2
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    26 5
+
+    0 23
+
+    2 8
+
+    10 44
+
+    '
+  - '10 5
+
+    11 42
+
+    18 11
+
+    9 21
+
+    5 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 3
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 25
+
+    11 44
+
+    9 29
+
+    '
+  - '10 0
+
+    18 15
+
+    30 12
+
+    1 28
+
+    14 13
+
+    14 21
+
+    8 22
+
+    7 0
+
+    4 1
+
+    21 16
+
+    20 36
+
+    '
+  - '1 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 5
+
+    30 0
+
+    33 0
+
+    13 3
+
+    17 5
+
+    19 5
+
+    '
+  - '1 3
+
+    3 4
+
+    0 24
+
+    5 4
+
+    '
+  - '3 2
+
+    1 9
+
+    1 25
+
+    2 7
+
+    2 8
+
+    0 -1
+
+    '
+  - '7 2
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    26 5
+
+    0 23
+
+    0 8
+
+    10 44
+
+    '
+  - '10 5
+
+    11 42
+
+    18 11
+
+    9 21
+
+    3 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 3
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 25
+
+    11 44
+
+    9 37
+
+    '
+  - '10 0
+
+    18 15
+
+    30 12
+
+    1 28
+
+    14 13
+
+    14 16
+
+    8 22
+
+    7 0
+
+    4 1
+
+    21 16
+
+    20 36
+
+    '
+  - '1 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    33 16
+
+    21 9
+
+    30 0
+
+    33 0
+
+    13 3
+
+    17 5
+
+    19 5
+
+    '
+  - '1 1
+
+    3 4
+
+    0 24
+
+    5 4
+
+    '
+  - '3 2
+
+    1 9
+
+    1 25
+
+    1 7
+
+    2 8
+
+    0 -1
+
+    '
+  - '2 2
+
+    1 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    26 5
+
+    0 23
+
+    0 8
+
+    10 44
+
+    '
+  - '10 5
+
+    11 75
+
+    18 11
+
+    9 21
+
+    3 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 3
+
+    11 1
+
+    '
+  - '3 1
+
+    5 15
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 25
+
+    11 44
+
+    9 57
+
+    '
+  - '10 0
+
+    18 15
+
+    30 12
+
+    1 28
+
+    14 13
+
+    14 16
+
+    8 22
+
+    3 0
+
+    4 1
+
+    21 16
+
+    20 36
+
+    '
+  - '1 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    57 16
+
+    21 9
+
+    30 0
+
+    33 0
+
+    13 3
+
+    17 5
+
+    19 5
+
+    '
+  - '1 1
+
+    3 4
+
+    -1 24
+
+    5 4
+
+    '
+  - '3 0
+
+    1 9
+
+    1 25
+
+    1 7
+
+    2 8
+
+    0 -1
+
+    '
+  - '2 2
+
+    2 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    26 5
+
+    0 23
+
+    0 8
+
+    10 44
+
+    '
+  - '10 5
+
+    11 75
+
+    18 11
+
+    9 21
+
+    3 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 0
+
+    11 1
+
+    '
+  - '3 1
+
+    5 26
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 25
+
+    11 44
+
+    9 57
+
+    '
+  - '10 0
+
+    18 15
+
+    30 12
+
+    1 28
+
+    28 13
+
+    14 16
+
+    8 22
+
+    3 0
+
+    4 1
+
+    21 16
+
+    20 36
+
+    '
+  - '1 3
+
+    27 0
+
+    24 4
+
+    16 16
+
+    57 16
+
+    21 9
+
+    30 0
+
+    33 0
+
+    13 3
+
+    22 5
+
+    19 5
+
+    '
+  - '1 1
+
+    3 4
+
+    -1 24
+
+    9 4
+
+    '
+  - '3 0
+
+    1 9
+
+    1 29
+
+    1 7
+
+    2 8
+
+    0 -1
+
+    '
+  - '1 2
+
+    2 30
+
+    7 15
+
+    1 3
+
+    28 0
+
+    0 9
+
+    24 27
+
+    26 5
+
+    0 23
+
+    0 8
+
+    10 44
+
+    '
+  - '4 5
+
+    11 75
+
+    18 11
+
+    9 21
+
+    3 18
+
+    37 18
+
+    27 18
+
+    0 18
+
+    2 31
+
+    2 0
+
+    11 1
+
+    '
+  - '3 1
+
+    5 26
+
+    0 6
+
+    2 12
+
+    13 15
+
+    27 -1
+
+    3 23
+
+    20 24
+
+    14 19
+
+    11 44
+
+    9 57
+
+    '
+  output:
+  - '2 '
+  - '3 '
+  - '2 '
+  - '8 '
+  - '10 '
+  - '1 '
+  - '4 '
+  - '10 '
+  - '3 '
+  - '7 '
+  - '7 '
+  - '3 '
+  - '5 '
+  - '10 '
+  - '0 '
+  - '8
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '3
+
+    '
+  - '7
+
+    '
+  - '5
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '7
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '8
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '3
+
+    '
+  - '7
+
+    '
+  - '7
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '1
+
+    '
+  - '7
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '7
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '3
+
+    '
+  - '6
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '7
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '3
+
+    '
+  - '6
+
+    '
+  - '4
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '10
+
+    '
+  - '3
+
+    '
+  - '5
+
+    '
+  - '4
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '4
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '10
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '5
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '3
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '6
+
+    '
+  - '10
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '7
+
+    '
+  - '3
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '5
+
+    '
+  - '1
+
+    '
+  - '7
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '4
+
+    '
+  - '1
+
+    '
+  - '8
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '1
+
+    '
+  - '8
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '4
+
+    '
+  - '1
+
+    '
+  - '8
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    '
+  - '2
+
+    '
+  - '1
+
+    '
+timeout: 2.0

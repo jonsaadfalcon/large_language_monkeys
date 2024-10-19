@@ -1,0 +1,2766 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nTakahashi recorded\
+  \ his daily life for the last few days as a integer sequence of length 2N, as follows:\n\
+  \n* a_1, b_1, a_2, b_2, ... , a_N, b_N\n\n\n\nThis means that, starting from a certain\
+  \ time T, he was:\n\n* sleeping for exactly a_1 seconds\n* then awake for exactly\
+  \ b_1 seconds\n* then sleeping for exactly a_2 seconds\n* :\n* then sleeping for\
+  \ exactly a_N seconds\n* then awake for exactly b_N seconds\n\n\n\nIn this record,\
+  \ he waked up N times.\n\nTakahashi is wondering how many times he waked up early\
+  \ during the recorded period.\n\nHere, he is said to wake up early if he wakes up\
+  \ between 4:00 AM and 7:00 AM, inclusive.\n\nIf he wakes up more than once during\
+  \ this period, each of these awakenings is counted as waking up early.\n\nUnfortunately,\
+  \ he forgot the time T.\n\nFind the maximum possible number of times he waked up\
+  \ early during the recorded period.\n\nFor your information, a day consists of 86400\
+  \ seconds, and the length of the period between 4:00 AM and 7:00 AM is 10800 seconds.\n\
+  \nConstraints\n\n* 1 \\leq N \\leq 10^5\n* 1 \\leq a_i, b_i \\leq 10^5\n* a_i and\
+  \ b_i are integers.\n\nInput\n\nThe input is given from Standard Input in the following\
+  \ format:\n\n\nN\na_1 b_1\na_2 b_2\n:\na_N b_N\n\n\nOutput\n\nPrint the maximum\
+  \ possible number of times he waked up early during the recorded period.\n\nExamples\n\
+  \nInput\n\n3\n28800 57600\n28800 57600\n57600 28800\n\n\nOutput\n\n2\n\n\nInput\n\
+  \n10\n28800 57600\n4800 9600\n6000 1200\n600 600\n300 600\n5400 600\n6000 5760\n\
+  6760 2880\n6000 12000\n9000 600\n\n\nOutput\n\n5\nA: ```n = int(input())\nx,num\
+  \ = [],0\nfor i in range(n):\n\ta,b = (int(j) for j in input().split())\n\tx.append((num+a)%86400)\n\
+  \tnum = (num+a+b)%86400\nx,ans = sorted(x),0\nfrom bisect import bisect\nfor i in\
+  \ range(n):\n\tans = max(ans,bisect(x,x[i]+10800)-i)\n\tif x[i]<=10800: x.append(x[i]+86400)\n\
+  print(ans)```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nPolycarp\
+  \ has 26 tasks. Each task is designated by a capital letter of the Latin alphabet.\n\
+  \nThe teacher asked Polycarp to solve tasks in the following way: if Polycarp began\
+  \ to solve some task, then he must solve it to the end, without being distracted\
+  \ by another task. After switching to another task, Polycarp cannot return to the\
+  \ previous task.\n\nPolycarp can only solve one task during the day. Every day he\
+  \ wrote down what task he solved. Now the teacher wants to know if Polycarp followed\
+  \ his advice.\n\nFor example, if Polycarp solved tasks in the following order: \"\
+  DDBBCCCBBEZ\", then the teacher will see that on the third day Polycarp began to\
+  \ solve the task 'B', then on the fifth day he got distracted and began to solve\
+  \ the task 'C', on the eighth day Polycarp returned to the task 'B'. Other examples\
+  \ of when the teacher is suspicious: \"BAB\", \"AABBCCDDEEBZZ\" and \"AAAAZAAAAA\"\
+  .\n\nIf Polycarp solved the tasks as follows: \"FFGZZZY\", then the teacher cannot\
+  \ have any suspicions. Please note that Polycarp is not obligated to solve all tasks.\
+  \ Other examples of when the teacher doesn't have any suspicious: \"BA\", \"AFFFCC\"\
+  \ and \"YYYYY\".\n\nHelp Polycarp find out if his teacher might be suspicious.\n\
+  \nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 1000). Then t\
+  \ test cases follow.\n\nThe first line of each test case contains one integer n\
+  \ (1 \u2264 n \u2264 50) \u2014 the number of days during which Polycarp solved\
+  \ tasks.\n\nThe second line contains a string of length n, consisting of uppercase\
+  \ Latin letters, which is the order in which Polycarp solved the tasks.\n\nOutput\n\
+  \nFor each test case output: \n\n  * \"YES\", if the teacher cannot be suspicious;\
+  \ \n  * \"NO\", otherwise. \n\n\n\nYou may print every letter in any case you want\
+  \ (so, for example, the strings yEs, yes, Yes and YES are all recognized as positive\
+  \ answer).\n\nExample\n\nInput\n\n\n5\n3\nABA\n11\nDDBBCCCBBEZ\n7\nFFGZZZY\n1\n\
+  Z\n2\nAB\n\n\nOutput\n\n\nNO\nNO\nYES\nYES\nYES\nA: ```def solve(task):\n    unique\
+  \ = set(task)\n    segments = 0\n    prev = ' '\n    for letter in task:\n     \
+  \   if letter != prev:\n            segments+=1\n        prev = letter\n    return\
+  \ \"YES\" if len(unique) == segments else \"NO\"\nif __name__ == '__main__':\n \
+  \   T = int(input().strip())\n    \n    for _ in range(T):\n        days = int(input().strip())\n\
+  \        tasks = input().strip()\n        print(solve(tasks))```\nQ: Write python\
+  \ code to solve the following coding problem that obeys the constraints and passes\
+  \ the example test cases. The output code needs to read from and write to standard\
+  \ IO. Please wrap your code answer using ```:\nCQXYM wants to create a connected\
+  \ undirected graph with n nodes and m edges, and the diameter of the graph must\
+  \ be strictly less than k-1. Also, CQXYM doesn't want a graph that contains self-loops\
+  \ or multiple edges (i.e. each edge connects two different vertices and between\
+  \ each pair of vertices there is at most one edge).\n\nThe diameter of a graph is\
+  \ the maximum distance between any two nodes.\n\nThe distance between two nodes\
+  \ is the minimum number of the edges on the path which endpoints are the two nodes.\n\
+  \nCQXYM wonders whether it is possible to create such a graph.\n\nInput\n\nThe input\
+  \ consists of multiple test cases. \n\nThe first line contains an integer t (1 \u2264\
+  \ t \u2264 10^5) \u2014 the number of test cases. The description of the test cases\
+  \ follows.\n\nOnly one line of each test case contains three integers n(1 \u2264\
+  \ n \u2264 10^9), m, k (0 \u2264 m,k \u2264 10^9).\n\nOutput\n\nFor each test case,\
+  \ print YES if it is possible to create the graph, or print NO if it is impossible.\
+  \ You can print each letter in any case (upper or lower).\n\nExample\n\nInput\n\n\
+  \n5\n1 0 3\n4 5 3\n4 6 3\n5 4 1\n2 1 1\n\n\nOutput\n\n\nYES\nNO\nYES\nNO\nNO\n\n\
+  Note\n\nIn the first test case, the graph's diameter equal to 0.\n\nIn the second\
+  \ test case, the graph's diameter can only be 2.\n\nIn the third test case, the\
+  \ graph's diameter can only be 1.\nA:"
+question: "CQXYM wants to create a connected undirected graph with n nodes and m edges,\
+  \ and the diameter of the graph must be strictly less than k-1. Also, CQXYM doesn't\
+  \ want a graph that contains self-loops or multiple edges (i.e. each edge connects\
+  \ two different vertices and between each pair of vertices there is at most one\
+  \ edge).\n\nThe diameter of a graph is the maximum distance between any two nodes.\n\
+  \nThe distance between two nodes is the minimum number of the edges on the path\
+  \ which endpoints are the two nodes.\n\nCQXYM wonders whether it is possible to\
+  \ create such a graph.\n\nInput\n\nThe input consists of multiple test cases. \n\
+  \nThe first line contains an integer t (1 \u2264 t \u2264 10^5) \u2014 the number\
+  \ of test cases. The description of the test cases follows.\n\nOnly one line of\
+  \ each test case contains three integers n(1 \u2264 n \u2264 10^9), m, k (0 \u2264\
+  \ m,k \u2264 10^9).\n\nOutput\n\nFor each test case, print YES if it is possible\
+  \ to create the graph, or print NO if it is impossible. You can print each letter\
+  \ in any case (upper or lower).\n\nExample\n\nInput\n\n\n5\n1 0 3\n4 5 3\n4 6 3\n\
+  5 4 1\n2 1 1\n\n\nOutput\n\n\nYES\nNO\nYES\nNO\nNO\n\nNote\n\nIn the first test\
+  \ case, the graph's diameter equal to 0.\n\nIn the second test case, the graph's\
+  \ diameter can only be 2.\n\nIn the third test case, the graph's diameter can only\
+  \ be 1."
+samples:
+- " ```from collections import defaultdict\n\ndef solve(n, m, k):\n    if n == 1:\n\
+  \        return \"YES\"\n    if m > n-1:\n        return \"NO\"\n    if k <= 2:\n\
+  \        return \"NO\"\n    if m == n-1:\n        return \"NO\"\n    return \"YES\"\
+  \n\nif __name__ == '__main__':\n    t = int(input().strip())\n    for _ in range(t):\n\
+  \        n, m, k = map(int, input().strip().split())\n        print(solve(n, m,\
+  \ k))``` Q:"
+- " ```n = int(input())\nfor _ in range(n):\n    N,M,K = map(int,input().split())\n\
+  \    if N==1 or M==0 or K==1:\n        print(\"YES\")\n    else:\n        print(\"\
+  NO\")```\nQ:"
+test_cases:
+  input:
+  - '5
+
+    1 0 3
+
+    4 5 3
+
+    4 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    1 0 0
+
+    '
+  - '1
+
+    5 7 0
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    5 20 3
+
+    5 20 4
+
+    5 20 5
+
+    '
+  - '1
+
+    1 0 1
+
+    '
+  - '1
+
+    3 3 0
+
+    '
+  - '1
+
+    2000000 691723712 3
+
+    '
+  - '3
+
+    1 1 1
+
+    1 0 0
+
+    1 2 1
+
+    '
+  - '2
+
+    1 0 0
+
+    1 0 1
+
+    '
+  - '1
+
+    2 0 0
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    8 20 3
+
+    5 20 4
+
+    5 20 5
+
+    '
+  - '1
+
+    2000000 691723712 5
+
+    '
+  - '3
+
+    1 1 1
+
+    1 0 0
+
+    1 0 1
+
+    '
+  - '2
+
+    1 0 0
+
+    1 0 0
+
+    '
+  - '5
+
+    2 0 3
+
+    4 5 3
+
+    4 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '5
+
+    2 0 3
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    1 0 2
+
+    '
+  - '5
+
+    1 0 8
+
+    4 0 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '5
+
+    1 1 8
+
+    4 0 5
+
+    8 6 2
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 3 3
+
+    5 4 1
+
+    0 1 0
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    14 20 3
+
+    5 20 4
+
+    9 18 5
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 2
+
+    16 0 2
+
+    '
+  - '5
+
+    1 1 2
+
+    1 0 2
+
+    3 20 3
+
+    5 20 4
+
+    5 20 8
+
+    '
+  - '5
+
+    1 1 2
+
+    1 0 2
+
+    3 20 6
+
+    10 20 4
+
+    1 20 8
+
+    '
+  - '1
+
+    5 7 1
+
+    '
+  - '1
+
+    2 0 1
+
+    '
+  - '1
+
+    6 3 0
+
+    '
+  - '1
+
+    2 1 0
+
+    '
+  - '1
+
+    5 5 1
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    8 20 3
+
+    5 20 4
+
+    5 18 5
+
+    '
+  - '1
+
+    4 0 1
+
+    '
+  - '1
+
+    6 2 0
+
+    '
+  - '1
+
+    2000000 1011370974 5
+
+    '
+  - '3
+
+    1 1 1
+
+    1 1 0
+
+    1 0 1
+
+    '
+  - '2
+
+    1 0 0
+
+    2 0 0
+
+    '
+  - '1
+
+    1 1 0
+
+    '
+  - '1
+
+    5 5 2
+
+    '
+  - '1
+
+    4 0 2
+
+    '
+  - '1
+
+    1698478 1011370974 5
+
+    '
+  - '3
+
+    1 2 1
+
+    1 1 0
+
+    1 0 1
+
+    '
+  - '2
+
+    2 0 0
+
+    2 0 0
+
+    '
+  - '1
+
+    9 5 2
+
+    '
+  - '1
+
+    4 1 2
+
+    '
+  - '1
+
+    184377 1011370974 5
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    1 0 1
+
+    '
+  - '2
+
+    2 0 0
+
+    2 1 0
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 0
+
+    '
+  - '1
+
+    11 5 2
+
+    '
+  - '1
+
+    4 1 0
+
+    '
+  - '1
+
+    290560 1011370974 5
+
+    '
+  - '2
+
+    2 0 1
+
+    2 0 0
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 5 2
+
+    '
+  - '1
+
+    4 2 0
+
+    '
+  - '1
+
+    290560 1011370974 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    2 0 2
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 3
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 5 0
+
+    '
+  - '1
+
+    290560 622787559 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    4 0 2
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 7 0
+
+    '
+  - '1
+
+    290560 441941061 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    8 0 2
+
+    '
+  - '5
+
+    1 0 8
+
+    4 5 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 7 1
+
+    '
+  - '1
+
+    290560 85494112 7
+
+    '
+  - '3
+
+    2 2 1
+
+    1 0 0
+
+    8 0 2
+
+    '
+  - '1
+
+    1 0 2
+
+    '
+  - '1
+
+    209873 85494112 7
+
+    '
+  - '3
+
+    2 4 1
+
+    1 0 0
+
+    8 0 2
+
+    '
+  - '5
+
+    1 0 8
+
+    4 0 5
+
+    4 6 2
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 0 3
+
+    '
+  - '1
+
+    209873 118203084 7
+
+    '
+  - '5
+
+    1 0 8
+
+    4 0 5
+
+    8 6 2
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    106925 118203084 7
+
+    '
+  - '5
+
+    1 0 8
+
+    4 0 5
+
+    8 6 4
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    106925 228819359 7
+
+    '
+  - '1
+
+    106925 228819359 5
+
+    '
+  - '1
+
+    106925 228819359 2
+
+    '
+  - '1
+
+    106925 255369238 2
+
+    '
+  - '1
+
+    106925 318761433 2
+
+    '
+  - '1
+
+    106925 301484762 2
+
+    '
+  - '1
+
+    106925 301484762 0
+
+    '
+  - '1
+
+    7 7 0
+
+    '
+  - '1
+
+    1 -1 1
+
+    '
+  - '1
+
+    3 5 0
+
+    '
+  - '1
+
+    2000000 1155051803 3
+
+    '
+  - '2
+
+    1 0 1
+
+    1 0 1
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 3
+
+    7 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    1 2 0
+
+    '
+  - '1
+
+    0 7 1
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    8 20 3
+
+    5 20 4
+
+    5 20 8
+
+    '
+  - '1
+
+    4 0 0
+
+    '
+  - '1
+
+    6 3 1
+
+    '
+  - '1
+
+    3188978 691723712 5
+
+    '
+  - '5
+
+    2 0 3
+
+    4 5 3
+
+    4 6 3
+
+    7 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    0 1 0
+
+    '
+  - '1
+
+    5 5 3
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    16 20 3
+
+    5 20 4
+
+    5 18 5
+
+    '
+  - '1
+
+    6 0 1
+
+    '
+  - '1
+
+    2000000 1732741103 5
+
+    '
+  - '3
+
+    1 1 1
+
+    1 1 0
+
+    1 -1 1
+
+    '
+  - '5
+
+    2 0 3
+
+    5 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    1 1 1
+
+    '
+  - '1
+
+    5 5 4
+
+    '
+  - '1
+
+    3 0 2
+
+    '
+  - '1
+
+    1698478 1795720215 5
+
+    '
+  - '3
+
+    0 2 1
+
+    1 1 0
+
+    1 0 1
+
+    '
+  - '2
+
+    3 0 0
+
+    2 0 0
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    3 1 1
+
+    '
+  - '1
+
+    9 3 2
+
+    '
+  - '1
+
+    8 1 2
+
+    '
+  - '1
+
+    110647 1011370974 5
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    1 -1 1
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 6 3
+
+    5 4 1
+
+    0 1 0
+
+    '
+  - '1
+
+    11 9 2
+
+    '
+  - '1
+
+    3411 1011370974 5
+
+    '
+  - '3
+
+    1 3 1
+
+    1 0 0
+
+    1 0 2
+
+    '
+  - '2
+
+    2 0 1
+
+    2 1 0
+
+    '
+  - '5
+
+    1 0 4
+
+    1 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 5 4
+
+    '
+  - '1
+
+    9 3 0
+
+    '
+  - '1
+
+    426191 1011370974 7
+
+    '
+  - '3
+
+    1 2 0
+
+    1 0 0
+
+    2 0 2
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 3
+
+    5 3 1
+
+    0 1 0
+
+    '
+  - '1
+
+    0 5 0
+
+    '
+  - '1
+
+    290560 829995256 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    4 -1 2
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 6
+
+    5 3 1
+
+    2 2 0
+
+    '
+  - '1
+
+    -1 7 1
+
+    '
+  - '1
+
+    290560 458350043 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    16 0 2
+
+    '
+  - '5
+
+    1 0 6
+
+    4 5 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 14 1
+
+    '
+  - '1
+
+    290560 161605147 7
+
+    '
+  - '3
+
+    2 2 1
+
+    1 0 0
+
+    8 1 2
+
+    '
+  - '5
+
+    1 0 13
+
+    4 0 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    385057 85494112 7
+
+    '
+  - '3
+
+    2 4 0
+
+    1 0 0
+
+    8 0 2
+
+    '
+  - '5
+
+    1 0 8
+
+    4 0 5
+
+    4 6 2
+
+    5 3 1
+
+    4 1 0
+
+    '
+  - '1
+
+    2 0 3
+
+    '
+  - '1
+
+    261616 118203084 7
+
+    '
+  - '1
+
+    106925 134399662 7
+
+    '
+  - '5
+
+    1 1 8
+
+    4 0 5
+
+    8 6 4
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    106925 228819359 12
+
+    '
+  - '1
+
+    47525 228819359 5
+
+    '
+  - '1
+
+    106925 228819359 0
+
+    '
+  - '1
+
+    106925 249582131 2
+
+    '
+  - '1
+
+    26834 318761433 2
+
+    '
+  - '1
+
+    106925 549812453 2
+
+    '
+  - '1
+
+    205614 301484762 0
+
+    '
+  - '1
+
+    8 7 0
+
+    '
+  - '1
+
+    3 1 0
+
+    '
+  - '1
+
+    2000000 1265963086 3
+
+    '
+  - '2
+
+    1 0 1
+
+    1 -1 1
+
+    '
+  - '5
+
+    1 0 3
+
+    7 5 3
+
+    7 6 3
+
+    5 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    0 2 0
+
+    '
+  - '1
+
+    0 7 2
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    3 20 3
+
+    5 20 4
+
+    5 20 8
+
+    '
+  - '1
+
+    3 0 0
+
+    '
+  - '1
+
+    5 3 1
+
+    '
+  - '1
+
+    3188978 154975671 5
+
+    '
+  - '1
+
+    0 1 1
+
+    '
+  - '1
+
+    2 5 3
+
+    '
+  - '5
+
+    1 0 2
+
+    1 0 1
+
+    14 20 3
+
+    5 20 4
+
+    5 18 5
+
+    '
+  - '1
+
+    6 0 2
+
+    '
+  - '1
+
+    2000000 657040760 5
+
+    '
+  - '5
+
+    2 0 3
+
+    5 5 5
+
+    4 6 3
+
+    5 4 1
+
+    2 2 1
+
+    '
+  - '1
+
+    5 1 4
+
+    '
+  - '1
+
+    3 -1 2
+
+    '
+  - '1
+
+    1836184 1795720215 5
+
+    '
+  - '3
+
+    0 2 1
+
+    1 1 0
+
+    2 0 1
+
+    '
+  - '2
+
+    3 0 0
+
+    2 1 0
+
+    '
+  - '5
+
+    1 0 3
+
+    4 5 5
+
+    4 6 3
+
+    9 4 1
+
+    2 1 1
+
+    '
+  - '1
+
+    9 2 2
+
+    '
+  - '1
+
+    8 0 2
+
+    '
+  - '1
+
+    110647 1011370974 1
+
+    '
+  - '1
+
+    11 18 2
+
+    '
+  - '1
+
+    3025 1011370974 5
+
+    '
+  - '2
+
+    3 0 1
+
+    2 0 0
+
+    '
+  - '5
+
+    1 0 4
+
+    1 5 3
+
+    4 6 3
+
+    5 4 1
+
+    2 1 0
+
+    '
+  - '1
+
+    1 1 4
+
+    '
+  - '1
+
+    426191 223986164 7
+
+    '
+  - '3
+
+    1 2 0
+
+    1 0 0
+
+    2 1 2
+
+    '
+  - '1
+
+    0 5 1
+
+    '
+  - '1
+
+    290560 682687672 7
+
+    '
+  - '3
+
+    0 2 1
+
+    1 0 0
+
+    4 -1 2
+
+    '
+  - '5
+
+    1 0 4
+
+    4 5 5
+
+    4 6 6
+
+    10 3 1
+
+    2 2 0
+
+    '
+  - '1
+
+    0 9 2
+
+    '
+  - '1
+
+    10261 458350043 7
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 1
+
+    16 0 2
+
+    '
+  - '1
+
+    1 14 2
+
+    '
+  - '1
+
+    290560 161605147 6
+
+    '
+  - '3
+
+    1 2 1
+
+    1 0 0
+
+    8 1 2
+
+    '
+  - '5
+
+    1 0 2
+
+    4 0 5
+
+    4 6 6
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    385057 62677104 7
+
+    '
+  - '3
+
+    2 4 0
+
+    1 0 0
+
+    15 0 2
+
+    '
+  - '1
+
+    2 1 3
+
+    '
+  - '1
+
+    288294 118203084 7
+
+    '
+  - '5
+
+    1 1 8
+
+    6 0 5
+
+    8 6 2
+
+    5 3 1
+
+    2 1 0
+
+    '
+  - '1
+
+    106925 134399662 3
+
+    '
+  - '5
+
+    1 1 8
+
+    4 0 5
+
+    8 6 4
+
+    5 3 1
+
+    1 1 0
+
+    '
+  - '1
+
+    73079 228819359 12
+
+    '
+  - '1
+
+    47525 321490960 5
+
+    '
+  - '1
+
+    106925 380092504 0
+
+    '
+  - '1
+
+    106925 473514396 2
+
+    '
+  - '1
+
+    26834 318761433 0
+
+    '
+  output:
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+  - 'NO
+
+    '
+timeout: 1.0

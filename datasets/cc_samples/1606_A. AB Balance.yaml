@@ -1,0 +1,2010 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nFor a given\
+  \ sequence A = {a0, a1, ... , an-1}, find the length of the longest increasing subsequnece\
+  \ (LIS) in A.\n\nAn increasing subsequence of A is defined by a subsequence {ai0,\
+  \ ai1, ... , aik} where 0 \u2264 i0 < i1 < ... < ik < n and ai0 < ai1 < ... < aik.\n\
+  \nConstraints\n\n* 1 \u2264 n \u2264 100000\n* 0 \u2264 ai \u2264 109\n\nInput\n\
+  \n\nn\na0\na1\n:\nan-1\n\n\n\nIn the first line, an integer n is given. In the next\
+  \ n lines, elements of A are given.\n\nOutput\n\nThe length of the longest increasing\
+  \ subsequence of A.\n\nExamples\n\nInput\n\n5\n5\n1\n3\n2\n4\n\n\nOutput\n\n3\n\n\
+  \nInput\n\n3\n1\n1\n1\n\n\nOutput\n\n1\nA: ```N = int(input())\nA = [int(input())\
+  \ for _ in range(N)]\nfrom bisect import bisect_left, bisect_right, bisect, insort_left,\
+  \ insort_right, insort\ndef solve(N,A):\n    lis = []\n    for i in range(N):\n\
+  \        ind = bisect_left(lis,A[i])\n        if ind == len(lis):\n            lis.append(A[i])\n\
+  \        else:\n            lis[ind] = A[i]\n    ans = len(lis)\n    return ans\n\
+  print(solve(N,A))```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nVasya has been playing Plane of Tanks with his friends the whole year. Now\
+  \ it is time to divide the participants into several categories depending on their\
+  \ results. \n\nA player is given a non-negative integer number of points in each\
+  \ round of the Plane of Tanks. Vasya wrote results for each round of the last year.\
+  \ He has n records in total.\n\nIn order to determine a player's category consider\
+  \ the best result obtained by the player and the best results of other players.\
+  \ The player belongs to category: \n\n  * \"noob\" \u2014 if more than 50% of players\
+  \ have better results; \n  * \"random\" \u2014 if his result is not worse than the\
+  \ result that 50% of players have, but more than 20% of players have better results;\
+  \ \n  * \"average\" \u2014 if his result is not worse than the result that 80% of\
+  \ players have, but more than 10% of players have better results; \n  * \"hardcore\"\
+  \ \u2014 if his result is not worse than the result that 90% of players have, but\
+  \ more than 1% of players have better results; \n  * \"pro\" \u2014 if his result\
+  \ is not worse than the result that 99% of players have. \n\n\n\nWhen the percentage\
+  \ is calculated the player himself is taken into account. That means that if two\
+  \ players played the game and the first one gained 100 points and the second one\
+  \ 1000 points, then the first player's result is not worse than the result that\
+  \ 50% of players have, and the second one is not worse than the result that 100%\
+  \ of players have.\n\nVasya gave you the last year Plane of Tanks results. Help\
+  \ Vasya determine each player's category.\n\nInput\n\nThe first line contains the\
+  \ only integer number n (1 \u2264 n \u2264 1000) \u2014 a number of records with\
+  \ the players' results.\n\nEach of the next n lines contains a player's name and\
+  \ the amount of points, obtained by the player for the round, separated with a space.\
+  \ The name contains not less than 1 and no more than 10 characters. The name consists\
+  \ of lowercase Latin letters only. It is guaranteed that any two different players\
+  \ have different names. The amount of points, obtained by the player for the round,\
+  \ is a non-negative integer number and does not exceed 1000.\n\nOutput\n\nPrint\
+  \ on the first line the number m \u2014 the number of players, who participated\
+  \ in one round at least.\n\nEach one of the next m lines should contain a player\
+  \ name and a category he belongs to, separated with space. Category can be one of\
+  \ the following: \"noob\", \"random\", \"average\", \"hardcore\" or \"pro\" (without\
+  \ quotes). The name of each player should be printed only once. Player names with\
+  \ respective categories can be printed in an arbitrary order.\n\nExamples\n\nInput\n\
+  \n5\nvasya 100\nvasya 200\nartem 100\nkolya 200\nigor 250\n\n\nOutput\n\n4\nartem\
+  \ noob\nigor pro\nkolya random\nvasya random\n\n\nInput\n\n3\nvasya 200\nkolya 1000\n\
+  vasya 1000\n\n\nOutput\n\n2\nkolya pro\nvasya pro\n\nNote\n\nIn the first example\
+  \ the best result, obtained by artem is not worse than the result that 25% of players\
+  \ have (his own result), so he belongs to category \"noob\". vasya and kolya have\
+  \ best results not worse than the results that 75% players have (both of them and\
+  \ artem), so they belong to category \"random\". igor has best result not worse\
+  \ than the result that 100% of players have (all other players and himself), so\
+  \ he belongs to category \"pro\".\n\nIn the second example both players have the\
+  \ same amount of points, so they have results not worse than 100% players have,\
+  \ so they belong to category \"pro\".\nA: ```from collections import defaultdict\n\
+  from bisect import bisect_left\np, n = defaultdict(int), int(input())\nfor i in\
+  \ range(n):\n    a, b = input().split()\n    p[a] = max(p[a], int(b))\np, n = sorted((b,\
+  \ a) for a, b in p.items()), len(p)\nt = [0] + [bisect_left(p, (p[n - 1 - n // k][0],\
+  \ '')) for k in [2, 5, 10, 100]] + [n]\ns = ['noob', 'random', 'average', 'hardcore',\
+  \ 'pro']\nfor i in range(1, len(t)):\n    d = s[i - 1]\n    for j in range(t[i -\
+  \ 1], t[i]): p[j] = p[j][1] + ' ' + d\nprint(n)\nprint('\\n'.join(p))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nYou are given a string s\
+  \ of length n consisting of characters a and/or b.\n\nLet \\operatorname{AB}(s)\
+  \ be the number of occurrences of string ab in s as a substring. Analogically, \\\
+  operatorname{BA}(s) is the number of occurrences of ba in s as a substring.\n\n\
+  In one step, you can choose any index i and replace s_i with character a or b.\n\
+  \nWhat is the minimum number of steps you need to make to achieve \\operatorname{AB}(s)\
+  \ = \\operatorname{BA}(s)?\n\nReminder:\n\nThe number of occurrences of string d\
+  \ in s as substring is the number of indices i (1 \u2264 i \u2264 |s| - |d| + 1)\
+  \ such that substring s_i s_{i + 1} ... s_{i + |d| - 1} is equal to d. For example,\
+  \ \\operatorname{AB}(aabbbabaa) = 2 since there are two indices i: i = 2 where aabbbabaa\
+  \ and i = 6 where aabbbabaa.\n\nInput\n\nEach test contains multiple test cases.\
+  \ The first line contains the number of test cases t (1 \u2264 t \u2264 1000). Description\
+  \ of the test cases follows.\n\nThe first and only line of each test case contains\
+  \ a single string s (1 \u2264 |s| \u2264 100, where |s| is the length of the string\
+  \ s), consisting only of characters a and/or b.\n\nOutput\n\nFor each test case,\
+  \ print the resulting string s with \\operatorname{AB}(s) = \\operatorname{BA}(s)\
+  \ you'll get making the minimum number of steps.\n\nIf there are multiple answers,\
+  \ print any of them.\n\nExample\n\nInput\n\n\n4\nb\naabbbabaa\nabbb\nabbaab\n\n\n\
+  Output\n\n\nb\naabbbabaa\nbbbb\nabbaaa\n\nNote\n\nIn the first test case, both \\\
+  operatorname{AB}(s) = 0 and \\operatorname{BA}(s) = 0 (there are no occurrences\
+  \ of ab (ba) in b), so can leave s untouched.\n\nIn the second test case, \\operatorname{AB}(s)\
+  \ = 2 and \\operatorname{BA}(s) = 2, so you can leave s untouched. \n\nIn the third\
+  \ test case, \\operatorname{AB}(s) = 1 and \\operatorname{BA}(s) = 0. For example,\
+  \ we can change s_1 to b and make both values zero.\n\nIn the fourth test case,\
+  \ \\operatorname{AB}(s) = 2 and \\operatorname{BA}(s) = 1. For example, we can change\
+  \ s_6 to a and make both values equal to 1.\nA:"
+question: "You are given a string s of length n consisting of characters a and/or\
+  \ b.\n\nLet \\operatorname{AB}(s) be the number of occurrences of string ab in s\
+  \ as a substring. Analogically, \\operatorname{BA}(s) is the number of occurrences\
+  \ of ba in s as a substring.\n\nIn one step, you can choose any index i and replace\
+  \ s_i with character a or b.\n\nWhat is the minimum number of steps you need to\
+  \ make to achieve \\operatorname{AB}(s) = \\operatorname{BA}(s)?\n\nReminder:\n\n\
+  The number of occurrences of string d in s as substring is the number of indices\
+  \ i (1 \u2264 i \u2264 |s| - |d| + 1) such that substring s_i s_{i + 1} ... s_{i\
+  \ + |d| - 1} is equal to d. For example, \\operatorname{AB}(aabbbabaa) = 2 since\
+  \ there are two indices i: i = 2 where aabbbabaa and i = 6 where aabbbabaa.\n\n\
+  Input\n\nEach test contains multiple test cases. The first line contains the number\
+  \ of test cases t (1 \u2264 t \u2264 1000). Description of the test cases follows.\n\
+  \nThe first and only line of each test case contains a single string s (1 \u2264\
+  \ |s| \u2264 100, where |s| is the length of the string s), consisting only of characters\
+  \ a and/or b.\n\nOutput\n\nFor each test case, print the resulting string s with\
+  \ \\operatorname{AB}(s) = \\operatorname{BA}(s) you'll get making the minimum number\
+  \ of steps.\n\nIf there are multiple answers, print any of them.\n\nExample\n\n\
+  Input\n\n\n4\nb\naabbbabaa\nabbb\nabbaab\n\n\nOutput\n\n\nb\naabbbabaa\nbbbb\nabbaaa\n\
+  \nNote\n\nIn the first test case, both \\operatorname{AB}(s) = 0 and \\operatorname{BA}(s)\
+  \ = 0 (there are no occurrences of ab (ba) in b), so can leave s untouched.\n\n\
+  In the second test case, \\operatorname{AB}(s) = 2 and \\operatorname{BA}(s) = 2,\
+  \ so you can leave s untouched. \n\nIn the third test case, \\operatorname{AB}(s)\
+  \ = 1 and \\operatorname{BA}(s) = 0. For example, we can change s_1 to b and make\
+  \ both values zero.\n\nIn the fourth test case, \\operatorname{AB}(s) = 2 and \\\
+  operatorname{BA}(s) = 1. For example, we can change s_6 to a and make both values\
+  \ equal to 1."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    s = input()\n    if s == 'b':\n \
+  \       print(s)\n    else:\n        for i in range(len(s)):\n            if s[i]\
+  \ == 'a':\n                s = s[:i] + 'b' + s[i + 1:]\n                break\n\
+  \        print(s)```  # Output\n```  # Output\n```  # Output\n```  # Output\n```\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output  # Output  # Output\
+  \  # Output  # Output  # Output  # Output  # Output  # Output"
+- " ```t = int(input())\nfor _ in range(t):\n    s = input()\n    ab = s.count('ab')\n\
+  \    ba = s.count('ba')\n    if ab == ba:\n        print(s)\n    else:\n       \
+  \ if ab > ba:\n            s = s.replace('ab', '', ab - ba)\n        else:\n   \
+  \         s = s.replace('ba', '', ba - ab)\n        print(s)````\nQ:"
+test_cases:
+  input:
+  - '4
+
+    b
+
+    aabbbabaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '1
+
+    abbabababbabababbababbbabbbbabbbabaabaabba
+
+    '
+  - '4
+
+    b
+
+    aabbbabaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '1
+
+    aaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbab
+
+    '
+  - '1
+
+    abbabababbbbababbababbbabbbbabbbabaabaabba
+
+    '
+  - '1
+
+    abbabababbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababbbbabababba
+
+    '
+  - '1
+
+    abbaababbabaaabbbbabbbababbababbbbbbababba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababbbbbbababba
+
+    '
+  - '1
+
+    abbababbbbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababcbbbbababba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbbabbabbabaabba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - '1
+
+    abbaababb`bbabbbbbabbbababbababcbbbbababba
+
+    '
+  - '1
+
+    abbaababb`bbabbbbbabbbababbababcbbbbab`bba
+
+    '
+  - '1
+
+    abbaababb`bbabbbbbabbbababbababccbbbab`bba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbababbababccbbbab`bba
+
+    '
+  - '1
+
+    abb`babbbccbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbababbababbcbbbab`bba
+
+    '
+  - '1
+
+    abbaabaababbbabbbbabbbababbabababbabababba
+
+    '
+  - '4
+
+    a
+
+    aabbbabaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '4
+
+    b
+
+    aabbbabaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    aababababbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbababbbbbbababbababbbabbbbaaababbabaabba
+
+    '
+  - '1
+
+    abbabbabbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababcbbbbbbabba
+
+    '
+  - '1
+
+    abbaababbabbabbbbbabbbababbababcbbbbababba
+
+    '
+  - '1
+
+    abbababbbbcbababbacabbbabbbbbabb`bbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbabbbbbabbbababbababcbbbbababba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbababbacabbcbbbab`bba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbaabbbbababccbbbab`bba
+
+    '
+  - '1
+
+    abb`babbbcbbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    abbacababbabababbababbbabbbbabbbabaabaabba
+
+    '
+  - '4
+
+    a
+
+    aabababaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '4
+
+    b
+
+    aabbbacaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababbbbabababaa
+
+    '
+  - '1
+
+    abbabbabbabbaabbbbabbbababbbbaabbbbbababba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbaabbababbababcbbbbbbabba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbbabbabbabaabbb
+
+    '
+  - '1
+
+    abbababbbbcbababbacabbbabbbbbabb`bbababbba
+
+    '
+  - '1
+
+    aabaababb`bbabbbbbababababbababcbbbbababba
+
+    '
+  - '1
+
+    abb`babbbcbbacabbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbaabbbbababccb`babbbba
+
+    '
+  - '1
+
+    aaaaababb`bbbbbbbbabbbababbababccbbbab`bba
+
+    '
+  - '4
+
+    c
+
+    aabbbacaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    abbaababbabbaabbbbaabbababbab`bcbbbbbbabba
+
+    '
+  - '1
+
+    abbababbbbcb`babbababbbabbbbbabbabbabaabbb
+
+    '
+  - '1
+
+    abbbababb`bbabbbbbabbbacabbababcbbbbababba
+
+    '
+  - '1
+
+    aabaababb`bbabbbbbababababbacabcbbbbababba
+
+    '
+  - '1
+
+    abb`babbbdbbacabbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbaabbbbababccb`babbbbb
+
+    '
+  - '1
+
+    aaaaababb`bbcbbbbbabbbababbababccbbbab`bba
+
+    '
+  - '4
+
+    c
+
+    aacabbbaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    abbabbbbbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaabaab`bbabbbbbababababbacabcbbbbababba
+
+    '
+  - '1
+
+    abb`babbbdbbaaabbabcbbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbcbabbaabbbbababccb`babbbbb
+
+    '
+  - '1
+
+    aaaaababb`bbcbbbbbaabbababbababccbbbbb`bba
+
+    '
+  - '1
+
+    abbaababbabbaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - '1
+
+    aabaabaab_bbabbbbbababababbacabcbbbbababba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbcbabbaaabbdbbbab`bba
+
+    '
+  - '1
+
+    aaaaaaaaaaaa`aaaaaaabbbbbbbbbbbbbbbbbbbbab
+
+    '
+  - '4
+
+    c
+
+    aabbbabaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '1
+
+    abbabababbbbacabbababbbabbbbabbbabaabaabba
+
+    '
+  - '1
+
+    abbaababbbbbaabbababbbababbababbbbabababba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbaababbababbbbbbababba
+
+    '
+  - '1
+
+    abbbababbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - '1
+
+    abbababbbbbbababbabaabbabbbbaabbabbabaabbb
+
+    '
+  - '1
+
+    abbababbbbcbababbbbabbbababbaabbabbabaabba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabcbbbabb`bbabaabba
+
+    '
+  - '1
+
+    abbaababb`bbabbbbbabbbababbababccbbb`b`bba
+
+    '
+  - '1
+
+    abb`babbbccbab`bbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbababbababbdbbbab`bba
+
+    '
+  - '1
+
+    abbababbbbbbababbbbabbbabbbbaaababbabaabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbababcbbbbcbabba
+
+    '
+  - '1
+
+    abbaaabbbbcbababbacabbbabbbbbabb`bbabaabbb
+
+    '
+  - '1
+
+    aabaababb`bbabcbbbabbbababbababcbbbbababba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbaabbbbababccbcbab`bba
+
+    '
+  - '1
+
+    abbaabaababbbabbbbabbbababbabababbabacabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbaabbababbababbbbabababaa
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbaabbbbabbabbabaabbb
+
+    '
+  - '1
+
+    aabaababb`baabbbbbababababbababcbbbbababba
+
+    '
+  - '1
+
+    abb`babbbcbbacabb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbababbaabbbbababccb`babbbba
+
+    '
+  - '1
+
+    aaaaababb`bbbbbbbbabbbababbababccbbb`b`bba
+
+    '
+  - '4
+
+    d
+
+    aabbbacaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    abbaababaabbaabbbbaabbababbab`bcbbbbbbbbba
+
+    '
+  - '1
+
+    abbababbbbcbacabbababababbbbbabb`bbabaabaa
+
+    '
+  - '1
+
+    abb`babbbdbbacabbacabbbabbbbbbbb`bbabaabaa
+
+    '
+  - '4
+
+    c
+
+    aabbbacaa
+
+    abbb
+
+    aababb
+
+    '
+  - '1
+
+    abbabbbcbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abb`babbbdbbaaabbabcbbaabbbbbbbb`bbabbabaa
+
+    '
+  - '1
+
+    abbaababbaabaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - '1
+
+    aabaabaab_bbabbbbbabababaabacabcbbbbababba
+
+    '
+  - '1
+
+    abbaab`bbbbbaabbababbbababbababbbbabababba
+
+    '
+  - '1
+
+    abbaababaabbaabbbbabbaababbababbbbbbababba
+
+    '
+  - '1
+
+    abbababbbbbaababbababbbabbbbaabbabbababbba
+
+    '
+  - '1
+
+    abbababbbbbbab`bbabaabbabbbbaabbabbabaabbb
+
+    '
+  - '1
+
+    abbaababbabbaabbababbbabbbbababcbbbbababba
+
+    '
+  - '1
+
+    abbababbbbcbbbabbababbbabcbbbabb`bbabaabba
+
+    '
+  - '1
+
+    abb`b`bbbccbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - '1
+
+    abb`babbbccbab`bb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbababbababbdbcbab`bba
+
+    '
+  - '1
+
+    abbabcbbbbcbababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbabcbbbabbbababbababcbbbbababaa
+
+    '
+  - '1
+
+    abbaabaababbbabbbbabbbababbabacabbabacabba
+
+    '
+  - '1
+
+    aababababbbbababbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaababb`baabbbbbababababbababcbbabababba
+
+    '
+  - '1
+
+    aba`babbbcbbbcabb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    abbbbab`bccbababbbbaabbababbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aaaaaaabb`bbbbbbbbabbbababbababccbbb`b`bba
+
+    '
+  - '4
+
+    e
+
+    aabbbacaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    abbaacabaabbaabbbbaabbababbab`bcbbbbbbbbba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbacabbacabbdbbbab`bba
+
+    '
+  - '4
+
+    d
+
+    aabbbacaa
+
+    abbb
+
+    aababb
+
+    '
+  - '1
+
+    abbabbccbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbaababbaacaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - '1
+
+    aabaabaab_bbabbbbbabababaabababcbbbbababba
+
+    '
+  - '1
+
+    abbaab`bbbbbaabbababbbacabbababbbbabababba
+
+    '
+  - '1
+
+    abbaababaabbaabbbbabbaababbacabbbbbbababba
+
+    '
+  - '1
+
+    abbbbabbbbbaababbababbbabbbbaabbabbababbba
+
+    '
+  - '1
+
+    abbababbbbcbababbbbababababbaabbabbabaabba
+
+    '
+  - '1
+
+    abb`b`bbbccbababbabaabbabbbbbabb`bbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbab`bb`babccbbbab`bba
+
+    '
+  - '1
+
+    abb`babcbdbbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    abbabcbbbbcbababbabaabbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbabcbbbabbbababb`babcbbbbababaa
+
+    '
+  - '1
+
+    abbaabaababbbabbbaabbbababbabacabbabacabba
+
+    '
+  - '1
+
+    aababbbabbbbababbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaababb`baabbbbbababacabbababcbbabababba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbab`bbacbbbcbbbab`aba
+
+    '
+  - '1
+
+    aabaababb`bbabbbababbaabbbbababccb`babbbba
+
+    '
+  - '1
+
+    abb`b`bbbccbababbababbbabbbbbbbb`bbaaaaaaa
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babbababbaabbbbaabbaabacaabba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbababacabbacabbdbbbbb`bba
+
+    '
+  - '4
+
+    d
+
+    aaabbacaa
+
+    abbb
+
+    aababb
+
+    '
+  - '1
+
+    abbabbcccbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    aabaabaab_baabbbbbabababaabababcbbbbababba
+
+    '
+  - '1
+
+    abbaababaabbaabbbbabbbababbacabbbbbbababba
+
+    '
+  - '1
+
+    abbbbaabbbbaababbababbbabbbbaabbabbbbabbba
+
+    '
+  - '1
+
+    abbacabbbbcbababbbbababababbaabbabbabaabba
+
+    '
+  - '1
+
+    abb`b`bbbccbababbabaabbabbbcbabb`bbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbab`bb`babccbabbb`bba
+
+    '
+  - '1
+
+    abb`babcbdbbabababbabbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    aabababbbbcbab`bbababbbabbbcbabb`bbabaabaa
+
+    '
+  - '1
+
+    abbaabaababbb`bbbaabbbababbabacabbabacabba
+
+    '
+  - '1
+
+    aababbbabbbbababbababbaabcbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbabababbcbababbacabababbbbbaab`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbb`bbbab`bbacbbbcbbbab`aba
+
+    '
+  - '1
+
+    aabaababb`bbabbbababbaabbcbababccb`babbbba
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babb`babbaabbbbaabbaabacaabba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbababacabbacabbdbbbab`bba
+
+    '
+  - '4
+
+    c
+
+    aaabbacaa
+
+    abbb
+
+    aababb
+
+    '
+  - '1
+
+    abbaababbabbaabbbbaabbababbab`bcbcccbbabba
+
+    '
+  - '1
+
+    aabaabaab`baabbbbbabababaabababcbbbbababba
+
+    '
+  - '1
+
+    abbbbaabbbbaababbababbbabbbbaabbabbbbababa
+
+    '
+  - '1
+
+    abb`b`bbbccbababbabaabbbbbbcbabb`bbabaabba
+
+    '
+  - '1
+
+    aababbbabbbbababbababbaabcbbaabb`bbabaabba
+
+    '
+  - '1
+
+    abbabababbcbababbacacababbbbbaab`bbabaabaa
+
+    '
+  - '1
+
+    aabaababb`bbabbbababbaaabcbababccb`babbbba
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babb`babbaabcbbaabbaabacaabba
+
+    '
+  - '1
+
+    aabaababb`bbbabbbbababacabbacabbdbbbab`bba
+
+    '
+  - '1
+
+    abababbbbabbaabbbbabbbababbabaabbbbaabbbba
+
+    '
+  - '1
+
+    aababbbabbbbababbababbaabcbbaaab`bbabaabba
+
+    '
+  - '1
+
+    aabaababb`baabbbbbabacacabbababcbbabababba
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babb`b`bbaabcbbaabbaabacaabba
+
+    '
+  - '1
+
+    aa`aababb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - '1
+
+    abbbbaabbbbaababbababbbabbbbaabbaabbbababa
+
+    '
+  - '1
+
+    aababbbabbbbababbababbaabcbbaabb`bbabbabba
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babb`b`bbaabcbbaabbaaaacaabba
+
+    '
+  - '1
+
+    abbbbabbbdbbacabbacabababbbbabbb`bbabaa`aa
+
+    '
+  - '1
+
+    abababbbaabbaabbbbabbbababbabaabbbbaabbbba
+
+    '
+  - '1
+
+    abbbbbbbbbcb`babb`b`bbbabcbbaabbaaaacaabba
+
+    '
+  - '1
+
+    abbbbabbbdbbacabbacabababbbbabbb`bbabaaaaa
+
+    '
+  - '1
+
+    abababbbaabbaabbbbabbbab`bbabaabbbbaabbbba
+
+    '
+  - '1
+
+    abbaacaaaabbaabbcbabbb`b`bbab`bcbbbbbbbbba
+
+    '
+  - '1
+
+    aaaaababb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - '1
+
+    abbbbabbbdbbacabbacabababbbbabbb`bb`baaaaa
+
+    '
+  - '1
+
+    aaaaab`bb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - '1
+
+    aaaaab`bb`bbbabbbbababacabbacabbebbbabbbba
+
+    '
+  - '1
+
+    aaaaab`bb`bbbabbbbababacabbacabbebbaabbbba
+
+    '
+  - '1
+
+    aabaab`bb`bbbabbbbababacabbacabbebbaabbbba
+
+    '
+  - '1
+
+    abbabababbabab`bbababbbabbbbabbbabaabaabba
+
+    '
+  - '1
+
+    aaaaaaaaaaaaaaaaaaaabbbbbbcbbbbbbbbbbbbbab
+
+    '
+  - '4
+
+    b
+
+    aabbaabaa
+
+    abbb
+
+    abbaab
+
+    '
+  - '1
+
+    abbaabaababbbabbbbabbbababbababbbbabababba
+
+    '
+  - '1
+
+    abbabababbbbababbababbbaabbbaabbabbbbaabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbaaabbbbabababba
+
+    '
+  - '1
+
+    abbaabbbbabaaabbbbabbbababbababbbbbbababba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - '1
+
+    abbababbbbabababbababbbabbbbaabbabbabaabba
+
+    '
+  - '1
+
+    abbaababbabbaabbbbabbbababaababcbbbbababba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbaabbabb`baabba
+
+    '
+  - '1
+
+    abbababbbbcbababbababbbabbbbbabbabbacaabba
+
+    '
+  - '1
+
+    abb`babbbccbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - '1
+
+    aabaababb`bbbbbbbbabbbabaabababccbbbab`bba
+
+    '
+  - '1
+
+    abb`babbbccbababbbbabbbabbbbbbbb`baabaabaa
+
+    '
+  - '1
+
+    abb`babbbcbbab`bbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - '1
+
+    abbabababbabababbababbbabbbbabbbababbaabba
+
+    '
+  - '4
+
+    b
+
+    aabbaabaa
+
+    abbb
+
+    abbabb
+
+    '
+  - '1
+
+    aababababbbbababbababbbabbbbaabbabbacaabba
+
+    '
+  - '1
+
+    abbababbbbbaababbababbbabbbbaabbabbabbabba
+
+    '
+  - '1
+
+    abbaababbabbabbbbbabbbababbacabcbbbbababba
+
+    '
+  output:
+  - 'b
+
+    aabbbabaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'abbabababbabababbababbbabbbbabbbabaabaabba
+
+    '
+  - 'b
+
+    aabbbabaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'baaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbab
+
+    '
+  - 'abbabababbbbababbababbbabbbbabbbabaabaabba
+
+    '
+  - 'abbabababbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababbbbabababba
+
+    '
+  - 'abbaababbabaaabbbbabbbababbababbbbbbababba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababbbbbbababba
+
+    '
+  - 'abbababbbbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababcbbbbababba
+
+    '
+  - 'abbababbbbcbababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'abbababbbbcbababbababbbabbbbbabbabbabaabba
+
+    '
+  - 'abbababbbbcbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - 'abbaababb`bbabbbbbabbbababbababcbbbbababba
+
+    '
+  - 'abbaababb`bbabbbbbabbbababbababcbbbbab`bba
+
+    '
+  - 'abbaababb`bbabbbbbabbbababbababccbbbab`bba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbababbababccbbbab`bba
+
+    '
+  - 'abb`babbbccbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbbbabbbababbababbcbbbab`bba
+
+    '
+  - 'abbaabaababbbabbbbabbbababbabababbabababba
+
+    '
+  - 'a
+
+    aabbbabaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'b
+
+    aabbbabaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'aababababbbbababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'abbababbbbbbababbababbbabbbbaaababbabaabba
+
+    '
+  - 'abbabbabbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababcbbbbbbabba
+
+    '
+  - 'abbaababbabbabbbbbabbbababbababcbbbbababba
+
+    '
+  - 'abbababbbbcbababbacabbbabbbbbabb`bbabaabba
+
+    '
+  - 'aabaababb`bbabbbbbabbbababbababcbbbbababba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbababbacabbcbbbab`bba
+
+    '
+  - 'aabaababb`bbbbbbbbabbaabbbbababccbbbab`bba
+
+    '
+  - 'abb`babbbcbbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'abbacababbabababbababbbabbbbabbbabaabaabba
+
+    '
+  - 'a
+
+    aabababaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'b
+
+    aabbbacaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababbbbabababaa
+
+    '
+  - 'abbabbabbabbaabbbbabbbababbbbaabbbbbababba
+
+    '
+  - 'abbaababbabbaabbbbaabbababbababcbbbbbbabba
+
+    '
+  - 'bbbababbbbcbababbababbbabbbbbabbabbabaabbb
+
+    '
+  - 'abbababbbbcbababbacabbbabbbbbabb`bbababbba
+
+    '
+  - 'aabaababb`bbabbbbbababababbababcbbbbababba
+
+    '
+  - 'abb`babbbcbbacabbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbbbabbaabbbbababccb`babbbba
+
+    '
+  - 'aaaaababb`bbbbbbbbabbbababbababccbbbab`bba
+
+    '
+  - 'c
+
+    aabbbacaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'abbaababbabbaabbbbaabbababbab`bcbbbbbbabba
+
+    '
+  - 'bbbababbbbcb`babbababbbabbbbbabbabbabaabbb
+
+    '
+  - 'abbbababb`bbabbbbbabbbacabbababcbbbbababba
+
+    '
+  - 'aabaababb`bbabbbbbababababbacabcbbbbababba
+
+    '
+  - 'abb`babbbdbbacabbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'babaababb`bbbbbbbbabbaabbbbababccb`babbbbb
+
+    '
+  - 'aaaaababb`bbcbbbbbabbbababbababccbbbab`bba
+
+    '
+  - 'c
+
+    aacabbbaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'abbabbbbbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - 'aabaabaab`bbabbbbbababababbacabcbbbbababba
+
+    '
+  - 'abb`babbbdbbaaabbabcbbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'babaababb`bbbbbbcbabbaabbbbababccb`babbbbb
+
+    '
+  - 'aaaaababb`bbcbbbbbaabbababbababccbbbbb`bba
+
+    '
+  - 'abbaababbabbaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - 'aabaabaab_bbabbbbbababababbacabcbbbbababba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbcbabbaaabbdbbbab`bba
+
+    '
+  - 'baaaaaaaaaaa`aaaaaaabbbbbbbbbbbbbbbbbbbbab
+
+    '
+  - 'c
+
+    aabbbabaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'abbabababbbbacabbababbbabbbbabbbabaabaabba
+
+    '
+  - 'abbaababbbbbaabbababbbababbababbbbabababba
+
+    '
+  - 'abbaababbabbaabbbbabbaababbababbbbbbababba
+
+    '
+  - 'abbbababbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - 'bbbababbbbbbababbabaabbabbbbaabbabbabaabbb
+
+    '
+  - 'abbababbbbcbababbbbabbbababbaabbabbabaabba
+
+    '
+  - 'abbababbbbcbababbababbbabcbbbabb`bbabaabba
+
+    '
+  - 'abbaababb`bbabbbbbabbbababbababccbbb`b`bba
+
+    '
+  - 'abb`babbbccbab`bbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbbbabbbababbababbdbbbab`bba
+
+    '
+  - 'abbababbbbbbababbbbabbbabbbbaaababbabaabba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbababcbbbbcbabba
+
+    '
+  - 'bbbaaabbbbcbababbacabbbabbbbbabb`bbabaabbb
+
+    '
+  - 'aabaababb`bbabcbbbabbbababbababcbbbbababba
+
+    '
+  - 'aabaababb`bbbbbbbbabbaabbbbababccbcbab`bba
+
+    '
+  - 'abbaabaababbbabbbbabbbababbabababbabacabba
+
+    '
+  - 'abbaababbabbaabbbbaabbababbababbbbabababaa
+
+    '
+  - 'bbbababbbbcbababbababbbaabbbbabbabbabaabbb
+
+    '
+  - 'aabaababb`baabbbbbababababbababcbbbbababba
+
+    '
+  - 'abb`babbbcbbacabb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbababbaabbbbababccb`babbbba
+
+    '
+  - 'aaaaababb`bbbbbbbbabbbababbababccbbb`b`bba
+
+    '
+  - 'd
+
+    aabbbacaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'abbaababaabbaabbbbaabbababbab`bcbbbbbbbbba
+
+    '
+  - 'abbababbbbcbacabbababababbbbbabb`bbabaabaa
+
+    '
+  - 'abb`babbbdbbacabbacabbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'c
+
+    aabbbacaa
+
+    bbbb
+
+    bababb
+
+    '
+  - 'abbabbbcbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - 'abb`babbbdbbaaabbabcbbaabbbbbbbb`bbabbabaa
+
+    '
+  - 'abbaababbaabaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - 'aabaabaab_bbabbbbbabababaabacabcbbbbababba
+
+    '
+  - 'abbaab`bbbbbaabbababbbababbababbbbabababba
+
+    '
+  - 'abbaababaabbaabbbbabbaababbababbbbbbababba
+
+    '
+  - 'abbababbbbbaababbababbbabbbbaabbabbababbba
+
+    '
+  - 'bbbababbbbbbab`bbabaabbabbbbaabbabbabaabbb
+
+    '
+  - 'abbaababbabbaabbababbbabbbbababcbbbbababba
+
+    '
+  - 'abbababbbbcbbbabbababbbabcbbbabb`bbabaabba
+
+    '
+  - 'abb`b`bbbccbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - 'abb`babbbccbab`bb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbbbabbbababbababbdbcbab`bba
+
+    '
+  - 'abbabcbbbbcbababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'aabaababb`bbabcbbbabbbababbababcbbbbababaa
+
+    '
+  - 'abbaabaababbbabbbbabbbababbabacabbabacabba
+
+    '
+  - 'aababababbbbababbababbaabbbbaabbabbabaabba
+
+    '
+  - 'aabaababb`baabbbbbababababbababcbbabababba
+
+    '
+  - 'aba`babbbcbbbcabb`babbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'abbbbab`bccbababbbbaabbababbbbbb`bbabaabaa
+
+    '
+  - 'aaaaaaabb`bbbbbbbbabbbababbababccbbb`b`bba
+
+    '
+  - 'e
+
+    aabbbacaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'abbaacabaabbaabbbbaabbababbab`bcbbbbbbbbba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbacabbacabbdbbbab`bba
+
+    '
+  - 'd
+
+    aabbbacaa
+
+    bbbb
+
+    bababb
+
+    '
+  - 'abbabbccbbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - 'abbaababbaacaabcbbaabbababbab`bcbbbbbbabba
+
+    '
+  - 'aabaabaab_bbabbbbbabababaabababcbbbbababba
+
+    '
+  - 'abbaab`bbbbbaabbababbbacabbababbbbabababba
+
+    '
+  - 'abbaababaabbaabbbbabbaababbacabbbbbbababba
+
+    '
+  - 'abbbbabbbbbaababbababbbabbbbaabbabbababbba
+
+    '
+  - 'abbababbbbcbababbbbababababbaabbabbabaabba
+
+    '
+  - 'abb`b`bbbccbababbabaabbabbbbbabb`bbabaabba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbab`bb`babccbbbab`bba
+
+    '
+  - 'abb`babcbdbbababbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'abbabcbbbbcbababbabaabbabbbbaabbabbabaabba
+
+    '
+  - 'aabaababb`bbabcbbbabbbababb`babcbbbbababaa
+
+    '
+  - 'abbaabaababbbabbbaabbbababbabacabbabacabba
+
+    '
+  - 'aababbbabbbbababbababbaabbbbaabbabbabaabba
+
+    '
+  - 'aabaababb`baabbbbbababacabbababcbbabababba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbab`bbacbbbcbbbab`aba
+
+    '
+  - 'aabaababb`bbabbbababbaabbbbababccb`babbbba
+
+    '
+  - 'abb`b`bbbccbababbababbbabbbbbbbb`bbaaaaaaa
+
+    '
+  - 'abbbbbbbbbcb`babbababbaabbbbaabbaabacaabba
+
+    '
+  - 'aabaababb`bbbbbbbbababacabbacabbdbbbbb`bba
+
+    '
+  - 'd
+
+    aaabbacaa
+
+    bbbb
+
+    bababb
+
+    '
+  - 'abbabbcccbcb`babbababbaabbbbaabbabbabaabba
+
+    '
+  - 'aabaabaab_baabbbbbabababaabababcbbbbababba
+
+    '
+  - 'abbaababaabbaabbbbabbbababbacabbbbbbababba
+
+    '
+  - 'abbbbaabbbbaababbababbbabbbbaabbabbbbabbba
+
+    '
+  - 'abbacabbbbcbababbbbababababbaabbabbabaabba
+
+    '
+  - 'abb`b`bbbccbababbabaabbabbbcbabb`bbabaabba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbab`bb`babccbabbb`bba
+
+    '
+  - 'abb`babcbdbbabababbabbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'aabababbbbcbab`bbababbbabbbcbabb`bbabaabaa
+
+    '
+  - 'abbaabaababbb`bbbaabbbababbabacabbabacabba
+
+    '
+  - 'aababbbabbbbababbababbaabcbbaabbabbabaabba
+
+    '
+  - 'abbabababbcbababbacabababbbbbaab`bbabaabaa
+
+    '
+  - 'aabaababb`bbbbbbbb`bbbab`bbacbbbcbbbab`aba
+
+    '
+  - 'aabaababb`bbabbbababbaabbcbababccb`babbbba
+
+    '
+  - 'abbbbbbbbbcb`babb`babbaabbbbaabbaabacaabba
+
+    '
+  - 'aabaababb`bbbbbbbbababacabbacabbdbbbab`bba
+
+    '
+  - 'c
+
+    aaabbacaa
+
+    bbbb
+
+    bababb
+
+    '
+  - 'abbaababbabbaabbbbaabbababbab`bcbcccbbabba
+
+    '
+  - 'aabaabaab`baabbbbbabababaabababcbbbbababba
+
+    '
+  - 'abbbbaabbbbaababbababbbabbbbaabbabbbbababa
+
+    '
+  - 'abb`b`bbbccbababbabaabbbbbbcbabb`bbabaabba
+
+    '
+  - 'aababbbabbbbababbababbaabcbbaabb`bbabaabba
+
+    '
+  - 'abbabababbcbababbacacababbbbbaab`bbabaabaa
+
+    '
+  - 'aabaababb`bbabbbababbaaabcbababccb`babbbba
+
+    '
+  - 'abbbbbbbbbcb`babb`babbaabcbbaabbaabacaabba
+
+    '
+  - 'aabaababb`bbbabbbbababacabbacabbdbbbab`bba
+
+    '
+  - 'abababbbbabbaabbbbabbbababbabaabbbbaabbbba
+
+    '
+  - 'aababbbabbbbababbababbaabcbbaaab`bbabaabba
+
+    '
+  - 'aabaababb`baabbbbbabacacabbababcbbabababba
+
+    '
+  - 'abbbbbbbbbcb`babb`b`bbaabcbbaabbaabacaabba
+
+    '
+  - 'aa`aababb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - 'abbbbaabbbbaababbababbbabbbbaabbaabbbababa
+
+    '
+  - 'aababbbabbbbababbababbaabcbbaabb`bbabbabba
+
+    '
+  - 'abbbbbbbbbcb`babb`b`bbaabcbbaabbaaaacaabba
+
+    '
+  - 'abbbbabbbdbbacabbacabababbbbabbb`bbabaa`aa
+
+    '
+  - 'abababbbaabbaabbbbabbbababbabaabbbbaabbbba
+
+    '
+  - 'abbbbbbbbbcb`babb`b`bbbabcbbaabbaaaacaabba
+
+    '
+  - 'abbbbabbbdbbacabbacabababbbbabbb`bbabaaaaa
+
+    '
+  - 'abababbbaabbaabbbbabbbab`bbabaabbbbaabbbba
+
+    '
+  - 'abbaacaaaabbaabbcbabbb`b`bbab`bcbbbbbbbbba
+
+    '
+  - 'aaaaababb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - 'abbbbabbbdbbacabbacabababbbbabbb`bb`baaaaa
+
+    '
+  - 'aaaaab`bb`bbbabbbbababacabbacabbdbbbabbbba
+
+    '
+  - 'aaaaab`bb`bbbabbbbababacabbacabbebbbabbbba
+
+    '
+  - 'aaaaab`bb`bbbabbbbababacabbacabbebbaabbbba
+
+    '
+  - 'aabaab`bb`bbbabbbbababacabbacabbebbaabbbba
+
+    '
+  - 'abbabababbabab`bbababbbabbbbabbbabaabaabba
+
+    '
+  - 'baaaaaaaaaaaaaaaaaaabbbbbbcbbbbbbbbbbbbbab
+
+    '
+  - 'b
+
+    aabbaabaa
+
+    bbbb
+
+    bbbaab
+
+    '
+  - 'abbaabaababbbabbbbabbbababbababbbbabababba
+
+    '
+  - 'abbabababbbbababbababbbaabbbaabbabbbbaabba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbaaabbbbabababba
+
+    '
+  - 'abbaabbbbabaaabbbbabbbababbababbbbbbababba
+
+    '
+  - 'abbaababbabbaabbbbabbbababbabaabbbbbababba
+
+    '
+  - 'abbababbbbabababbababbbabbbbaabbabbabaabba
+
+    '
+  - 'abbaababbabbaabbbbabbbababaababcbbbbababba
+
+    '
+  - 'abbababbbbcbababbababbbabbbbaabbabb`baabba
+
+    '
+  - 'abbababbbbcbababbababbbabbbbbabbabbacaabba
+
+    '
+  - 'abb`babbbccbababbababbbabbbbbabb`bbabaabba
+
+    '
+  - 'aabaababb`bbbbbbbbabbbabaabababccbbbab`bba
+
+    '
+  - 'abb`babbbccbababbbbabbbabbbbbbbb`baabaabaa
+
+    '
+  - 'abb`babbbcbbab`bbababbbabbbbbbbb`bbabaabaa
+
+    '
+  - 'abbabababbabababbababbbabbbbabbbababbaabba
+
+    '
+  - 'b
+
+    aabbaabaa
+
+    bbbb
+
+    bbbabb
+
+    '
+  - 'aababababbbbababbababbbabbbbaabbabbacaabba
+
+    '
+  - 'abbababbbbbaababbababbbabbbbaabbabbabbabba
+
+    '
+  - 'abbaababbabbabbbbbabbbababbacabcbbbbababba
+
+    '
+timeout: 2.0

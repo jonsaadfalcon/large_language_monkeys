@@ -1,0 +1,3144 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nGiven are a\
+  \ sequence of N positive integers A_1, A_2, \\ldots, A_N, and a positive integer\
+  \ K.\n\nFind the number of non-empty contiguous subsequences in A such that the\
+  \ remainder when dividing the sum of its elements by K is equal to the number of\
+  \ its elements. We consider two subsequences different if they are taken from different\
+  \ positions, even if they are equal sequences.\n\nConstraints\n\n* All values in\
+  \ input are integers.\n* 1 \\leq N \\leq 2\\times 10^5\n* 1 \\leq K \\leq 10^9\n\
+  * 1 \\leq A_i \\leq 10^9\n\nInput\n\nInput is given from Standard Input in the following\
+  \ format:\n\n\nN K\nA_1 A_2 \\cdots A_N\n\n\nOutput\n\nPrint the number of subsequences\
+  \ that satisfy the condition.\n\nExamples\n\nInput\n\n5 4\n1 4 2 3 5\n\n\nOutput\n\
+  \n4\n\n\nInput\n\n8 4\n4 2 4 2 4 2 4 2\n\n\nOutput\n\n7\n\n\nInput\n\n10 7\n14 15\
+  \ 92 65 35 89 79 32 38 46\n\n\nOutput\n\n8\nA: ```from collections import defaultdict\n\
+  \ndef gets():\n  return list(map(int, input().split()))\n\nN, K = gets()\nA = gets()\n\
+  \nS = [0] * (N + 1)\nfor i in range(N):\n  S[i + 1] = (S[i] + A[i] - 1) % K\n\n\
+  cnt = defaultdict(int)\nans = 0\ncnt[0] += 1\nfor i in range(1, N+1):\n  if i -\
+  \ K >= 0:\n    cnt[S[i - K]] -= 1\n  ans += cnt[S[i]]\n  cnt[S[i]] += 1\n\nprint(ans)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nThis is an interactive\
+  \ problem.\n\nWe hid from you a permutation p of length n, consisting of the elements\
+  \ from 1 to n. You want to guess it. To do that, you can give us 2 different indices\
+  \ i and j, and we will reply with p_{i} mod p_{j} (remainder of division p_{i} by\
+  \ p_{j}).\n\nWe have enough patience to answer at most 2 \u22C5 n queries, so you\
+  \ should fit in this constraint. Can you do it?\n\nAs a reminder, a permutation\
+  \ of length n is an array consisting of n distinct integers from 1 to n in arbitrary\
+  \ order. For example, [2,3,1,5,4] is a permutation, but [1,2,2] is not a permutation\
+  \ (2 appears twice in the array) and [1,3,4] is also not a permutation (n=3 but\
+  \ there is 4 in the array).\n\nInput\n\nThe only line of the input contains a single\
+  \ integer n (1 \u2264 n \u2264 10^4) \u2014 length of the permutation.\n\nInteraction\n\
+  \nThe interaction starts with reading n. \n\nThen you are allowed to make at most\
+  \ 2 \u22C5 n queries in the following way: \n\n  * \"? x y\" (1 \u2264 x, y \u2264\
+  \ n, x \u2260 y). \n\n\n\nAfter each one, you should read an integer k, that equals\
+  \ p_x mod p_y. \n\nWhen you have guessed the permutation, print a single line \"\
+  ! \" (without quotes), followed by array p and quit.\n\nAfter printing a query do\
+  \ not forget to output end of line and flush the output. Otherwise, you will get\
+  \ Idleness limit exceeded. To do this, use:\n\n  * fflush(stdout) or cout.flush()\
+  \ in C++;\n  * System.out.flush() in Java;\n  * flush(output) in Pascal;\n  * stdout.flush()\
+  \ in Python;\n  * see documentation for other languages.\n\n\n\nExit immediately\
+  \ after receiving \"-1\" and you will see Wrong answer verdict. Otherwise you can\
+  \ get an arbitrary verdict because your solution will continue to read from a closed\
+  \ stream.\n\nHack format\n\nIn the first line output n (1 \u2264 n \u2264 10^4).\
+  \ In the second line print the permutation of n integers p_1, p_2, \u2026, p_n.\n\
+  \nExample\n\nInput\n\n\n3\n\n1\n\n2\n\n1\n\n0\n\nOutput\n\n\n? 1 2\n\n? 3 2\n\n\
+  ? 1 3\n\n? 2 1\n\n! 1 3 2\nA: ```import sys\n\nDEBUG = False\n\n\ndef debug(*args):\n\
+  \    if not DEBUG:\n        return\n    print(\"\\033[0;31m\", end=\"\", file=sys.stderr)\n\
+  \    print(*args, file=sys.stderr)\n    print(\"\\033[0m\", end=\"\", file=sys.stderr)\n\
+  \    sys.stderr.flush()\n\n\ndef readInt():\n    line = input()\n    while line\
+  \ == \"\":\n        line = input()\n    result = int(line)\n    return result\n\n\
+  \ncache = {}\n\n\ndef query(i, j):\n    if (i, j) not in cache:\n        print(\"\
+  ? \" + str(i + 1) + \" \" + str(j + 1), file=sys.stdout)\n        sys.stdout.flush()\n\
+  \        if not DEBUG:\n            x = readInt()\n            debug(\"query\",\
+  \ i, j, \":\", x)\n        else:\n            x = REAL[i] % REAL[j]\n          \
+  \  debug(\"query\", i, j, \"\\t\", REAL[i], \"%\", REAL[j], \":\", x)\n        cache[(i,\
+  \ j)] = x\n    return cache[(i, j)]\n\n\ndef answer(arr):\n    print(\"! \" + \"\
+  \ \".join(str(x) for x in arr), file=sys.stdout)\n    sys.stdout.flush()\n    debug(\"\
+  ans\", arr)\n\n\ndef solve():\n    # Want the nth move to correspond with the nth\
+  \ bit.\n    # While reconstructing we just need to know whether to go right or down,\
+  \ so make sure the diagonals alternate bits\n    if DEBUG:\n        cache.clear()\n\
+  \        N = len(REAL)\n        debug(\"Testing\", N, REAL)\n    else:\n       \
+  \ N = readInt()\n    if N == 1:\n        answer([1])\n        exit()\n\n    ans\
+  \ = [-1 for i in range(N)]\n    last = 0\n    for i in range(1, N):\n        a =\
+  \ query(i, last)\n        b = query(last, i)\n        if a > b:\n            # last\
+  \ is larger, so a is a[i]\n            ans[i] = a\n            if DEBUG:\n     \
+  \           assert REAL[last] > REAL[i]\n        else:\n            ans[last] =\
+  \ b\n            if DEBUG:\n                assert REAL[last] < REAL[i]\n\n    \
+  \        last = i\n    for i in range(N):\n        if ans[i] == -1:\n          \
+  \  ans[i] = N\n    answer(ans)\n    assert len(cache) <= 2 * N\n\n    return ans\n\
+  \n\nif DEBUG:\n    import random\n\n    random.seed(0)\n    for _ in range(1000):\n\
+  \        N = 5\n        REAL = list(range(1, N + 1))\n        random.shuffle(REAL)\n\
+  \        assert solve() == REAL\n    exit()\n\nif __name__ == \"__main__\":\n  \
+  \  solve()```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nYou are\
+  \ given an array a consisting of n positive integers. You have to choose a positive\
+  \ integer d and paint all elements into two colors. All elements which are divisible\
+  \ by d will be painted red, and all other elements will be painted blue.\n\nThe\
+  \ coloring is called beautiful if there are no pairs of adjacent elements with the\
+  \ same color in the array. Your task is to find any value of d which yields a beautiful\
+  \ coloring, or report that it is impossible.\n\nInput\n\nThe first line contains\
+  \ a single integer t (1 \u2264 t \u2264 1000) \u2014 the number of testcases.\n\n\
+  The first line of each testcase contains one integer n (2 \u2264 n \u2264 100) \u2014\
+  \ the number of elements of the array.\n\nThe second line of each testcase contains\
+  \ n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^{18}).\n\nOutput\n\nFor\
+  \ each testcase print a single integer. If there is no such value of d that yields\
+  \ a beautiful coloring, print 0. Otherwise, print any suitable value of d (1 \u2264\
+  \ d \u2264 10^{18}).\n\nExample\n\nInput\n\n\n5\n5\n1 2 3 4 5\n3\n10 5 15\n3\n100\
+  \ 10 200\n10\n9 8 2 6 6 2 8 6 5 4\n2\n1 3\n\n\nOutput\n\n\n2\n0\n100\n0\n3\nA:"
+question: "You are given an array a consisting of n positive integers. You have to\
+  \ choose a positive integer d and paint all elements into two colors. All elements\
+  \ which are divisible by d will be painted red, and all other elements will be painted\
+  \ blue.\n\nThe coloring is called beautiful if there are no pairs of adjacent elements\
+  \ with the same color in the array. Your task is to find any value of d which yields\
+  \ a beautiful coloring, or report that it is impossible.\n\nInput\n\nThe first line\
+  \ contains a single integer t (1 \u2264 t \u2264 1000) \u2014 the number of testcases.\n\
+  \nThe first line of each testcase contains one integer n (2 \u2264 n \u2264 100)\
+  \ \u2014 the number of elements of the array.\n\nThe second line of each testcase\
+  \ contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^{18}).\n\nOutput\n\
+  \nFor each testcase print a single integer. If there is no such value of d that\
+  \ yields a beautiful coloring, print 0. Otherwise, print any suitable value of d\
+  \ (1 \u2264 d \u2264 10^{18}).\n\nExample\n\nInput\n\n\n5\n5\n1 2 3 4 5\n3\n10 5\
+  \ 15\n3\n100 10 200\n10\n9 8 2 6 6 2 8 6 5 4\n2\n1 3\n\n\nOutput\n\n\n2\n0\n100\n\
+  0\n3"
+samples:
+- " ```import sys\n\nDEBUG = False\n\n\ndef debug(*args):\n    if not DEBUG:\n   \
+  \     return\n    print(\"\\033[0;31m\", end=\"\", file=sys.stderr)\n    print(*args,\
+  \ file=sys.stderr)\n    print(\"\\033[0m\", end=\"\", file=sys.stderr)\n    sys.stderr.flush()\n\
+  \n\ndef readInt():\n    line = input()\n    while line == \"\":\n        line =\
+  \ input()\n    result = int(line)\n    return result\n\n\ndef solve():\n    t =\
+  \ readInt()\n    for _ in range(t):\n        n = readInt()\n        a = list(map(int,\
+  \ input().split()))\n        d = 1\n        while True:\n            color = {}\n\
+  \            for i in range(n):\n                if a[i] % d == 0:\n           \
+  \         color[i] = 1\n                else:\n                    color[i] = 0\n\
+  \            if all(color[i] != color[i - 1] for i in range(1, n)):\n          \
+  \      print(d)\n                break\n            d += 1\n        else:\n    \
+  \        print(0)\n\n\nif __name__ == \"__main__\":\n    solve()```\nQ:"
+- " ```import sys\n\nDEBUG = False\n\n\ndef debug(*args):\n    if not DEBUG:\n   \
+  \     return\n    print(\"\\033[0;31m\", end=\"\", file=sys.stderr)\n    print(*args,\
+  \ file=sys.stderr)\n    print(\"\\033[0m\", end=\"\", file=sys.stderr)\n    sys.stderr.flush()\n\
+  \n\ndef readInt():\n    line = input()\n    while line == \"\":\n        line =\
+  \ input()\n    result = int(line)\n    return result\n\n\ndef solve():\n    for\
+  \ _ in range(readInt()):\n        n = readInt()\n        a = [readInt() for _ in\
+  \ range(n)]\n        for d in range(1, n):\n            if all(a[i] % d != a[i +\
+  \ 1] % d for i in range(n - 1)):\n                print(d)\n                return\n\
+  \        print(0)\n\n\nif __name__ == \"__main__\":\n    solve()```\nQ:"
+test_cases:
+  input:
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    6 5 12 5 16
+
+    '
+  - '1
+
+    5
+
+    3 5 6 11 2
+
+    '
+  - '1
+
+    5
+
+    11 5 12 5 16
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    11 5 12 5 10
+
+    '
+  - '1
+
+    5
+
+    22 5 12 5 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 40
+
+    10
+
+    9 8 2 3 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    2 6 3 12 4
+
+    '
+  - '5
+
+    5
+
+    1 2 4 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 4 4 5
+
+    3
+
+    1 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    3 4 7 16 2
+
+    '
+  - '1
+
+    5
+
+    21 4 12 7 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 2 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 3 6 2 10 6 4 4
+
+    2
+
+    1 2
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    101 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 4 4 5
+
+    3
+
+    1 5 16
+
+    3
+
+    100 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 5 4 8
+
+    3
+
+    10 6 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 3 5
+
+    3
+
+    9 5 15
+
+    3
+
+    101 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    12 9 12 5 12
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 22 32
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    110 10 23
+
+    10
+
+    18 8 2 6 6 1 8 6 5 4
+
+    2
+
+    1 6
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 2 5
+
+    3
+
+    110 10 23
+
+    10
+
+    18 8 2 6 6 1 8 6 5 4
+
+    2
+
+    1 6
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 27
+
+    3
+
+    100 10 200
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 1
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 16 23
+
+    10
+
+    9 8 2 6 6 1 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 6 23
+
+    10
+
+    18 8 2 6 6 1 8 9 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 6 12 5 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 3 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 4 12 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 18 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 31 5 10
+
+    '
+  - '1
+
+    5
+
+    32 4 31 5 10
+
+    '
+  - '1
+
+    5
+
+    1 4 31 5 10
+
+    '
+  - '1
+
+    5
+
+    2 5 6 11 2
+
+    '
+  - '1
+
+    4
+
+    11 5 12 5 16
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    18 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 5 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    5 5 12 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 12 5 2
+
+    '
+  - '1
+
+    5
+
+    22 4 18 2 10
+
+    '
+  - '1
+
+    5
+
+    1 4 31 5 2
+
+    '
+  - '1
+
+    5
+
+    5 5 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 12 5 4
+
+    '
+  - '1
+
+    5
+
+    22 4 18 2 6
+
+    '
+  - '1
+
+    5
+
+    1 4 31 5 3
+
+    '
+  - '1
+
+    5
+
+    5 9 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 12 7 4
+
+    '
+  - '1
+
+    5
+
+    1 4 31 5 4
+
+    '
+  - '1
+
+    5
+
+    21 4 12 7 4
+
+    '
+  - '1
+
+    5
+
+    1 4 22 5 4
+
+    '
+  - '1
+
+    5
+
+    21 4 4 7 4
+
+    '
+  - '1
+
+    5
+
+    1 4 11 5 4
+
+    '
+  - '1
+
+    5
+
+    30 4 4 7 4
+
+    '
+  - '1
+
+    5
+
+    1 4 11 5 7
+
+    '
+  - '1
+
+    5
+
+    13 4 4 7 4
+
+    '
+  - '1
+
+    4
+
+    1 4 11 5 7
+
+    '
+  - '1
+
+    5
+
+    13 6 4 7 4
+
+    '
+  - '1
+
+    4
+
+    1 4 11 5 12
+
+    '
+  - '1
+
+    5
+
+    2 6 4 7 4
+
+    '
+  - '1
+
+    4
+
+    1 4 11 3 12
+
+    '
+  - '1
+
+    5
+
+    2 6 3 7 4
+
+    '
+  - '1
+
+    5
+
+    6 5 12 2 16
+
+    '
+  - '1
+
+    5
+
+    5 5 6 11 2
+
+    '
+  - '1
+
+    5
+
+    11 5 12 8 16
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    5 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    11 5 12 5 19
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 1 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    14 6 12 5 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 2 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 3 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 4 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 18 1 10
+
+    '
+  - '1
+
+    5
+
+    22 4 31 5 3
+
+    '
+  - '1
+
+    5
+
+    53 4 31 5 10
+
+    '
+  - '1
+
+    5
+
+    1 4 31 5 1
+
+    '
+  - '1
+
+    4
+
+    11 5 12 8 16
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    18 8 2 6 6 1 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    6 4 12 5 2
+
+    '
+  - '1
+
+    5
+
+    1 4 31 2 2
+
+    '
+  - '1
+
+    5
+
+    5 2 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 12 12 4
+
+    '
+  - '1
+
+    5
+
+    1 4 33 5 4
+
+    '
+  - '1
+
+    5
+
+    1 4 22 5 5
+
+    '
+  - '1
+
+    5
+
+    21 2 4 7 4
+
+    '
+  - '1
+
+    5
+
+    30 4 4 2 4
+
+    '
+  - '1
+
+    4
+
+    1 8 11 5 7
+
+    '
+  - '1
+
+    4
+
+    13 6 4 7 4
+
+    '
+  - '1
+
+    5
+
+    2 6 4 7 7
+
+    '
+  - '1
+
+    4
+
+    1 4 11 3 19
+
+    '
+  - '1
+
+    5
+
+    6 10 12 2 16
+
+    '
+  - '1
+
+    5
+
+    5 5 2 11 2
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    4 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    16 5 12 8 16
+
+    '
+  - '1
+
+    5
+
+    11 3 12 5 19
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 1 10 6 5 1
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    14 6 12 5 6
+
+    '
+  - '5
+
+    5
+
+    1 2 3 2 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 3 6 2 10 6 4 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    7 4 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 17 1 10
+
+    '
+  - '1
+
+    5
+
+    22 4 14 5 3
+
+    '
+  - '1
+
+    4
+
+    53 4 31 5 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    18 8 2 6 6 1 8 9 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 4 11 12 4
+
+    '
+  - '1
+
+    5
+
+    1 4 22 5 9
+
+    '
+  - '1
+
+    5
+
+    21 3 4 7 4
+
+    '
+  - '1
+
+    5
+
+    30 4 4 2 7
+
+    '
+  - '1
+
+    4
+
+    1 4 11 2 19
+
+    '
+  - '1
+
+    5
+
+    2 3 3 12 4
+
+    '
+  - '1
+
+    5
+
+    6 10 12 2 25
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    9 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    11 3 12 7 19
+
+    '
+  - '1
+
+    5
+
+    7 4 22 5 18
+
+    '
+  - '1
+
+    5
+
+    22 4 17 2 10
+
+    '
+  - '1
+
+    5
+
+    22 4 14 1 3
+
+    '
+  - '1
+
+    4
+
+    53 6 31 5 10
+
+    '
+  - '1
+
+    5
+
+    22 5 11 12 4
+
+    '
+  - '1
+
+    5
+
+    1 4 22 7 9
+
+    '
+  - '1
+
+    5
+
+    21 3 3 7 4
+
+    '
+  - '1
+
+    5
+
+    30 4 4 2 1
+
+    '
+  - '1
+
+    4
+
+    2 4 11 2 19
+
+    '
+  - '1
+
+    5
+
+    6 10 12 2 20
+
+    '
+  - '1
+
+    5
+
+    7 4 22 5 35
+
+    '
+  - '1
+
+    5
+
+    22 7 17 2 10
+
+    '
+  - '1
+
+    5
+
+    22 4 13 1 3
+
+    '
+  - '1
+
+    4
+
+    53 6 31 5 16
+
+    '
+  - '1
+
+    5
+
+    22 2 11 12 4
+
+    '
+  - '1
+
+    5
+
+    1 4 16 7 9
+
+    '
+  - '1
+
+    5
+
+    21 2 3 7 4
+
+    '
+  - '1
+
+    5
+
+    30 4 4 1 1
+
+    '
+  - '1
+
+    4
+
+    2 4 9 2 19
+
+    '
+  - '1
+
+    5
+
+    7 4 22 5 6
+
+    '
+  - '1
+
+    5
+
+    22 7 19 2 10
+
+    '
+  - '1
+
+    5
+
+    40 4 13 1 3
+
+    '
+  - '1
+
+    4
+
+    53 2 31 5 16
+
+    '
+  - '1
+
+    5
+
+    14 2 11 12 4
+
+    '
+  - '1
+
+    5
+
+    1 4 16 7 10
+
+    '
+  - '1
+
+    5
+
+    30 5 4 1 1
+
+    '
+  - '1
+
+    4
+
+    2 4 9 2 5
+
+    '
+  - '5
+
+    5
+
+    1 2 4 4 5
+
+    3
+
+    1 5 15
+
+    3
+
+    100 10 306
+
+    10
+
+    6 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    7 4 22 7 6
+
+    '
+  - '1
+
+    4
+
+    22 7 19 2 10
+
+    '
+  - '1
+
+    5
+
+    40 4 18 1 3
+
+    '
+  - '1
+
+    4
+
+    47 2 31 5 16
+
+    '
+  - '1
+
+    5
+
+    10 2 11 12 4
+
+    '
+  - '1
+
+    4
+
+    2 4 9 1 5
+
+    '
+  - '5
+
+    5
+
+    1 2 4 4 5
+
+    3
+
+    1 5 15
+
+    3
+
+    100 10 306
+
+    10
+
+    6 12 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    7 4 22 7 2
+
+    '
+  - '1
+
+    4
+
+    22 4 19 2 10
+
+    '
+  - '1
+
+    4
+
+    40 4 18 1 3
+
+    '
+  - '1
+
+    4
+
+    58 2 31 5 16
+
+    '
+  - '1
+
+    5
+
+    10 2 11 14 4
+
+    '
+  - '1
+
+    4
+
+    2 4 9 1 8
+
+    '
+  - '1
+
+    5
+
+    7 4 22 14 2
+
+    '
+  - '1
+
+    4
+
+    26 4 19 2 10
+
+    '
+  - '1
+
+    5
+
+    14 2 11 14 4
+
+    '
+  - '1
+
+    4
+
+    2 8 9 1 8
+
+    '
+  - '1
+
+    5
+
+    7 4 19 14 2
+
+    '
+  - '1
+
+    4
+
+    26 4 19 2 15
+
+    '
+  - '1
+
+    5
+
+    3 4 19 14 2
+
+    '
+  - '1
+
+    5
+
+    3 4 19 17 2
+
+    '
+  - '1
+
+    5
+
+    3 4 7 17 2
+
+    '
+  - '1
+
+    5
+
+    3 4 7 12 2
+
+    '
+  - '1
+
+    5
+
+    3 4 7 12 1
+
+    '
+  - '1
+
+    5
+
+    3 3 7 12 1
+
+    '
+  - '1
+
+    5
+
+    6 5 21 5 16
+
+    '
+  - '1
+
+    5
+
+    3 5 6 22 2
+
+    '
+  - '5
+
+    5
+
+    2 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 200
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    11 5 12 10 16
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 3
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    11 5 12 5 12
+
+    '
+  - '5
+
+    5
+
+    1 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 7 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 5 12 1 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 20 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 6 12 5 3
+
+    '
+  - '1
+
+    5
+
+    17 4 12 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 18 6 10
+
+    '
+  - '1
+
+    5
+
+    22 4 7 5 10
+
+    '
+  - '1
+
+    5
+
+    33 4 31 5 10
+
+    '
+  - '1
+
+    5
+
+    1 4 31 8 10
+
+    '
+  - '1
+
+    5
+
+    2 5 2 11 2
+
+    '
+  - '1
+
+    4
+
+    11 5 12 5 13
+
+    '
+  - '5
+
+    5
+
+    2 2 3 4 5
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    18 8 2 6 6 2 8 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '5
+
+    5
+
+    1 2 5 4 8
+
+    3
+
+    10 5 15
+
+    3
+
+    100 10 23
+
+    10
+
+    9 8 2 6 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    5 5 12 9 10
+
+    '
+  - '5
+
+    5
+
+    1 2 3 1 5
+
+    3
+
+    10 5 15
+
+    3
+
+    101 10 40
+
+    10
+
+    9 8 2 3 6 2 10 6 5 4
+
+    2
+
+    1 3
+
+    '
+  - '1
+
+    5
+
+    22 1 12 5 2
+
+    '
+  - '1
+
+    5
+
+    1 4 57 5 2
+
+    '
+  - '1
+
+    5
+
+    22 5 12 5 4
+
+    '
+  - '1
+
+    5
+
+    22 4 18 4 6
+
+    '
+  - '1
+
+    5
+
+    1 2 31 5 3
+
+    '
+  - '1
+
+    5
+
+    5 6 22 5 10
+
+    '
+  - '1
+
+    5
+
+    22 4 12 7 7
+
+    '
+  - '1
+
+    5
+
+    1 4 61 5 4
+
+    '
+  - '1
+
+    5
+
+    21 1 4 7 4
+
+    '
+  - '1
+
+    5
+
+    1 1 11 5 4
+
+    '
+  - '1
+
+    5
+
+    30 4 1 7 4
+
+    '
+  - '1
+
+    5
+
+    1 1 11 5 7
+
+    '
+  - '1
+
+    5
+
+    13 3 4 7 4
+
+    '
+  - '1
+
+    4
+
+    1 4 11 5 13
+
+    '
+  - '1
+
+    5
+
+    13 1 4 7 4
+
+    '
+  - '1
+
+    4
+
+    1 4 10 5 12
+
+    '
+  output:
+  - '2
+
+    0
+
+    100
+
+    0
+
+    3
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '5
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    20
+
+    0
+
+    3
+
+    '
+  - '2
+
+    3
+
+    100
+
+    0
+
+    3
+
+    '
+  - '6
+
+    '
+  - '0
+
+    3
+
+    100
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    100
+
+    0
+
+    3
+
+    '
+  - '4
+
+    '
+  - '3
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    2
+
+    '
+  - '2
+
+    3
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    5
+
+    100
+
+    0
+
+    3
+
+    '
+  - '0
+
+    5
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    3
+
+    0
+
+    0
+
+    3
+
+    '
+  - '12
+
+    '
+  - '0
+
+    0
+
+    4
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    6
+
+    '
+  - '0
+
+    5
+
+    0
+
+    0
+
+    6
+
+    '
+  - '2
+
+    0
+
+    100
+
+    0
+
+    3
+
+    '
+  - '2
+
+    3
+
+    100
+
+    0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    16
+
+    0
+
+    3
+
+    '
+  - '2
+
+    0
+
+    6
+
+    0
+
+    3
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '5
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    3
+
+    100
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    3
+
+    100
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '4
+
+    '
+  - '4
+
+    '
+  - '0
+
+    '
+  - '5
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    100
+
+    0
+
+    3
+
+    '
+  - '5
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '5
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '4
+
+    '
+  - '2
+
+    '
+  - '5
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    3
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '4
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+timeout: 2.0

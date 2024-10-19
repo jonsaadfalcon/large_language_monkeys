@@ -1,0 +1,13852 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nOne day the\
+  \ Codeforces round author sat exams. He had n exams and he needed to get an integer\
+  \ from 2 to 5 for each exam. He will have to re-sit each failed exam, i.e. the exam\
+  \ that gets mark 2. \n\nThe author would need to spend too much time and effort\
+  \ to make the sum of his marks strictly more than k. That could have spoilt the\
+  \ Codeforces round. On the other hand, if the sum of his marks is strictly less\
+  \ than k, the author's mum won't be pleased at all. \n\nThe Codeforces authors are\
+  \ very smart and they always get the mark they choose themselves. Also, the Codeforces\
+  \ authors just hate re-sitting exams. \n\nHelp the author and find the minimum number\
+  \ of exams he will have to re-sit if he passes the exams in the way that makes the\
+  \ sum of marks for all n exams equal exactly k.\n\nInput\n\nThe single input line\
+  \ contains space-separated integers n and k (1 \u2264 n \u2264 50, 1 \u2264 k \u2264\
+  \ 250) \u2014 the number of exams and the required sum of marks.\n\nIt is guaranteed\
+  \ that there exists a way to pass n exams in the way that makes the sum of marks\
+  \ equal exactly k.\n\nOutput\n\nPrint the single number \u2014 the minimum number\
+  \ of exams that the author will get a 2 for, considering that the sum of marks for\
+  \ all exams must equal k.\n\nExamples\n\nInput\n\n4 8\n\n\nOutput\n\n4\n\n\nInput\n\
+  \n4 10\n\n\nOutput\n\n2\n\n\nInput\n\n1 3\n\n\nOutput\n\n0\n\nNote\n\nIn the first\
+  \ sample the author has to get a 2 for all his exams.\n\nIn the second sample he\
+  \ should get a 3 for two exams and a 2 for two more.\n\nIn the third sample he should\
+  \ get a 3 for one exam.\nA: ```n, k = map(int, input().split())\n\nq = k // n\n\
+  r = k % n\n\nif q > 2:\n\tprint(0)\nelse:\n\tprint(n - r)```\nQ: Write python code\
+  \ to solve the following coding problem that obeys the constraints and passes the\
+  \ example test cases. The output code needs to read from and write to standard IO.\
+  \ Please wrap your code answer using ```:\nOld timers of Summer Informatics School\
+  \ can remember previous camps in which each student was given a drink of his choice\
+  \ on the vechorka (late-evening meal). Or may be the story was more complicated?\n\
+  \nThere are n students living in a building, and for each of them the favorite drink\
+  \ a_i is known. So you know n integers a_1, a_2, ..., a_n, where a_i (1 \u2264 a_i\
+  \ \u2264 k) is the type of the favorite drink of the i-th student. The drink types\
+  \ are numbered from 1 to k.\n\nThere are infinite number of drink sets. Each set\
+  \ consists of exactly two portions of the same drink. In other words, there are\
+  \ k types of drink sets, the j-th type contains two portions of the drink j. The\
+  \ available number of sets of each of the k types is infinite.\n\nYou know that\
+  \ students will receive the minimum possible number of sets to give all students\
+  \ exactly one drink. Obviously, the number of sets will be exactly \u2308 n/2 \u2309\
+  , where \u2308 x \u2309 is x rounded up.\n\nAfter students receive the sets, they\
+  \ will distribute their portions by their choice: each student will get exactly\
+  \ one portion. Note, that if n is odd then one portion will remain unused and the\
+  \ students' teacher will drink it.\n\nWhat is the maximum number of students that\
+  \ can get their favorite drink if \u2308 n/2 \u2309 sets will be chosen optimally\
+  \ and students will distribute portions between themselves optimally?\n\nInput\n\
+  \nThe first line of the input contains two integers n and k (1 \u2264 n, k \u2264\
+  \ 1 000) \u2014 the number of students in the building and the number of different\
+  \ drinks.\n\nThe next n lines contain student's favorite drinks. The i-th line contains\
+  \ a single integer from 1 to k \u2014 the type of the favorite drink of the i-th\
+  \ student.\n\nOutput\n\nPrint exactly one integer \u2014 the maximum number of students\
+  \ that can get a favorite drink.\n\nExamples\n\nInput\n\n\n5 3\n1\n3\n1\n1\n2\n\n\
+  \nOutput\n\n\n4\n\n\nInput\n\n\n10 3\n2\n1\n3\n2\n3\n3\n1\n3\n1\n2\n\n\nOutput\n\
+  \n\n9\n\nNote\n\nIn the first example, students could choose three sets with drinks\
+  \ 1, 1 and 2 (so they will have two sets with two drinks of the type 1 each and\
+  \ one set with two drinks of the type 2, so portions will be 1, 1, 1, 1, 2, 2).\
+  \ This way all students except the second one will get their favorite drinks.\n\n\
+  Another possible answer is sets with drinks 1, 2 and 3. In this case the portions\
+  \ will be 1, 1, 2, 2, 3, 3. Then all the students except one will gain their favorite\
+  \ drinks. The only student that will not gain the favorite drink will be a student\
+  \ with a_i = 1 (i.e. the first, the third or the fourth).\nA: ```from math import\
+  \  ceil\n\n\nn, k = map(int, input().split())\nbev = [0] * k\nfor i in range(n):\n\
+  \    x = int(input())\n    bev[x-1] += 1\n\nbad = 0\ngood = 0\nfor i in range(k):\n\
+  \    bad += bev[i] & 1\n    good += bev[i] - (bev[i] & 1)\n# print(good, bad)\n\
+  bad = ceil(bad / 2)\nprint(good + bad)```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nYou are given an array of integers a of length n. The elements\
+  \ of the array can be either different or the same. \n\nEach element of the array\
+  \ is colored either blue or red. There are no unpainted elements in the array. One\
+  \ of the two operations described below can be applied to an array in a single step:\n\
+  \n  * either you can select any blue element and decrease its value by 1; \n  *\
+  \ or you can select any red element and increase its value by 1. \n\n\n\nSituations\
+  \ in which there are no elements of some color at all are also possible. For example,\
+  \ if the whole array is colored blue or red, one of the operations becomes unavailable.\n\
+  \nDetermine whether it is possible to make 0 or more steps such that the resulting\
+  \ array is a permutation of numbers from 1 to n?\n\nIn other words, check whether\
+  \ there exists a sequence of steps (possibly empty) such that after applying it,\
+  \ the array a contains in some order all numbers from 1 to n (inclusive), each exactly\
+  \ once.\n\nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 10^4)\
+  \ \u2014 the number of input data sets in the test.\n\nThe description of each set\
+  \ of input data consists of three lines. The first line contains an integer n (1\
+  \ \u2264 n \u2264 2 \u22C5 10^5) \u2014 the length of the original array a. The\
+  \ second line contains n integers a_1, a_2, ..., a_n (-10^9 \u2264 a_i \u2264 10^9)\
+  \ \u2014 the array elements themselves.\n\nThe third line has length n and consists\
+  \ exclusively of the letters 'B' and/or 'R': ith character is 'B' if a_i is colored\
+  \ blue, and is 'R' if colored red.\n\nIt is guaranteed that the sum of n over all\
+  \ input sets does not exceed 2 \u22C5 10^5.\n\nOutput\n\nPrint t lines, each of\
+  \ which contains the answer to the corresponding test case of the input. Print YES\
+  \ as an answer if the corresponding array can be transformed into a permutation,\
+  \ and NO otherwise.\n\nYou can print the answer in any case (for example, the strings\
+  \ yEs, yes, Yes, and YES will be recognized as a positive answer).\n\nExample\n\n\
+  Input\n\n\n8\n4\n1 2 5 2\nBRBR\n2\n1 1\nBB\n5\n3 1 4 2 5\nRBRRB\n5\n3 1 3 1 3\n\
+  RBRRB\n5\n5 1 5 1 5\nRBRRB\n4\n2 2 2 2\nBRBR\n2\n1 -2\nBR\n4\n-2 -1 4 0\nRRRR\n\n\
+  \nOutput\n\n\nYES\nNO\nYES\nYES\nNO\nYES\nYES\nYES\n\nNote\n\nIn the first test\
+  \ case of the example, the following sequence of moves can be performed:\n\n  *\
+  \ choose i=3, element a_3=5 is blue, so we decrease it, we get a=[1,2,4,2]; \n \
+  \ * choose i=2, element a_2=2 is red, so we increase it, we get a=[1,3,4,2]; \n\
+  \  * choose i=3, element a_3=4 is blue, so we decrease it, we get a=[1,3,3,2]; \n\
+  \  * choose i=2, element a_2=2 is red, so we increase it, we get a=[1,4,3,2]. \n\
+  \n\n\nWe got that a is a permutation. Hence the answer is YES.\nA:"
+question: "You are given an array of integers a of length n. The elements of the array\
+  \ can be either different or the same. \n\nEach element of the array is colored\
+  \ either blue or red. There are no unpainted elements in the array. One of the two\
+  \ operations described below can be applied to an array in a single step:\n\n  *\
+  \ either you can select any blue element and decrease its value by 1; \n  * or you\
+  \ can select any red element and increase its value by 1. \n\n\n\nSituations in\
+  \ which there are no elements of some color at all are also possible. For example,\
+  \ if the whole array is colored blue or red, one of the operations becomes unavailable.\n\
+  \nDetermine whether it is possible to make 0 or more steps such that the resulting\
+  \ array is a permutation of numbers from 1 to n?\n\nIn other words, check whether\
+  \ there exists a sequence of steps (possibly empty) such that after applying it,\
+  \ the array a contains in some order all numbers from 1 to n (inclusive), each exactly\
+  \ once.\n\nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 10^4)\
+  \ \u2014 the number of input data sets in the test.\n\nThe description of each set\
+  \ of input data consists of three lines. The first line contains an integer n (1\
+  \ \u2264 n \u2264 2 \u22C5 10^5) \u2014 the length of the original array a. The\
+  \ second line contains n integers a_1, a_2, ..., a_n (-10^9 \u2264 a_i \u2264 10^9)\
+  \ \u2014 the array elements themselves.\n\nThe third line has length n and consists\
+  \ exclusively of the letters 'B' and/or 'R': ith character is 'B' if a_i is colored\
+  \ blue, and is 'R' if colored red.\n\nIt is guaranteed that the sum of n over all\
+  \ input sets does not exceed 2 \u22C5 10^5.\n\nOutput\n\nPrint t lines, each of\
+  \ which contains the answer to the corresponding test case of the input. Print YES\
+  \ as an answer if the corresponding array can be transformed into a permutation,\
+  \ and NO otherwise.\n\nYou can print the answer in any case (for example, the strings\
+  \ yEs, yes, Yes, and YES will be recognized as a positive answer).\n\nExample\n\n\
+  Input\n\n\n8\n4\n1 2 5 2\nBRBR\n2\n1 1\nBB\n5\n3 1 4 2 5\nRBRRB\n5\n3 1 3 1 3\n\
+  RBRRB\n5\n5 1 5 1 5\nRBRRB\n4\n2 2 2 2\nBRBR\n2\n1 -2\nBR\n4\n-2 -1 4 0\nRRRR\n\n\
+  \nOutput\n\n\nYES\nNO\nYES\nYES\nNO\nYES\nYES\nYES\n\nNote\n\nIn the first test\
+  \ case of the example, the following sequence of moves can be performed:\n\n  *\
+  \ choose i=3, element a_3=5 is blue, so we decrease it, we get a=[1,2,4,2]; \n \
+  \ * choose i=2, element a_2=2 is red, so we increase it, we get a=[1,3,4,2]; \n\
+  \  * choose i=3, element a_3=4 is blue, so we decrease it, we get a=[1,3,3,2]; \n\
+  \  * choose i=2, element a_2=2 is red, so we increase it, we get a=[1,4,3,2]. \n\
+  \n\n\nWe got that a is a permutation. Hence the answer is YES."
+samples:
+- " ```t = int(input())\n\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    color = input()\n    bad = 0\n    for i in range(n):\n\
+  \        if color[i] == 'B':\n            a[i] -= 1\n        else:\n           \
+  \ a[i] += 1\n    a.sort()\n    for i in range(1, n):\n        if a[i] != a[i-1]\
+  \ + 1:\n            bad = 1\n            break\n    if bad:\n        print('NO')\n\
+  \    else:\n        print('YES')``` Q:"
+- " ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    colors = input()\n    blue = [i for i in range(n) if colors[i]\
+  \ == 'B']\n    red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue)\
+  \ > 0 and len(red) > 0:\n        if max(a) - min(a) + 1 != n:\n            print('NO')\n\
+  \        else:\n            print('YES')\n    else:\n        print('NO')````\n```python\n\
+  ``` A: ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    colors = input()\n    blue = [i for i in range(n) if colors[i]\
+  \ == 'B']\n    red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue)\
+  \ > 0 and len(red) > 0:\n        if max(a) - min(a) + 1 != n:\n            print('NO')\n\
+  \        else:\n            print('YES')\n    else:\n        print('NO')``` ```\n\
+  A: ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    colors = input()\n    blue = [i for i in range(n) if colors[i]\
+  \ == 'B']\n    red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue)\
+  \ > 0 and len(red) > 0:\n        if max(a) - min(a) + 1 != n:\n            print('NO')\n\
+  \        else:\n            print('YES')\n    else:\n        print('NO')``` ```\n\
+  ```python\n``` A: ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n\
+  \    a = list(map(int, input().split()))\n    colors = input()\n    blue = [i for\
+  \ i in range(n) if colors[i] == 'B']\n    red = [i for i in range(n) if colors[i]\
+  \ == 'R']\n    if len(blue) > 0 and len(red) > 0:\n        if max(a) - min(a) +\
+  \ 1 != n:\n            print('NO')\n        else:\n            print('YES')\n  \
+  \  else:\n        print('NO')``` ```\nA: ```t = int(input())\nfor _ in range(t):\n\
+  \    n = int(input())\n    a = list(map(int, input().split()))\n    colors = input()\n\
+  \    blue = [i for i in range(n) if colors[i] == 'B']\n    red = [i for i in range(n)\
+  \ if colors[i] == 'R']\n    if len(blue) > 0 and len(red) > 0:\n        if max(a)\
+  \ - min(a) + 1 != n:\n            print('NO')\n        else:\n            print('YES')\n\
+  \    else:\n        print('NO')``` ```\n```python\n``` A: ```t = int(input())\n\
+  for _ in range(t):\n    n = int(input())\n    a = list(map(int, input().split()))\n\
+  \    colors = input()\n    blue = [i for i in range(n) if colors[i] == 'B']\n  \
+  \  red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue) > 0 and len(red)\
+  \ > 0:\n        if max(a) - min(a) + 1 != n:\n            print('NO')\n        else:\n\
+  \            print('YES')\n    else:\n        print('NO')``` ```\nA: ```t = int(input())\n\
+  for _ in range(t):\n    n = int(input())\n    a = list(map(int, input().split()))\n\
+  \    colors = input()\n    blue = [i for i in range(n) if colors[i] == 'B']\n  \
+  \  red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue) > 0 and len(red)\
+  \ > 0:\n        if max(a) - min(a) + 1 != n:\n            print('NO')\n        else:\n\
+  \            print('YES')\n    else:\n        print('NO')``` ```\n```python\n```\
+  \ A: ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    colors = input()\n    blue = [i for i in range(n) if colors[i]\
+  \ == 'B']\n    red = [i for i in range(n) if colors[i] == 'R']\n    if len(blue)\
+  \ > 0 and len(red) > 0:\n        if max(a) - min(a) + 1 != n:\n           "
+test_cases:
+  input:
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 2 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    2 1 4 2 5
+
+    RBRRB
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 7 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 1
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    4 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    6 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 2 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    0 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 2 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 7 2 0
+
+    RBRRB
+
+    5
+
+    5 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    2 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 2 3
+
+    RBRRB
+
+    5
+
+    0 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BBRR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 2 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 6 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 10
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    2 1 4 2 5
+
+    RBRRB
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 7 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    RBRB
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 8 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 6 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    RB
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    RBRB
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 2 -1 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BBRR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 2
+
+    RBRRB
+
+    5
+
+    8 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 2 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 6 1
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    3 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    2 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 1 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 4 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 8 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 6 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 1
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    RB
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 1
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 8 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 2
+
+    RBRRB
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 6 1
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 7 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 1 4 3
+
+    RBRRB
+
+    5
+
+    3 1 6 0 5
+
+    RBRRB
+
+    5
+
+    5 2 4 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 0
+
+    RBRRB
+
+    5
+
+    0 1 6 1 10
+
+    RBRRA
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    7 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 2 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    2 1
+
+    BB
+
+    5
+
+    3 0 4 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    BRRBR
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -1
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 4
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    1 2 1 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 10
+
+    BRRBR
+
+    5
+
+    4 1 6 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 10
+
+    RBRRA
+
+    4
+
+    2 2 2 3
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    2 1 4 2 5
+
+    RBRRB
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    2 1 4 2 5
+
+    RBRRB
+
+    5
+
+    2 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    RRBB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    RRBB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -1
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 2 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 3
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 2 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 -1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 0 5
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    BRRBR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 4
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 3 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RRBBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    RRBB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 6 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 1 4 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 6 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 0 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    3 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    RRBB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 10
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 1 2
+
+    BRBR
+
+    2
+
+    1 -1
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 0 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 0 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 0 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    5 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 2 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 1
+
+    RBBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    0 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    1 2 2 3
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 0
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 6 1
+
+    BRBR
+
+    2
+
+    0 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -4 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 2 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    RBRB
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    3 3 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 1
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 7 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 6
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    6 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 0 5
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    BRRBR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    4 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 3
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 4
+
+    RBBRR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRQB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 3 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RRBBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -4 -1 0 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 0 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 0 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -3 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 0 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    5 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 1
+
+    RBBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 5 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 0
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 4 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 2 3
+
+    RBRRB
+
+    5
+
+    0 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 6
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -4 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BBRR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 2
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 2 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 1 2 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 1
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 3 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 1 6
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 1
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 4 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    BRRBR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    4 1 5 1 5
+
+    BRRBR
+
+    4
+
+    2 2 2 3
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 3
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 4
+
+    RBBRR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    0 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRQB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 3 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RRBBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    RBRB
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 10
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -4 -1 0 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 -1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 9 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 0 1 3
+
+    RBRRB
+
+    5
+
+    5 1 9 1 5
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -3 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    4 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 0 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 2 -1 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 1
+
+    RBBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 5 2 3
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 5 1 8
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 0
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 3 0 4
+
+    RBRRB
+
+    5
+
+    5 1 4 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 4
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 6
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 3 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -4 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 2 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 1 4 3
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    5 0 4 2 1
+
+    RBRRB
+
+    5
+
+    5 1 6 1 5
+
+    RBRRB
+
+    5
+
+    5 3 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 5 2 0
+
+    RBRRB
+
+    5
+
+    5 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 1 6 2 6
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 1
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    4 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    4 1 5 1 5
+
+    BRRBR
+
+    4
+
+    2 2 2 3
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 3
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 4
+
+    RBBRR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -2 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    0 1
+
+    BB
+
+    5
+
+    5 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRQB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 3 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 1
+
+    RRBBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    RBRB
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -2
+
+    RB
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 2
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 5 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 10
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 4 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -4 -1 0 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 -1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    4 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 0
+
+    RBRRB
+
+    5
+
+    5 1 5 0 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 1 5 2
+
+    RBRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 2
+
+    RBRRB
+
+    4
+
+    -1 2 -1 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 0
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 2 0 4
+
+    RBRRB
+
+    5
+
+    5 1 4 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 4
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    2 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    RBRRB
+
+    5
+
+    5 1 3 1 3
+
+    RBRRB
+
+    5
+
+    0 1 5 1 2
+
+    RBRRB
+
+    4
+
+    0 3 0 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BBRR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 6
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 3 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -4 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 3
+
+    RBRRB
+
+    5
+
+    3 1 6 1 10
+
+    RBRRB
+
+    5
+
+    5 2 5 1 7
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 0 -1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 2 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 1 4 3
+
+    RBRRB
+
+    5
+
+    5 1 6 0 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 -2
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 5 2 0
+
+    RBRRB
+
+    5
+
+    5 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 1
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 0
+
+    RBRRB
+
+    5
+
+    5 0 6 2 6
+
+    RBRRB
+
+    5
+
+    5 4 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 1
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRRB
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 2 5
+
+    RBRRB
+
+    5
+
+    1 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 3
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 2 4
+
+    RBBRR
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -2 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 3 2
+
+    BRBR
+
+    2
+
+    0 1
+
+    BB
+
+    5
+
+    5 1 4 2 5
+
+    RBRRB
+
+    5
+
+    3 1 5 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRQB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 3 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 2 1
+
+    RRBBR
+
+    5
+
+    4 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    RBRB
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 1
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 3
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -4
+
+    RB
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 1 1 3
+
+    RBRRB
+
+    5
+
+    5 1 5 1 5
+
+    RBRRB
+
+    4
+
+    2 4 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -4 -1 0 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 0 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 4 7 5
+
+    BRRBR
+
+    5
+
+    4 1 3 1 4
+
+    RBRRB
+
+    5
+
+    5 -2 5 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    RB
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    4 4 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 4 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 1
+
+    RBRRB
+
+    5
+
+    5 1 5 0 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -2 0 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 0
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 5
+
+    BRRBR
+
+    5
+
+    4 1 2 0 4
+
+    RBRRB
+
+    5
+
+    5 1 4 1 2
+
+    RBRRB
+
+    4
+
+    3 2 2 4
+
+    BRBR
+
+    2
+
+    1 -2
+
+    BR
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BBRR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    6 1 4 2 5
+
+    BRRBR
+
+    5
+
+    0 1 3 1 6
+
+    RBRRB
+
+    5
+
+    5 1 9 0 5
+
+    RBRRA
+
+    4
+
+    2 3 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -4 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    0 1 6 1
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 0 5 2 0
+
+    RBRRB
+
+    5
+
+    5 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 2 5 1 5
+
+    RBRRB
+
+    4
+
+    3 2 2 1
+
+    BRBR
+
+    2
+
+    2 -2
+
+    BR
+
+    4
+
+    -2 -1 2 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    2 2 5 2
+
+    BRBR
+
+    2
+
+    1 1
+
+    BB
+
+    5
+
+    3 1 4 3 9
+
+    RBRRB
+
+    5
+
+    3 1 3 1 5
+
+    RBRRB
+
+    5
+
+    5 1 0 1 5
+
+    RBRRB
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    0 -4
+
+    RB
+
+    4
+
+    -1 -1 4 0
+
+    RRRR
+
+    '
+  - '8
+
+    4
+
+    1 2 5 2
+
+    BRBR
+
+    2
+
+    1 4
+
+    BB
+
+    5
+
+    3 1 4 2 5
+
+    BRRBR
+
+    5
+
+    4 1 6 1 4
+
+    RBRRB
+
+    5
+
+    5 1 5 1 10
+
+    RBRRA
+
+    4
+
+    2 2 2 2
+
+    BRBR
+
+    2
+
+    1 -3
+
+    BR
+
+    4
+
+    -2 -1 4 0
+
+    RRRR
+
+    '
+  output:
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    NO
+
+    YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    YES
+
+    NO
+
+    YES
+
+    '
+  - 'YES
+
+    YES
+
+    YES
+
+    NO
+
+    NO
+
+    YES
+
+    YES
+
+    YES
+
+    '
+timeout: 1.0

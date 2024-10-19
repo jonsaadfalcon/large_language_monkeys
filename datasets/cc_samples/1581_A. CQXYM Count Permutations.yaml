@@ -1,0 +1,12379 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou are given\
+  \ an array a consisting of n integers. You have to find the length of the smallest\
+  \ (shortest) prefix of elements you need to erase from a to make it a good array.\
+  \ Recall that the prefix of the array a=[a_1, a_2, ..., a_n] is a subarray consisting\
+  \ several first elements: the prefix of the array a of length k is the array [a_1,\
+  \ a_2, ..., a_k] (0 \u2264 k \u2264 n).\n\nThe array b of length m is called good,\
+  \ if you can obtain a non-decreasing array c (c_1 \u2264 c_2 \u2264 ... \u2264 c_{m})\
+  \ from it, repeating the following operation m times (initially, c is empty):\n\n\
+  \  * select either the first or the last element of b, remove it from b, and append\
+  \ it to the end of the array c. \n\n\n\nFor example, if we do 4 operations: take\
+  \ b_1, then b_{m}, then b_{m-1} and at last b_2, then b becomes [b_3, b_4, ...,\
+  \ b_{m-3}] and c =[b_1, b_{m}, b_{m-1}, b_2].\n\nConsider the following example:\
+  \ b = [1, 2, 3, 4, 4, 2, 1]. This array is good because we can obtain non-decreasing\
+  \ array c from it by the following sequence of operations:\n\n  1. take the first\
+  \ element of b, so b = [2, 3, 4, 4, 2, 1], c = [1]; \n  2. take the last element\
+  \ of b, so b = [2, 3, 4, 4, 2], c = [1, 1]; \n  3. take the last element of b, so\
+  \ b = [2, 3, 4, 4], c = [1, 1, 2]; \n  4. take the first element of b, so b = [3,\
+  \ 4, 4], c = [1, 1, 2, 2]; \n  5. take the first element of b, so b = [4, 4], c\
+  \ = [1, 1, 2, 2, 3]; \n  6. take the last element of b, so b = [4], c = [1, 1, 2,\
+  \ 2, 3, 4]; \n  7. take the only element of b, so b = [], c = [1, 1, 2, 2, 3, 4,\
+  \ 4] \u2014 c is non-decreasing. \n\n\n\nNote that the array consisting of one element\
+  \ is good.\n\nPrint the length of the shortest prefix of a to delete (erase), to\
+  \ make a to be a good array. Note that the required length can be 0.\n\nYou have\
+  \ to answer t independent test cases.\n\nInput\n\nThe first line of the input contains\
+  \ one integer t (1 \u2264 t \u2264 2 \u22C5 10^4) \u2014 the number of test cases.\
+  \ Then t test cases follow.\n\nThe first line of the test case contains one integer\
+  \ n (1 \u2264 n \u2264 2 \u22C5 10^5) \u2014 the length of a. The second line of\
+  \ the test case contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 2 \u22C5\
+  \ 10^5), where a_i is the i-th element of a.\n\nIt is guaranteed that the sum of\
+  \ n does not exceed 2 \u22C5 10^5 (\u2211 n \u2264 2 \u22C5 10^5).\n\nOutput\n\n\
+  For each test case, print the answer: the length of the shortest prefix of elements\
+  \ you need to erase from a to make it a good array.\n\nExample\n\nInput\n\n\n5\n\
+  4\n1 2 3 4\n7\n4 3 3 8 4 5 2\n3\n1 1 1\n7\n1 3 1 4 5 3 2\n5\n5 4 3 2 3\n\n\nOutput\n\
+  \n\n0\n4\n0\n2\n3\n\nNote\n\nIn the first test case of the example, the array a\
+  \ is already good, so we don't need to erase any prefix.\n\nIn the second test case\
+  \ of the example, the initial array a is not good. Let's erase first 4 elements\
+  \ of a, the result is [4, 5, 2]. The resulting array is good. You can prove that\
+  \ if you erase fewer number of first elements, the result will not be good.\nA:\
+  \ ```t = int(input())\nfor _ in range(t):\n  n = int(input())\n  a = list(int(x)\
+  \ for x in input().split())\n  start = 0\n  end = n-1\n  while end>0 and a[end]<=a[end-1]:\n\
+  \    end-=1\n  start=end\n  while start>0 and a[start]>=a[start-1]:\n    start-=1\n\
+  \  print(start)```\nQ: Write python code to solve the following coding problem that\
+  \ obeys the constraints and passes the example test cases. The output code needs\
+  \ to read from and write to standard IO. Please wrap your code answer using ```:\n\
+  We have a grid with H rows and W columns of squares. Snuke is painting these squares\
+  \ in colors 1, 2, ..., N. Here, the following conditions should be satisfied:\n\n\
+  * For each i (1 \u2264 i \u2264 N), there are exactly a_i squares painted in Color\
+  \ i. Here, a_1 + a_2 + ... + a_N = H W.\n* For each i (1 \u2264 i \u2264 N), the\
+  \ squares painted in Color i are 4-connected. That is, every square painted in Color\
+  \ i can be reached from every square painted in Color i by repeatedly traveling\
+  \ to a horizontally or vertically adjacent square painted in Color i.\n\n\n\nFind\
+  \ a way to paint the squares so that the conditions are satisfied. It can be shown\
+  \ that a solution always exists.\n\nConstraints\n\n* 1 \u2264 H, W \u2264 100\n\
+  * 1 \u2264 N \u2264 H W\n* a_i \u2265 1\n* a_1 + a_2 + ... + a_N = H W\n\nInput\n\
+  \nInput is given from Standard Input in the following format:\n\n\nH W\nN\na_1 a_2\
+  \ ... a_N\n\n\nOutput\n\nPrint one way to paint the squares that satisfies the conditions.\
+  \ Output in the following format:\n\n\nc_{1 1} ... c_{1 W}\n:\nc_{H 1} ... c_{H\
+  \ W}\n\n\nHere, c_{i j} is the color of the square at the i-th row from the top\
+  \ and j-th column from the left.\n\nExamples\n\nInput\n\n2 2\n3\n2 1 1\n\n\nOutput\n\
+  \n1 1\n2 3\n\n\nInput\n\n3 5\n5\n1 2 3 4 5\n\n\nOutput\n\n1 4 4 4 3\n2 5 4 5 3\n\
+  2 5 5 5 3\n\n\nInput\n\n1 1\n1\n1\n\n\nOutput\n\n1\nA: ```h,w=map(int,input().split())\n\
+  n=int(input())\na=list(map(int,input().split()))\np=list()\nfor i in range(n):\n\
+  \    p.extend([i+1 for j in range(a[i])])\n#print(p)\nfor i in range(h):\n    if\
+  \ i%2==0:\n        print(*p[i*w:i*w+w])\n    else:\n        print(*p[i*w:i*w+w][::-1])```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nCQXYM is counting permutations\
+  \ length of 2n.\n\nA permutation is an array consisting of n distinct integers from\
+  \ 1 to n in arbitrary order. For example, [2,3,1,5,4] is a permutation, but [1,2,2]\
+  \ is not a permutation (2 appears twice in the array) and [1,3,4] is also not a\
+  \ permutation (n=3 but there is 4 in the array).\n\nA permutation p(length of 2n)\
+  \ will be counted only if the number of i satisfying p_i<p_{i+1} is no less than\
+  \ n. For example:\n\n  * Permutation [1, 2, 3, 4] will count, because the number\
+  \ of such i that p_i<p_{i+1} equals 3 (i = 1, i = 2, i = 3).\n  * Permutation [3,\
+  \ 2, 1, 4] won't count, because the number of such i that p_i<p_{i+1} equals 1 (i\
+  \ = 3). \n\n\n\nCQXYM wants you to help him to count the number of such permutations\
+  \ modulo 1000000007 (10^9+7).\n\nIn addition, [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation)\
+  \ is to get the remainder. For example:\n\n  * 7 mod 3=1, because 7 = 3 \u22C5 2\
+  \ + 1, \n  * 15 mod 4=3, because 15 = 4 \u22C5 3 + 3. \n\nInput\n\nThe input consists\
+  \ of multiple test cases. \n\nThe first line contains an integer t (t \u2265 1)\
+  \ \u2014 the number of test cases. The description of the test cases follows.\n\n\
+  Only one line of each test case contains an integer n(1 \u2264 n \u2264 10^5).\n\
+  \nIt is guaranteed that the sum of n over all test cases does not exceed 10^5\n\n\
+  Output\n\nFor each test case, print the answer in a single line.\n\nExample\n\n\
+  Input\n\n\n4\n1\n2\n9\n91234\n\n\nOutput\n\n\n1\n12\n830455698\n890287984\n\nNote\n\
+  \nn=1, there is only one permutation that satisfies the condition: [1,2].\n\nIn\
+  \ permutation [1,2], p_1<p_2, and there is one i=1 satisfy the condition. Since\
+  \ 1 \u2265 n, this permutation should be counted. In permutation [2,1], p_1>p_2.\
+  \ Because 0<n, this permutation should not be counted.\n\nn=2, there are 12 permutations:\
+  \ [1,2,3,4],[1,2,4,3],[1,3,2,4],[1,3,4,2],[1,4,2,3],[2,1,3,4],[2,3,1,4],[2,3,4,1],[2,4,1,3],[3,1,2,4],[3,4,1,2],[4,1,2,3].\n\
+  A:"
+question: "CQXYM is counting permutations length of 2n.\n\nA permutation is an array\
+  \ consisting of n distinct integers from 1 to n in arbitrary order. For example,\
+  \ [2,3,1,5,4] is a permutation, but [1,2,2] is not a permutation (2 appears twice\
+  \ in the array) and [1,3,4] is also not a permutation (n=3 but there is 4 in the\
+  \ array).\n\nA permutation p(length of 2n) will be counted only if the number of\
+  \ i satisfying p_i<p_{i+1} is no less than n. For example:\n\n  * Permutation [1,\
+  \ 2, 3, 4] will count, because the number of such i that p_i<p_{i+1} equals 3 (i\
+  \ = 1, i = 2, i = 3).\n  * Permutation [3, 2, 1, 4] won't count, because the number\
+  \ of such i that p_i<p_{i+1} equals 1 (i = 3). \n\n\n\nCQXYM wants you to help him\
+  \ to count the number of such permutations modulo 1000000007 (10^9+7).\n\nIn addition,\
+  \ [modulo operation](https://en.wikipedia.org/wiki/Modulo_operation) is to get the\
+  \ remainder. For example:\n\n  * 7 mod 3=1, because 7 = 3 \u22C5 2 + 1, \n  * 15\
+  \ mod 4=3, because 15 = 4 \u22C5 3 + 3. \n\nInput\n\nThe input consists of multiple\
+  \ test cases. \n\nThe first line contains an integer t (t \u2265 1) \u2014 the number\
+  \ of test cases. The description of the test cases follows.\n\nOnly one line of\
+  \ each test case contains an integer n(1 \u2264 n \u2264 10^5).\n\nIt is guaranteed\
+  \ that the sum of n over all test cases does not exceed 10^5\n\nOutput\n\nFor each\
+  \ test case, print the answer in a single line.\n\nExample\n\nInput\n\n\n4\n1\n\
+  2\n9\n91234\n\n\nOutput\n\n\n1\n12\n830455698\n890287984\n\nNote\n\nn=1, there is\
+  \ only one permutation that satisfies the condition: [1,2].\n\nIn permutation [1,2],\
+  \ p_1<p_2, and there is one i=1 satisfy the condition. Since 1 \u2265 n, this permutation\
+  \ should be counted. In permutation [2,1], p_1>p_2. Because 0<n, this permutation\
+  \ should not be counted.\n\nn=2, there are 12 permutations: [1,2,3,4],[1,2,4,3],[1,3,2,4],[1,3,4,2],[1,4,2,3],[2,1,3,4],[2,3,1,4],[2,3,4,1],[2,4,1,3],[3,1,2,4],[3,4,1,2],[4,1,2,3]."
+samples:
+- " ```t = int(input())\nMOD = 1000000007\nfor _ in range(t):\n    n = int(input())\n\
+  \    res = 0\n    for i in range(1, n+1):\n        res += i * (i-1) ** (n-1)\n \
+  \       res %= MOD\n    print(res)```\nQ:"
+- " ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    res = 1\n \
+  \   for i in range(n):\n        res *= i+1\n    res %= 1000000007\n    print(res)```\n\
+  \n\n```\n```\n```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n``` ```python\n\
+  ``` ```python\n``` ```python\n``` ```python\n"
+test_cases:
+  input:
+  - '4
+
+    1
+
+    2
+
+    9
+
+    91234
+
+    '
+  - '2
+
+    99997
+
+    3
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    4
+
+    1
+
+    23481
+
+    279
+
+    5113
+
+    2013
+
+    48785
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '1
+
+    100000
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    260
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    4
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '20
+
+    597
+
+    2791
+
+    71
+
+    1
+
+    6
+
+    14
+
+    196
+
+    1
+
+    4335
+
+    14
+
+    5133
+
+    6
+
+    17
+
+    3620
+
+    5111
+
+    1
+
+    119
+
+    992
+
+    76848
+
+    127
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    212
+
+    2
+
+    98869
+
+    822
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    20
+
+    360
+
+    23355
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    1372
+
+    '
+  - '19
+
+    1
+
+    1019
+
+    1
+
+    11812
+
+    46726
+
+    27618
+
+    43
+
+    3
+
+    369
+
+    1694
+
+    85
+
+    138
+
+    8
+
+    47
+
+    7
+
+    5748
+
+    4405
+
+    141
+
+    135
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    4
+
+    1
+
+    23481
+
+    279
+
+    5113
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    260
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    212
+
+    1
+
+    98869
+
+    822
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    20
+
+    360
+
+    23355
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    668
+
+    '
+  - '4
+
+    1
+
+    2
+
+    15
+
+    91234
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    5113
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    212
+
+    1
+
+    98869
+
+    103
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    23355
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    668
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    7162
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    1
+
+    98869
+
+    103
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    668
+
+    '
+  - '14
+
+    19027
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    1
+
+    98869
+
+    103
+
+    2
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    8035
+
+    668
+
+    '
+  - '14
+
+    19027
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    5
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    1
+
+    98869
+
+    24
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    8035
+
+    668
+
+    '
+  - '14
+
+    19027
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    5
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    2
+
+    98869
+
+    24
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    3
+
+    98869
+
+    24
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    95
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    1
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    3
+
+    98869
+
+    21
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    64367
+
+    10
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '8
+
+    63
+
+    2
+
+    44
+
+    409
+
+    3
+
+    98869
+
+    21
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    64367
+
+    10
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '8
+
+    63
+
+    2
+
+    44
+
+    151
+
+    3
+
+    98869
+
+    21
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    10
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    23
+
+    9762
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    13
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    13
+
+    4
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    668
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    21405
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    21405
+
+    9
+
+    5
+
+    12108
+
+    3584
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    21405
+
+    9
+
+    5
+
+    12108
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    220
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    12108
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    21723
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    21723
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    21723
+
+    5043
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    5043
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    16056
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    16056
+
+    383
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    11272
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    65
+
+    16
+
+    16056
+
+    383
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    65
+
+    16
+
+    16056
+
+    265
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    8551
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    10
+
+    65
+
+    16
+
+    16056
+
+    265
+
+    '
+  - '15
+
+    16
+
+    241
+
+    1595
+
+    102
+
+    214
+
+    8551
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    6
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    10
+
+    65
+
+    16
+
+    16056
+
+    265
+
+    '
+  - '15
+
+    16
+
+    241
+
+    1595
+
+    102
+
+    214
+
+    8551
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    8551
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    8551
+
+    15018
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    8551
+
+    9239
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    9239
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    9239
+
+    5
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    12255
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    12255
+
+    10
+
+    15
+
+    21723
+
+    1515
+
+    2
+
+    71188
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    12255
+
+    10
+
+    15
+
+    21723
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    20
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    12255
+
+    10
+
+    15
+
+    21723
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    19
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    12255
+
+    10
+
+    15
+
+    21723
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    19
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    74
+
+    10
+
+    15
+
+    21723
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    19
+
+    241
+
+    418
+
+    102
+
+    214
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    19
+
+    241
+
+    418
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    19
+
+    241
+
+    232
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    15
+
+    241
+
+    232
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    15
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    47457
+
+    768
+
+    2
+
+    '
+  - '15
+
+    15
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    39317
+
+    1515
+
+    2
+
+    76046
+
+    768
+
+    2
+
+    '
+  - '15
+
+    15
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    768
+
+    2
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    768
+
+    2
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    15
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    2
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    10
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    2
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    682
+
+    74
+
+    10
+
+    10
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    1134
+
+    74
+
+    10
+
+    10
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    22
+
+    241
+
+    270
+
+    102
+
+    407
+
+    1134
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    22
+
+    241
+
+    166
+
+    102
+
+    407
+
+    1134
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    1515
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    22
+
+    241
+
+    166
+
+    102
+
+    407
+
+    1134
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    22
+
+    197
+
+    166
+
+    102
+
+    407
+
+    1134
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    28
+
+    197
+
+    166
+
+    102
+
+    407
+
+    1134
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    28
+
+    197
+
+    166
+
+    102
+
+    407
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    28
+
+    197
+
+    166
+
+    170
+
+    407
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    368
+
+    1
+
+    '
+  - '15
+
+    28
+
+    197
+
+    166
+
+    170
+
+    407
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    142
+
+    1
+
+    '
+  - '15
+
+    47
+
+    197
+
+    166
+
+    170
+
+    407
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    142
+
+    1
+
+    '
+  - '15
+
+    47
+
+    292
+
+    166
+
+    170
+
+    407
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    142
+
+    1
+
+    '
+  - '15
+
+    47
+
+    292
+
+    166
+
+    170
+
+    130
+
+    1418
+
+    58
+
+    10
+
+    10
+
+    44920
+
+    416
+
+    2
+
+    76046
+
+    142
+
+    1
+
+    '
+  - '2
+
+    99997
+
+    4
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    4
+
+    1
+
+    23481
+
+    279
+
+    5113
+
+    2013
+
+    48785
+
+    16
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    340
+
+    6346
+
+    1566
+
+    260
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    4
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '20
+
+    597
+
+    2791
+
+    71
+
+    1
+
+    3
+
+    14
+
+    196
+
+    1
+
+    4335
+
+    14
+
+    5133
+
+    6
+
+    17
+
+    3620
+
+    5111
+
+    1
+
+    119
+
+    992
+
+    76848
+
+    127
+
+    '
+  - '8
+
+    48
+
+    4
+
+    44
+
+    212
+
+    1
+
+    98869
+
+    822
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    20
+
+    360
+
+    23355
+
+    6
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    1372
+
+    '
+  - '19
+
+    1
+
+    1019
+
+    1
+
+    11812
+
+    46726
+
+    27618
+
+    43
+
+    3
+
+    369
+
+    1694
+
+    85
+
+    138
+
+    8
+
+    47
+
+    7
+
+    5748
+
+    4405
+
+    223
+
+    135
+
+    '
+  - '4
+
+    2
+
+    2
+
+    9
+
+    91234
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    4
+
+    1
+
+    23481
+
+    279
+
+    5113
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    2079
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    16
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    55
+
+    212
+
+    1
+
+    98869
+
+    822
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    20
+
+    360
+
+    23355
+
+    4
+
+    5497
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    668
+
+    '
+  - '4
+
+    1
+
+    2
+
+    3
+
+    91234
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    7162
+
+    21482
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    530
+
+    6
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    23355
+
+    6
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    668
+
+    '
+  - '14
+
+    13633
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    6521
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    7162
+
+    15329
+
+    9
+
+    5
+
+    5147
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    1
+
+    53950
+
+    103
+
+    1
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    4548
+
+    317
+
+    '
+  - '14
+
+    19027
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    58
+
+    5766
+
+    3
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    99
+
+    6
+
+    '
+  - '8
+
+    48
+
+    2
+
+    18
+
+    409
+
+    1
+
+    98869
+
+    103
+
+    2
+
+    '
+  - '14
+
+    3
+
+    135
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    5184
+
+    2
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    8035
+
+    668
+
+    '
+  - '14
+
+    19027
+
+    25
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    5766
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1566
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    4400
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    5
+
+    '
+  - '8
+
+    48
+
+    4
+
+    44
+
+    409
+
+    1
+
+    98869
+
+    24
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    1923
+
+    1
+
+    64367
+
+    408
+
+    220
+
+    23
+
+    8035
+
+    668
+
+    '
+  - '14
+
+    19027
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    11240
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2847
+
+    8
+
+    49336
+
+    768
+
+    5
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    636
+
+    2
+
+    98869
+
+    24
+
+    2
+
+    '
+  - '14
+
+    53733
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    279
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    48
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    8
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '8
+
+    48
+
+    2
+
+    44
+
+    409
+
+    3
+
+    24337
+
+    24
+
+    2
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    95
+
+    8470
+
+    2013
+
+    6009
+
+    12
+
+    11
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    6815
+
+    9
+
+    5
+
+    10746
+
+    2052
+
+    1
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '14
+
+    3
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    64367
+
+    17
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8470
+
+    2791
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    1673
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    8
+
+    21069
+
+    2052
+
+    1
+
+    49336
+
+    768
+
+    2
+
+    '
+  - '8
+
+    63
+
+    2
+
+    44
+
+    409
+
+    1
+
+    98869
+
+    21
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    8
+
+    8575
+
+    1
+
+    64367
+
+    10
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    1160
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    44
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    471
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '8
+
+    63
+
+    2
+
+    44
+
+    151
+
+    4
+
+    98869
+
+    21
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    10449
+
+    1
+
+    55318
+
+    10
+
+    220
+
+    23
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    4
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    6
+
+    127
+
+    '
+  - '15
+
+    24
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    3590
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    6
+
+    10841
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    739
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2103
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    7564
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    21069
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    8
+
+    220
+
+    23
+
+    9762
+
+    668
+
+    '
+  - '14
+
+    60017
+
+    13
+
+    2
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    17
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    94538
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    360
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    54
+
+    9762
+
+    668
+
+    '
+  - '14
+
+    30939
+
+    13
+
+    1
+
+    1
+
+    23481
+
+    68
+
+    8963
+
+    2013
+
+    6009
+
+    12
+
+    20
+
+    6660
+
+    4
+
+    127
+
+    '
+  - '15
+
+    19
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    15329
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    7
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    668
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    21405
+
+    9
+
+    5
+
+    12108
+
+    2052
+
+    1
+
+    66545
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    1
+
+    55318
+
+    20
+
+    34
+
+    36
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    94
+
+    214
+
+    5980
+
+    21405
+
+    9
+
+    5
+
+    12108
+
+    3584
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    16831
+
+    20
+
+    220
+
+    36
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    214
+
+    5980
+
+    21405
+
+    17
+
+    5
+
+    12108
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    1
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    220
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    69
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    12108
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    102
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    10169
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    84
+
+    404
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    21723
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    22943
+
+    4
+
+    4930
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    10
+
+    5980
+
+    27384
+
+    9
+
+    5
+
+    21723
+
+    5043
+
+    1
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    8
+
+    8575
+
+    2
+
+    55318
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '14
+
+    5
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    24413
+
+    20
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    6346
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    5043
+
+    2
+
+    81108
+
+    1469
+
+    2
+
+    '
+  - '14
+
+    3
+
+    143
+
+    3
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    9762
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    12233
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    9762
+
+    1246
+
+    '
+  - '15
+
+    16
+
+    119
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    27384
+
+    9
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    4
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    208
+
+    16
+
+    16056
+
+    677
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    299
+
+    5980
+
+    27384
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '15
+
+    16
+
+    99
+
+    4794
+
+    102
+
+    214
+
+    5980
+
+    11272
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    110
+
+    16
+
+    16056
+
+    383
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    150
+
+    5980
+
+    16898
+
+    10
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    195
+
+    23998
+
+    4
+
+    12234
+
+    2
+
+    55318
+
+    5
+
+    65
+
+    16
+
+    16056
+
+    265
+
+    '
+  - '15
+
+    16
+
+    241
+
+    4794
+
+    102
+
+    214
+
+    8551
+
+    16898
+
+    14
+
+    9
+
+    21723
+
+    1515
+
+    2
+
+    81108
+
+    768
+
+    2
+
+    '
+  - '14
+
+    5
+
+    143
+
+    4
+
+    112
+
+    23998
+
+    4
+
+    23471
+
+    2
+
+    55318
+
+    10
+
+    65
+
+    16
+
+    16056
+
+    265
+
+    '
+  output:
+  - '1
+
+    12
+
+    830455698
+
+    890287984
+
+    '
+  - '979296788
+
+    360
+
+    '
+  - '265272552
+
+    34141923
+
+    20160
+
+    1
+
+    405591801
+
+    643806863
+
+    236814910
+
+    315525538
+
+    970428805
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '553573229
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    682559158
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    20160
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '924058387
+
+    309126958
+
+    25034588
+
+    1
+
+    239500800
+
+    517878947
+
+    323758520
+
+    1
+
+    41675960
+
+    517878947
+
+    479930293
+
+    239500800
+
+    971636156
+
+    715097853
+
+    974503605
+
+    1
+
+    796779807
+
+    613317322
+
+    14480144
+
+    386977425
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    904840727
+
+    12
+
+    299753863
+
+    710075077
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    899717444
+
+    228927089
+
+    695947115
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    920390755
+
+    '
+  - '1
+
+    242249437
+
+    1
+
+    255618610
+
+    152921347
+
+    449038492
+
+    417266680
+
+    360
+
+    208304992
+
+    183336760
+
+    809670618
+
+    93533682
+
+    394870773
+
+    559855581
+
+    589145299
+
+    14790749
+
+    130154591
+
+    924228990
+
+    876516086
+
+    '
+  - '265272552
+
+    34141923
+
+    20160
+
+    1
+
+    405591801
+
+    643806863
+
+    236814910
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    682559158
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    904840727
+
+    1
+
+    299753863
+
+    710075077
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    899717444
+
+    228927089
+
+    695947115
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    700702610
+
+    '
+  - '1
+
+    12
+
+    554680740
+
+    890287984
+
+    '
+  - '265272552
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    236814910
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    904840727
+
+    1
+
+    299753863
+
+    346887392
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    695947115
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    700702610
+
+    '
+  - '265272552
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    701278536
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    1
+
+    299753863
+
+    346887392
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    700702610
+
+    '
+  - '771452689
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    1
+
+    299753863
+
+    346887392
+
+    12
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    40372739
+
+    700702610
+
+    '
+  - '771452689
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    1814400
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    1
+
+    299753863
+
+    313534412
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    40372739
+
+    700702610
+
+    '
+  - '771452689
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    1814400
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    12
+
+    299753863
+
+    313534412
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    360
+
+    299753863
+
+    313534412
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    481489820
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    1
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    360
+
+    299753863
+
+    313427725
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    171195395
+
+    573163035
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '375122389
+
+    12
+
+    593679722
+
+    685602584
+
+    360
+
+    299753863
+
+    313427725
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    171195395
+
+    573163035
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '375122389
+
+    12
+
+    593679722
+
+    226026539
+
+    360
+
+    299753863
+
+    313427725
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    573163035
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    870706360
+
+    574287787
+
+    700702610
+
+    '
+  - '948838627
+
+    729521009
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    700702610
+
+    '
+  - '948838627
+
+    729521009
+
+    20160
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    700702610
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    587687477
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    587687477
+
+    830455698
+
+    1814400
+
+    221681921
+
+    213242016
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    587687477
+
+    830455698
+
+    1814400
+
+    221681921
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    781623358
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    221681921
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    307726106
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    307726106
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    307726106
+
+    252537407
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    252537407
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    452209262
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    452209262
+
+    916878993
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    896748341
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    131300692
+
+    243290230
+
+    452209262
+
+    916878993
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    131300692
+
+    243290230
+
+    452209262
+
+    310030101
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    402455889
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    573163035
+
+    131300692
+
+    243290230
+
+    452209262
+
+    310030101
+
+    '
+  - '243290230
+
+    429596486
+
+    804091302
+
+    387031660
+
+    573530194
+
+    402455889
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    239500800
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    573163035
+
+    131300692
+
+    243290230
+
+    452209262
+
+    310030101
+
+    '
+  - '243290230
+
+    429596486
+
+    804091302
+
+    387031660
+
+    573530194
+
+    402455889
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    402455889
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    402455889
+
+    905447738
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    402455889
+
+    279345619
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    279345619
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    279345619
+
+    1814400
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    890477394
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    890477394
+
+    573163035
+
+    554680740
+
+    307726106
+
+    122764607
+
+    12
+
+    23216095
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    890477394
+
+    573163035
+
+    554680740
+
+    307726106
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '899717444
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    890477394
+
+    573163035
+
+    554680740
+
+    307726106
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '736474183
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    890477394
+
+    573163035
+
+    554680740
+
+    307726106
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '736474183
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    307726106
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '736474183
+
+    429596486
+
+    733575423
+
+    387031660
+
+    573530194
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '736474183
+
+    429596486
+
+    733575423
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '736474183
+
+    429596486
+
+    841598577
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '554680740
+
+    429596486
+
+    841598577
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '554680740
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    389637995
+
+    379457362
+
+    12
+
+    '
+  - '554680740
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    791756175
+
+    122764607
+
+    12
+
+    871735465
+
+    379457362
+
+    12
+
+    '
+  - '554680740
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    379457362
+
+    12
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    379457362
+
+    12
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    554680740
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    12
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    573163035
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    12
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    353624726
+
+    19280696
+
+    573163035
+
+    573163035
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    281316140
+
+    19280696
+
+    573163035
+
+    573163035
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '5251549
+
+    429596486
+
+    385985038
+
+    387031660
+
+    560075209
+
+    281316140
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '5251549
+
+    429596486
+
+    804763448
+
+    387031660
+
+    560075209
+
+    281316140
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    122764607
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '5251549
+
+    429596486
+
+    804763448
+
+    387031660
+
+    560075209
+
+    281316140
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '5251549
+
+    416402923
+
+    804763448
+
+    387031660
+
+    560075209
+
+    281316140
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '537597627
+
+    416402923
+
+    804763448
+
+    387031660
+
+    560075209
+
+    281316140
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '537597627
+
+    416402923
+
+    804763448
+
+    387031660
+
+    560075209
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '537597627
+
+    416402923
+
+    804763448
+
+    674130309
+
+    560075209
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    787588685
+
+    1
+
+    '
+  - '537597627
+
+    416402923
+
+    804763448
+
+    674130309
+
+    560075209
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    131864306
+
+    1
+
+    '
+  - '559855581
+
+    416402923
+
+    804763448
+
+    674130309
+
+    560075209
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    131864306
+
+    1
+
+    '
+  - '559855581
+
+    493339575
+
+    804763448
+
+    674130309
+
+    560075209
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    131864306
+
+    1
+
+    '
+  - '559855581
+
+    493339575
+
+    804763448
+
+    674130309
+
+    43854741
+
+    859582407
+
+    940658889
+
+    573163035
+
+    573163035
+
+    59151966
+
+    220109570
+
+    12
+
+    871735465
+
+    131864306
+
+    1
+
+    '
+  - '979296788
+
+    20160
+
+    '
+  - '265272552
+
+    34141923
+
+    20160
+
+    1
+
+    405591801
+
+    643806863
+
+    236814910
+
+    315525538
+
+    970428805
+
+    243290230
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    819136920
+
+    536921451
+
+    703613161
+
+    682559158
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    20160
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '924058387
+
+    309126958
+
+    25034588
+
+    1
+
+    360
+
+    517878947
+
+    323758520
+
+    1
+
+    41675960
+
+    517878947
+
+    479930293
+
+    239500800
+
+    971636156
+
+    715097853
+
+    974503605
+
+    1
+
+    796779807
+
+    613317322
+
+    14480144
+
+    386977425
+
+    '
+  - '882862985
+
+    20160
+
+    593679722
+
+    904840727
+
+    1
+
+    299753863
+
+    710075077
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    899717444
+
+    228927089
+
+    695947115
+
+    239500800
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    920390755
+
+    '
+  - '1
+
+    242249437
+
+    1
+
+    255618610
+
+    152921347
+
+    449038492
+
+    417266680
+
+    360
+
+    208304992
+
+    183336760
+
+    809670618
+
+    93533682
+
+    394870773
+
+    559855581
+
+    589145299
+
+    14790749
+
+    130154591
+
+    391479503
+
+    876516086
+
+    '
+  - '12
+
+    12
+
+    830455698
+
+    890287984
+
+    '
+  - '265272552
+
+    34141923
+
+    20160
+
+    1
+
+    405591801
+
+    643806863
+
+    236814910
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    670083859
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    243290230
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    324852642
+
+    904840727
+
+    1
+
+    299753863
+
+    710075077
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    899717444
+
+    228927089
+
+    695947115
+
+    20160
+
+    440928506
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    700702610
+
+    '
+  - '1
+
+    12
+
+    360
+
+    890287984
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    701278536
+
+    911371831
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    284148424
+
+    239500800
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    695947115
+
+    239500800
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    700702610
+
+    '
+  - '265272552
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    27809269
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    701278536
+
+    223606536
+
+    830455698
+
+    1814400
+
+    305670834
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    1
+
+    77761031
+
+    346887392
+
+    1
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    133194630
+
+    454110789
+
+    '
+  - '771452689
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    940658889
+
+    792599852
+
+    360
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    987257827
+
+    239500800
+
+    '
+  - '882862985
+
+    12
+
+    261547992
+
+    685602584
+
+    1
+
+    299753863
+
+    346887392
+
+    12
+
+    '
+  - '360
+
+    876516086
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    655921475
+
+    12
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    40372739
+
+    700702610
+
+    '
+  - '771452689
+
+    159304024
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    792599852
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    703613161
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    428228199
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    1814400
+
+    '
+  - '882862985
+
+    20160
+
+    593679722
+
+    685602584
+
+    1
+
+    299753863
+
+    313534412
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    539368755
+
+    1
+
+    171195395
+
+    414386056
+
+    781623358
+
+    870706360
+
+    40372739
+
+    700702610
+
+    '
+  - '771452689
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    2856353
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    601846670
+
+    394870773
+
+    474160434
+
+    379457362
+
+    1814400
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    115253365
+
+    12
+
+    299753863
+
+    313534412
+
+    12
+
+    '
+  - '686718651
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    643806863
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    882862985
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    394870773
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '882862985
+
+    12
+
+    593679722
+
+    685602584
+
+    360
+
+    209142962
+
+    313534412
+
+    12
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    481489820
+
+    105270962
+
+    315525538
+
+    459832758
+
+    328814650
+
+    801320322
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    869525001
+
+    830455698
+
+    1814400
+
+    715095915
+
+    638757676
+
+    1
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '360
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    171195395
+
+    971636156
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    105270962
+
+    309126958
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    384869784
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    394870773
+
+    337968465
+
+    638757676
+
+    1
+
+    474160434
+
+    379457362
+
+    12
+
+    '
+  - '375122389
+
+    12
+
+    593679722
+
+    685602584
+
+    1
+
+    299753863
+
+    313427725
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    394870773
+
+    755331340
+
+    1
+
+    171195395
+
+    573163035
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    507441151
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    593679722
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    389366945
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '375122389
+
+    12
+
+    593679722
+
+    226026539
+
+    20160
+
+    299753863
+
+    313427725
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    659256150
+
+    1
+
+    724450546
+
+    573163035
+
+    781623358
+
+    870706360
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    20160
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    239500800
+
+    386977425
+
+    '
+  - '313534412
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    172608927
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    239500800
+
+    497562558
+
+    700702610
+
+    '
+  - '948838627
+
+    34141923
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    917546506
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    31578351
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    337968465
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    394870773
+
+    781623358
+
+    870706360
+
+    574287787
+
+    700702610
+
+    '
+  - '761312941
+
+    729521009
+
+    12
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '971636156
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    908185063
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    228927089
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    340644277
+
+    574287787
+
+    700702610
+
+    '
+  - '948838627
+
+    729521009
+
+    1
+
+    1
+
+    405591801
+
+    376605894
+
+    517278032
+
+    315525538
+
+    459832758
+
+    328814650
+
+    899717444
+
+    852186114
+
+    20160
+
+    386977425
+
+    '
+  - '736474183
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    223606536
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    589145299
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    700702610
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    587687477
+
+    830455698
+
+    1814400
+
+    221681921
+
+    638757676
+
+    1
+
+    774109590
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    1
+
+    724450546
+
+    899717444
+
+    551978127
+
+    759229837
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    9759997
+
+    573530194
+
+    625020021
+
+    587687477
+
+    830455698
+
+    1814400
+
+    221681921
+
+    213242016
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    346507485
+
+    899717444
+
+    781623358
+
+    759229837
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    573530194
+
+    625020021
+
+    587687477
+
+    971636156
+
+    1814400
+
+    221681921
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    781623358
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    110982124
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    221681921
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    387031660
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    697373626
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    50010779
+
+    675526973
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    307726106
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    958288209
+
+    20160
+
+    31051871
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573163035
+
+    625020021
+
+    427832927
+
+    830455698
+
+    1814400
+
+    307726106
+
+    252537407
+
+    1
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    394870773
+
+    755331340
+
+    12
+
+    724450546
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '1814400
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    875061536
+
+    899717444
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    536921451
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    252537407
+
+    12
+
+    291618426
+
+    648008720
+
+    12
+
+    '
+  - '360
+
+    259506824
+
+    360
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    574287787
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    933086400
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    574287787
+
+    787347347
+
+    '
+  - '243290230
+
+    796779807
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    427832927
+
+    830455698
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '20160
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    108498708
+
+    243290230
+
+    452209262
+
+    825840837
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    280760648
+
+    625020021
+
+    427832927
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '243290230
+
+    987257827
+
+    956791834
+
+    387031660
+
+    573530194
+
+    625020021
+
+    896748341
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    929540994
+
+    243290230
+
+    452209262
+
+    916878993
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    209733847
+
+    625020021
+
+    836381390
+
+    573163035
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    194427710
+
+    624938753
+
+    20160
+
+    937037336
+
+    12
+
+    724450546
+
+    1814400
+
+    131300692
+
+    243290230
+
+    452209262
+
+    310030101
+
+    '
+  - '243290230
+
+    429596486
+
+    956791834
+
+    387031660
+
+    573530194
+
+    402455889
+
+    836381390
+
+    517878947
+
+    830455698
+
+    307726106
+
+    122764607
+
+    12
+
+    291618426
+
+    379457362
+
+    12
+
+    '
+  - '1814400
+
+    259506824
+
+    20160
+
+    703038213
+
+    624938753
+
+    20160
+
+    701947182
+
+    12
+
+    724450546
+
+    573163035
+
+    131300692
+
+    243290230
+
+    452209262
+
+    310030101
+
+    '
+timeout: 1.0

@@ -1,0 +1,6355 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nVery soon there\
+  \ will be a parade of victory over alien invaders in Berland. Unfortunately, all\
+  \ soldiers died in the war and now the army consists of entirely new recruits, many\
+  \ of whom do not even know from which leg they should begin to march. The civilian\
+  \ population also poorly understands from which leg recruits begin to march, so\
+  \ it is only important how many soldiers march in step.\n\nThere will be n columns\
+  \ participating in the parade, the i-th column consists of li soldiers, who start\
+  \ to march from left leg, and ri soldiers, who start to march from right leg.\n\n\
+  The beauty of the parade is calculated by the following formula: if L is the total\
+  \ number of soldiers on the parade who start to march from the left leg, and R is\
+  \ the total number of soldiers on the parade who start to march from the right leg,\
+  \ so the beauty will equal |L - R|.\n\nNo more than once you can choose one column\
+  \ and tell all the soldiers in this column to switch starting leg, i.e. everyone\
+  \ in this columns who starts the march from left leg will now start it from right\
+  \ leg, and vice versa. Formally, you can pick no more than one index i and swap\
+  \ values li and ri. \n\nFind the index of the column, such that switching the starting\
+  \ leg for soldiers in it will maximize the the beauty of the parade, or determine,\
+  \ that no such operation can increase the current beauty.\n\nInput\n\nThe first\
+  \ line contains single integer n (1 \u2264 n \u2264 105) \u2014 the number of columns.\
+  \ \n\nThe next n lines contain the pairs of integers li and ri (1 \u2264 li, ri\
+  \ \u2264 500) \u2014 the number of soldiers in the i-th column which start to march\
+  \ from the left or the right leg respectively.\n\nOutput\n\nPrint single integer\
+  \ k \u2014 the number of the column in which soldiers need to change the leg from\
+  \ which they start to march, or 0 if the maximum beauty is already reached.\n\n\
+  Consider that columns are numbered from 1 to n in the order they are given in the\
+  \ input data.\n\nIf there are several answers, print any of them.\n\nExamples\n\n\
+  Input\n\n3\n5 6\n8 9\n10 3\n\n\nOutput\n\n3\n\n\nInput\n\n2\n6 5\n5 6\n\n\nOutput\n\
+  \n1\n\n\nInput\n\n6\n5 9\n1 3\n4 8\n4 5\n23 54\n12 32\n\n\nOutput\n\n0\n\nNote\n\
+  \nIn the first example if you don't give the order to change the leg, the number\
+  \ of soldiers, who start to march from the left leg, would equal 5 + 8 + 10 = 23,\
+  \ and from the right leg \u2014 6 + 9 + 3 = 18. In this case the beauty of the parade\
+  \ will equal |23 - 18| = 5.\n\nIf you give the order to change the leg to the third\
+  \ column, so the number of soldiers, who march from the left leg, will equal 5 +\
+  \ 8 + 3 = 16, and who march from the right leg \u2014 6 + 9 + 10 = 25. In this case\
+  \ the beauty equals |16 - 25| = 9.\n\nIt is impossible to reach greater beauty by\
+  \ giving another orders. Thus, the maximum beauty that can be achieved is 9.\nA:\
+  \ ```n = int(input())\nL, R = 0, 0\nD = []\nfor i in range(n):\n    l, r = map(int,\
+  \ input().split())\n    L += l\n    R += r\n    D.append((l, r))\n\nans = abs(L\
+  \ - R)\nnum = 0\nfor i in range(n):\n    l, r = D[i]\n    L1 = L - l + r\n    R1\
+  \ = R - r + l\n    if ans < abs(L1 - R1):\n        ans = abs(L1 - R1)\n        num\
+  \ = i + 1\n\nprint(num)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nGiven are integer sequences A and B of length 3N. Each of these two sequences\
+  \ contains three copies of each of 1, 2, \\dots, N. In other words, A and B are\
+  \ both arrangements of (1, 1, 1, 2, 2, 2, \\dots, N, N, N).\n\nTak can perform the\
+  \ following operation to the sequence A arbitrarily many times:\n\n* Pick a value\
+  \ from 1, 2, \\dots, N and call it x. A contains exactly three copies of x. Remove\
+  \ the middle element of these three. After that, append x to the beginning or the\
+  \ end of A.\n\n\n\nCheck if he can turn A into B. If he can, print the minimum required\
+  \ number of operations to achieve that.\n\nConstraints\n\n* 1 \\leq N \\leq 33\n\
+  * A and B are both arrangements of (1, 1, 1, 2, 2, 2, \\dots, N, N, N).\n* All values\
+  \ in input are integers.\n\nInput\n\nInput is given from Standard Input in the following\
+  \ format:\n\n\nN\nA_1 A_2 ... A_{3N}\nB_1 B_2 ... B_{3N}\n\n\nOutput\n\nIf Tak can\
+  \ turn A into B, print the minimum required number of operations to achieve that.\
+  \ Otherwise, print -1.\n\nExamples\n\nInput\n\n3\n2 3 1 1 3 2 2 1 3\n1 2 2 3 1 2\
+  \ 3 1 3\n\n\nOutput\n\n4\n\n\nInput\n\n3\n1 1 1 2 2 2 3 3 3\n1 1 1 2 2 2 3 3 3\n\
+  \n\nOutput\n\n0\n\n\nInput\n\n3\n2 3 3 1 1 1 2 2 3\n3 2 2 1 1 1 3 3 2\n\n\nOutput\n\
+  \n-1\n\n\nInput\n\n8\n3 6 7 5 4 8 4 1 1 3 8 7 3 8 2 4 7 5 2 2 6 5 6 1\n7 5 8 1 3\
+  \ 6 7 5 4 8 1 3 3 8 2 4 2 6 5 6 1 4 7 2\n\n\nOutput\n\n7\nA: ```import sys\nreadline\
+  \ = sys.stdin.buffer.readline\n\nclass E:\n\tdef __init__(self,to,nx):\n\t\tself.to=to\n\
+  \t\tself.nx=nx\n\nclass Graph:\n\tdef __init__(self,n):\n\t\tself.n=n\n\t\tself.head=[None]*n\n\
+  \t\n\tdef ae(self,a,b):\n\t\thead=self.head\n\t\thead[a]=E(b,head[a])\n\t\t#head[b]=E(a,head[b])\n\
+  \t\treturn head[a]\n\ndef scc(g):\n\tn=g.n\n\tcur=g.head\n\tlast=[None]*n\n\torder=[-1]*n\n\
+  \tlow=[-1]*n\n\tbl=[-1]*n\n\tidx=[]\n\tst=[]\n\tnum=0\n\tfor i in range(n):\n\t\t\
+  if order[i]!=-1:\n\t\t\tcontinue\n\t\trec=[i]\n\t\twhile rec:\n\t\t\tv=rec[-1]\n\
+  \t\t\tif last[v] is None:\n\t\t\t\t#first in v\n\t\t\t\t\n\t\t\t\torder[v]=low[v]=num\n\
+  \t\t\t\tnum+=1\n\t\t\t\tst.append(v)\n\t\t\telse:\n\t\t\t\t#process last edge\n\t\
+  \t\t\t\n\t\t\t\tlow[v]=min(low[v],low[last[v].to])\n\t\t\t\n\t\t\tfound=False\n\t\
+  \t\twhile cur[v] is not None:\n\t\t\t\t#process next edge\n\t\t\t\te=cur[v]\n\t\t\
+  \t\tcur[v]=e.nx\n\t\t\t\tto=e.to\n\t\t\t\t\n\t\t\t\tif order[to]==-1:\n\t\t\t\t\t\
+  #visit another node\n\t\t\t\t\trec.append(to)\n\t\t\t\t\tlast[v]=e\n\t\t\t\t\tfound=True\n\
+  \t\t\t\t\tbreak\n\t\t\t\telif bl[to]==-1:\n\t\t\t\t\tlow[v]=min(low[v],order[to])\n\
+  \t\t\t\n\t\t\tif not found:\n\t\t\t\t#last out v\n\t\t\t\trec.pop()\n\t\t\t\t\n\t\
+  \t\t\tif order[v]==low[v]:\n\t\t\t\t\tc=len(idx)\n\t\t\t\t\ttmp=[]\n\t\t\t\t\twhile\
+  \ True:\n\t\t\t\t\t\ta=st.pop()\n\t\t\t\t\t\tbl[a]=c\n\t\t\t\t\t\ttmp.append(a)\n\
+  \t\t\t\t\t\tif v==a:\n\t\t\t\t\t\t\tbreak\n\t\t\t\t\tidx.append(tmp)\n\n\ts=len(idx)\n\
+  \tfor i in range(n):\n\t\tbl[i]=s-1-bl[i]\n\tidx.reverse()\n\t\n\treturn (s,bl,idx)\n\
+  \nclass twosat:\n\tdef __init__(self,n):\n\t\tself.n=n\n\t\tself.g=Graph(2*n)\n\t\
+  \n\tdef add(self,x,y):\n\t\tself.g.ae(x^1,y)\n\t\tself.g.ae(y^1,x)\n\t\n\tdef solve(self):\n\
+  \t\ts,bl,idx=scc(self.g)\n\t\tfor i in range(self.n):\n\t\t\tif bl[i*2]==bl[i*2+1]:\n\
+  \t\t\t\treturn False\n\t\treturn True\n\nn=int(readline())\nN=n*3\na=list(map(int,readline().split()))\n\
+  b=list(map(int,readline().split()))\n\nfor i in range(N):\n\ta[i]-=1\n\tb[i]-=1\n\
+  \napos=[[] for i in range(n)]\nfor i in range(N):\n\tapos[a[i]].append(i)\n\nbpos=[[]\
+  \ for i in range(n)]\nfor i in range(N):\n\tbpos[b[i]].append(i)\n\ndef feasible(l,r):\n\
+  \tt=[False]*N\n\t\n\tdef issubseq():\n\t\thead=l\n\t\tfor i in range(N):\n\t\t\t\
+  if t[i]:\n\t\t\t\twhile head<r and a[i]!=b[head]:\n\t\t\t\t\thead+=1\n\t\t\t\tif\
+  \ head==r:\n\t\t\t\t\treturn False\n\t\t\t\thead+=1\n\t\treturn True\n\t\n\tl2r=[]\n\
+  \tr2l=[]\n\tw=[]\n\tfor val in range(n):\n\t\tz=[]\n\t\tfor x in bpos[val]:\n\t\t\
+  \tif x<l:\n\t\t\t\tz.append(0)\n\t\t\telif x<r:\n\t\t\t\tz.append(1)\n\t\t\telse:\n\
+  \t\t\t\tz.append(2)\n\t\t\n\t\tif z==[0,0,0]:\n\t\t\treturn False\n\t\telif z==[0,0,1]:\n\
+  \t\t\tt[apos[val][2]]=1\n\t\telif z==[0,0,2]:\n\t\t\tx=l-bpos[val][0]\n\t\t\ty=bpos[val][2]-r\n\
+  \t\t\tr2l.append((x,y))\n\t\telif z==[0,1,1]:\n\t\t\tt[apos[val][0]]=1\n\t\t\tt[apos[val][2]]=1\n\
+  \t\telif z==[0,1,2]:\n\t\t\tx=l-bpos[val][0]\n\t\t\ty=bpos[val][2]-r\n\t\t\tw.append((apos[val][0],apos[val][2],x,y))\n\
+  \t\telif z==[0,2,2]:\n\t\t\tx=l-bpos[val][0]\n\t\t\ty=bpos[val][2]-r\n\t\t\tl2r.append((x,y))\n\
+  \t\telif z==[1,1,1]:\n\t\t\tt[apos[val][0]]=1\n\t\t\tt[apos[val][1]]=1\n\t\t\tt[apos[val][2]]=1\n\
+  \t\telif z==[1,1,2]:\n\t\t\tt[apos[val][0]]=1\n\t\t\tt[apos[val][2]]=1\n\t\telif\
+  \ z==[1,2,2]:\n\t\t\tt[apos[val][0]]=1\n\t\telif z==[2,2,2]:\n\t\t\treturn False\n\
+  \t\telse:\n\t\t\tassert False\n\t\t\n\tif not issubseq():\n\t\treturn False\n\t\n\
+  \tdef conflict(xa,xb,ya,yb):\n\t\treturn ya<=xa and xb<=yb\n\t\n\tfor xa,xb in l2r:\n\
+  \t\tfor ya,yb in r2l:\n\t\t\tif conflict(xa,xb,ya,yb):\n\t\t\t\treturn False\n\t\
+  \n\ts=len(w)\n\tts=twosat(s)\n\t\n\tfor i in range(s):\n\t\tpa,pb,qa,qb=w[i]\n\t\
+  \t\n\t\t#left is ok?\n\t\tok=True\n\t\tt[pa]=1\n\t\tif not issubseq():\n\t\t\tok=False\n\
+  \t\tt[pa]=0;\n\t\tif ok:\n\t\t\tfor xa,xb in l2r:\n\t\t\t\tif conflict(xa,xb,qa,qb):\n\
+  \t\t\t\t\tok=False\n\t\tif not ok:\n\t\t\tts.add(i*2+1,i*2+1)\n\t\t\n\t\t#right\
+  \ is ok?\n\t\tok=True\n\t\tt[pb]=1;\n\t\tif not issubseq():\n\t\t\tok=False\n\t\t\
+  t[pb]=0;\n\t\tif ok:\n\t\t\tfor ya,yb in r2l:\n\t\t\t\tif conflict(qa,qb,ya,yb):\n\
+  \t\t\t\t\tok=False\n\t\tif not ok:\n\t\t\tts.add(i*2,i*2)\n\t\n\tfor i in range(s):\n\
+  \t\tfor j in range(i+1,s):\n\t\t\tp0a,p0b,q0a,q0b=w[i]\n\t\t\tp1a,p1b,q1a,q1b=w[j]\n\
+  \t\t\tt0=bpos[a[p0a]][1]\n\t\t\tt1=bpos[a[p1a]][1]\n\t\t\t\n\t\t\t#left-left is\
+  \ ok?\n\t\t\tok=True\n\t\t\tif (p0a<p1a)!=(t0<t1):\n\t\t\t\tok=False\n\t\t\tif not\
+  \ ok:\n\t\t\t\tts.add(i*2+1,j*2+1)\n\t\t\t\t\n\t\t\t#left-right is ok?\n\t\t\tok=True\n\
+  \t\t\tif (p0a<p1b)!=(t0<t1):\n\t\t\t\tok=False\n\t\t\tif conflict(q1a,q1b,q0a,q0b):\n\
+  \t\t\t\tok=False\n\t\t\tif not ok:\n\t\t\t\tts.add(i*2+1,j*2)\n\t\t\t\n\t\t\t#right-left\
+  \ is ok?\n\t\t\tok=True\n\t\t\tif (p0b<p1a)!=(t0<t1):\n\t\t\t\tok=False;\n\t\t\t\
+  if conflict(q0a,q0b,q1a,q1b):\n\t\t\t\tok=False\n\t\t\tif not ok:\n\t\t\t\tts.add(i*2,j*2+1)\n\
+  \t\t\n\t\t\t#right-right is ok?\n\t\t\tok=True\n\t\t\tif (p0b<p1b)!=(t0<t1):\n\t\
+  \t\t\tok=False\n\t\t\tif not ok:\n\t\t\t\tts.add(i*2,j*2);\n\t\t\n\treturn ts.solve();\n\
+  \n\nans=10**18\nfor i in range(N):\n\tfor j in range(i,N+1):\n\t\tif feasible(i,j):\n\
+  \t\t\tans=min(ans,N-(j-i))\n\nif ans==10**18:\n\tans=-1\n\nprint(ans)```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nIn fact, the problems E1\
+  \ and E2 do not have much in common. You should probably think of them as two separate\
+  \ problems.\n\nYou are given an integer array a[1 \u2026 n] = [a_1, a_2, \u2026\
+  , a_n].\n\nLet us consider an empty [deque](https://tinyurl.com/pfeucbux) (double-ended\
+  \ queue). A deque is a data structure that supports adding elements to both the\
+  \ beginning and the end. So, if there are elements [3, 4, 4] currently in the deque,\
+  \ adding an element 1 to the beginning will produce the sequence [\\color{red}{1},\
+  \ 3, 4, 4], and adding the same element to the end will produce [3, 4, 4, \\color{red}{1}].\n\
+  \nThe elements of the array are sequentially added to the initially empty deque,\
+  \ starting with a_1 and finishing with a_n. Before adding each element to the deque,\
+  \ you may choose whether to add it to the beginning or to the end.\n\nFor example,\
+  \ if we consider an array a = [3, 7, 5, 5], one of the possible sequences of actions\
+  \ looks like this:    1. |  add 3 to the beginning of the deque: |  deque has a\
+  \ sequence [\\color{red}{3}] in it;   \n---|---|---  \n  2. |  add 7 to the end\
+  \ of the deque: |  deque has a sequence [3, \\color{red}{7}] in it;   \n  3. | \
+  \ add 5 to the end of the deque: |  deque has a sequence [3, 7, \\color{red}{5}]\
+  \ in it;   \n  4. |  add 5 to the beginning of the deque: |  deque has a sequence\
+  \ [\\color{red}{5}, 3, 7, 5] in it;   \n  \nFind the minimal possible number of\
+  \ inversions in the deque after the whole array is processed. \n\nAn inversion in\
+  \ sequence d is a pair of indices (i, j) such that i < j and d_i > d_j. For example,\
+  \ the array d = [5, 3, 7, 5] has exactly two inversions \u2014 (1, 2) and (3, 4),\
+  \ since d_1 = 5 > 3 = d_2 and d_3 = 7 > 5 = d_4.\n\nInput\n\nThe first line contains\
+  \ an integer t (1 \u2264 t \u2264 1000) \u2014 the number of test cases.\n\nThe\
+  \ next 2t lines contain descriptions of the test cases. \n\nThe first line of each\
+  \ test case description contains an integer n (1 \u2264 n \u2264 2 \u22C5 10^5)\
+  \ \u2014 array size. The second line of the description contains n space-separated\
+  \ integers a_i (-10^9 \u2264 a_i \u2264 10^9) \u2014 elements of the array.\n\n\
+  It is guaranteed that the sum of n over all test cases does not exceed 2 \u22C5\
+  \ 10^5.\n\nOutput\n\nPrint t lines, each line containing the answer to the corresponding\
+  \ test case. The answer to a test case should be a single integer \u2014 the minimal\
+  \ possible number of inversions in the deque after executing the described algorithm.\n\
+  \nExample\n\nInput\n\n\n6\n4\n3 7 5 5\n3\n3 2 1\n3\n3 1 2\n4\n-1 2 2 -1\n4\n4 5\
+  \ 1 3\n5\n1 3 1 3 2\n\n\nOutput\n\n\n2\n0\n1\n0\n1\n2\n\nNote\n\nOne of the ways\
+  \ to get the sequence [5, 3, 7, 5] in the deque, containing only two inversions,\
+  \ from the initial array [3, 7, 5, 5] (the first sample test case) is described\
+  \ in the problem statement. \n\nAlso, in this example, you could get the answer\
+  \ of two inversions by simply putting each element of the original array at the\
+  \ end of the deque. In this case, the original sequence [3, 7, 5, 5], also containing\
+  \ exactly two inversions, will be in the deque as-is.\nA:"
+question: "In fact, the problems E1 and E2 do not have much in common. You should\
+  \ probably think of them as two separate problems.\n\nYou are given an integer array\
+  \ a[1 \u2026 n] = [a_1, a_2, \u2026, a_n].\n\nLet us consider an empty [deque](https://tinyurl.com/pfeucbux)\
+  \ (double-ended queue). A deque is a data structure that supports adding elements\
+  \ to both the beginning and the end. So, if there are elements [3, 4, 4] currently\
+  \ in the deque, adding an element 1 to the beginning will produce the sequence [\\\
+  color{red}{1}, 3, 4, 4], and adding the same element to the end will produce [3,\
+  \ 4, 4, \\color{red}{1}].\n\nThe elements of the array are sequentially added to\
+  \ the initially empty deque, starting with a_1 and finishing with a_n. Before adding\
+  \ each element to the deque, you may choose whether to add it to the beginning or\
+  \ to the end.\n\nFor example, if we consider an array a = [3, 7, 5, 5], one of the\
+  \ possible sequences of actions looks like this:    1. |  add 3 to the beginning\
+  \ of the deque: |  deque has a sequence [\\color{red}{3}] in it;   \n---|---|---\
+  \  \n  2. |  add 7 to the end of the deque: |  deque has a sequence [3, \\color{red}{7}]\
+  \ in it;   \n  3. |  add 5 to the end of the deque: |  deque has a sequence [3,\
+  \ 7, \\color{red}{5}] in it;   \n  4. |  add 5 to the beginning of the deque: |\
+  \  deque has a sequence [\\color{red}{5}, 3, 7, 5] in it;   \n  \nFind the minimal\
+  \ possible number of inversions in the deque after the whole array is processed.\
+  \ \n\nAn inversion in sequence d is a pair of indices (i, j) such that i < j and\
+  \ d_i > d_j. For example, the array d = [5, 3, 7, 5] has exactly two inversions\
+  \ \u2014 (1, 2) and (3, 4), since d_1 = 5 > 3 = d_2 and d_3 = 7 > 5 = d_4.\n\nInput\n\
+  \nThe first line contains an integer t (1 \u2264 t \u2264 1000) \u2014 the number\
+  \ of test cases.\n\nThe next 2t lines contain descriptions of the test cases. \n\
+  \nThe first line of each test case description contains an integer n (1 \u2264 n\
+  \ \u2264 2 \u22C5 10^5) \u2014 array size. The second line of the description contains\
+  \ n space-separated integers a_i (-10^9 \u2264 a_i \u2264 10^9) \u2014 elements\
+  \ of the array.\n\nIt is guaranteed that the sum of n over all test cases does not\
+  \ exceed 2 \u22C5 10^5.\n\nOutput\n\nPrint t lines, each line containing the answer\
+  \ to the corresponding test case. The answer to a test case should be a single integer\
+  \ \u2014 the minimal possible number of inversions in the deque after executing\
+  \ the described algorithm.\n\nExample\n\nInput\n\n\n6\n4\n3 7 5 5\n3\n3 2 1\n3\n\
+  3 1 2\n4\n-1 2 2 -1\n4\n4 5 1 3\n5\n1 3 1 3 2\n\n\nOutput\n\n\n2\n0\n1\n0\n1\n2\n\
+  \nNote\n\nOne of the ways to get the sequence [5, 3, 7, 5] in the deque, containing\
+  \ only two inversions, from the initial array [3, 7, 5, 5] (the first sample test\
+  \ case) is described in the problem statement. \n\nAlso, in this example, you could\
+  \ get the answer of two inversions by simply putting each element of the original\
+  \ array at the end of the deque. In this case, the original sequence [3, 7, 5, 5],\
+  \ also containing exactly two inversions, will be in the deque as-is."
+samples:
+- " ```n = int(input())\nt = int(input())\nfor _ in range(t):\n    n = int(input())\n\
+  \    a = list(map(int, input().split()))\n    l, r = 0, 0\n    inversions = 0\n\
+  \    for x in a:\n        if x > r:\n            inversions += r - l + 1\n     \
+  \   l = r\n        r = x\n    print(inversions)``` Q:"
+- " ```n = int(input())\nfor _ in range(n):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    res = 0\n    l, r = [], []\n    for x in a:\n        if\
+  \ x > 0:\n            r.append(x)\n        else:\n            l.append(x)\n    l.sort()\n\
+  \    r.sort(reverse=True)\n    for i in range(len(l)):\n        if i < len(r):\n\
+  \            if l[i] > r[i]:\n                res += 1\n    print(res)````\nQ:"
+test_cases:
+  input:
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '1
+
+    1
+
+    -1000000000
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1000000000 999999998 999999999
+
+    '
+  - '1
+
+    1
+
+    -1090552905
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1000000000 999999998 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 4 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1000000000 714491994 999999999
+
+    '
+  - '6
+
+    4
+
+    3 0 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    0 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 0 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -2
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 2 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    1 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 5 1 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    0 5 1 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 8 1
+
+    '
+  - '6
+
+    4
+
+    3 1 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 8 1
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -2
+
+    4
+
+    0 5 1 3
+
+    5
+
+    2 3 0 2 0
+
+    '
+  - '6
+
+    4
+
+    3 1 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 1 8 1
+
+    '
+  - '6
+
+    4
+
+    3 1 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 2 0
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 1 8 1
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 0 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    1952608156 755572301 1101000000 999999998 999999999
+
+    '
+  - '1
+
+    5
+
+    1281844869 594621428 1000000000 1496043289 1013691690
+
+    '
+  - '6
+
+    4
+
+    5 7 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -2 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 0 4 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -2
+
+    4
+
+    4 5 1 5
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 2 6
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    7 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 4 2 4
+
+    5
+
+    1 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 3 2 0
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -2
+
+    4
+
+    0 5 1 3
+
+    5
+
+    2 2 0 2 2
+
+    '
+  - '6
+
+    4
+
+    6 7 5 1
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 0 1 4 2
+
+    '
+  - '6
+
+    4
+
+    2 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 0 4 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 4
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 2
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '6
+
+    4
+
+    5 3 5 5
+
+    3
+
+    3 0 1
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 4 2 3
+
+    5
+
+    0 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 1 2
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 2 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    5 1 5 7
+
+    3
+
+    3 3 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 1 2 3
+
+    5
+
+    1 3 1 8 1
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    5 5 1 3
+
+    5
+
+    4 1 1 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 1 2
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 2 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 7 4 10
+
+    3
+
+    1 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -2
+
+    4
+
+    7 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 1 1 3
+
+    5
+
+    2 3 0 3 4
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 -1 -1
+
+    4
+
+    4 3 3 6
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    5 1 3 7
+
+    3
+
+    3 3 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 1 2 3
+
+    5
+
+    1 3 1 8 1
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    0 5 2 3
+
+    5
+
+    1 3 2 1 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    0 5 2 3
+
+    5
+
+    1 3 2 1 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 1 2
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    2 2 1 3
+
+    5
+
+    2 3 0 5 0
+
+    '
+  - '6
+
+    4
+
+    3 7 5 4
+
+    3
+
+    3 5 1
+
+    3
+
+    3 5 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 1 1 3
+
+    5
+
+    1 3 1 0 3
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    6 5 1 3
+
+    5
+
+    4 1 1 0 2
+
+    '
+  - '6
+
+    4
+
+    3 7 7 5
+
+    3
+
+    3 1 2
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    2 2 1 3
+
+    5
+
+    2 3 0 5 0
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    6 1 0
+
+    4
+
+    -1 2 2 0
+
+    4
+
+    0 5 2 3
+
+    5
+
+    1 3 2 1 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 1
+
+    3
+
+    6 1 0
+
+    4
+
+    -1 2 2 0
+
+    4
+
+    0 5 2 3
+
+    5
+
+    1 3 2 1 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 15
+
+    3
+
+    3 2 1
+
+    3
+
+    3 0 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 1 1 3
+
+    5
+
+    2 4 -1 3 5
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 1
+
+    3
+
+    6 1 0
+
+    4
+
+    -1 2 2 0
+
+    4
+
+    0 5 2 3
+
+    5
+
+    1 3 2 1 3
+
+    '
+  - '6
+
+    4
+
+    3 7 8 15
+
+    3
+
+    3 2 1
+
+    3
+
+    3 0 0
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    2 1 1 3
+
+    5
+
+    2 4 -1 3 5
+
+    '
+  - '6
+
+    4
+
+    3 7 8 15
+
+    3
+
+    3 2 1
+
+    3
+
+    3 0 0
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    2 1 1 3
+
+    5
+
+    2 4 -1 3 1
+
+    '
+  - '6
+
+    4
+
+    2 11 5 0
+
+    3
+
+    5 5 1
+
+    3
+
+    3 5 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 0 1 3
+
+    5
+
+    1 3 1 0 5
+
+    '
+  - '6
+
+    4
+
+    3 7 8 15
+
+    3
+
+    3 2 1
+
+    3
+
+    3 0 0
+
+    4
+
+    -1 2 1 0
+
+    4
+
+    4 1 1 3
+
+    5
+
+    2 4 -1 3 1
+
+    '
+  - '6
+
+    4
+
+    2 11 8 0
+
+    3
+
+    10 2 1
+
+    3
+
+    3 5 2
+
+    4
+
+    1 2 1 -1
+
+    4
+
+    4 0 1 6
+
+    5
+
+    1 5 1 0 0
+
+    '
+  - '6
+
+    4
+
+    2 11 8 -1
+
+    3
+
+    10 2 1
+
+    3
+
+    3 10 2
+
+    4
+
+    1 2 1 -1
+
+    4
+
+    4 0 1 6
+
+    5
+
+    1 5 1 -1 0
+
+    '
+  - '6
+
+    4
+
+    2 11 8 -1
+
+    3
+
+    10 2 1
+
+    3
+
+    5 10 2
+
+    4
+
+    1 2 1 -1
+
+    4
+
+    1 0 1 6
+
+    5
+
+    1 5 1 -1 0
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    0 3 1 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 4
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '1
+
+    1
+
+    -1572755758
+
+    '
+  - '1
+
+    1
+
+    -1994447814
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1001000000 999999998 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 4 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '1
+
+    1
+
+    -3557835192
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 1001000000 999999998 999999999
+
+    '
+  - '1
+
+    1
+
+    -1177154308
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    1
+
+    -404786817
+
+    '
+  - '1
+
+    1
+
+    -2306668450
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1000000000 1496043289 999999999
+
+    '
+  - '1
+
+    1
+
+    -170211275
+
+    '
+  - '6
+
+    4
+
+    3 7 8 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1001000000 628405048 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 2 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 1101000000 999999998 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    8 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1000000000 1318373358 999999999
+
+    '
+  - '6
+
+    4
+
+    3 0 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -2
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 1
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '1
+
+    5
+
+    1281844869 594621428 1000000000 1496043289 999999999
+
+    '
+  - '1
+
+    1
+
+    -41790379
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 256091627 1001000000 628405048 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 2 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 1101000000 999999998 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 5 4
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    8 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1001000000 1318373358 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 1
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    3 3 1 4 2
+
+    '
+  - '1
+
+    5
+
+    236424498 594621428 1000000000 1496043289 999999999
+
+    '
+  - '1
+
+    5
+
+    999999996 256091627 1001000000 628405048 1063115534
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    7 5 1 3
+
+    5
+
+    2 3 1 2 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 0101000000 999999998 1368676000
+
+    '
+  - '6
+
+    4
+
+    5 7 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 0 4 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -2
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '1
+
+    5
+
+    236424498 594621428 1010000000 1496043289 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 256091627 1001000000 330631407 1063115534
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    2 2 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 0101000000 733198157 1368676000
+
+    '
+  - '6
+
+    4
+
+    5 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 0 4 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '1
+
+    5
+
+    236424498 842458350 1010000000 1496043289 999999999
+
+    '
+  - '1
+
+    5
+
+    875031871 256091627 1001000000 330631407 1063115534
+
+    '
+  - '6
+
+    4
+
+    3 13 5 4
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 0101000000 90693554 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    1 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    5 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    1 3 0 4 0
+
+    '
+  - '1
+
+    5
+
+    236424498 842458350 1010100000 1496043289 999999999
+
+    '
+  - '6
+
+    4
+
+    3 13 5 4
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 0
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 109225457 0101000000 90693554 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    5 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 4 0
+
+    '
+  - '1
+
+    5
+
+    236424498 842458350 1000100000 1496043289 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 5 1 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 4
+
+    3
+
+    3 2 0
+
+    3
+
+    0 2 0
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 109225457 0101000000 138689760 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 0 -1
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    5 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 4 2 3
+
+    5
+
+    1 3 0 4 0
+
+    '
+  - '1
+
+    5
+
+    999999996 26547904 0101000000 138689760 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 2 3
+
+    5
+
+    1 3 0 8 2
+
+    '
+  - '6
+
+    4
+
+    7 3 5 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 4 2 3
+
+    5
+
+    1 3 0 4 0
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    0 5 0 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '1
+
+    5
+
+    999999996 26547904 0101100000 138689760 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -2
+
+    4
+
+    0 5 0 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '1
+
+    5
+
+    999999996 26547904 0101100010 138689760 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 8 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -2
+
+    4
+
+    0 5 1 3
+
+    5
+
+    2 3 0 2 2
+
+    '
+  - '1
+
+    1
+
+    -1182291871
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1000000000 999999998 1212312430
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    1 3 1 1 2
+
+    '
+  - '1
+
+    1
+
+    -2072621836
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 1 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    5 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1000000000 999999998 1844965305
+
+    '
+  - '1
+
+    1
+
+    -2060860677
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 2 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 2 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 594621428 1001000000 1449709188 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 4 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -2
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '1
+
+    1
+
+    -5490202626
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    912921884 755572301 1001000000 999999998 999999999
+
+    '
+  - '1
+
+    1
+
+    -303186913
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 -1 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 2 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -2 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    1
+
+    -335830449
+
+    '
+  - '6
+
+    4
+
+    3 0 5 5
+
+    3
+
+    3 3 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 1
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    6 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '1
+
+    1
+
+    -2980236549
+
+    '
+  - '1
+
+    1
+
+    -137484530
+
+    '
+  - '1
+
+    5
+
+    999999996 472578341 1001000000 628405048 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 14 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 1 5
+
+    3
+
+    3 0 0
+
+    3
+
+    6 1 2
+
+    4
+
+    -1 2 3 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1000000100 1318373358 999999999
+
+    '
+  - '6
+
+    4
+
+    3 0 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 4 -2
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    6 7 5 1
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 1 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 256091627 1001000000 628405048 1112913869
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 7 6 5
+
+    3
+
+    6 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    0 2 3 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    2 3 1 2 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 -1 4 2
+
+    '
+  - '1
+
+    5
+
+    1009392756 755572301 1101000000 999999998 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 7 4 5
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '6
+
+    4
+
+    3 7 5 4
+
+    3
+
+    3 2 0
+
+    3
+
+    10 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    8 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 999999997 1001000000 1318373358 195849909
+
+    '
+  - '6
+
+    4
+
+    3 8 5 1
+
+    3
+
+    3 2 0
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 3
+
+    5
+
+    3 3 1 4 2
+
+    '
+  - '1
+
+    5
+
+    236424498 594621428 1000100000 1496043289 999999999
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    7 5 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 14187850 1001000000 628405048 1063115534
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    3 3 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 7 1 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '6
+
+    4
+
+    3 13 5 5
+
+    3
+
+    3 2 1
+
+    3
+
+    0 2 2
+
+    4
+
+    -1 0 2 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 0101000000 999999998 1770800587
+
+    '
+  - '6
+
+    4
+
+    2 7 5 7
+
+    3
+
+    3 2 0
+
+    3
+
+    1 1 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 3 1 3
+
+    5
+
+    2 3 0 4 2
+
+    '
+  - '1
+
+    5
+
+    236424498 594621428 1010001000 1496043289 999999999
+
+    '
+  - '1
+
+    5
+
+    999999996 256091627 0001000000 330631407 1063115534
+
+    '
+  - '6
+
+    4
+
+    3 7 5 5
+
+    3
+
+    3 5 1
+
+    3
+
+    2 2 2
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    4 7 2 3
+
+    5
+
+    1 3 1 3 2
+
+    '
+  - '1
+
+    5
+
+    999999996 755572301 0101000000 407201525 1368676000
+
+    '
+  - '6
+
+    4
+
+    3 0 4 5
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 2
+
+    4
+
+    -1 2 2 -1
+
+    4
+
+    4 5 1 2
+
+    5
+
+    2 3 1 3 1
+
+    '
+  - '1
+
+    5
+
+    236424498 842458350 1010000000 1496043289 1990754
+
+    '
+  - '6
+
+    4
+
+    3 7 8 10
+
+    3
+
+    3 2 1
+
+    3
+
+    3 1 0
+
+    4
+
+    -1 2 1 -1
+
+    4
+
+    2 5 1 3
+
+    5
+
+    2 3 0 4 4
+
+    '
+  - '1
+
+    5
+
+    875031871 256091627 1001000000 219086351 1063115534
+
+    '
+  output:
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '1
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    2
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    2
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    2
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    2
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    2
+
+    1
+
+    '
+  - '4
+
+    '
+  - '3
+
+    '
+  - '0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    0
+
+    2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    2
+
+    0
+
+    2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    1
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    1
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    2
+
+    0
+
+    '
+  - '2
+
+    1
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '2
+
+    1
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '1
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    0
+
+    0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    0
+
+    0
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    2
+
+    2
+
+    0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    2
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    2
+
+    2
+
+    '
+  - '2
+
+    1
+
+    1
+
+    0
+
+    0
+
+    0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    0
+
+    '
+  - '2
+
+    1
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    1
+
+    1
+
+    0
+
+    0
+
+    0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    2
+
+    2
+
+    '
+  - '2
+
+    1
+
+    0
+
+    1
+
+    2
+
+    2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    '
+  - '2
+
+    1
+
+    0
+
+    1
+
+    2
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    0
+
+    1
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    0
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    2
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    2
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    0
+
+    1
+
+    0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    0
+
+    0
+
+    0
+
+    0
+
+    1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    3
+
+    '
+  - '2
+
+    0
+
+    1
+
+    1
+
+    0
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '2
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    2
+
+    2
+
+    '
+  - '0
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '2
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '1
+
+    0
+
+    1
+
+    0
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    1
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '2
+
+    0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    '
+  - '0
+
+    '
+  - '1
+
+    0
+
+    0
+
+    1
+
+    1
+
+    1
+
+    '
+  - '2
+
+    '
+  - '1
+
+    '
+  - '2
+
+    0
+
+    0
+
+    1
+
+    1
+
+    2
+
+    '
+  - '1
+
+    '
+  - '0
+
+    0
+
+    1
+
+    0
+
+    1
+
+    0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    0
+
+    0
+
+    1
+
+    1
+
+    0
+
+    '
+  - '0
+
+    '
+timeout: 2.0

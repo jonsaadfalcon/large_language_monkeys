@@ -1,0 +1,2907 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nArkady invited\
+  \ Anna for a dinner to a sushi restaurant. The restaurant is a bit unusual: it offers\
+  \ n pieces of sushi aligned in a row, and a customer has to choose a continuous\
+  \ subsegment of these sushi to buy.\n\nThe pieces of sushi are of two types: either\
+  \ with tuna or with eel. Let's denote the type of the i-th from the left sushi as\
+  \ t_i, where t_i = 1 means it is with tuna, and t_i = 2 means it is with eel.\n\n\
+  Arkady does not like tuna, Anna does not like eel. Arkady wants to choose such a\
+  \ continuous subsegment of sushi that it has equal number of sushi of each type\
+  \ and each half of the subsegment has only sushi of one type. For example, subsegment\
+  \ [2, 2, 2, 1, 1, 1] is valid, but subsegment [1, 2, 1, 2, 1, 2] is not, because\
+  \ both halves contain both types of sushi.\n\nFind the length of the longest continuous\
+  \ subsegment of sushi Arkady can buy.\n\nInput\n\nThe first line contains a single\
+  \ integer n (2 \u2264 n \u2264 100 000) \u2014 the number of pieces of sushi.\n\n\
+  The second line contains n integers t_1, t_2, ..., t_n (t_i = 1, denoting a sushi\
+  \ with tuna or t_i = 2, denoting a sushi with eel), representing the types of sushi\
+  \ from left to right.\n\nIt is guaranteed that there is at least one piece of sushi\
+  \ of each type. Note that it means that there is at least one valid continuous segment.\n\
+  \nOutput\n\nPrint a single integer \u2014 the maximum length of a valid continuous\
+  \ segment.\n\nExamples\n\nInput\n\n\n7\n2 2 2 1 1 2 2\n\n\nOutput\n\n\n4\n\n\nInput\n\
+  \n\n6\n1 2 1 2 1 2\n\n\nOutput\n\n\n2\n\n\nInput\n\n\n9\n2 2 1 1 1 2 2 2 2\n\n\n\
+  Output\n\n\n6\n\nNote\n\nIn the first example Arkady can choose the subsegment [2,\
+  \ 2, 1, 1] or the subsegment [1, 1, 2, 2] with length 4.\n\nIn the second example\
+  \ there is no way but to choose one of the subsegments [2, 1] or [1, 2] with length\
+  \ 2.\n\nIn the third example Arkady's best choice is the subsegment [1, 1, 1, 2,\
+  \ 2, 2].\nA: ```n = int(input())\na = [int(s) for s in input().split()]\ni = 0\n\
+  j = 0\ncur1 = 0\ncur = 0\nres = 0\nb = a[0]\nprev = 0\nwhile j < n and a[j] == b:\n\
+  \    j+=1\n    cur1 += 1\n    cur += 1\n\nwhile i < n and j < n:\n    if b == 1:\n\
+  \        b = 2\n    else:\n        b = 1\n    prev = cur\n    cur = 0\n    while\
+  \ j < n and a[j] == b:\n        j += 1\n        cur1 += 1\n        cur += 1\n  \
+  \      \n    if 2*min(prev, cur) > res:\n        res = 2*min(prev, cur)\n    while\
+  \ i < n and a[i] == 3 - b:\n        i += 1\n        cur1 -= 1\nprint(res)```\nQ:\
+  \ Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nThis problem is given\
+  \ in two versions that differ only by constraints. If you can solve this problem\
+  \ in large constraints, then you can just write a single solution to the both versions.\
+  \ If you find the problem too difficult in large constraints, you can write solution\
+  \ to the simplified version only.\n\nWaking up in the morning, Apollinaria decided\
+  \ to bake cookies. To bake one cookie, she needs n ingredients, and for each ingredient\
+  \ she knows the value ai \u2014 how many grams of this ingredient one needs to bake\
+  \ a cookie. To prepare one cookie Apollinaria needs to use all n ingredients.\n\n\
+  Apollinaria has bi gram of the i-th ingredient. Also she has k grams of a magic\
+  \ powder. Each gram of magic powder can be turned to exactly 1 gram of any of the\
+  \ n ingredients and can be used for baking cookies.\n\nYour task is to determine\
+  \ the maximum number of cookies, which Apollinaria is able to bake using the ingredients\
+  \ that she has and the magic powder.\n\nInput\n\nThe first line of the input contains\
+  \ two positive integers n and k (1 \u2264 n, k \u2264 1000) \u2014 the number of\
+  \ ingredients and the number of grams of the magic powder.\n\nThe second line contains\
+  \ the sequence a1, a2, ..., an (1 \u2264 ai \u2264 1000), where the i-th number\
+  \ is equal to the number of grams of the i-th ingredient, needed to bake one cookie.\n\
+  \nThe third line contains the sequence b1, b2, ..., bn (1 \u2264 bi \u2264 1000),\
+  \ where the i-th number is equal to the number of grams of the i-th ingredient,\
+  \ which Apollinaria has.\n\nOutput\n\nPrint the maximum number of cookies, which\
+  \ Apollinaria will be able to bake using the ingredients that she has and the magic\
+  \ powder.\n\nExamples\n\nInput\n\n3 1\n2 1 4\n11 3 16\n\n\nOutput\n\n4\n\n\nInput\n\
+  \n4 3\n4 3 5 6\n11 12 14 20\n\n\nOutput\n\n3\n\nNote\n\nIn the first sample it is\
+  \ profitably for Apollinaria to make the existing 1 gram of her magic powder to\
+  \ ingredient with the index 2, then Apollinaria will be able to bake 4 cookies.\n\
+  \nIn the second sample Apollinaria should turn 1 gram of magic powder to ingredient\
+  \ with the index 1 and 1 gram of magic powder to ingredient with the index 3. Then\
+  \ Apollinaria will be able to bake 3 cookies. The remaining 1 gram of the magic\
+  \ powder can be left, because it can't be used to increase the answer.\nA: ```n,\
+  \ k = input().split(\" \")\nn, k = [int(n), int(k)]\nlist1 = list(map(int, input().split(\"\
+  \ \")))\nlist2 = list(map(int, input().split(\" \")))\n\nlow = 0\nhigh = 2*(10**9)\n\
+  while low < high:\n    if high - low % 2 != 0:\n        mid = low + (high - low)\
+  \ // 2 + 1\n    else:\n        mid = low + (high - low)//2\n    d = k\n    list6\
+  \ = []\n    for i in range(n):\n        if list1[i]*mid <= list2[i]:\n         \
+  \   continue\n        else:\n            c = list1[i] * mid - list2[i]\n       \
+  \     if d >= c:\n                d = d - c\n                continue\n        \
+  \    else:\n                high = mid -1\n                break\n    if high !=\
+  \ mid - 1:\n        low = mid\n\nprint(low)```\nQ: Write python code to solve the\
+  \ following coding problem that obeys the constraints and passes the example test\
+  \ cases. The output code needs to read from and write to standard IO. Please wrap\
+  \ your code answer using ```:\nYou are given a sequence a_1, a_2, ..., a_n consisting\
+  \ of n pairwise distinct positive integers.\n\nFind \\left\u230A \\frac n 2 \\right\u230B\
+  \ different pairs of integers x and y such that: \n\n  * x \u2260 y; \n  * x and\
+  \ y appear in a; \n  * x~mod~y doesn't appear in a. \n\n\n\nNote that some x or\
+  \ y can belong to multiple pairs.\n\n\u230A x \u230B denotes the floor function\
+  \ \u2014 the largest integer less than or equal to x. x~mod~y denotes the remainder\
+  \ from dividing x by y.\n\nIf there are multiple solutions, print any of them. It\
+  \ can be shown that at least one solution always exists.\n\nInput\n\nThe first line\
+  \ contains a single integer t (1 \u2264 t \u2264 10^4) \u2014 the number of testcases.\n\
+  \nThe first line of each testcase contains a single integer n (2 \u2264 n \u2264\
+  \ 2 \u22C5 10^5) \u2014 the length of the sequence.\n\nThe second line of each testcase\
+  \ contains n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^6).\n\nAll numbers\
+  \ in the sequence are pairwise distinct. The sum of n over all testcases doesn't\
+  \ exceed 2 \u22C5 10^5.\n\nOutput\n\nThe answer for each testcase should contain\
+  \ \\left\u230A \\frac n 2 \\right\u230B different pairs of integers x and y such\
+  \ that x \u2260 y, x and y appear in a and x~mod~y doesn't appear in a. Print the\
+  \ pairs one after another.\n\nYou can print the pairs in any order. However, the\
+  \ order of numbers in the pair should be exactly such that the first number is x\
+  \ and the second number is y. All pairs should be pairwise distinct.\n\nIf there\
+  \ are multiple solutions, print any of them.\n\nExample\n\nInput\n\n\n4\n2\n1 4\n\
+  4\n2 8 3 4\n5\n3 8 5 9 7\n6\n2 7 5 3 4 8\n\n\nOutput\n\n\n4 1\n8 2\n8 4\n9 5\n7\
+  \ 5\n8 7\n4 3\n5 2\n\nNote\n\nIn the first testcase there are only two pairs: (1,\
+  \ 4) and (4, 1). \\left\u230A \\frac 2 2 \\right\u230B=1, so we have to find one\
+  \ pair. 1~mod~4=1, and 1 appears in a, so that pair is invalid. Thus, the only possible\
+  \ answer is a pair (4, 1).\n\nIn the second testcase, we chose pairs 8~mod~2=0 and\
+  \ 8~mod~4=0. 0 doesn't appear in a, so that answer is valid. There are multiple\
+  \ possible answers for that testcase.\n\nIn the third testcase, the chosen pairs\
+  \ are 9~mod~5=4 and 7~mod~5=2. Neither 4, nor 2, appears in a, so that answer is\
+  \ valid.\nA:"
+question: "You are given a sequence a_1, a_2, ..., a_n consisting of n pairwise distinct\
+  \ positive integers.\n\nFind \\left\u230A \\frac n 2 \\right\u230B different pairs\
+  \ of integers x and y such that: \n\n  * x \u2260 y; \n  * x and y appear in a;\
+  \ \n  * x~mod~y doesn't appear in a. \n\n\n\nNote that some x or y can belong to\
+  \ multiple pairs.\n\n\u230A x \u230B denotes the floor function \u2014 the largest\
+  \ integer less than or equal to x. x~mod~y denotes the remainder from dividing x\
+  \ by y.\n\nIf there are multiple solutions, print any of them. It can be shown that\
+  \ at least one solution always exists.\n\nInput\n\nThe first line contains a single\
+  \ integer t (1 \u2264 t \u2264 10^4) \u2014 the number of testcases.\n\nThe first\
+  \ line of each testcase contains a single integer n (2 \u2264 n \u2264 2 \u22C5\
+  \ 10^5) \u2014 the length of the sequence.\n\nThe second line of each testcase contains\
+  \ n integers a_1, a_2, ..., a_n (1 \u2264 a_i \u2264 10^6).\n\nAll numbers in the\
+  \ sequence are pairwise distinct. The sum of n over all testcases doesn't exceed\
+  \ 2 \u22C5 10^5.\n\nOutput\n\nThe answer for each testcase should contain \\left\u230A\
+  \ \\frac n 2 \\right\u230B different pairs of integers x and y such that x \u2260\
+  \ y, x and y appear in a and x~mod~y doesn't appear in a. Print the pairs one after\
+  \ another.\n\nYou can print the pairs in any order. However, the order of numbers\
+  \ in the pair should be exactly such that the first number is x and the second number\
+  \ is y. All pairs should be pairwise distinct.\n\nIf there are multiple solutions,\
+  \ print any of them.\n\nExample\n\nInput\n\n\n4\n2\n1 4\n4\n2 8 3 4\n5\n3 8 5 9\
+  \ 7\n6\n2 7 5 3 4 8\n\n\nOutput\n\n\n4 1\n8 2\n8 4\n9 5\n7 5\n8 7\n4 3\n5 2\n\n\
+  Note\n\nIn the first testcase there are only two pairs: (1, 4) and (4, 1). \\left\u230A\
+  \ \\frac 2 2 \\right\u230B=1, so we have to find one pair. 1~mod~4=1, and 1 appears\
+  \ in a, so that pair is invalid. Thus, the only possible answer is a pair (4, 1).\n\
+  \nIn the second testcase, we chose pairs 8~mod~2=0 and 8~mod~4=0. 0 doesn't appear\
+  \ in a, so that answer is valid. There are multiple possible answers for that testcase.\n\
+  \nIn the third testcase, the chosen pairs are 9~mod~5=4 and 7~mod~5=2. Neither 4,\
+  \ nor 2, appears in a, so that answer is valid."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    for i in range(n):\n        for j in range(i+1, n):\n \
+  \           if a[i] != a[j]:\n                if a[i] % a[j] not in a:\n       \
+  \             print(a[i], a[j])\n```  Q:"
+- " ```t = int(input())\nfor _ in range(t):\n    n = int(input())\n    a = list(map(int,\
+  \ input().split()))\n    a.sort()\n    res = []\n    for i in range(n-1):\n    \
+  \    if a[i+1] % a[i] not in a:\n            res.append((a[i], a[i+1]))\n    print(*res,\
+  \ sep='\\n')```"
+test_cases:
+  input:
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    200005 200006 200007 200008 200009
+
+    '
+  - '1
+
+    2
+
+    4 2
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 10001 10002 10003
+
+    '
+  - '1
+
+    5
+
+    200005 200006 22718 200008 200009
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    6 8 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 00001 10002 10003
+
+    '
+  - '1
+
+    5
+
+    341556 200006 22718 200008 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 22718 186677 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 23493 186677 349744
+
+    '
+  - '1
+
+    5
+
+    200005 93830 22718 200008 200009
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 8
+
+    5
+
+    6 8 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 00001 17511 10003
+
+    '
+  - '1
+
+    5
+
+    341556 200006 26087 200008 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 20269 200008 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 22718 327494 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 23493 186677 168170
+
+    '
+  - '1
+
+    5
+
+    287250 208142 23493 186677 371653
+
+    '
+  - '1
+
+    5
+
+    200005 93830 22718 104645 200009
+
+    '
+  - '1
+
+    4
+
+    10000 00101 17511 10003
+
+    '
+  - '1
+
+    5
+
+    287250 160233 20269 200008 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 22718 64562 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 22718 269748 422649
+
+    '
+  - '1
+
+    5
+
+    200005 93830 32028 104645 200009
+
+    '
+  - '1
+
+    4
+
+    10000 10101 17511 10003
+
+    '
+  - '1
+
+    5
+
+    341556 200006 26087 359716 228354
+
+    '
+  - '1
+
+    5
+
+    287250 160233 8358 200008 200009
+
+    '
+  - '1
+
+    5
+
+    287250 9675 22718 269748 422649
+
+    '
+  - '1
+
+    5
+
+    200005 93830 32028 104645 1813
+
+    '
+  - '1
+
+    4
+
+    10000 10111 17511 10003
+
+    '
+  - '1
+
+    4
+
+    10000 00111 17511 10003
+
+    '
+  - '1
+
+    5
+
+    355965 208142 21881 186677 1423883
+
+    '
+  - '1
+
+    5
+
+    355965 208142 21881 7548 1423883
+
+    '
+  - '1
+
+    5
+
+    49032 208142 21881 7548 1423883
+
+    '
+  - '1
+
+    5
+
+    20170 208142 21881 7548 1423883
+
+    '
+  - '1
+
+    5
+
+    1265 208142 21881 7548 1423883
+
+    '
+  - '1
+
+    5
+
+    200005 200006 200007 76461 200009
+
+    '
+  - '1
+
+    2
+
+    4 1
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 1 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 10001 10002 17440
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 6 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    200005 200006 13836 200008 200009
+
+    '
+  - '1
+
+    4
+
+    10000 00001 5460 10003
+
+    '
+  - '1
+
+    5
+
+    341556 200006 22718 14626 200009
+
+    '
+  - '1
+
+    5
+
+    287250 200006 25296 186677 349744
+
+    '
+  - '1
+
+    5
+
+    200005 93830 22718 200008 91526
+
+    '
+  - '1
+
+    5
+
+    338077 200006 200007 200008 200009
+
+    '
+  - '1
+
+    2
+
+    6 2
+
+    '
+  - '1
+
+    4
+
+    10000 10001 10002 9852
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 5 9 14
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 11001 10002 9852
+
+    '
+  - '1
+
+    5
+
+    338077 225532 200007 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 10002 9852
+
+    '
+  - '1
+
+    5
+
+    338077 225532 200007 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 10002 17910
+
+    '
+  - '1
+
+    5
+
+    338077 225532 112141 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 18509 17910
+
+    '
+  - '1
+
+    5
+
+    338077 193824 112141 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 112141 305 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01001 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 112141 235 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01000 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 112141 377 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01000 25107 32967
+
+    '
+  - '1
+
+    5
+
+    338077 247280 112141 377 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01000 25107 32967
+
+    '
+  - '1
+
+    4
+
+    10000 01000 34173 26070
+
+    '
+  - '1
+
+    5
+
+    482446 247280 152604 377 677147
+
+    '
+  - '1
+
+    4
+
+    10000 01000 34173 45994
+
+    '
+  - '1
+
+    5
+
+    482446 375350 152604 377 677147
+
+    '
+  - '1
+
+    5
+
+    482446 375350 152604 69 1094058
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 15 3 4
+
+    5
+
+    3 8 5 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 10001 13708 10003
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 10 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    338077 200006 200007 337566 200009
+
+    '
+  - '1
+
+    2
+
+    6 4
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 1 5 9 14
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    338077 200006 11298 200008 373286
+
+    '
+  - '1
+
+    5
+
+    338077 225532 250752 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10010 01001 10002 9852
+
+    '
+  - '1
+
+    5
+
+    338077 225532 112141 97641 31894
+
+    '
+  - '1
+
+    4
+
+    10010 01001 18509 17910
+
+    '
+  - '1
+
+    5
+
+    338077 193824 189319 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 11001 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 42832 305 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01011 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 207716 235 373286
+
+    '
+  - '1
+
+    4
+
+    11001 01000 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 112141 279 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01000 4066 32967
+
+    '
+  - '1
+
+    4
+
+    11000 01000 25107 26070
+
+    '
+  - '1
+
+    5
+
+    482446 240419 112141 377 677147
+
+    '
+  - '1
+
+    4
+
+    10000 01000 13749 26070
+
+    '
+  - '1
+
+    4
+
+    10000 01000 30263 45994
+
+    '
+  - '1
+
+    5
+
+    482446 375350 152604 630 677147
+
+    '
+  - '1
+
+    5
+
+    482446 343666 152604 69 1094058
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 15 3 4
+
+    5
+
+    3 8 5 9 7
+
+    6
+
+    1 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    338077 200006 238078 337566 200009
+
+    '
+  - '1
+
+    5
+
+    338077 133190 11298 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10000 11011 10002 18263
+
+    '
+  - '1
+
+    5
+
+    338077 254936 250752 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10010 01001 1395 9852
+
+    '
+  - '1
+
+    5
+
+    338077 225532 33263 97641 470960
+
+    '
+  - '1
+
+    4
+
+    11010 01001 18509 17910
+
+    '
+  - '1
+
+    5
+
+    338077 193824 291429 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 11000 18509 32967
+
+    '
+  - '1
+
+    4
+
+    10001 01011 9067 32967
+
+    '
+  - '1
+
+    4
+
+    11001 01000 14033 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 65314 279 373286
+
+    '
+  - '1
+
+    4
+
+    11000 01100 25107 26070
+
+    '
+  - '1
+
+    5
+
+    32743 240419 112141 377 677147
+
+    '
+  - '1
+
+    4
+
+    10000 01000 8195 45994
+
+    '
+  - '1
+
+    5
+
+    482446 343666 17056 69 1094058
+
+    '
+  - '1
+
+    5
+
+    338077 200006 139616 337566 200009
+
+    '
+  - '1
+
+    4
+
+    10000 11001 10002 18263
+
+    '
+  - '1
+
+    5
+
+    338077 254936 122827 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 10002 3025
+
+    '
+  - '1
+
+    4
+
+    11010 01001 18509 697
+
+    '
+  - '1
+
+    5
+
+    338077 167292 291429 97641 373286
+
+    '
+  - '1
+
+    4
+
+    01000 01100 25107 26070
+
+    '
+  - '1
+
+    4
+
+    10000 01000 1795 45994
+
+    '
+  - '1
+
+    5
+
+    482446 204473 17056 69 1094058
+
+    '
+  - '1
+
+    5
+
+    338077 254936 122827 315953 373286
+
+    '
+  - '1
+
+    4
+
+    10010 11000 18509 25419
+
+    '
+  - '1
+
+    4
+
+    10001 01001 9067 22447
+
+    '
+  - '1
+
+    4
+
+    398454 247280 112141 481 529532
+
+    '
+  - '1
+
+    4
+
+    10100 01000 1795 45994
+
+    '
+  - '1
+
+    5
+
+    49321 225532 33263 97641 327199
+
+    '
+  - '1
+
+    4
+
+    01010 01001 26999 697
+
+    '
+  - '1
+
+    4
+
+    10010 11000 15124 25419
+
+    '
+  - '1
+
+    4
+
+    398454 247280 123177 481 529532
+
+    '
+  - '1
+
+    5
+
+    482446 204473 17056 121 1138845
+
+    '
+  - '1
+
+    5
+
+    533636 506124 122827 315953 373286
+
+    '
+  - '1
+
+    4
+
+    10010 11000 25179 25419
+
+    '
+  - '1
+
+    4
+
+    01010 01001 11052 568
+
+    '
+  - '1
+
+    5
+
+    797797 506124 122827 545319 373286
+
+    '
+  - '1
+
+    4
+
+    01010 00001 11052 568
+
+    '
+  - '1
+
+    5
+
+    797797 645470 122827 545319 373286
+
+    '
+  - '1
+
+    5
+
+    797797 645470 122827 545319 178997
+
+    '
+  - '1
+
+    4
+
+    01010 00001 12016 1131
+
+    '
+  - '1
+
+    5
+
+    797797 645470 175834 545319 178997
+
+    '
+  - '1
+
+    4
+
+    01010 10001 6818 1131
+
+    '
+  - '1
+
+    4
+
+    01010 10001 5402 1131
+
+    '
+  - '1
+
+    5
+
+    200005 200006 258292 200008 200009
+
+    '
+  - '1
+
+    4
+
+    10010 10001 10002 10003
+
+    '
+  - '1
+
+    2
+
+    6 3
+
+    '
+  - '1
+
+    4
+
+    10000 00001 10002 9852
+
+    '
+  - '4
+
+    2
+
+    1 6
+
+    4
+
+    2 8 3 4
+
+    5
+
+    3 8 5 9 14
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    4
+
+    10000 10001 10002 4682
+
+    '
+  - '1
+
+    5
+
+    338077 225532 200007 294305 373286
+
+    '
+  - '1
+
+    5
+
+    338077 225532 113788 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 11647 17910
+
+    '
+  - '1
+
+    5
+
+    338077 160916 112141 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 11001 18509 17910
+
+    '
+  - '1
+
+    5
+
+    338077 106272 112141 97641 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 17105 32967
+
+    '
+  - '1
+
+    5
+
+    338077 16622 112141 305 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01001 33877 32967
+
+    '
+  - '1
+
+    5
+
+    338077 66520 112141 235 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01000 27129 32967
+
+    '
+  - '1
+
+    4
+
+    10001 01100 25107 32967
+
+    '
+  - '1
+
+    5
+
+    338077 247280 112141 343 373286
+
+    '
+  - '1
+
+    4
+
+    10000 01000 25107 18889
+
+    '
+  - '1
+
+    4
+
+    10000 01100 25107 26070
+
+    '
+  - '1
+
+    5
+
+    482446 247280 152604 203 677147
+
+    '
+  - '1
+
+    5
+
+    482446 375350 152604 377 283082
+
+    '
+  - '4
+
+    2
+
+    1 4
+
+    4
+
+    2 8 3 8
+
+    5
+
+    3 8 10 9 7
+
+    6
+
+    2 7 5 3 4 8
+
+    '
+  - '1
+
+    5
+
+    338077 200006 11298 15196 373286
+
+    '
+  - '1
+
+    5
+
+    105056 225532 250752 200008 373286
+
+    '
+  - '1
+
+    4
+
+    10010 01000 10002 9852
+
+    '
+  - '1
+
+    5
+
+    338077 225532 85554 97641 470960
+
+    '
+  - '1
+
+    4
+
+    10000 01001 15192 16664
+
+    '
+  - '1
+
+    5
+
+    338077 225532 112141 167788 31894
+
+    '
+  - '1
+
+    4
+
+    10010 01011 18509 17910
+
+    '
+  - '1
+
+    4
+
+    10000 11001 27329 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 53044 305 373286
+
+    '
+  - '1
+
+    4
+
+    10001 01111 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 207716 238 373286
+
+    '
+  - '1
+
+    4
+
+    11000 01000 18509 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 77164 279 373286
+
+    '
+  - '1
+
+    4
+
+    00001 01000 4066 32967
+
+    '
+  - '1
+
+    5
+
+    398454 52195 112141 377 373286
+
+    '
+  - '1
+
+    4
+
+    11000 11100 25107 26070
+
+    '
+  - '1
+
+    5
+
+    482446 240419 112141 180 677147
+
+    '
+  - '1
+
+    4
+
+    10001 01000 13749 26070
+
+    '
+  - '1
+
+    5
+
+    482446 375350 67760 630 677147
+
+    '
+  - '1
+
+    5
+
+    482446 343666 152604 25 1094058
+
+    '
+  - '1
+
+    5
+
+    338077 200006 238078 337566 194339
+
+    '
+  - '1
+
+    5
+
+    338077 254936 250752 113572 373286
+
+    '
+  - '1
+
+    4
+
+    10010 01001 1395 9191
+
+    '
+  - '1
+
+    5
+
+    338077 225532 54205 97641 470960
+
+    '
+  - '1
+
+    4
+
+    11000 01001 10002 24783
+
+    '
+  - '1
+
+    4
+
+    11110 01001 18509 17910
+
+    '
+  - '1
+
+    5
+
+    338077 193824 198648 97641 373286
+
+    '
+  - '1
+
+    4
+
+    01001 01000 14033 32967
+
+    '
+  - '1
+
+    5
+
+    338077 193824 70285 279 373286
+
+    '
+  - '1
+
+    5
+
+    398454 247280 112141 307 529532
+
+    '
+  - '1
+
+    4
+
+    11000 01100 25107 16845
+
+    '
+  - '1
+
+    5
+
+    32743 240419 172330 377 677147
+
+    '
+  - '1
+
+    4
+
+    10000 01000 13749 4575
+
+    '
+  - '1
+
+    4
+
+    10010 01000 8195 45994
+
+    '
+  - '1
+
+    5
+
+    482446 343666 14372 69 1094058
+
+    '
+  - '1
+
+    5
+
+    338077 200006 139616 58782 200009
+
+    '
+  output:
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    7 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '200006 200005
+
+    200007 200005
+
+    '
+  - '4 2
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    7 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10001 10000
+
+    10002 10000
+
+    '
+  - '200005 22718
+
+    200006 22718
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    6 5
+
+    7 5
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10000 1
+
+    10002 1
+
+    '
+  - '200006 22718
+
+    200008 22718
+
+    '
+  - '186677 22718
+
+    200006 22718
+
+    '
+  - '186677 23493
+
+    200006 23493
+
+    '
+  - '93830 22718
+
+    200005 22718
+
+    '
+  - '4 1
+
+    3 2
+
+    8 2
+
+    6 5
+
+    7 5
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10000 1
+
+    10003 1
+
+    '
+  - '200006 26087
+
+    200008 26087
+
+    '
+  - '200006 20269
+
+    200008 20269
+
+    '
+  - '200006 22718
+
+    200009 22718
+
+    '
+  - '168170 23493
+
+    186677 23493
+
+    '
+  - '186677 23493
+
+    208142 23493
+
+    '
+  - '93830 22718
+
+    104645 22718
+
+    '
+  - '10000 101
+
+    10003 101
+
+    '
+  - '160233 20269
+
+    200008 20269
+
+    '
+  - '64562 22718
+
+    200006 22718
+
+    '
+  - '200006 22718
+
+    269748 22718
+
+    '
+  - '93830 32028
+
+    104645 32028
+
+    '
+  - '10003 10000
+
+    10101 10000
+
+    '
+  - '200006 26087
+
+    228354 26087
+
+    '
+  - '160233 8358
+
+    200008 8358
+
+    '
+  - '22718 9675
+
+    269748 9675
+
+    '
+  - '32028 1813
+
+    93830 1813
+
+    '
+  - '10003 10000
+
+    10111 10000
+
+    '
+  - '10000 111
+
+    10003 111
+
+    '
+  - '186677 21881
+
+    208142 21881
+
+    '
+  - '21881 7548
+
+    208142 7548
+
+    '
+  - '21881 7548
+
+    49032 7548
+
+    '
+  - '20170 7548
+
+    21881 7548
+
+    '
+  - '7548 1265
+
+    21881 1265
+
+    '
+  - '200005 76461
+
+    200006 76461
+
+    '
+  - '4 1
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    3 1
+
+    7 1
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10001 10000
+
+    10002 10000
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    6 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '200005 13836
+
+    200006 13836
+
+    '
+  - '5460 1
+
+    10000 1
+
+    '
+  - '22718 14626
+
+    200006 14626
+
+    '
+  - '186677 25296
+
+    200006 25296
+
+    '
+  - '91526 22718
+
+    93830 22718
+
+    '
+  - '200007 200006
+
+    200008 200006
+
+    '
+  - '6 2
+
+    '
+  - '10000 9852
+
+    10001 9852
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    8 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10000 9852
+
+    10002 9852
+
+    '
+  - '200008 200007
+
+    225532 200007
+
+    '
+  - '9852 1001
+
+    10000 1001
+
+    '
+  - '200007 97641
+
+    225532 97641
+
+    '
+  - '10000 1001
+
+    10002 1001
+
+    '
+  - '112141 97641
+
+    225532 97641
+
+    '
+  - '10000 1001
+
+    17910 1001
+
+    '
+  - '112141 97641
+
+    193824 97641
+
+    '
+  - '10000 1001
+
+    18509 1001
+
+    '
+  - '112141 305
+
+    193824 305
+
+    '
+  - '10001 1001
+
+    18509 1001
+
+    '
+  - '112141 235
+
+    193824 235
+
+    '
+  - '10001 1000
+
+    18509 1000
+
+    '
+  - '112141 377
+
+    193824 377
+
+    '
+  - '10001 1000
+
+    25107 1000
+
+    '
+  - '112141 377
+
+    247280 377
+
+    '
+  - '10000 1000
+
+    25107 1000
+
+    '
+  - '10000 1000
+
+    26070 1000
+
+    '
+  - '152604 377
+
+    247280 377
+
+    '
+  - '10000 1000
+
+    34173 1000
+
+    '
+  - '152604 377
+
+    375350 377
+
+    '
+  - '152604 69
+
+    375350 69
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    7 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10001 10000
+
+    10003 10000
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    7 3
+
+    8 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '200007 200006
+
+    200009 200006
+
+    '
+  - '6 4
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    3 1
+
+    5 1
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '200006 11298
+
+    200008 11298
+
+    '
+  - '225532 200008
+
+    250752 200008
+
+    '
+  - '9852 1001
+
+    10002 1001
+
+    '
+  - '97641 31894
+
+    112141 31894
+
+    '
+  - '10010 1001
+
+    17910 1001
+
+    '
+  - '189319 97641
+
+    193824 97641
+
+    '
+  - '11001 10000
+
+    18509 10000
+
+    '
+  - '42832 305
+
+    193824 305
+
+    '
+  - '10001 1011
+
+    18509 1011
+
+    '
+  - '193824 235
+
+    207716 235
+
+    '
+  - '11001 1000
+
+    18509 1000
+
+    '
+  - '112141 279
+
+    193824 279
+
+    '
+  - '4066 1000
+
+    10001 1000
+
+    '
+  - '11000 1000
+
+    25107 1000
+
+    '
+  - '112141 377
+
+    240419 377
+
+    '
+  - '10000 1000
+
+    13749 1000
+
+    '
+  - '10000 1000
+
+    30263 1000
+
+    '
+  - '152604 630
+
+    375350 630
+
+    '
+  - '152604 69
+
+    343666 69
+
+    '
+  - '4 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    7 3
+
+    3 1
+
+    4 1
+
+    5 1
+
+    '
+  - '200009 200006
+
+    238078 200006
+
+    '
+  - '133190 11298
+
+    200008 11298
+
+    '
+  - '10002 10000
+
+    11011 10000
+
+    '
+  - '250752 200008
+
+    254936 200008
+
+    '
+  - '1395 1001
+
+    9852 1001
+
+    '
+  - '97641 33263
+
+    225532 33263
+
+    '
+  - '11010 1001
+
+    17910 1001
+
+    '
+  - '193824 97641
+
+    291429 97641
+
+    '
+  - '11000 10000
+
+    18509 10000
+
+    '
+  - '9067 1011
+
+    10001 1011
+
+    '
+  - '11001 1000
+
+    14033 1000
+
+    '
+  - '65314 279
+
+    193824 279
+
+    '
+  - '11000 1100
+
+    25107 1100
+
+    '
+  - '32743 377
+
+    112141 377
+
+    '
+  - '8195 1000
+
+    10000 1000
+
+    '
+  - '17056 69
+
+    343666 69
+
+    '
+  - '200006 139616
+
+    200009 139616
+
+    '
+  - '10002 10000
+
+    11001 10000
+
+    '
+  - '200008 122827
+
+    254936 122827
+
+    '
+  - '3025 1001
+
+    10000 1001
+
+    '
+  - '1001 697
+
+    11010 697
+
+    '
+  - '167292 97641
+
+    291429 97641
+
+    '
+  - '1100 1000
+
+    25107 1000
+
+    '
+  - '1795 1000
+
+    10000 1000
+
+    '
+  - '17056 69
+
+    204473 69
+
+    '
+  - '254936 122827
+
+    315953 122827
+
+    '
+  - '11000 10010
+
+    18509 10010
+
+    '
+  - '9067 1001
+
+    10001 1001
+
+    '
+  - '112141 481
+
+    247280 481
+
+    '
+  - '1795 1000
+
+    10100 1000
+
+    '
+  - '49321 33263
+
+    97641 33263
+
+    '
+  - '1001 697
+
+    1010 697
+
+    '
+  - '11000 10010
+
+    15124 10010
+
+    '
+  - '123177 481
+
+    247280 481
+
+    '
+  - '17056 121
+
+    204473 121
+
+    '
+  - '315953 122827
+
+    373286 122827
+
+    '
+  - '11000 10010
+
+    25179 10010
+
+    '
+  - '1001 568
+
+    1010 568
+
+    '
+  - '373286 122827
+
+    506124 122827
+
+    '
+  - '568 1
+
+    1010 1
+
+    '
+  - '373286 122827
+
+    545319 122827
+
+    '
+  - '178997 122827
+
+    545319 122827
+
+    '
+  - '1010 1
+
+    1131 1
+
+    '
+  - '178997 175834
+
+    545319 175834
+
+    '
+  - '1131 1010
+
+    6818 1010
+
+    '
+  - '1131 1010
+
+    5402 1010
+
+    '
+  - '200006 200005
+
+    200008 200005
+
+    '
+  - '10002 10001
+
+    10003 10001
+
+    '
+  - '6 3
+
+    '
+  - '9852 1
+
+    10000 1
+
+    '
+  - '6 1
+
+    3 2
+
+    4 2
+
+    5 3
+
+    8 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '10000 4682
+
+    10001 4682
+
+    '
+  - '225532 200007
+
+    294305 200007
+
+    '
+  - '113788 97641
+
+    225532 97641
+
+    '
+  - '10000 1001
+
+    11647 1001
+
+    '
+  - '112141 97641
+
+    160916 97641
+
+    '
+  - '11001 10000
+
+    17910 10000
+
+    '
+  - '106272 97641
+
+    112141 97641
+
+    '
+  - '10000 1001
+
+    17105 1001
+
+    '
+  - '16622 305
+
+    112141 305
+
+    '
+  - '10000 1001
+
+    32967 1001
+
+    '
+  - '66520 235
+
+    112141 235
+
+    '
+  - '10001 1000
+
+    27129 1000
+
+    '
+  - '10001 1100
+
+    25107 1100
+
+    '
+  - '112141 343
+
+    247280 343
+
+    '
+  - '10000 1000
+
+    18889 1000
+
+    '
+  - '10000 1100
+
+    25107 1100
+
+    '
+  - '152604 203
+
+    247280 203
+
+    '
+  - '152604 377
+
+    283082 377
+
+    '
+  - '4 1
+
+    3 2
+
+    8 2
+
+    7 3
+
+    8 3
+
+    3 2
+
+    4 2
+
+    5 2
+
+    '
+  - '15196 11298
+
+    200006 11298
+
+    '
+  - '200008 105056
+
+    225532 105056
+
+    '
+  - '9852 1000
+
+    10002 1000
+
+    '
+  - '97641 85554
+
+    225532 85554
+
+    '
+  - '10000 1001
+
+    15192 1001
+
+    '
+  - '112141 31894
+
+    167788 31894
+
+    '
+  - '10010 1011
+
+    17910 1011
+
+    '
+  - '11001 10000
+
+    27329 10000
+
+    '
+  - '53044 305
+
+    193824 305
+
+    '
+  - '10001 1111
+
+    18509 1111
+
+    '
+  - '193824 238
+
+    207716 238
+
+    '
+  - '11000 1000
+
+    18509 1000
+
+    '
+  - '77164 279
+
+    193824 279
+
+    '
+  - '1000 1
+
+    4066 1
+
+    '
+  - '52195 377
+
+    112141 377
+
+    '
+  - '11100 11000
+
+    25107 11000
+
+    '
+  - '112141 180
+
+    240419 180
+
+    '
+  - '10001 1000
+
+    13749 1000
+
+    '
+  - '67760 630
+
+    375350 630
+
+    '
+  - '152604 25
+
+    343666 25
+
+    '
+  - '200006 194339
+
+    238078 194339
+
+    '
+  - '250752 113572
+
+    254936 113572
+
+    '
+  - '1395 1001
+
+    9191 1001
+
+    '
+  - '97641 54205
+
+    225532 54205
+
+    '
+  - '10002 1001
+
+    11000 1001
+
+    '
+  - '11110 1001
+
+    17910 1001
+
+    '
+  - '193824 97641
+
+    198648 97641
+
+    '
+  - '1001 1000
+
+    14033 1000
+
+    '
+  - '70285 279
+
+    193824 279
+
+    '
+  - '112141 307
+
+    247280 307
+
+    '
+  - '11000 1100
+
+    16845 1100
+
+    '
+  - '32743 377
+
+    172330 377
+
+    '
+  - '4575 1000
+
+    10000 1000
+
+    '
+  - '8195 1000
+
+    10010 1000
+
+    '
+  - '14372 69
+
+    343666 69
+
+    '
+  - '139616 58782
+
+    200006 58782
+
+    '
+timeout: 2.0

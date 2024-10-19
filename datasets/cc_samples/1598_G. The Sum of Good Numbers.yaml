@@ -1,0 +1,645 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThe princess\
+  \ is going to escape the dragon's cave, and she needs to plan it carefully.\n\n\
+  The princess runs at vp miles per hour, and the dragon flies at vd miles per hour.\
+  \ The dragon will discover the escape after t hours and will chase the princess\
+  \ immediately. Looks like there's no chance to success, but the princess noticed\
+  \ that the dragon is very greedy and not too smart. To delay him, the princess decides\
+  \ to borrow a couple of bijous from his treasury. Once the dragon overtakes the\
+  \ princess, she will drop one bijou to distract him. In this case he will stop,\
+  \ pick up the item, return to the cave and spend f hours to straighten the things\
+  \ out in the treasury. Only after this will he resume the chase again from the very\
+  \ beginning.\n\nThe princess is going to run on the straight. The distance between\
+  \ the cave and the king's castle she's aiming for is c miles. How many bijous will\
+  \ she need to take from the treasury to be able to reach the castle? If the dragon\
+  \ overtakes the princess at exactly the same moment she has reached the castle,\
+  \ we assume that she reached the castle before the dragon reached her, and doesn't\
+  \ need an extra bijou to hold him off.\n\nInput\n\nThe input data contains integers\
+  \ vp, vd, t, f and c, one per line (1 \u2264 vp, vd \u2264 100, 1 \u2264 t, f \u2264\
+  \ 10, 1 \u2264 c \u2264 1000).\n\nOutput\n\nOutput the minimal number of bijous\
+  \ required for the escape to succeed.\n\nExamples\n\nInput\n\n1\n2\n1\n1\n10\n\n\
+  \nOutput\n\n2\n\n\nInput\n\n1\n2\n1\n1\n8\n\n\nOutput\n\n1\n\nNote\n\nIn the first\
+  \ case one hour after the escape the dragon will discover it, and the princess will\
+  \ be 1 mile away from the cave. In two hours the dragon will overtake the princess\
+  \ 2 miles away from the cave, and she will need to drop the first bijou. Return\
+  \ to the cave and fixing the treasury will take the dragon two more hours; meanwhile\
+  \ the princess will be 4 miles away from the cave. Next time the dragon will overtake\
+  \ the princess 8 miles away from the cave, and she will need the second bijou, but\
+  \ after this she will reach the castle without any further trouble.\n\nThe second\
+  \ case is similar to the first one, but the second time the dragon overtakes the\
+  \ princess when she has reached the castle, and she won't need the second bijou.\n\
+  A: ```vp = int(input())\nvd = int(input())\nt = int(input())\nf = int(input())\n\
+  c = int(input())\ndistance = t * vp\ntime = t\ntreasure = 0\nif vp == vd:\n    if\
+  \ t == 0:\n        print(1)\n    else:\n        print(0)\nelif vp > vd:\n    print(0)\n\
+  else:\n    while distance < c:\n        timeadd = distance/(vd - vp)\n        distance\
+  \ += vp * timeadd\n        if distance >= c:\n            break\n        else:\n\
+  \            time += timeadd\n            treasure += 1\n            timeadd = f\
+  \ + distance/vd\n            distance += timeadd * vp\n    print(treasure)```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nGiven is an integer N.\
+  \ Find the number of digits that N has in base K.\n\nConstraints\n\n* All values\
+  \ in input are integers.\n* 1 \\leq N \\leq 10^9\n* 2 \\leq K \\leq 10\n\nInput\n\
+  \nInput is given from Standard Input in the following format:\n\n\nN K\n\n\nOutput\n\
+  \nPrint the number of digits that N has in base K.\n\nExamples\n\nInput\n\n11 2\n\
+  \n\nOutput\n\n4\n\n\nInput\n\n1010101 10\n\n\nOutput\n\n7\n\n\nInput\n\n314159265\
+  \ 3\n\n\nOutput\n\n18\nA: ```N,K=map(int,input().split())\nx=0\nwhile K**x<=N:\n\
+  \    x=x+1\nprint(x)```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nLet's call a positive integer good if there is no digit 0 in its decimal\
+  \ representation.\n\nFor an array of a good numbers a, one found out that the sum\
+  \ of some two neighboring elements is equal to x (i.e. x = a_i + a_{i + 1} for some\
+  \ i). x had turned out to be a good number as well.\n\nThen the elements of the\
+  \ array a were written out one after another without separators into one string\
+  \ s. For example, if a = [12, 5, 6, 133], then s = 1256133.\n\nYou are given a string\
+  \ s and a number x. Your task is to determine the positions in the string that correspond\
+  \ to the adjacent elements of the array that have sum x. If there are several possible\
+  \ answers, you can print any of them.\n\nInput\n\nThe first line contains the string\
+  \ s (2 \u2264 |s| \u2264 5 \u22C5 10^5).\n\nThe second line contains an integer\
+  \ x (2 \u2264 x < 10^{200000}).\n\nAn additional constraint on the input: the answer\
+  \ always exists, i.e you can always select two adjacent substrings of the string\
+  \ s so that if you convert these substrings to integers, their sum is equal to x.\n\
+  \nOutput\n\nIn the first line, print two integers l_1, r_1, meaning that the first\
+  \ term of the sum (a_i) is in the string s from position l_1 to position r_1.\n\n\
+  In the second line, print two integers l_2, r_2, meaning that the second term of\
+  \ the sum (a_{i + 1}) is in the string s from position l_2 to position r_2.\n\n\
+  Examples\n\nInput\n\n\n1256133\n17\n\n\nOutput\n\n\n1 2\n3 3\n\n\nInput\n\n\n9544715561\n\
+  525\n\n\nOutput\n\n\n2 3\n4 6\n\n\nInput\n\n\n239923\n5\n\n\nOutput\n\n\n1 1\n2\
+  \ 2\n\n\nInput\n\n\n1218633757639\n976272\n\n\nOutput\n\n\n2 7\n8 13\n\nNote\n\n\
+  In the first example s[1;2] = 12 and s[3;3] = 5, 12+5=17.\n\nIn the second example\
+  \ s[2;3] = 54 and s[4;6] = 471, 54+471=525.\n\nIn the third example s[1;1] = 2 and\
+  \ s[2;2] = 3, 2+3=5.\n\nIn the fourth example s[2;7] = 218633 and s[8;13] = 757639,\
+  \ 218633+757639=976272.\nA:"
+question: "Let's call a positive integer good if there is no digit 0 in its decimal\
+  \ representation.\n\nFor an array of a good numbers a, one found out that the sum\
+  \ of some two neighboring elements is equal to x (i.e. x = a_i + a_{i + 1} for some\
+  \ i). x had turned out to be a good number as well.\n\nThen the elements of the\
+  \ array a were written out one after another without separators into one string\
+  \ s. For example, if a = [12, 5, 6, 133], then s = 1256133.\n\nYou are given a string\
+  \ s and a number x. Your task is to determine the positions in the string that correspond\
+  \ to the adjacent elements of the array that have sum x. If there are several possible\
+  \ answers, you can print any of them.\n\nInput\n\nThe first line contains the string\
+  \ s (2 \u2264 |s| \u2264 5 \u22C5 10^5).\n\nThe second line contains an integer\
+  \ x (2 \u2264 x < 10^{200000}).\n\nAn additional constraint on the input: the answer\
+  \ always exists, i.e you can always select two adjacent substrings of the string\
+  \ s so that if you convert these substrings to integers, their sum is equal to x.\n\
+  \nOutput\n\nIn the first line, print two integers l_1, r_1, meaning that the first\
+  \ term of the sum (a_i) is in the string s from position l_1 to position r_1.\n\n\
+  In the second line, print two integers l_2, r_2, meaning that the second term of\
+  \ the sum (a_{i + 1}) is in the string s from position l_2 to position r_2.\n\n\
+  Examples\n\nInput\n\n\n1256133\n17\n\n\nOutput\n\n\n1 2\n3 3\n\n\nInput\n\n\n9544715561\n\
+  525\n\n\nOutput\n\n\n2 3\n4 6\n\n\nInput\n\n\n239923\n5\n\n\nOutput\n\n\n1 1\n2\
+  \ 2\n\n\nInput\n\n\n1218633757639\n976272\n\n\nOutput\n\n\n2 7\n8 13\n\nNote\n\n\
+  In the first example s[1;2] = 12 and s[3;3] = 5, 12+5=17.\n\nIn the second example\
+  \ s[2;3] = 54 and s[4;6] = 471, 54+471=525.\n\nIn the third example s[1;1] = 2 and\
+  \ s[2;2] = 3, 2+3=5.\n\nIn the fourth example s[2;7] = 218633 and s[8;13] = 757639,\
+  \ 218633+757639=976272."
+samples:
+- " ```s = input()\nx = int(input())\nfor i in range(len(s)):\n    for j in range(i\
+  \ + 1, len(s) + 1):\n        if int(s[i:j]) + int(s[j:]) == x:\n            print(i,\
+  \ j - 1)\n            print(j, len(s) - 1)\n            exit()\n``` Q:"
+- " ```s=input()\nx=int(input())\ni=0\nwhile i<len(s):\n    j=i+1\n    while j<len(s):\n\
+  \        a=int(s[i:j])\n        b=int(s[j:])\n        if a+b==x:\n            print(i+1,j)\n\
+  \            exit()\n        j+=1\n    i+=1```\nQ:"
+test_cases:
+  input:
+  - '1218633757639
+
+    976272
+
+    '
+  - '1256133
+
+    17
+
+    '
+  - '239923
+
+    5
+
+    '
+  - '9544715561
+
+    525
+
+    '
+  - '6724346775336763344646345654634456737536356367343567753377634557564556547345667475473663555555555555555555555555555555555555555555541
+
+    55555555555555555555555555555555555555555555
+
+    '
+  - '75341425222343324753425262324443346666666666666666666666666666666666
+
+    133333333333333332
+
+    '
+  - '7322541544213454245144115443733264165421346424524421645366666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333332
+
+    '
+  - '7451524554322352231431411334755253565432236224253242234466666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333332
+
+    '
+  - '1111111111111111111111111111111111111132222224322222329221
+
+    3222222432222232923
+
+    '
+  - '7215312222224424534455131241154521514145531513143222214722541322333553553546524124225553252425663162315333231566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333333333333332
+
+    '
+  - '75321244441512241155122155753322454526223412551322556666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333332
+
+    '
+  - '72221321134523541221543221331513321522225422722214211445335522216532213425144325222355236666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333333333333333333333332
+
+    '
+  - '723423221134423152233552724424221245524153243663666666666666666666666666666666666666666666666666
+
+    1333333333333333333333332
+
+    '
+  - '72542134554133511726422355551345116666666666666666666666666666666666
+
+    133333333333333332
+
+    '
+  - '741521344742521354666666666666666666
+
+    1333333332
+
+    '
+  - '7142152212435311313322444154224515315454312333214423554154355554134334815216222353541141433244515432461632556542344322543455425546666423433566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333333333333333333333333333332
+
+    '
+  - '7123435314341353543221534414154525324212245124451352241723343541544235354322154551415562632421335622555236235266666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333333333333332
+
+    '
+  - '7551344531325354443521233254132313152532342223765235553242535544463224435413241326354334322366666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333332
+
+    '
+  - '1389741136579513931291454542257669814123353188882921233371869112934592515884229891613876299881532549
+
+    1869118859
+
+    '
+  - '77
+
+    14
+
+    '
+  - '7321135545352243251333425445513242544554143354732124565645325425144442655562424354455524446566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333332
+
+    '
+  - '725252531112121212735353532112121223666666666666666666666666666666666666
+
+    1333333333333333332
+
+    '
+  - '74451523315422515524213224231233555244415442755526234265226155352243243412335662555155436666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333333333333333333333332
+
+    '
+  - '7111111214111111552722222221522222256366666666666666666666666666666666666666
+
+    13333333333333333332
+
+    '
+  - '7515252522752535363266666666666666666666
+
+    13333333332
+
+    '
+  - '72435133535314454515551153143454121434233153245335513342155515735461435454255556155622641434642315442442543463355134432556166666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333333333333333333333333333333333333333332
+
+    '
+  - '721523533542244514253454222454252551141552312244432331244233721533543552254625264465223565352561251562323354542431244334166666666666666666666666666666666666666661333333333333333333316666666666666666666666666666666666666666
+
+    1333333333333333333333333333333333333333333333333333333333332
+
+    '
+  - '723423215525454544222115724424226625464545223126666666666666666666666666666666666666666666666666
+
+    1333333333333333333333332
+
+    '
+  - '7121241524253335342723135263525334534366666666666666666666666666666666666666
+
+    13333333333333333332
+
+    '
+  - '1111111111111111111111111111111111111132222222382222222841
+
+    3222222238222222285
+
+    '
+  - '7213421422513211131231351222731342253262332224224236233266666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333332
+
+    '
+  - '7111115552722222565366666666666666666666
+
+    13333333332
+
+    '
+  - '7155435311353333135234223554112212513224414324726654632245443424623532365422321352333541542466666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333332
+
+    '
+  - '71111543323213312542532145423325212422232121453313424531534114534445235821225443242143236535432565244263135332321225543244346425452156444552356666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333333333333333333333333333333333333333333333333332
+
+    '
+  - '73233433145135133542323554241115544313331743435432561461346433336542422256454133416666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    133333333333333333333333333333333333333332
+
+    '
+  - '7125352343513324311722545234462442542266666666666666666666666666666666666666
+
+    13333333333333333332
+
+    '
+  - '722552511241531111354442321415344442554313145373355362125153222236444332242635544365542425636666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666611111111111112345
+
+    13333333333333333333333333333333333333333333332
+
+    '
+  - '7215352445451415433545542342722536345555242543465554334366666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333332
+
+    '
+  - '63451234887584191635778146328716294424124839893546
+
+    6996469335
+
+    '
+  - '44
+
+    8
+
+    '
+  - '49912217999385523554991221799938552355119789323198525256511
+
+    11978932319852525652
+
+    '
+  - '7111551231232252334251215245512545222422334212821166234233225334536131635662255523243234522266666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333333333333333332
+
+    '
+  - '8993916542682434571141424849823473251739621791489112772491331576369966321319943333635595635194459724
+
+    78613
+
+    '
+  - '711124452213553314344225233225434151523143351534352345431114214332231544215331142722224552224653425354335334235445262624243452635453346542215315333342654215341143666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    1333333333333333333333333333333333333333333333333333333333333333333333333333333332
+
+    '
+  - '712124152425333534311111111111111111723135263525334534322222222222222221666666666666666666666666666666666666666666666666666666666666666666666666
+
+    1333333333333333333333333333333333332
+
+    '
+  - '5727944836753191447441188857216798214675797767295497143968172216181828777762464112176717672592669436
+
+    16993845184753532657289664818579199818525236939897
+
+    '
+  - '7114542154142244353344334341423243821554325524325546444533534143424366666666666666666666666666666666666666666666666666666666666666666666
+
+    13333333333333333333333333333333332
+
+    '
+  - '1256133
+
+    16
+
+    '
+  - '1256133
+
+    26
+
+    '
+  - '1256133
+
+    4
+
+    '
+  - '1256133
+
+    3
+
+    '
+  - '1256133
+
+    19
+
+    '
+  - '1256133
+
+    6
+
+    '
+  - '1256133
+
+    7
+
+    '
+  - '1256133
+
+    11
+
+    '
+  - '1256133
+
+    31
+
+    '
+  - '8993916542682434571141424849823473251739621791489112772491331576369966321319943333635595635194459724
+
+    57115
+
+    '
+  - '1256133
+
+    34
+
+    '
+  - '1256133
+
+    58
+
+    '
+  - '1256133
+
+    57
+
+    '
+  - '9544715561
+
+    759
+
+    '
+  - '1256133
+
+    86
+
+    '
+  - '1256133
+
+    64
+
+    '
+  output:
+  - '2 7
+
+    8 13'
+  - '1 2
+
+    3 3'
+  - '1 1
+
+    2 2'
+  - '2 3
+
+    4 6'
+  - '89 132
+
+    133 133'
+  - '35 51
+
+    52 68'
+  - '57 84
+
+    85 112'
+  - '57 84
+
+    85 112'
+  - '38 38
+
+    39 57'
+  - '111 165
+
+    166 220'
+  - '53 78
+
+    79 104'
+  - '89 132
+
+    133 176'
+  - '49 72
+
+    73 96'
+  - '35 51
+
+    52 68'
+  - '19 27
+
+    28 36'
+  - '141 210
+
+    211 280'
+  - '111 165
+
+    166 220'
+  - '93 138
+
+    139 184'
+  - '58 67
+
+    68 71'
+  - '1 1
+
+    2 2'
+  - '93 138
+
+    139 184'
+  - '37 54
+
+    55 72'
+  - '89 132
+
+    133 176'
+  - '39 57
+
+    58 76'
+  - '21 30
+
+    31 40'
+  - '124 185
+
+    186 247'
+  - '121 161
+
+    162 222'
+  - '48 71
+
+    72 95'
+  - '39 57
+
+    58 76'
+  - '38 38
+
+    39 57'
+  - '57 84
+
+    85 112'
+  - '21 30
+
+    31 40'
+  - '93 138
+
+    139 184'
+  - '143 213
+
+    214 284'
+  - '83 123
+
+    124 164'
+  - '39 57
+
+    58 76'
+  - '93 138
+
+    139 184'
+  - '57 84
+
+    85 112'
+  - '28 37
+
+    38 47'
+  - '1 1
+
+    2 2'
+  - '39 58
+
+    59 59'
+  - '93 138
+
+    139 184'
+  - '8 12
+
+    13 17'
+  - '163 243
+
+    244 324'
+  - '73 108
+
+    109 144'
+  - '2 50
+
+    51 99'
+  - '69 102
+
+    103 136'
+  - '5 6
+
+    7 7
+
+    '
+  - '1 1
+
+    2 3
+
+    '
+  - '5 5
+
+    6 6
+
+    '
+  - '1 1
+
+    2 2
+
+    '
+  - '4 4
+
+    5 6
+
+    '
+  - '6 6
+
+    7 7
+
+    '
+  - '2 2
+
+    3 3
+
+    '
+  - '3 3
+
+    4 4
+
+    '
+  - '2 3
+
+    4 4
+
+    '
+  - '17 21
+
+    22 22
+
+    '
+  - '5 5
+
+    6 7
+
+    '
+  - '2 2
+
+    3 4
+
+    '
+  - '3 4
+
+    5 5
+
+    '
+  - '3 4
+
+    5 7
+
+    '
+  - '2 3
+
+    4 5
+
+    '
+  - '4 5
+
+    6 6
+
+    '
+timeout: 2.0

@@ -1,0 +1,3524 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nIn the middle\
+  \ of Tyrrhenian Sea, there is a small volcanic island called Chronus. The island\
+  \ is now uninhabited but it used to be a civilized island. Some historical records\
+  \ imply that the island was annihilated by an eruption of a volcano about 800 years\
+  \ ago and that most of the people in the island were killed by pyroclastic flows\
+  \ caused by the volcanic activity. In 2003, a European team of archaeologists launched\
+  \ an excavation project in Chronus Island. Since then, the project has provided\
+  \ many significant historic insights. In particular the discovery made in the summer\
+  \ of 2008 astonished the world: the project team excavated several mechanical watches\
+  \ worn by the victims of the disaster. This indicates that people in Chronus Island\
+  \ had such a highly advanced manufacturing technology.\n\nShortly after the excavation\
+  \ of the watches, archaeologists in the team tried to identify what time of the\
+  \ day the disaster happened, but it was not successful due to several difficulties.\
+  \ First, the extraordinary heat of pyroclastic flows severely damaged the watches\
+  \ and took away the letters and numbers printed on them. Second, every watch has\
+  \ a perfect round form and one cannot tell where the top of the watch is. Lastly,\
+  \ though every watch has three hands, they have a completely identical look and\
+  \ therefore one cannot tell which is the hour, the minute, or the second (It is\
+  \ a mystery how the people in Chronus Island were distinguishing the three hands.\
+  \ Some archaeologists guess that the hands might be painted with different colors,\
+  \ but this is only a hypothesis, as the paint was lost by the heat. ). This means\
+  \ that we cannot decide the time indicated by a watch uniquely; there can be a number\
+  \ of candidates. We have to consider different rotations of the watch. Furthermore,\
+  \ since there are several possible interpretations of hands, we have also to consider\
+  \ all the permutations of hands.\n\nYou are an information archaeologist invited\
+  \ to the project team and are asked to induce the most plausible time interval within\
+  \ which the disaster happened, from the set of excavated watches.\n\nIn what follows,\
+  \ we express a time modulo 12 hours. We write a time by the notation hh:mm:ss, where\
+  \ hh, mm, and ss stand for the hour (hh = 00, 01, 02, . . . , 11), the minute (mm\
+  \ = 00, 01, 02, . . . , 59), and the second (ss = 00, 01, 02, . . . , 59), respectively.\
+  \ The time starts from 00:00:00 and counts up every second 00:00:00, 00:00:01, 00:00:02,\
+  \ . . ., but it reverts to 00:00:00 every 12 hours.\n\nThe watches in Chronus Island\
+  \ obey the following conventions of modern analog watches.\n\n* A watch has three\
+  \ hands, i.e. the hour hand, the minute hand, and the second hand, though they look\
+  \ identical as mentioned above.\n* Every hand ticks 6 degrees clockwise in a discrete\
+  \ manner. That is, no hand stays between ticks, and each hand returns to the same\
+  \ position every 60 ticks.\n* The second hand ticks every second.\n* The minute\
+  \ hand ticks every 60 seconds.\n* The hour hand ticks every 12 minutes.\n\n\n\n\
+  At the time 00:00:00, all the three hands are located at the same position.\n\n\
+  Because people in Chronus Island were reasonably keen to keep their watches correct\
+  \ and pyroclastic flows spread over the island quite rapidly, it can be assumed\
+  \ that all the watches were stopped in a short interval of time. Therefore it is\
+  \ highly expected that the time the disaster happened is in the shortest time interval\
+  \ within which all the excavated watches have at least one candidate time.\n\nYou\
+  \ must calculate the shortest time interval and report it to the project team.\n\
+  \n\n\nInput\n\nThe input consists of multiple datasets, each of which is formatted\
+  \ as follows.\n\nn\ns1 t1 u1\ns2 t2 u2\n.\n.\n.\nsn tn un\n\n\nThe first line contains\
+  \ a single integer n (2 \u2264 n \u2264 10), representing the number of the watches.\
+  \ The three numbers si , ti , ui in each line are integers such that 0 \u2264 si\
+  \ ,ti , ui \u2264 59 and they specify the positions of the three hands by the number\
+  \ of ticks relative to an arbitrarily chosen position.\n\nNote that the positions\
+  \ of the hands of a watch can be expressed in many different ways. For example,\
+  \ if a watch was stopped at the time 11:55:03, the positions of hands can be expressed\
+  \ differently by rotating the watch arbitrarily (e.g. 59 55 3, 0 56 4, 1 57 5, etc.)\
+  \ and as well by permuting the hour, minute, and second hands arbitrarily (e.g.\
+  \ 55 59 3, 55 3 59, 3 55 59, etc.).\n\nThe end of the input is indicated by a line\
+  \ containing a single zero.\n\nOutput\n\nFor each dataset, output the shortest time\
+  \ interval within which all the watches given in the dataset have at least one candidate\
+  \ time. The output must be written in a single line in the following format for\
+  \ each dataset.\n\nhh:mm:ss h'h':m'm':s's'\n\nEach line contains a pair of times\
+  \ hh:mm:ss and, h'h':m'm':s's' indicating that the shortest interval begins at hh:mm:ss\
+  \ and ends at h'h':m'm':s's' inclusive. The beginning time and the ending time are\
+  \ separated by a single space and each of them should consist of hour, minute, and\
+  \ second in two digits separated by colons. No extra characters should appear in\
+  \ the output.\n\nIn calculating the shortest interval, you can exploit the facts\
+  \ that every watch has at least one candidate time and that the shortest time interval\
+  \ contains 00:00:00 only if the interval starts from 00:00:00 (i.e. the shortest\
+  \ interval terminates before the time reverts to 00:00:00).\n\nIf there is more\
+  \ than one time interval that gives the shortest, output the one that first comes\
+  \ after 00:00:00 inclusive.\n\nExample\n\nInput\n\n3\n8 8 18\n32 32 32\n57 2 57\n\
+  5\n49 3 49\n7 30 44\n27 21 21\n33 56 56\n21 46 4\n3\n45 52 28\n36 26 36\n20 55 50\n\
+  10\n33 8 39\n50 57 43\n35 21 12\n21 17 11\n16 21 58\n45 40 53\n45 30 53\n39 1 8\n\
+  55 48 30\n7 48 15\n0\n\n\nOutput\n\n00:00:00 00:00:10\n06:14:56 06:32:09\n07:27:37\
+  \ 07:32:02\n05:17:40 05:21:03\nA: ```from itertools import permutations\nBASE =\
+  \ 12*3600\ndef convert(v):\n    return \"%02d:%02d:%02d\" % (v // 3600, (v // 60)\
+  \ % 60, v % 60)\nwhile 1:\n    N = int(input())\n    if N == 0:\n        break\n\
+  \    R = set()\n    L = []\n    for i in range(N):\n        ts = set()\n       \
+  \ *E, = map(int, input().split())\n        for a, b, c in permutations(E, r=3):\n\
+  \            for i in range(60):\n                h = (a+i) % 60; m = (b+i)%60;\
+  \ s = (c+i) % 60\n                if m // 12 == h % 5:\n                    v =\
+  \ 3600*(h//5) + 60*m + s\n                    ts.add(v)\n                    R.add(v)\n\
+  \        L.append(sorted(ts))\n    R = sorted(R)\n    res = 13*3600; mi = ma = 0\n\
+  \    C = [0]*N\n    for r in R:\n        s = r\n        for i in range(N):\n   \
+  \         c = C[i]; ts = L[i]; l = len(ts)\n            while c < l and ts[c] <\
+  \ r:\n                c += 1\n            C[i] = c\n            if c == l:\n   \
+  \             s = max(s, BASE + ts[0])\n            else:\n                s = max(s,\
+  \ ts[c])\n        if s - r < res:\n            res = s - r\n            mi = r %\
+  \ BASE; ma = s % BASE\n    print(\"%s %s\" % (convert(mi), convert(ma)))```\nQ:\
+  \ Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nThis morning Tolik has\
+  \ understood that while he was sleeping he had invented an incredible problem which\
+  \ will be a perfect fit for Codeforces! But, as a \"Discuss tasks\" project hasn't\
+  \ been born yet (in English, well), he decides to test a problem and asks his uncle.\n\
+  \nAfter a long time thinking, Tolik's uncle hasn't any ideas on how to solve it.\
+  \ But, he doesn't want to tell Tolik about his inability to solve it, so he hasn't\
+  \ found anything better than asking you how to solve this task.\n\nIn this task\
+  \ you are given a cell field n \u22C5 m, consisting of n rows and m columns, where\
+  \ point's coordinates (x, y) mean it is situated in the x-th row and y-th column,\
+  \ considering numeration from one (1 \u2264 x \u2264 n, 1 \u2264 y \u2264 m). Initially,\
+  \ you stand in the cell (1, 1). Every move you can jump from cell (x, y), which\
+  \ you stand in, by any non-zero vector (dx, dy), thus you will stand in the (x+dx,\
+  \ y+dy) cell. Obviously, you can't leave the field, but also there is one more important\
+  \ condition \u2014 you're not allowed to use one vector twice. Your task is to visit\
+  \ each cell of the field exactly once (the initial cell is considered as already\
+  \ visited).\n\nTolik's uncle is a very respectful person. Help him to solve this\
+  \ task!\n\nInput\n\nThe first and only line contains two positive integers n, m\
+  \ (1 \u2264 n \u22C5 m \u2264 10^{6}) \u2014 the number of rows and columns of the\
+  \ field respectively.\n\nOutput\n\nPrint \"-1\" (without quotes) if it is impossible\
+  \ to visit every cell exactly once.\n\nElse print n \u22C5 m pairs of integers,\
+  \ i-th from them should contain two integers x_i, y_i (1 \u2264 x_i \u2264 n, 1\
+  \ \u2264 y_i \u2264 m) \u2014 cells of the field in order of visiting, so that all\
+  \ of them are distinct and vectors of jumps between them are distinct too.\n\nNotice\
+  \ that the first cell should have (1, 1) coordinates, according to the statement.\n\
+  \nExamples\n\nInput\n\n\n2 3\n\n\nOutput\n\n\n1 1\n1 3\n1 2\n2 2\n2 3\n2 1\n\nInput\n\
+  \n\n1 1\n\n\nOutput\n\n\n1 1\n\nNote\n\nThe vectors from the first example in the\
+  \ order of making jumps are (0, 2), (0, -1), (1, 0), (0, 1), (0, -2).\nA: ```# [0,0,0]\n\
+  # [0,0,0]\n\n# [1,0,0]\n# [0,0,0]\n# [0,0,0]\n\n# [1,0,1]\n# [0,0,0]\n# [0,0,0]\n\
+  \n# [1,1,1]\n# [0,0,0]\n# [0,0,0]\n\n# [1,1,1]\n# [0,0,1]\n# [0,0,0]\n# [0,0,0]\
+  \ 3,2\n#\n# 0,0 3,2\n# 0,1 3,1\n# 0,2 3,0\n# 1,0 2,2\n# 1,1 2,1\n# 1,2 2,0\n\n\n\
+  n, m = map(int, input().split())\nans = []\nif n % 2 == 0:\n    for i in range(int(n\
+  \ / 2)):\n        for j in range(m):\n\n            ans.append(f'{i+1} {j+1}')\n\
+  \            ans.append(f'{n-i} {m-j}')\nelse:\n    for i in range(int(n / 2)):\n\
+  \        for j in range(m):\n            ans.append(f'{i+1} {j+1}')\n          \
+  \  ans.append(f'{n-i} {m-j}')\n    mid = int(n/2)\n    for j in range(m//2):\n \
+  \       ans.append(f'{mid+1} {j+1}')\n        ans.append(f'{mid+1} {m-j}')\n   \
+  \ if m % 2 != 0:\n        ans.append(f'{n//2+1} {m//2+1}')\nprint('\\n'.join(ans))\n\
+  \"\"\"\n0 0 0\n0 0 0\n\n1 0 0\n0 0 0\n\n1 0 0\n0 0 1\n\n1 1 0\n0 0 1\n\n1 1 0\n\
+  0 1 1\n\n1 1 1\n0 1 1\n\n1 1 1\n1 1 1\n\n\"\"\"```\nQ: Write python code to solve\
+  \ the following coding problem that obeys the constraints and passes the example\
+  \ test cases. The output code needs to read from and write to standard IO. Please\
+  \ wrap your code answer using ```:\nAlice and Bob play the following game. Alice\
+  \ has a set S of disjoint ranges of integers, initially containing only one range\
+  \ [1, n]. In one turn, Alice picks a range [l, r] from the set S and asks Bob to\
+  \ pick a number in the range. Bob chooses a number d (l \u2264 d \u2264 r). Then\
+  \ Alice removes [l, r] from S and puts into the set S the range [l, d - 1] (if l\
+  \ \u2264 d - 1) and the range [d + 1, r] (if d + 1 \u2264 r). The game ends when\
+  \ the set S is empty. We can show that the number of turns in each game is exactly\
+  \ n.\n\nAfter playing the game, Alice remembers all the ranges [l, r] she picked\
+  \ from the set S, but Bob does not remember any of the numbers that he picked. But\
+  \ Bob is smart, and he knows he can find out his numbers d from Alice's ranges,\
+  \ and so he asks you for help with your programming skill.\n\nGiven the list of\
+  \ ranges that Alice has picked ([l, r]), for each range, help Bob find the number\
+  \ d that Bob has picked.\n\nWe can show that there is always a unique way for Bob\
+  \ to choose his number for a list of valid ranges picked by Alice.\n\nInput\n\n\
+  Each test contains multiple test cases. The first line contains the number of test\
+  \ cases t (1 \u2264 t \u2264 1000). Description of the test cases follows.\n\nThe\
+  \ first line of each test case contains a single integer n (1 \u2264 n \u2264 1000).\n\
+  \nEach of the next n lines contains two integers l and r (1 \u2264 l \u2264 r \u2264\
+  \ n), denoting the range [l, r] that Alice picked at some point.\n\nNote that the\
+  \ ranges are given in no particular order.\n\nIt is guaranteed that the sum of n\
+  \ over all test cases does not exceed 1000, and the ranges for each test case are\
+  \ from a valid game.\n\nOutput\n\nFor each test case print n lines. Each line should\
+  \ contain three integers l, r, and d, denoting that for Alice's range [l, r] Bob\
+  \ picked the number d.\n\nYou can print the lines in any order. We can show that\
+  \ the answer is unique.\n\nIt is not required to print a new line after each test\
+  \ case. The new lines in the output of the example are for readability only. \n\n\
+  Example\n\nInput\n\n\n4\n1\n1 1\n3\n1 3\n2 3\n2 2\n6\n1 1\n3 5\n4 4\n3 6\n4 5\n\
+  1 6\n5\n1 5\n1 2\n4 5\n2 2\n4 4\n\n\nOutput\n\n\n1 1 1\n\n1 3 1\n2 2 2\n2 3 3\n\n\
+  1 1 1\n3 5 3\n4 4 4\n3 6 6\n4 5 5\n1 6 2\n\n1 5 3\n1 2 1\n4 5 5\n2 2 2\n4 4 4\n\n\
+  Note\n\nIn the first test case, there is only 1 range [1, 1]. There was only one\
+  \ range [1, 1] for Alice to pick, and there was only one number 1 for Bob to pick.\n\
+  \nIn the second test case, n = 3. Initially, the set contains only one range [1,\
+  \ 3]. \n\n  * Alice picked the range [1, 3]. Bob picked the number 1. Then Alice\
+  \ put the range [2, 3] back to the set, which after this turn is the only range\
+  \ in the set. \n  * Alice picked the range [2, 3]. Bob picked the number 3. Then\
+  \ Alice put the range [2, 2] back to the set. \n  * Alice picked the range [2, 2].\
+  \ Bob picked the number 2. The game ended. \n\n\n\nIn the fourth test case, the\
+  \ game was played with n = 5. Initially, the set contains only one range [1, 5].\
+  \ The game's turn is described in the following table. \n\nGame turn| Alice's picked\
+  \ range| Bob's picked number| The range set after  \n---|---|---|---  \nBefore the\
+  \ game start| | |  \\{ [1, 5] \\}   \n1| [1, 5]| 3|  \\{ [1, 2], [4, 5] \\}  \n\
+  2| [1, 2]| 1|  \\{ [2, 2], [4, 5] \\}   \n3| [4, 5]| 5|  \\{ [2, 2], [4, 4] \\}\
+  \   \n4| [2, 2]| 2|  \\{ [4, 4] \\}   \n5| [4, 4]| 4|  \\{ \\}  (empty set)\nA:"
+question: "Alice and Bob play the following game. Alice has a set S of disjoint ranges\
+  \ of integers, initially containing only one range [1, n]. In one turn, Alice picks\
+  \ a range [l, r] from the set S and asks Bob to pick a number in the range. Bob\
+  \ chooses a number d (l \u2264 d \u2264 r). Then Alice removes [l, r] from S and\
+  \ puts into the set S the range [l, d - 1] (if l \u2264 d - 1) and the range [d\
+  \ + 1, r] (if d + 1 \u2264 r). The game ends when the set S is empty. We can show\
+  \ that the number of turns in each game is exactly n.\n\nAfter playing the game,\
+  \ Alice remembers all the ranges [l, r] she picked from the set S, but Bob does\
+  \ not remember any of the numbers that he picked. But Bob is smart, and he knows\
+  \ he can find out his numbers d from Alice's ranges, and so he asks you for help\
+  \ with your programming skill.\n\nGiven the list of ranges that Alice has picked\
+  \ ([l, r]), for each range, help Bob find the number d that Bob has picked.\n\n\
+  We can show that there is always a unique way for Bob to choose his number for a\
+  \ list of valid ranges picked by Alice.\n\nInput\n\nEach test contains multiple\
+  \ test cases. The first line contains the number of test cases t (1 \u2264 t \u2264\
+  \ 1000). Description of the test cases follows.\n\nThe first line of each test case\
+  \ contains a single integer n (1 \u2264 n \u2264 1000).\n\nEach of the next n lines\
+  \ contains two integers l and r (1 \u2264 l \u2264 r \u2264 n), denoting the range\
+  \ [l, r] that Alice picked at some point.\n\nNote that the ranges are given in no\
+  \ particular order.\n\nIt is guaranteed that the sum of n over all test cases does\
+  \ not exceed 1000, and the ranges for each test case are from a valid game.\n\n\
+  Output\n\nFor each test case print n lines. Each line should contain three integers\
+  \ l, r, and d, denoting that for Alice's range [l, r] Bob picked the number d.\n\
+  \nYou can print the lines in any order. We can show that the answer is unique.\n\
+  \nIt is not required to print a new line after each test case. The new lines in\
+  \ the output of the example are for readability only. \n\nExample\n\nInput\n\n\n\
+  4\n1\n1 1\n3\n1 3\n2 3\n2 2\n6\n1 1\n3 5\n4 4\n3 6\n4 5\n1 6\n5\n1 5\n1 2\n4 5\n\
+  2 2\n4 4\n\n\nOutput\n\n\n1 1 1\n\n1 3 1\n2 2 2\n2 3 3\n\n1 1 1\n3 5 3\n4 4 4\n\
+  3 6 6\n4 5 5\n1 6 2\n\n1 5 3\n1 2 1\n4 5 5\n2 2 2\n4 4 4\n\nNote\n\nIn the first\
+  \ test case, there is only 1 range [1, 1]. There was only one range [1, 1] for Alice\
+  \ to pick, and there was only one number 1 for Bob to pick.\n\nIn the second test\
+  \ case, n = 3. Initially, the set contains only one range [1, 3]. \n\n  * Alice\
+  \ picked the range [1, 3]. Bob picked the number 1. Then Alice put the range [2,\
+  \ 3] back to the set, which after this turn is the only range in the set. \n  *\
+  \ Alice picked the range [2, 3]. Bob picked the number 3. Then Alice put the range\
+  \ [2, 2] back to the set. \n  * Alice picked the range [2, 2]. Bob picked the number\
+  \ 2. The game ended. \n\n\n\nIn the fourth test case, the game was played with n\
+  \ = 5. Initially, the set contains only one range [1, 5]. The game's turn is described\
+  \ in the following table. \n\nGame turn| Alice's picked range| Bob's picked number|\
+  \ The range set after  \n---|---|---|---  \nBefore the game start| | |  \\{ [1,\
+  \ 5] \\}   \n1| [1, 5]| 3|  \\{ [1, 2], [4, 5] \\}  \n2| [1, 2]| 1|  \\{ [2, 2],\
+  \ [4, 5] \\}   \n3| [4, 5]| 5|  \\{ [2, 2], [4, 4] \\}   \n4| [2, 2]| 2|  \\{ [4,\
+  \ 4] \\}   \n5| [4, 4]| 4|  \\{ \\}  (empty set)"
+samples:
+- " ```# [0,0,0]\n# [0,0,0]\n\n# [1,0,0]\n# [0,0,0]\n# [0,0,0]\n\n# [1,0,0]\n# [0,0,1]\n\
+  # [0,0,0]\n# [0,0,0]\n\n# [1,1,0]\n# [0,0,1]\n# [0,0,0]\n# [0,1,1]\n\n# [1,1,0]\n\
+  # [0,1,1]\n# [0,0,1]\n# [0,0,0]\n# [0,0,0]\n\n# [1,1,1]\n# [0,1,1]\n# [0,0,1]\n\
+  # [0,0,0]\n# [0,0,0]\n# [0,0,0]\n\nn, m = map(int, input().split())\nans = []\n\
+  if n % 2 == 0:\n    for i in range(int(n / 2)):\n        for j in range(m):\n\n\
+  \            ans.append(f'{i+1} {j+1}')\n            ans.append(f'{n-i} {m-j}')\n\
+  else:\n    for i in range(int(n / 2)):\n        for j in range(m):\n           \
+  \ ans.append(f'{i+1} {j+1}')\n            ans.append(f'{n-i} {m-j}')\n    mid =\
+  \ int(n/2)\n    for j in range(m//2):\n        ans.append(f'{mid+1} {j+1}')\n  \
+  \      ans.append(f'{mid+1} {m-j}')\n    if m % 2 != 0:\n        ans.append(f'{n//2+1}\
+  \ {m//2+1}')\nprint('\\n'.join(ans))\n\"\"\"\n0 0 0\n0 0 0\n\n1 0 0\n0 0 0\n\n1\
+  \ 0 0\n0 0 1\n\n1 1 0\n0 0 1\n\n1 1 0\n0 1 1\n\n1 1 1\n0 1 1\n\n1 1 1\n1 1 1\n\n\
+  \"\"\"```\nQ:"
+- " ```# [0,0,0]\n# [0,0,0]\n\n# [1,0,0]\n# [0,0,0]\n# [0,0,0]\n\n# [1,0,0]\n# [0,0,1]\n\
+  # [0,0,0]\n# [0,0,0] 3,2\n#\n# 0,0 3,2\n# 0,1 3,1\n# 0,2 3,0\n# 1,0 2,2\n# 1,1 2,1\n\
+  # 1,2 2,0\n\n\nn, m = map(int, input().split())\nans = []\nif n % 2 == 0:\n    for\
+  \ i in range(int(n / 2)):\n        for j in range(m):\n\n            ans.append(f'{i+1}\
+  \ {j+1}')\n            ans.append(f'{n-i} {m-j}')\nelse:\n    for i in range(int(n\
+  \ / 2)):\n        for j in range(m):\n            ans.append(f'{i+1} {j+1}')\n \
+  \           ans.append(f'{n-i} {m-j}')\n    mid = int(n/2)\n    for j in range(m//2):\n\
+  \        ans.append(f'{mid+1} {j+1}')\n        ans.append(f'{mid+1} {m-j}')\n  \
+  \  if m % 2 != 0:\n        ans.append(f'{n//2+1} {m//2+1}')\nprint('\\n'.join(ans))\n\
+  \"\"\"\n0 0 0\n0 0 0\n\n1 0 0\n0 0 0\n\n1 0 0\n0 0 1\n\n1 1 0\n0 0 1\n\n1 1 0\n\
+  0 1 1\n\n1 1 1\n0 1 1\n\n1 1 1\n1 1 1\n\n\"\"\"```\nQ:"
+test_cases:
+  input:
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 1
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 3
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 4
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 5
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 3
+
+    1 2
+
+    3 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    1 5
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    4 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 5
+
+    5
+
+    1 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 3
+
+    1 1
+
+    3 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    4 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    1 6
+
+    5
+
+    3 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 4
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 4
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 3
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    1 6
+
+    5
+
+    1 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 1
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    3 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 4
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 4
+
+    1 2
+
+    1 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 5
+
+    2 3
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 4
+
+    1 4
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    6 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 5
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    6 6
+
+    4 5
+
+    1 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    1 4
+
+    1 1
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    1 6
+
+    5
+
+    1 4
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 1
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 5
+
+    4 4
+
+    3 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  - '4
+
+    1
+
+    1 1
+
+    3
+
+    1 3
+
+    2 3
+
+    2 2
+
+    6
+
+    1 1
+
+    3 4
+
+    4 4
+
+    6 6
+
+    4 5
+
+    2 6
+
+    5
+
+    2 5
+
+    1 2
+
+    4 5
+
+    2 2
+
+    4 4
+
+    '
+  output:
+  - '1 1 1
+
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+
+    '
+  - '1 1 1
+
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    1 1 1
+
+    2 2 2
+
+    2 3 3
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 3 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 4 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 5 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    1 3 3
+
+    3 5 5
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    1 5 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    4 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 5 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    1 3 3
+
+    3 5 5
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    4 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    1 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    1 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    1 4 1
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 4 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    1 3 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    1 1 1
+
+    2 2 2
+
+    2 3 3
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    3 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 4 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    1 4 3
+
+    1 5 5
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    2 3 3
+
+    4 5 5
+
+    1 5 1
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    2 4 3
+
+    1 4 1
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    4 5 5
+
+    3 5 3
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    3 4 3
+
+    4 5 5
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    1 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    3 4 3
+
+    4 5 5
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    1 1 1
+
+    2 2 2
+
+    4 4 4
+
+    4 5 5
+
+    1 4 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    1 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    1 4 3
+
+
+    '
+  - '1 1 1
+
+
+    1 1 1
+
+    2 2 2
+
+    2 3 3
+
+
+    1 1 1
+
+    4 4 4
+
+    4 5 5
+
+    3 5 3
+
+    3 6 6
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+  - '1 1 1
+
+
+    2 2 2
+
+    2 3 3
+
+    1 3 1
+
+
+    1 1 1
+
+    4 4 4
+
+    6 6 6
+
+    3 4 3
+
+    4 5 5
+
+    2 6 2
+
+
+    2 2 2
+
+    4 4 4
+
+    1 2 1
+
+    4 5 5
+
+    2 5 3
+
+
+    '
+timeout: 1.0

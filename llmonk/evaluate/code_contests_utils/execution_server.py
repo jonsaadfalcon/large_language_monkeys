@@ -78,6 +78,8 @@ def execute_python_code(request: ExecuteCodeRequest):
             with open(temp.name, "w") as f:
                 f.write(request.code)
 
+            breakpoint()
+
             for input_str, expected_output in request.input_expected_output_pairs:
                 # Intentionally serial - most programs fail.
                 actual_output = execute_with_input(
@@ -86,6 +88,8 @@ def execute_python_code(request: ExecuteCodeRequest):
                     timeout=request.timeout,
                     memory_limit_bytes=request.memory_limit_bytes,
                 )
+
+                breakpoint()
 
                 if actual_output is None or not outputs_match(expected_output, actual_output):
                     return ExecuteCodeResult(correct=False)

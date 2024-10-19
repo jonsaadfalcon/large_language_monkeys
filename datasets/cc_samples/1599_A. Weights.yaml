@@ -1,0 +1,3782 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nDecades have\
+  \ passed since the beginning of AtCoder Beginner Contest.\n\nThe contests are labeled\
+  \ as `ABC001`, `ABC002`, ... from the first round, but after the 999-th round `ABC999`,\
+  \ a problem occurred: how the future rounds should be labeled?\n\nIn the end, the\
+  \ labels for the rounds from the 1000-th to the 1998-th are decided: `ABD001`, `ABD002`,\
+  \ ..., `ABD999`.\n\nYou are given an integer N between 1 and 1998 (inclusive). Print\
+  \ the first three characters of the label of the N-th round of AtCoder Beginner\
+  \ Contest.\n\nConstraints\n\n* 1 \\leq N \\leq 1998\n* N is an integer.\n\nInput\n\
+  \nInput is given from Standard Input in the following format:\n\n\nN\n\n\nOutput\n\
+  \nPrint the first three characters of the label of the N-th round of AtCoder Beginner\
+  \ Contest.\n\nExamples\n\nInput\n\n999\n\n\nOutput\n\nABC\n\n\nInput\n\n1000\n\n\
+  \nOutput\n\nABD\n\n\nInput\n\n1481\n\n\nOutput\n\nABD\nA: ```print([\"ABD\",\"ABC\"\
+  ][len(input())<4])```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nYou are given a string s of length n, which consists only of the first k\
+  \ letters of the Latin alphabet. All letters in string s are uppercase.\n\nA subsequence\
+  \ of string s is a string that can be derived from s by deleting some of its symbols\
+  \ without changing the order of the remaining symbols. For example, \"ADE\" and\
+  \ \"BD\" are subsequences of \"ABCDE\", but \"DEA\" is not.\n\nA subsequence of\
+  \ s called good if the number of occurences of each of the first k letters of the\
+  \ alphabet is the same.\n\nFind the length of the longest good subsequence of s.\
+  \ \n\nInput\n\nThe first line of the input contains integers n (1\u2264 n \u2264\
+  \ 10^5) and k (1 \u2264 k \u2264 26).\n\nThe second line of the input contains the\
+  \ string s of length n. String s only contains uppercase letters from 'A' to the\
+  \ k-th letter of Latin alphabet.\n\nOutput\n\nPrint the only integer \u2014 the\
+  \ length of the longest good subsequence of string s.\n\nExamples\n\nInput\n\n9\
+  \ 3\nACAABCCAB\n\n\nOutput\n\n6\n\nInput\n\n9 4\nABCABCABC\n\n\nOutput\n\n0\n\n\
+  Note\n\nIn the first example, \"ACBCAB\" (\"ACAABCCAB\") is one of the subsequences\
+  \ that has the same frequency of 'A', 'B' and 'C'. Subsequence \"CAB\" also has\
+  \ the same frequency of these letters, but doesn't have the maximum possible length.\n\
+  \nIn the second example, none of the subsequences can have 'D', hence the answer\
+  \ is 0.\nA: ```n,k = list(map(int,input().strip().split()))\ns = input()\nletters\
+  \ = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',\
+  \ 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']\nL = letters[:k]\ncounts\
+  \ = {}\nfor x in L:\n    counts[x] = s.count(x)\n\nprint(min([counts[j] for j in\
+  \ L])*k)```\nQ: Write python code to solve the following coding problem that obeys\
+  \ the constraints and passes the example test cases. The output code needs to read\
+  \ from and write to standard IO. Please wrap your code answer using ```:\nYou are\
+  \ given an array A of length N weights of masses A_1, A_2...A_N. No two weights\
+  \ have the same mass. You can put every weight on one side of the balance (left\
+  \ or right). You don't have to put weights in order A_1,...,A_N. There is also a\
+  \ string S consisting of characters \"L\" and \"R\", meaning that after putting\
+  \ the i-th weight (not A_i, but i-th weight of your choice) left or right side of\
+  \ the balance should be heavier. Find the order of putting the weights on the balance\
+  \ such that rules of string S are satisfied. \n\nInput\n\nThe first line contains\
+  \ one integer N (1 \u2264 N \u2264 2*10^5) - the length of the array A The second\
+  \ line contains N distinct integers: A_1, A_2,...,A_N (1 \u2264 A_i \u2264 10^9)\
+  \ - the weights given The third line contains string S of length N consisting only\
+  \ of letters \"L\" and \"R\" - string determining which side of the balance should\
+  \ be heavier after putting the i-th weight of your choice\n\nOutput\n\nThe output\
+  \ contains N lines. In every line, you should print one integer and one letter -\
+  \ integer representing the weight you are putting on the balance in that move and\
+  \ the letter representing the side of the balance where you are putting the weight.\
+  \ If there is no solution, print -1.\n\nExample\n\nInput\n\n\n5\n3 8 2 13 7\nLLRLL\n\
+  \n\nOutput\n\n\n3 L\n2 R\n8 R\n13 L\n7 L\n\nNote\n\nExplanation for the test case:\
+  \ \n\nafter the 1st weight: 3 L (left side is heavier)\n\nafter the 2nd weight:\
+  \ 2 R (left side is heavier)\n\nafter the 3rd weight: 8 R (right side is heavier)\n\
+  \nafter the 4th weight: 13 L (left side is heavier)\n\nafter the 5th weight: 7 L\
+  \ (left side is heavier)\n\nSo, the rules given by string S are fulfilled and our\
+  \ order of putting the weights is correct.\nA:"
+question: "You are given an array A of length N weights of masses A_1, A_2...A_N.\
+  \ No two weights have the same mass. You can put every weight on one side of the\
+  \ balance (left or right). You don't have to put weights in order A_1,...,A_N. There\
+  \ is also a string S consisting of characters \"L\" and \"R\", meaning that after\
+  \ putting the i-th weight (not A_i, but i-th weight of your choice) left or right\
+  \ side of the balance should be heavier. Find the order of putting the weights on\
+  \ the balance such that rules of string S are satisfied. \n\nInput\n\nThe first\
+  \ line contains one integer N (1 \u2264 N \u2264 2*10^5) - the length of the array\
+  \ A The second line contains N distinct integers: A_1, A_2,...,A_N (1 \u2264 A_i\
+  \ \u2264 10^9) - the weights given The third line contains string S of length N\
+  \ consisting only of letters \"L\" and \"R\" - string determining which side of\
+  \ the balance should be heavier after putting the i-th weight of your choice\n\n\
+  Output\n\nThe output contains N lines. In every line, you should print one integer\
+  \ and one letter - integer representing the weight you are putting on the balance\
+  \ in that move and the letter representing the side of the balance where you are\
+  \ putting the weight. If there is no solution, print -1.\n\nExample\n\nInput\n\n\
+  \n5\n3 8 2 13 7\nLLRLL\n\n\nOutput\n\n\n3 L\n2 R\n8 R\n13 L\n7 L\n\nNote\n\nExplanation\
+  \ for the test case: \n\nafter the 1st weight: 3 L (left side is heavier)\n\nafter\
+  \ the 2nd weight: 2 R (left side is heavier)\n\nafter the 3rd weight: 8 R (right\
+  \ side is heavier)\n\nafter the 4th weight: 13 L (left side is heavier)\n\nafter\
+  \ the 5th weight: 7 L (left side is heavier)\n\nSo, the rules given by string S\
+  \ are fulfilled and our order of putting the weights is correct."
+samples:
+- " ```N = int(input())\nA = list(map(int,input().split()))\nS = input()\n\nweights\
+  \ = []\nfor i in range(N):\n    if S[i] == 'L':\n        weights.append((A[i], 'L'))\n\
+  \    else:\n        weights.append((A[i], 'R'))\n\nweights.sort()\nans = []\nfor\
+  \ w, s in weights:\n    if s == 'L':\n        ans.append(w)\n    else:\n       \
+  \ ans.append(-w)\n\nprint('\\n'.join([str(x) + ' ' + s for x, s in zip(ans, ['L'\
+  \ if x > 0 else 'R' for x in ans])]))\n```  Q:"
+- " ```n = int(input())\nw = list(map(int, input().split()))\ns = input()\nans = []\n\
+  left = 0\nright = sum(w)\nfor i in range(n):\n    if s[i] == 'L':\n        right\
+  \ -= w[i]\n    else:\n        left += w[i]\n    while left < right:\n        left\
+  \ += w[0]\n        w.pop(0)\n    while left > right:\n        right += w[-1]\n \
+  \       w.pop()\n    ans.append(w[0])\n    w.pop(0)\nif len(ans) != n:\n    print(-1)\n\
+  else:\n    for i in range(n):\n        print(ans[i], 'L' if s[i] == 'L' else 'R')```\n\
+  \n\n```python\n```\n\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\n\n```python\n```\n\
+  \n\n```python\n```\n\n\n```python\n```"
+test_cases:
+  input:
+  - '5
+
+    3 8 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 4 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 4 2 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 2 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    12 4 3 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 20 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 4 2 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 16 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 13 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 1 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 8
+
+    LLRLL
+
+    '
+  - '5
+
+    3 16 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    8 4 3 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 6 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 23 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 11 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 4 3 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    8 4 3 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    13 4 3 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 11
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 17 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 23 3 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    13 4 6 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 15 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 15 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    13 8 6 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 10 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 5 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 4 2 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 2 2 12
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 14 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 16 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 16
+
+    LLRLL
+
+    '
+  - '5
+
+    6 6 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 5 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 11 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 1 3 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    13 4 5 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 1 11
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 9 10
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 2 16
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 3 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    13 4 6 2 3
+
+    LLRLL
+
+    '
+  - '5
+
+    3 15 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    13 8 8 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 6 7
+
+    LLRLL
+
+    '
+  - '5
+
+    1 4 3 2 16
+
+    LLRLL
+
+    '
+  - '5
+
+    6 10 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 5 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 11 1 9 12
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 9 8
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 2 26
+
+    LLRLL
+
+    '
+  - '5
+
+    3 15 2 9 6
+
+    LLRLL
+
+    '
+  - '5
+
+    1 4 4 2 16
+
+    LLRLL
+
+    '
+  - '5
+
+    6 10 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 2 4
+
+    LLRLL
+
+    '
+  - '5
+
+    6 12 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    1 12 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 6 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 4 2 2 12
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 2 2 4
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 19 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 4 13 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    3 16 1 7 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 2 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 2 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    8 5 3 2 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 11 1 9 8
+
+    LLRLL
+
+    '
+  - '5
+
+    8 4 6 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    3 4 3 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 27 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 4 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 15 10
+
+    LLRLL
+
+    '
+  - '5
+
+    13 8 6 4 2
+
+    LLRLL
+
+    '
+  - '5
+
+    6 8 2 2 12
+
+    LLRLL
+
+    '
+  - '5
+
+    6 7 3 2 16
+
+    LLRLL
+
+    '
+  - '5
+
+    6 12 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 1 3 2 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 1 4
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 5 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 17 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 11 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 14 1 9 12
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 2 45
+
+    LLRLL
+
+    '
+  - '5
+
+    6 16 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 12 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 14 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 1 2 4
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 2 6 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 4 13 9
+
+    LLRLL
+
+    '
+  - '5
+
+    8 5 3 2 1
+
+    LLRLL
+
+    '
+  - '5
+
+    5 11 1 9 8
+
+    LLRLL
+
+    '
+  - '5
+
+    10 8 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 15 8
+
+    LLRLL
+
+    '
+  - '5
+
+    6 8 2 4 12
+
+    LLRLL
+
+    '
+  - '5
+
+    6 12 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 3 1 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 21 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 16 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 19 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 1 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 4 2 2 4
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 1 6 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 4 16 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 11 1 9 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 8 2 10
+
+    LLRLL
+
+    '
+  - '5
+
+    7 8 2 4 12
+
+    LLRLL
+
+    '
+  - '5
+
+    6 13 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 7 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 21 2 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 16 8 2 13
+
+    LLRLL
+
+    '
+  - '5
+
+    4 19 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 2 7 7
+
+    LLRLL
+
+    '
+  - '5
+
+    6 8 4 16 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 11 1 18 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 8 3 10
+
+    LLRLL
+
+    '
+  - '5
+
+    6 16 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 7 2 10 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 21 2 9 12
+
+    LLRLL
+
+    '
+  - '5
+
+    2 19 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 2 4 16 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 8 3 16
+
+    LLRLL
+
+    '
+  - '5
+
+    5 21 3 9 12
+
+    LLRLL
+
+    '
+  - '5
+
+    2 10 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 8 2 19 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 21 3 9 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 2 34 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 1 13 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 23 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 11 1 9 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 4 3 2 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 7 3 2 11
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 9 13
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 1 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 6 3 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 23 3 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 15 1 9 10
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 10 13
+
+    LLRLL
+
+    '
+  - '5
+
+    3 5 2 13 4
+
+    LLRLL
+
+    '
+  - '5
+
+    2 16 1 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    8 6 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 11 1 6 7
+
+    LLRLL
+
+    '
+  - '5
+
+    13 4 3 4 2
+
+    LLRLL
+
+    '
+  - '5
+
+    5 16 2 9 10
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 3 9 8
+
+    LLRLL
+
+    '
+  - '5
+
+    18 4 6 2 3
+
+    LLRLL
+
+    '
+  - '5
+
+    13 7 8 2 2
+
+    LLRLL
+
+    '
+  - '5
+
+    6 10 5 1 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 5 3 9 7
+
+    LLRLL
+
+    '
+  - '5
+
+    4 11 1 9 23
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 5 4 26
+
+    LLRLL
+
+    '
+  - '5
+
+    3 30 2 9 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 3 2 9 10
+
+    LLRLL
+
+    '
+  - '5
+
+    6 2 5 2 4
+
+    LLRLL
+
+    '
+  - '5
+
+    1 12 8 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    1 6 2 13 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 8 4 19 7
+
+    LLRLL
+
+    '
+  - '5
+
+    3 14 4 13 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 4 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    2 11 1 9 8
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 1 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 2 28 10
+
+    LLRLL
+
+    '
+  - '5
+
+    2 8 2 7 14
+
+    LLRLL
+
+    '
+  - '5
+
+    6 7 3 2 28
+
+    LLRLL
+
+    '
+  - '5
+
+    6 23 5 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 11 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 12 8 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 14 2 4 7
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 4 13 4
+
+    LLRLL
+
+    '
+  - '5
+
+    8 5 6 2 1
+
+    LLRLL
+
+    '
+  - '5
+
+    5 11 1 9 16
+
+    LLRLL
+
+    '
+  - '5
+
+    10 8 2 6 7
+
+    LLRLL
+
+    '
+  - '5
+
+    8 1 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 18 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    4 16 8 2 9
+
+    LLRLL
+
+    '
+  - '5
+
+    6 19 12 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 8 4 16 10
+
+    LLRLL
+
+    '
+  - '5
+
+    9 11 1 9 6
+
+    LLRLL
+
+    '
+  - '5
+
+    6 1 8 2 12
+
+    LLRLL
+
+    '
+  - '5
+
+    7 8 2 8 12
+
+    LLRLL
+
+    '
+  - '5
+
+    5 2 1 18 6
+
+    LLRLL
+
+    '
+  - '5
+
+    5 1 8 3 10
+
+    LLRLL
+
+    '
+  - '5
+
+    12 16 5 4 9
+
+    LLRLL
+
+    '
+  - '5
+
+    3 19 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 4 4 16 9
+
+    LLRLL
+
+    '
+  - '5
+
+    5 38 3 9 12
+
+    LLRLL
+
+    '
+  - '5
+
+    3 10 8 3 9
+
+    LLRLL
+
+    '
+  - '5
+
+    1 8 2 19 7
+
+    LLRLL
+
+    '
+  output:
+  - '7 L
+
+    3 R
+
+    8 R
+
+    13 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3 R
+
+    8 R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    7  R
+
+    13 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    7 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    7 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    7 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    7  R
+
+    12 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    8  R
+
+    20 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    4  R
+
+    7 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    16 L
+
+    2 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    7 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    8 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    16 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    9 L
+
+    2 L
+
+    '
+  - '5 L
+
+    4  R
+
+    6  R
+
+    9 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    9 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    23 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    4  R
+
+    9 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    8 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    11 L
+
+    2 L
+
+    '
+  - '7 L
+
+    5  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    17 L
+
+    1 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    9 L
+
+    1 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    23 L
+
+    3 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    13 L
+
+    2 L
+
+    '
+  - '7 L
+
+    5  R
+
+    8  R
+
+    15 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    15 L
+
+    1 L
+
+    '
+  - '6 L
+
+    2  R
+
+    8  R
+
+    13 L
+
+    2 L
+
+    '
+  - '7 L
+
+    5  R
+
+    8  R
+
+    10 L
+
+    2 L
+
+    '
+  - '5 L
+
+    3  R
+
+    7  R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    5  R
+
+    7 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    12 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    8  R
+
+    14 L
+
+    2 L
+
+    '
+  - '7 L
+
+    5  R
+
+    9  R
+
+    16 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    16 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    6  R
+
+    9 L
+
+    2 L
+
+    '
+  - '5 L
+
+    3  R
+
+    7  R
+
+    9 L
+
+    2 L
+
+    '
+  - '7 L
+
+    4  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    9 L
+
+    1 L
+
+    '
+  - '4 L
+
+    2  R
+
+    5  R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    11 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    10 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    30 L
+
+    1 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    16 L
+
+    1 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    30 L
+
+    3 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    13 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    15 L
+
+    2 L
+
+    '
+  - '8 L
+
+    2  R
+
+    8  R
+
+    13 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    16 L
+
+    1 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    10 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    7  R
+
+    9 L
+
+    2 L
+
+    '
+  - '9 L
+
+    4  R
+
+    11  R
+
+    12 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    26 L
+
+    1 L
+
+    '
+  - '6 L
+
+    3  R
+
+    9  R
+
+    15 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    4  R
+
+    16 L
+
+    1 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    10 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    5  R
+
+    6 L
+
+    1 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    12 L
+
+    2 L
+
+    '
+  - '8 L
+
+    2  R
+
+    9  R
+
+    12 L
+
+    1 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    13 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    12 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    4  R
+
+    6 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    8  R
+
+    19 L
+
+    2 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '8 L
+
+    4  R
+
+    9  R
+
+    13 L
+
+    3 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    6 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    7  R
+
+    16 L
+
+    1 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    9 L
+
+    2 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    9 L
+
+    2 L
+
+    '
+  - '5 L
+
+    3  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    8 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    3  R
+
+    4 L
+
+    2 L
+
+    '
+  - '5 L
+
+    4  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    27 L
+
+    1 L
+
+    '
+  - '4 L
+
+    2  R
+
+    6  R
+
+    9 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    10  R
+
+    15 L
+
+    2 L
+
+    '
+  - '6 L
+
+    4  R
+
+    8  R
+
+    13 L
+
+    2 L
+
+    '
+  - '6 L
+
+    2  R
+
+    8  R
+
+    12 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    16 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    12 L
+
+    2 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    6 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    4  R
+
+    6 L
+
+    1 L
+
+    '
+  - '7 L
+
+    5  R
+
+    9  R
+
+    30 L
+
+    3 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    17 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    11 L
+
+    2 L
+
+    '
+  - '9 L
+
+    4  R
+
+    12  R
+
+    14 L
+
+    1 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    45 L
+
+    1 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    16 L
+
+    2 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    12 L
+
+    3 L
+
+    '
+  - '4 L
+
+    3  R
+
+    7  R
+
+    14 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    4  R
+
+    6 L
+
+    1 L
+
+    '
+  - '6 L
+
+    4  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    13 L
+
+    4 L
+
+    '
+  - '3 L
+
+    2  R
+
+    5  R
+
+    8 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    10 L
+
+    2 L
+
+    '
+  - '6 L
+
+    2  R
+
+    8  R
+
+    9 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    8  R
+
+    15 L
+
+    2 L
+
+    '
+  - '6 L
+
+    4  R
+
+    8  R
+
+    12 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    12 L
+
+    4 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    7 L
+
+    1 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    30 L
+
+    2 L
+
+    '
+  - '7 L
+
+    3  R
+
+    9  R
+
+    21 L
+
+    2 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    16 L
+
+    2 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    19 L
+
+    3 L
+
+    '
+  - '3 L
+
+    2  R
+
+    4  R
+
+    7 L
+
+    1 L
+
+    '
+  - '4 L
+
+    2  R
+
+    4  R
+
+    5 L
+
+    2 L
+
+    '
+  - '6 L
+
+    4  R
+
+    7  R
+
+    8 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    16 L
+
+    4 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '6 L
+
+    2  R
+
+    8  R
+
+    10 L
+
+    1 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    12 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    13 L
+
+    4 L
+
+    '
+  - '7 L
+
+    3  R
+
+    7  R
+
+    9 L
+
+    2 L
+
+    '
+  - '7 L
+
+    5  R
+
+    9  R
+
+    21 L
+
+    2 L
+
+    '
+  - '8 L
+
+    5  R
+
+    13  R
+
+    16 L
+
+    2 L
+
+    '
+  - '8 L
+
+    4  R
+
+    9  R
+
+    19 L
+
+    3 L
+
+    '
+  - '7 L
+
+    4  R
+
+    7  R
+
+    8 L
+
+    2 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    16 L
+
+    4 L
+
+    '
+  - '6 L
+
+    5  R
+
+    11  R
+
+    18 L
+
+    1 L
+
+    '
+  - '6 L
+
+    3  R
+
+    8  R
+
+    10 L
+
+    1 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    16 L
+
+    4 L
+
+    '
+  - '7 L
+
+    3  R
+
+    7  R
+
+    10 L
+
+    2 L
+
+    '
+  - '9 L
+
+    5  R
+
+    12  R
+
+    21 L
+
+    2 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    19 L
+
+    2 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    13 L
+
+    2 L
+
+    '
+  - '5 L
+
+    4  R
+
+    9  R
+
+    16 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    8  R
+
+    16 L
+
+    1 L
+
+    '
+  - '9 L
+
+    5  R
+
+    12  R
+
+    21 L
+
+    3 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    10 L
+
+    2 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    19 L
+
+    2 L
+
+    '
+  - '9 L
+
+    5  R
+
+    9  R
+
+    21 L
+
+    3 L
+
+    '
+  - '7 L
+
+    3  R
+
+    8  R
+
+    34 L
+
+    2 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    13 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    7  R
+
+    23 L
+
+    2 L
+
+    '
+  - '9 L
+
+    3  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    4  R
+
+    6 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    11 L
+
+    2 L
+
+    '
+  - '8 L
+
+    5  R
+
+    9  R
+
+    13 L
+
+    2 L
+
+    '
+  - '5 L
+
+    1  R
+
+    6  R
+
+    9 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    7 L
+
+    3 L
+
+    '
+  - '7 L
+
+    4  R
+
+    9  R
+
+    23 L
+
+    3 L
+
+    '
+  - '9 L
+
+    3  R
+
+    10  R
+
+    15 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    10  R
+
+    13 L
+
+    2 L
+
+    '
+  - '4 L
+
+    3  R
+
+    5  R
+
+    13 L
+
+    2 L
+
+    '
+  - '7 L
+
+    2  R
+
+    9  R
+
+    16 L
+
+    1 L
+
+    '
+  - '6 L
+
+    5  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '6 L
+
+    4  R
+
+    7  R
+
+    11 L
+
+    1 L
+
+    '
+  - '4 L
+
+    3  R
+
+    4  R
+
+    13 L
+
+    2 L
+
+    '
+  - '9 L
+
+    5  R
+
+    10  R
+
+    16 L
+
+    2 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    30 L
+
+    3 L
+
+    '
+  - '4 L
+
+    3  R
+
+    6  R
+
+    18 L
+
+    2 L
+
+    '
+  - '7 L
+
+    2  R
+
+    8  R
+
+    13 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    10 L
+
+    1 L
+
+    '
+  - '6 L
+
+    5  R
+
+    7  R
+
+    9 L
+
+    3 L
+
+    '
+  - '9 L
+
+    4  R
+
+    11  R
+
+    23 L
+
+    1 L
+
+    '
+  - '5 L
+
+    4  R
+
+    6  R
+
+    26 L
+
+    1 L
+
+    '
+  - '6 L
+
+    3  R
+
+    9  R
+
+    30 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    9  R
+
+    10 L
+
+    2 L
+
+    '
+  - '4 L
+
+    2  R
+
+    5  R
+
+    6 L
+
+    2 L
+
+    '
+  - '8 L
+
+    4  R
+
+    9  R
+
+    12 L
+
+    1 L
+
+    '
+  - '6 L
+
+    2  R
+
+    7  R
+
+    13 L
+
+    1 L
+
+    '
+  - '7 L
+
+    4  R
+
+    8  R
+
+    19 L
+
+    3 L
+
+    '
+  - '9 L
+
+    4  R
+
+    13  R
+
+    14 L
+
+    3 L
+
+    '
+  - '6 L
+
+    4  R
+
+    8  R
+
+    9 L
+
+    2 L
+
+    '
+  - '8 L
+
+    2  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '5 L
+
+    4  R
+
+    7  R
+
+    8 L
+
+    1 L
+
+    '
+  - '8 L
+
+    5  R
+
+    10  R
+
+    28 L
+
+    2 L
+
+    '
+  - '7 L
+
+    2  R
+
+    8  R
+
+    14 L
+
+    2 L
+
+    '
+  - '6 L
+
+    3  R
+
+    7  R
+
+    28 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    23 L
+
+    2 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    11 L
+
+    4 L
+
+    '
+  - '8 L
+
+    6  R
+
+    9  R
+
+    12 L
+
+    4 L
+
+    '
+  - '5 L
+
+    4  R
+
+    7  R
+
+    14 L
+
+    2 L
+
+    '
+  - '5 L
+
+    4  R
+
+    8  R
+
+    13 L
+
+    4 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    8 L
+
+    1 L
+
+    '
+  - '9 L
+
+    5  R
+
+    11  R
+
+    16 L
+
+    1 L
+
+    '
+  - '7 L
+
+    6  R
+
+    8  R
+
+    10 L
+
+    2 L
+
+    '
+  - '8 L
+
+    2  R
+
+    8  R
+
+    9 L
+
+    1 L
+
+    '
+  - '6 L
+
+    5  R
+
+    9  R
+
+    18 L
+
+    4 L
+
+    '
+  - '8 L
+
+    4  R
+
+    9  R
+
+    16 L
+
+    2 L
+
+    '
+  - '9 L
+
+    6  R
+
+    12  R
+
+    19 L
+
+    3 L
+
+    '
+  - '8 L
+
+    5  R
+
+    10  R
+
+    16 L
+
+    4 L
+
+    '
+  - '9 L
+
+    6  R
+
+    9  R
+
+    11 L
+
+    1 L
+
+    '
+  - '6 L
+
+    2  R
+
+    8  R
+
+    12 L
+
+    1 L
+
+    '
+  - '8 L
+
+    7  R
+
+    8  R
+
+    12 L
+
+    2 L
+
+    '
+  - '5 L
+
+    2  R
+
+    6  R
+
+    18 L
+
+    1 L
+
+    '
+  - '5 L
+
+    3  R
+
+    8  R
+
+    10 L
+
+    1 L
+
+    '
+  - '9 L
+
+    5  R
+
+    12  R
+
+    16 L
+
+    4 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    19 L
+
+    3 L
+
+    '
+  - '5 L
+
+    4  R
+
+    9  R
+
+    16 L
+
+    4 L
+
+    '
+  - '9 L
+
+    5  R
+
+    12  R
+
+    38 L
+
+    3 L
+
+    '
+  - '8 L
+
+    3  R
+
+    9  R
+
+    10 L
+
+    3 L
+
+    '
+  - '7 L
+
+    2  R
+
+    8  R
+
+    19 L
+
+    1 L
+
+    '
+timeout: 1.0

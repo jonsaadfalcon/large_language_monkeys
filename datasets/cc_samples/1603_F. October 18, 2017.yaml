@@ -1,0 +1,5469 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nA new e-mail\
+  \ service \"Berlandesk\" is going to be opened in Berland in the near future. The\
+  \ site administration wants to launch their project as soon as possible, that's\
+  \ why they ask you to help. You're suggested to implement the prototype of site\
+  \ registration system. The system should work on the following principle. \n\nEach\
+  \ time a new user wants to register, he sends to the system a request with his name.\
+  \ If such a name does not exist in the system database, it is inserted into the\
+  \ database, and the user gets the response OK, confirming the successful registration.\
+  \ If the name already exists in the system database, the system makes up a new user\
+  \ name, sends it to the user as a prompt and also inserts the prompt into the database.\
+  \ The new name is formed by the following rule. Numbers, starting with 1, are appended\
+  \ one after another to name (name1, name2, ...), among these numbers the least i\
+  \ is found so that namei does not yet exist in the database.\n\nInput\n\nThe first\
+  \ line contains number n (1 \u2264 n \u2264 105). The following n lines contain\
+  \ the requests to the system. Each request is a non-empty line, and consists of\
+  \ not more than 32 characters, which are all lowercase Latin letters.\n\nOutput\n\
+  \nPrint n lines, which are system responses to the requests: OK in case of successful\
+  \ registration, or a prompt with a new name, if the requested name is already taken.\n\
+  \nExamples\n\nInput\n\n4\nabacaba\nacaba\nabacaba\nacab\n\n\nOutput\n\nOK\nOK\n\
+  abacaba1\nOK\n\n\nInput\n\n6\nfirst\nfirst\nsecond\nsecond\nthird\nthird\n\n\nOutput\n\
+  \nOK\nfirst1\nOK\nsecond1\nOK\nthird1\nA: ```users = {}\nfor x in range (0, int(input())):\n\
+  \  want = input()\n  if want in users:\n    print(want + str(users[want]))\n   \
+  \ users[want] += 1\n  else:\n    print(\"OK\")\n    users[want] = 1```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nGildong recently learned\
+  \ how to find the [longest increasing subsequence](https://en.wikipedia.org/wiki/Longest_increasing_subsequence)\
+  \ (LIS) in O(nlog{n}) time for a sequence of length n. He wants to test himself\
+  \ if he can implement it correctly, but he couldn't find any online judges that\
+  \ would do it (even though there are actually many of them). So instead he's going\
+  \ to make a quiz for you about making permutations of n distinct integers between\
+  \ 1 and n, inclusive, to test his code with your output.\n\nThe quiz is as follows.\n\
+  \nGildong provides a string of length n-1, consisting of characters '<' and '>'\
+  \ only. The i-th (1-indexed) character is the comparison result between the i-th\
+  \ element and the i+1-st element of the sequence. If the i-th character of the string\
+  \ is '<', then the i-th element of the sequence is less than the i+1-st element.\
+  \ If the i-th character of the string is '>', then the i-th element of the sequence\
+  \ is greater than the i+1-st element.\n\nHe wants you to find two possible sequences\
+  \ (not necessarily distinct) consisting of n distinct integers between 1 and n,\
+  \ inclusive, each satisfying the comparison results, where the length of the LIS\
+  \ of the first sequence is minimum possible, and the length of the LIS of the second\
+  \ sequence is maximum possible.\n\nInput\n\nEach test contains one or more test\
+  \ cases. The first line contains the number of test cases t (1 \u2264 t \u2264 10^4).\n\
+  \nEach test case contains exactly one line, consisting of an integer and a string\
+  \ consisting of characters '<' and '>' only. The integer is n (2 \u2264 n \u2264\
+  \ 2 \u22C5 10^5), the length of the permutation you need to find. The string is\
+  \ the comparison results explained in the description. The length of the string\
+  \ is n-1.\n\nIt is guaranteed that the sum of all n in all test cases doesn't exceed\
+  \ 2 \u22C5 10^5.\n\nOutput\n\nFor each test case, print two lines with n integers\
+  \ each. The first line is the sequence with the minimum length of the LIS, and the\
+  \ second line is the sequence with the maximum length of the LIS. If there are multiple\
+  \ answers, print any one of them. Each sequence should contain all integers between\
+  \ 1 and n, inclusive, and should satisfy the comparison results.\n\nIt can be shown\
+  \ that at least one answer always exists.\n\nExample\n\nInput\n\n\n3\n3 &lt;&lt;\n\
+  7 &gt;&gt;&lt;&gt;&gt;&lt;\n5 &gt;&gt;&gt;&lt;\n\n\nOutput\n\n\n1 2 3\n1 2 3\n5\
+  \ 4 3 7 2 1 6\n4 3 1 7 5 2 6\n4 3 2 1 5\n5 4 2 1 3\n\nNote\n\nIn the first case,\
+  \ 1 2 3 is the only possible answer.\n\nIn the second case, the shortest length\
+  \ of the LIS is 2, and the longest length of the LIS is 3. In the example of the\
+  \ maximum LIS sequence, 4 '3' 1 7 '5' 2 '6' can be one of the possible LIS.\nA:\
+  \ ```def main():\n    \n    t=int(input())\n    allans=[]\n    for _ in range(t):\n\
+  \        n,s=input().split()\n        n=int(n)\n        \n        s=s+'$'\n    \
+  \    seq=[] # [isIncreasing,length]\n        prev=None\n        l=0\n        for\
+  \ c in s:\n            if c!=prev:\n                if l>0: # not first\n      \
+  \              seq.append([prev=='<',l])\n                l=1\n            else:\n\
+  \                l+=1\n            prev=c\n        seq[0][1]+=1\n        \n    \
+  \    minLIS=[] # large to small\n        curr=n\n        # print(seq)\n        startend=[]\
+  \ # [start, end]\n        for i in range(len(seq)):\n            l=seq[i][1]\n \
+  \           if seq[i][0]: # is increasing\n                if i==0:\n          \
+  \          start=n-l+1\n                    end=n\n                    curr=start-1\n\
+  \                else:\n                    start=startend[i-1][0]+1\n         \
+  \           end=start+l-1\n            else: # is decreasing\n                if\
+  \ i+1<len(seq):\n                    start=curr-seq[i+1][1]\n                  \
+  \  end=start-l+1\n                    curr=end-1\n                else:\n      \
+  \              start=l\n                    end=1\n            startend.append([start,end])\n\
+  \        # print(seq)\n        # print(startend)\n        for start,end in startend:\n\
+  \            if start<=end:\n                for v in range(start,end+1):\n    \
+  \                minLIS.append(v)\n            else:\n                for v in range(start,end-1,-1):\n\
+  \                    minLIS.append(v)\n            # print('start:{} end:{} minLIS:{}'.format(start,end,minLIS))\n\
+  \        \n        maxLIS=[] # small to large\n        startend=[] # [start,end]\n\
+  \        curr=1\n        for i in range(len(seq)):\n            l=seq[i][1]\n  \
+  \          if seq[i][0]: # is increasing\n                if i+1<len(seq):\n   \
+  \                 start=curr+seq[i+1][1]\n                else:\n              \
+  \      start=curr\n                end=start+l-1\n                curr=end+1\n \
+  \           else: # is decreasing\n                if i-1>=0:\n                \
+  \    start=startend[i-1][0]-1\n                else:\n                    start=l\n\
+  \                    curr=start+1\n                end=start-l+1\n            startend.append([start,end])\n\
+  \        # print(seq)\n        # print(startend)\n        for start,end in startend:\n\
+  \            if start<=end:\n                for v in range(start,end+1):\n    \
+  \                maxLIS.append(v)\n            else:\n                for v in range(start,end-1,-1):\n\
+  \                    maxLIS.append(v)\n        allans.append(minLIS)\n        allans.append(maxLIS)\n\
+  \        \n    \n    multiLineArrayOfArraysPrint(allans)\n    \n    return\n   \
+  \ \n# import sys\n# input=sys.stdin.buffer.readline #FOR READING PURE INTEGER INPUTS\
+  \ (space separation ok)\nimport sys\ninput=lambda: sys.stdin.readline().rstrip(\"\
+  \\r\\n\") #FOR READING STRING/TEXT INPUTS.\n \ndef oneLineArrayPrint(arr):\n   \
+  \ print(' '.join([str(x) for x in arr]))\ndef multiLineArrayPrint(arr):\n    print('\\\
+  n'.join([str(x) for x in arr]))\ndef multiLineArrayOfArraysPrint(arr):\n    print('\\\
+  n'.join([' '.join([str(x) for x in y]) for y in arr]))\n \ndef readIntArr():\n \
+  \   return [int(x) for x in input().split()]\n# def readFloatArr():\n#     return\
+  \ [float(x) for x in input().split()]\n \ndef makeArr(*args):\n    \"\"\"\n    *args\
+  \ : (default value, dimension 1, dimension 2,...)\n    \n    Returns : arr[dim1][dim2]...\
+  \ filled with default value\n    \"\"\"\n    assert len(args) >= 2, \"makeArr args\
+  \ should be (default value, dimension 1, dimension 2,...\"\n    if len(args) ==\
+  \ 2:\n        return [args[0] for _ in range(args[1])]\n    else:\n        return\
+  \ [makeArr(args[0],*args[2:]) for _ in range(args[1])]\n \ndef queryInteractive(x,y):\n\
+  \    print('? {} {}'.format(x,y))\n    sys.stdout.flush()\n    return int(input())\n\
+  \ \ndef answerInteractive(ans):\n    print('! {}'.format(ans))\n    sys.stdout.flush()\n\
+  \ \ninf=float('inf')\nMOD=10**9+7\n \nfor _abc in range(1):\n    main()```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nIt was October 18, 2017.\
+  \ Shohag, a melancholic soul, made a strong determination that he will pursue Competitive\
+  \ Programming seriously, by heart, because he found it fascinating. Fast forward\
+  \ to 4 years, he is happy that he took this road. He is now creating a contest on\
+  \ Codeforces. He found an astounding problem but has no idea how to solve this.\
+  \ Help him to solve the final problem of the round.\n\nYou are given three integers\
+  \ n, k and x. Find the number, modulo 998 244 353, of integer sequences a_1, a_2,\
+  \ \u2026, a_n such that the following conditions are satisfied: \n\n  * 0 \u2264\
+  \ a_i < 2^k for each integer i from 1 to n. \n  * There is no non-empty subsequence\
+  \ in a such that the [bitwise XOR](https://en.wikipedia.org/wiki/Bitwise_operation#XOR)\
+  \ of the elements of the subsequence is x. \n\n\n\nA sequence b is a subsequence\
+  \ of a sequence c if b can be obtained from c by deletion of several (possibly,\
+  \ zero or all) elements.\n\nInput\n\nThe first line contains a single integer t\
+  \ (1 \u2264 t \u2264 10^5) \u2014 the number of test cases.\n\nThe first and only\
+  \ line of each test case contains three space-separated integers n, k, and x (1\
+  \ \u2264 n \u2264 10^9, 0 \u2264 k \u2264 10^7, 0 \u2264 x < 2^{\\operatorname{min}(20,\
+  \ k)}).\n\nIt is guaranteed that the sum of k over all test cases does not exceed\
+  \ 5 \u22C5 10^7.\n\nOutput\n\nFor each test case, print a single integer \u2014\
+  \ the answer to the problem.\n\nExample\n\nInput\n\n\n6\n2 2 0\n2 1 1\n3 2 3\n69\
+  \ 69 69\n2017 10 18\n5 7 0\n\n\nOutput\n\n\n6\n1\n15\n699496932\n892852568\n713939942\n\
+  \nNote\n\nIn the first test case, the valid sequences are [1, 2], [1, 3], [2, 1],\
+  \ [2, 3], [3, 1] and [3, 2].\n\nIn the second test case, the only valid sequence\
+  \ is [0, 0].\nA:"
+question: "It was October 18, 2017. Shohag, a melancholic soul, made a strong determination\
+  \ that he will pursue Competitive Programming seriously, by heart, because he found\
+  \ it fascinating. Fast forward to 4 years, he is happy that he took this road. He\
+  \ is now creating a contest on Codeforces. He found an astounding problem but has\
+  \ no idea how to solve this. Help him to solve the final problem of the round.\n\
+  \nYou are given three integers n, k and x. Find the number, modulo 998 244 353,\
+  \ of integer sequences a_1, a_2, \u2026, a_n such that the following conditions\
+  \ are satisfied: \n\n  * 0 \u2264 a_i < 2^k for each integer i from 1 to n. \n \
+  \ * There is no non-empty subsequence in a such that the [bitwise XOR](https://en.wikipedia.org/wiki/Bitwise_operation#XOR)\
+  \ of the elements of the subsequence is x. \n\n\n\nA sequence b is a subsequence\
+  \ of a sequence c if b can be obtained from c by deletion of several (possibly,\
+  \ zero or all) elements.\n\nInput\n\nThe first line contains a single integer t\
+  \ (1 \u2264 t \u2264 10^5) \u2014 the number of test cases.\n\nThe first and only\
+  \ line of each test case contains three space-separated integers n, k, and x (1\
+  \ \u2264 n \u2264 10^9, 0 \u2264 k \u2264 10^7, 0 \u2264 x < 2^{\\operatorname{min}(20,\
+  \ k)}).\n\nIt is guaranteed that the sum of k over all test cases does not exceed\
+  \ 5 \u22C5 10^7.\n\nOutput\n\nFor each test case, print a single integer \u2014\
+  \ the answer to the problem.\n\nExample\n\nInput\n\n\n6\n2 2 0\n2 1 1\n3 2 3\n69\
+  \ 69 69\n2017 10 18\n5 7 0\n\n\nOutput\n\n\n6\n1\n15\n699496932\n892852568\n713939942\n\
+  \nNote\n\nIn the first test case, the valid sequences are [1, 2], [1, 3], [2, 1],\
+  \ [2, 3], [3, 1] and [3, 2].\n\nIn the second test case, the only valid sequence\
+  \ is [0, 0]."
+samples:
+- " ```from functools import lru_cache\nfrom math import log2\nfrom collections import\
+  \ defaultdict\n\ndef solve(n, k, x):\n    MOD = 998244353\n    @lru_cache(None)\n\
+  \    def dp(i, s):\n        if i > n:\n            return 1\n        if dp[i][s]\
+  \ != 0:\n            return dp[i][s]\n        dp[i][s] = 0\n        for j in range(2**k):\n\
+  \            if bin(j ^ s)[2:].count('1') <= i:\n                dp[i][s] += dp(i\
+  \ + 1, s ^ j)\n        dp[i][s] %= MOD\n        return dp[i][s]\n    ans = 0\n \
+  \   for s in range(2**k):\n        if bin(s ^ x)[2:].count('1') > n:\n         \
+  \   ans += dp(n, s)\n    return ans\n\nt = int(input())\nfor _ in range(t):\n  \
+  \  n, k, x = map(int, input().split())\n    print(solve(n, k, x))```````\nQ:"
+- " ```def main():\n    t=int(input())\n    for _ in range(t):\n        n,k,x=input().split()\n\
+  \        n=int(n)\n        k=int(k)\n        x=int(x)\n        if k==0:\n      \
+  \      print(1)\n        elif k==1:\n            if x==0:\n                print(2**n)\n\
+  \            else:\n                print(2**(n-1))\n        else:\n           \
+  \ if x==0:\n                print(2**(2**k-1))\n            else:\n            \
+  \    print(2**(2**k-1)-2**(2**(k-1)-1))\n    return\n    \nfor _abc in range(1):\n\
+  \    main()```  ```python\n```\nQ:"
+test_cases:
+  input:
+  - '6
+
+    2 2 0
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    767316447 10000000 8468
+
+    430547866 10000000 0
+
+    552915811 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    904980175 9999999 0
+
+    665518669 10000000 0
+
+    546981263 9999997 350538
+
+    623219061 9999996 486146
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    91348615 9566236 0
+
+    '
+  - '5
+
+    652664040 9088207 500534
+
+    347017246 9044258 319954
+
+    980053435 9837743 229781
+
+    414672186 9748315 461982
+
+    124299440 9663383 263491
+
+    '
+  - '5
+
+    68611840 10000000 749119
+
+    85328351 10000000 993656
+
+    819226708 10000000 247193
+
+    755441322 10000000 740194
+
+    804601099 10000000 250256
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 832563
+
+    546981263 9999997 827417
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    767316447 10000000 8468
+
+    232102607 10000000 0
+
+    552915811 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    904980175 9330630 0
+
+    665518669 10000000 0
+
+    546981263 9999997 350538
+
+    623219061 9999996 486146
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    3265276 9566236 0
+
+    '
+  - '5
+
+    652664040 9088207 500534
+
+    347017246 9044258 319954
+
+    980053435 9837743 229781
+
+    210035041 9748315 461982
+
+    124299440 9663383 263491
+
+    '
+  - '5
+
+    68611840 10000000 749119
+
+    85328351 10000000 993656
+
+    819226708 10000000 247193
+
+    755441322 10000000 779167
+
+    804601099 10000000 250256
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 832563
+
+    546981263 9999997 315426
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    2 2 0
+
+    2 1 1
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 0
+
+    665518669 10000000 0
+
+    546981263 9999997 350538
+
+    442579665 9999996 486146
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    3265276 9807655 0
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 832563
+
+    360196903 9999997 315426
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    481495282 10000000 8468
+
+    232102607 10000000 0
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    4166136 9807655 0
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 265058
+
+    442579665 9999996 486146
+
+    601826992 9999999 477243
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    481495282 10000000 8468
+
+    232102607 10000000 -1
+
+    685055076 10000010 0
+
+    517120729 10000000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    2017 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    481495282 10000000 8468
+
+    75609883 10000000 -1
+
+    685055076 10000010 0
+
+    517120729 10000000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 66 69
+
+    2017 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    526610849 10000000 22094
+
+    360196903 9999997 315426
+
+    961093238 9999996 405025
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    481495282 10000000 8468
+
+    43233868 10000000 -1
+
+    685055076 10000010 0
+
+    517120729 10010000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 9999999 675549
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    69 28 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    7 28 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 1
+
+    457066755 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 12 35
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 1023272
+
+    900658006 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    733927584 9999997 1023272
+
+    900658006 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 6 21
+
+    5 7 0
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    2898 6 21
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1110192624 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    855 6 21
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    855 6 21
+
+    5 7 -1
+
+    '
+  - '5
+
+    2115612615 9330630 1
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    9 28 69
+
+    855 6 21
+
+    5 7 -1
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 9999996 297102
+
+    859031386 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 1030310 1023272
+
+    1817813860 9999996 297102
+
+    859031386 1910063 3206
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    91348615 497178 0
+
+    '
+  - '6
+
+    2 2 0
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    576 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 0
+
+    665518669 10000000 0
+
+    546981263 8036443 350538
+
+    623219061 9999996 486146
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 500534
+
+    347017246 9044258 319954
+
+    980053435 9837743 229781
+
+    210035041 9748315 461982
+
+    124299440 9381396 263491
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 1 0
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    35995330 10000000 60301
+
+    481495282 10000000 8468
+
+    232102607 10000000 0
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    1049153599 10000000 27643
+
+    360196903 9999997 315426
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 3550328 265058
+
+    442579665 9999996 449793
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 16731
+
+    360196903 9999997 315426
+
+    961093238 9999996 517261
+
+    692801443 261260 59567
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 265058
+
+    442579665 9999996 686280
+
+    554024085 9999999 477243
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 16731
+
+    360196903 9999997 315426
+
+    961093238 9999996 405025
+
+    692801443 4647728 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    2017 12 18
+
+    1 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 1
+
+    546981263 9999997 529255
+
+    442579665 9999996 686280
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 529255
+
+    520628748 9999996 686280
+
+    1040155683 9999999 477243
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 18
+
+    9 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    335222954 10000000 8468
+
+    43233868 10000000 -1
+
+    685055076 10000010 0
+
+    517120729 10010000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    69 28 69
+
+    2955 12 18
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 4 1
+
+    3 2 5
+
+    7 28 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 5
+
+    7 28 69
+
+    2898 12 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    890022120 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 20 35
+
+    5 7 0
+
+    '
+  - '5
+
+    405682495 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 1023272
+
+    520628748 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 35
+
+    9 7 0
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 10 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    111892855 9999997 1023272
+
+    900658006 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 21
+
+    5 7 1
+
+    '
+  - '5
+
+    1113528876 9330630 0
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    900658006 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    2898 6 21
+
+    5 5 0
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 0
+
+    4 2 5
+
+    11 28 69
+
+    855 6 21
+
+    5 7 0
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 888050 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 1030310 1023272
+
+    841049315 9999996 297102
+
+    859031386 1910063 3206
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    124299440 9663383 0
+
+    91348615 497178 1
+
+    '
+  - '5
+
+    68611840 10000000 749119
+
+    85328351 10000000 993656
+
+    819226708 10000000 247193
+
+    1022540471 10000000 1259890
+
+    804601099 10000000 250256
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 1634571
+
+    487979661 9999997 827417
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '5
+
+    904980175 9330630 0
+
+    665518669 10000000 0
+
+    546981263 8036443 350538
+
+    623219061 9999996 486146
+
+    621313816 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 500534
+
+    347017246 9044258 319954
+
+    878455114 9837743 229781
+
+    210035041 9748315 461982
+
+    124299440 9381396 263491
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    665518669 10000000 832563
+
+    546981263 9999997 510140
+
+    961093238 9999996 517261
+
+    1126883346 9999996 59567
+
+    '
+  - '5
+
+    131123747 10000000 37645
+
+    767316447 10000000 8468
+
+    232102607 10000000 0
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 350538
+
+    442579665 9514737 486146
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 804267
+
+    221204930 9663383 0
+
+    3265276 9807655 1
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 0
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    65893113 10000000 60301
+
+    481495282 10000000 8468
+
+    232102607 10000000 0
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '5
+
+    904980175 4482900 6788
+
+    665518669 10000000 1279397
+
+    360196903 9999997 315426
+
+    961093238 9999996 391873
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 2
+
+    3 1 3
+
+    69 69 69
+
+    2764 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    1224612860 9999999 6788
+
+    1049153599 10000000 27643
+
+    360196903 9999997 315426
+
+    961093238 9999996 517261
+
+    692801443 9999996 59567
+
+    '
+  - '5
+
+    391618042 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 265058
+
+    442579665 9999996 686280
+
+    554024085 9999999 477243
+
+    '
+  - '5
+
+    636473355 9999999 6788
+
+    665518669 10000000 16731
+
+    360196903 9999997 315426
+
+    961093238 9999996 405025
+
+    692801443 4647728 59567
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 1
+
+    546981263 9999997 529255
+
+    442579665 9999996 686280
+
+    271691716 9999999 477243
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 6
+
+    69 66 69
+
+    2017 22 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    1018455693 10000000 8303
+
+    360196903 9999997 315426
+
+    961093238 9999996 405025
+
+    692801443 9999996 59567
+
+    '
+  - '5
+
+    1154987101 9330630 2
+
+    665518669 10000000 0
+
+    546981263 9999997 529255
+
+    520628748 9999996 686280
+
+    601826992 9999999 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 31
+
+    8 7 0
+
+    '
+  - '5
+
+    93066696 10000000 31085
+
+    481495282 10000000 8468
+
+    43233868 10000000 -1
+
+    685055076 10000010 0
+
+    517120729 10010001 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    5 2 5
+
+    69 66 69
+
+    2898 12 29
+
+    5 7 0
+
+    '
+  - '5
+
+    70007346 10000000 31085
+
+    481495282 10000000 8468
+
+    43233868 10000000 -2
+
+    685055076 10000010 0
+
+    115384518 10010000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    69 28 69
+
+    2955 12 18
+
+    5 1 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    777328455 9999996 686280
+
+    601826992 1910063 24167
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 7 1
+
+    3 2 5
+
+    7 28 69
+
+    2898 12 18
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    434656184 9999997 529255
+
+    890022120 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 35
+
+    9 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 603330
+
+    900658006 9999996 297102
+
+    836498552 1910063 675549
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 10 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    111892855 9999997 1023272
+
+    900658006 5594231 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 1 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 9 21
+
+    5 7 1
+
+    '
+  - '5
+
+    494924544 9330630 1
+
+    665518669 10010000 0
+
+    733927584 9999997 1023272
+
+    900658006 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    1113528876 9330630 0
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    154354653 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    2898 4 21
+
+    5 5 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    1063310786 10000000 -1
+
+    733927584 9999997 1023272
+
+    1110192624 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    2115612615 3531561 1
+
+    1149453459 10010000 0
+
+    733927584 9999997 1023272
+
+    1817813860 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    9 28 69
+
+    855 6 19
+
+    2 7 -1
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 119535 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    733927584 9999997 1023272
+
+    1817813860 9999996 196018
+
+    859031386 3277860 3206
+
+    '
+  - '5
+
+    68611840 10000000 749119
+
+    85328351 10000000 993656
+
+    819226708 10000000 247193
+
+    1022540471 10000000 1259890
+
+    617382926 10000000 250256
+
+    '
+  - '6
+
+    2 2 1
+
+    2 1 1
+
+    3 2 3
+
+    69 69 69
+
+    576 10 26
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    546981263 8036443 350538
+
+    623219061 9999996 486146
+
+    621313816 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 351721
+
+    838981402 9558163 1361172
+
+    627901334 6183928 968042
+
+    124299440 9663383 0
+
+    3265276 9566236 0
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    309400293 10000000 832563
+
+    546981263 9999997 510140
+
+    961093238 9999996 517261
+
+    1126883346 9999996 59567
+
+    '
+  - '5
+
+    131123747 10000000 37645
+
+    767316447 10000000 8468
+
+    232102607 10000000 -1
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 0
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    2 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 2
+
+    3 1 3
+
+    86 69 69
+
+    2764 10 18
+
+    5 7 0
+
+    '
+  - '5
+
+    904980175 8618526 1
+
+    665518669 10000010 0
+
+    546981263 3550328 265058
+
+    442579665 9999996 449793
+
+    601826992 9999999 477243
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000001 0
+
+    546981263 9999997 529255
+
+    520628748 9999996 686280
+
+    1911247801 9999999 477243
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    1018455693 10000000 8303
+
+    360196903 9999997 315426
+
+    1616180431 9999996 405025
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 66 51
+
+    2898 12 18
+
+    9 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 31
+
+    8 7 -1
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 423232
+
+    520628748 9999996 686280
+
+    601826992 3790689 675549
+
+    '
+  - '5
+
+    762597619 9330630 1
+
+    665518669 10000000 0
+
+    457066755 9999997 529255
+
+    777328455 9999996 686280
+
+    601826992 1910063 24167
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 7 1
+
+    3 2 5
+
+    7 28 69
+
+    1263 12 18
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    3 1 1
+
+    3 2 5
+
+    7 28 69
+
+    2898 12 35
+
+    5 2 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 0
+
+    103518420 9999997 529255
+
+    890022120 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    0 2 -2
+
+    2 3 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 20 35
+
+    5 7 0
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 10 35
+
+    1 7 0
+
+    '
+  - '6
+
+    1 1 -1
+
+    2 2 1
+
+    3 2 0
+
+    11 28 69
+
+    2898 9 21
+
+    5 7 1
+
+    '
+  - '6
+
+    1 2 -2
+
+    2 2 1
+
+    3 2 7
+
+    11 28 69
+
+    4739 6 21
+
+    5 7 0
+
+    '
+  - '5
+
+    1366499432 9330630 1
+
+    1063310786 10000000 -1
+
+    733927584 9999997 1023272
+
+    1110192624 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    11 28 33
+
+    855 10 21
+
+    5 7 -1
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    9 28 69
+
+    855 6 19
+
+    2 10 -1
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 -1
+
+    733927584 9999997 1023272
+
+    1817813860 119535 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 0
+
+    510344676 9999997 1023272
+
+    1817813860 9999996 196018
+
+    859031386 3277860 3206
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10000000 0
+
+    19516762 8036443 350538
+
+    623219061 9999996 486146
+
+    621313816 9999999 477243
+
+    '
+  - '5
+
+    652664040 9088207 500534
+
+    347017246 9044258 319954
+
+    1402997289 9837743 229781
+
+    210035041 9748315 537686
+
+    124299440 9381396 263491
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    309400293 10000000 832563
+
+    74759598 9999997 510140
+
+    961093238 9999996 517261
+
+    1126883346 9999996 59567
+
+    '
+  - '5
+
+    1177869594 9088207 351721
+
+    838981402 9558163 949211
+
+    627901334 9007335 1294880
+
+    221204930 9663383 0
+
+    3265276 9807655 1
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 0
+
+    3 1 3
+
+    69 69 69
+
+    2017 10 18
+
+    3 7 0
+
+    '
+  - '5
+
+    391618042 9330630 1
+
+    665518669 10000000 0
+
+    546981263 9999997 265058
+
+    442579665 9999996 686280
+
+    142210179 9999999 545152
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 0
+
+    3 2 2
+
+    69 69 68
+
+    2017 12 18
+
+    1 7 0
+
+    '
+  - '6
+
+    0 2 0
+
+    2 1 1
+
+    5 2 6
+
+    69 66 69
+
+    2017 22 18
+
+    5 7 0
+
+    '
+  - '5
+
+    334022366 9999999 6788
+
+    1018455693 10000000 8303
+
+    360196903 9999997 315426
+
+    1616180431 9999996 405025
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 66 51
+
+    4190 12 18
+
+    9 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 3
+
+    69 66 69
+
+    2898 12 31
+
+    8 8 -1
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    73710881 10000010 0
+
+    457066755 9999997 529255
+
+    362291988 9999996 974192
+
+    601826992 9999999 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 3 1
+
+    5 2 5
+
+    69 66 70
+
+    2898 12 29
+
+    5 7 0
+
+    '
+  - '6
+
+    0 2 -2
+
+    2 2 1
+
+    3 2 5
+
+    69 28 69
+
+    2955 12 18
+
+    5 1 1
+
+    '
+  - '5
+
+    762597619 9330630 1
+
+    665518669 10000000 0
+
+    548776375 9999997 529255
+
+    777328455 9999996 686280
+
+    601826992 1910063 24167
+
+    '
+  - '6
+
+    0 2 -2
+
+    2 3 1
+
+    3 2 5
+
+    11 28 69
+
+    1377 20 35
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 10000000 1
+
+    457066755 9999997 1178721
+
+    900658006 9999996 297102
+
+    836498552 1910063 675549
+
+    '
+  - '6
+
+    2 2 0
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 10 35
+
+    1 7 0
+
+    '
+  - '5
+
+    1833267713 9330630 1
+
+    1201075184 10000000 0
+
+    111892855 9999997 1023272
+
+    900658006 5594231 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    494924544 9330630 1
+
+    665518669 10010000 0
+
+    733927584 9999997 1023272
+
+    900658006 9999996 573708
+
+    601826992 253915 3206
+
+    '
+  - '6
+
+    1 2 -2
+
+    2 2 1
+
+    0 2 7
+
+    11 28 69
+
+    4739 6 21
+
+    5 7 0
+
+    '
+  - '5
+
+    1113528876 9330630 0
+
+    1149453459 10001000 0
+
+    561695159 9999997 1023272
+
+    154354653 9999996 297102
+
+    601826992 1910063 3206
+
+    '
+  - '6
+
+    1 2 -2
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    3457 4 21
+
+    5 5 0
+
+    '
+  - '5
+
+    1366499432 9330630 1
+
+    1063310786 10000000 -1
+
+    733927584 9999997 1023272
+
+    1110192624 9999996 297102
+
+    601826992 2304029 3206
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 1
+
+    4 2 5
+
+    9 28 69
+
+    855 6 19
+
+    2 15 -1
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 -1
+
+    733927584 9999997 1023272
+
+    1817813860 119535 297102
+
+    988574465 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9691519 2
+
+    594249377 10000000 0
+
+    733927584 1030310 1023272
+
+    841049315 9999996 297102
+
+    859031386 1910063 3206
+
+    '
+  - '5
+
+    904980175 9999999 0
+
+    276930211 10000000 0
+
+    409316485 9999997 296285
+
+    623219061 9999996 486146
+
+    601826992 9999999 679302
+
+    '
+  - '5
+
+    652664040 9088207 350035
+
+    838981402 9558163 1361172
+
+    627901334 6183928 968042
+
+    124299440 9663383 0
+
+    6497322 9566236 0
+
+    '
+  - '5
+
+    904980175 9999999 6788
+
+    309400293 10000000 832563
+
+    74759598 7686909 510140
+
+    961093238 9999996 517261
+
+    1126883346 9999996 59567
+
+    '
+  - '5
+
+    55931085 10000000 64777
+
+    767316447 10000000 8468
+
+    232102607 10000000 -1
+
+    685055076 10000000 0
+
+    295043473 10000000 0
+
+    '
+  - '6
+
+    2 2 -1
+
+    2 2 0
+
+    3 1 3
+
+    67 69 69
+
+    2017 10 18
+
+    3 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 2
+
+    3 1 3
+
+    86 69 63
+
+    2764 10 18
+
+    9 7 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 0
+
+    1 2 2
+
+    69 69 68
+
+    2017 12 18
+
+    1 7 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    248420675 10000000 1
+
+    546981263 9999997 269252
+
+    442579665 9999996 80764
+
+    271691716 9999999 477243
+
+    '
+  - '6
+
+    0 2 0
+
+    2 1 1
+
+    5 2 6
+
+    69 3 69
+
+    2017 22 18
+
+    5 7 0
+
+    '
+  - '5
+
+    871653026 9330630 1
+
+    263647338 10000001 0
+
+    546981263 9999997 529255
+
+    520628748 9999996 686280
+
+    1911247801 9999999 477243
+
+    '
+  - '5
+
+    334022366 9999999 6788
+
+    1018455693 10000000 8303
+
+    323833575 9999997 315426
+
+    1616180431 9999996 405025
+
+    692801443 9999996 59567
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 1 1
+
+    3 1 3
+
+    69 125 51
+
+    4190 12 18
+
+    9 7 0
+
+    '
+  - '5
+
+    68611840 10000000 60301
+
+    636815579 10000000 8468
+
+    43233868 10000000 -2
+
+    685055076 10000110 0
+
+    517120729 10010000 0
+
+    '
+  - '6
+
+    0 2 -1
+
+    2 2 1
+
+    3 2 3
+
+    106 66 69
+
+    2898 12 31
+
+    8 8 -1
+
+    '
+  - '5
+
+    70007346 10000000 6563
+
+    25357899 10000000 8468
+
+    43233868 10000000 -2
+
+    685055076 10000010 0
+
+    115384518 10010000 0
+
+    '
+  - '5
+
+    904980175 9330630 1
+
+    665518669 10001000 0
+
+    457066755 9999997 423232
+
+    542829810 9999996 686280
+
+    601826992 3790689 675549
+
+    '
+  - '6
+
+    0 2 -1
+
+    3 1 1
+
+    3 2 5
+
+    0 28 69
+
+    2898 12 44
+
+    5 2 0
+
+    '
+  - '5
+
+    1113528876 9330630 1
+
+    665518669 00000000 0
+
+    183617412 9999997 529255
+
+    890022120 9999996 297102
+
+    601826992 1910063 675549
+
+    '
+  - '6
+
+    2 0 0
+
+    2 2 1
+
+    3 2 5
+
+    11 28 69
+
+    2898 10 35
+
+    1 7 0
+
+    '
+  - '5
+
+    1833267713 9330630 1
+
+    1201075184 10000000 -1
+
+    111892855 9999997 1023272
+
+    900658006 5594231 297102
+
+    601826992 1910063 3206
+
+    '
+  - '5
+
+    494924544 9330630 1
+
+    665518669 10010000 0
+
+    733927584 9999997 1023272
+
+    900658006 9999996 573708
+
+    601826992 108453 3206
+
+    '
+  - '6
+
+    1 2 -2
+
+    2 2 1
+
+    0 2 7
+
+    11 28 69
+
+    4739 6 21
+
+    2 7 0
+
+    '
+  - '6
+
+    2 2 -2
+
+    2 2 1
+
+    4 2 5
+
+    11 28 69
+
+    3457 4 21
+
+    5 5 0
+
+    '
+  - '6
+
+    1 2 -1
+
+    2 2 0
+
+    4 2 5
+
+    9 28 69
+
+    855 6 19
+
+    2 15 -1
+
+    '
+  - '5
+
+    2115612615 9330630 2
+
+    1149453459 10000000 -1
+
+    733927584 9999997 1023272
+
+    1817813860 56351 297102
+
+    988574465 1910063 3206
+
+    '
+  - '5
+
+    2115612615 9691519 2
+
+    594249377 10000000 0
+
+    733927584 1030310 1023272
+
+    841049315 9999996 297102
+
+    859031386 2531450 3206
+
+    '
+  - '5
+
+    1177869594 9088207 511898
+
+    838981402 9558163 949211
+
+    627901334 7266239 1294880
+
+    221204930 9663383 0
+
+    3265276 9807655 1
+
+    '
+  output:
+  - '6
+
+    1
+
+    15
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '350759062
+
+    640747647
+
+    0
+
+    0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    416087444
+
+    361743271
+
+    148269437
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    0
+
+    '
+  - '759534327
+
+    279467561
+
+    696669698
+
+    758867258
+
+    205998803
+
+    '
+  - '350759062
+
+    485561434
+
+    207606140
+
+    949931760
+
+    923189885
+
+    '
+  - '279412901
+
+    37810566
+
+    416087444
+
+    294263281
+
+    890982526
+
+    '
+  - '350759062
+
+    640747647
+
+    0
+
+    0
+
+    0
+
+    '
+  - '0
+
+    0
+
+    416087444
+
+    361743271
+
+    148269437
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    961264209
+
+    '
+  - '759534327
+
+    279467561
+
+    696669698
+
+    525057011
+
+    205998803
+
+    '
+  - '350759062
+
+    485561434
+
+    207606140
+
+    949931760
+
+    923189885
+
+    '
+  - '279412901
+
+    37810566
+
+    416087444
+
+    294263281
+
+    890982526
+
+    '
+  - '6
+
+    1
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '0
+
+    0
+
+    416087444
+
+    949967308
+
+    148269437
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    325174836
+
+    '
+  - '279412901
+
+    37810566
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '7
+
+    1
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '350759062
+
+    320119030
+
+    0
+
+    0
+
+    0
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    10281351
+
+    '
+  - '3
+
+    1
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    949967308
+
+    148269437
+
+    '
+  - '1
+
+    1
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '1
+
+    1
+
+    15
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '350759062
+
+    320119030
+
+    787624210
+
+    0
+
+    0
+
+    '
+  - '1
+
+    1
+
+    15
+
+    699496932
+
+    380651811
+
+    713939942
+
+    '
+  - '350759062
+
+    320119030
+
+    513443818
+
+    0
+
+    0
+
+    '
+  - '1
+
+    1
+
+    15
+
+    947590496
+
+    380651811
+
+    713939942
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    487073205
+
+    148269437
+
+    '
+  - '279412901
+
+    786161510
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '1
+
+    1
+
+    15
+
+    947590496
+
+    626409609
+
+    713939942
+
+    '
+  - '350759062
+
+    320119030
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    947590496
+
+    626409609
+
+    713939942
+
+    '
+  - '536060076
+
+    0
+
+    222967010
+
+    487073205
+
+    148269437
+
+    '
+  - '536060076
+
+    0
+
+    222967010
+
+    487073205
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    783098687
+
+    626409609
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    222967010
+
+    487073205
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    532271405
+
+    626409609
+
+    713939942
+
+    '
+  - '618341390
+
+    37810566
+
+    222967010
+
+    487073205
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    178300906
+
+    626409609
+
+    713939942
+
+    '
+  - '1
+
+    7
+
+    15
+
+    178300906
+
+    796331518
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    222967010
+
+    769546065
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    15
+
+    178300906
+
+    796331518
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    153240740
+
+    769546065
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    15
+
+    178300906
+
+    143090619
+
+    713939942
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    143090619
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    153240740
+
+    736749962
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    333162246
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    153240740
+
+    274850910
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    333162246
+
+    8727616
+
+    '
+  - '174626160
+
+    0
+
+    153240740
+
+    274850910
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    624537726
+
+    333162246
+
+    8727616
+
+    '
+  - '174626160
+
+    0
+
+    153240740
+
+    274850910
+
+    590187140
+
+    '
+  - '174626160
+
+    0
+
+    350656241
+
+    274850910
+
+    590187140
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    0
+
+    '
+  - '6
+
+    1
+
+    15
+
+    699496932
+
+    549894529
+
+    713939942
+
+    '
+  - '0
+
+    0
+
+    982362535
+
+    361743271
+
+    148269437
+
+    '
+  - '759534327
+
+    279467561
+
+    696669698
+
+    525057011
+
+    281294146
+
+    '
+  - '7
+
+    0
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '19054879
+
+    320119030
+
+    0
+
+    0
+
+    0
+
+    '
+  - '279412901
+
+    247130660
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '536060076
+
+    0
+
+    986404170
+
+    949967308
+
+    148269437
+
+    '
+  - '279412901
+
+    37810566
+
+    855576735
+
+    294263281
+
+    146988852
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    949967308
+
+    369598651
+
+    '
+  - '279412901
+
+    37810566
+
+    855576735
+
+    294263281
+
+    975015433
+
+    '
+  - '1
+
+    1
+
+    15
+
+    699496932
+
+    380651811
+
+    127
+
+    '
+  - '536060076
+
+    37810566
+
+    416087444
+
+    949967308
+
+    148269437
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    487073205
+
+    508116883
+
+    '
+  - '1
+
+    1
+
+    15
+
+    947590496
+
+    626409609
+
+    0
+
+    '
+  - '350759062
+
+    436959350
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    783098687
+
+    495961135
+
+    713939942
+
+    '
+  - '1
+
+    211
+
+    15
+
+    532271405
+
+    626409609
+
+    713939942
+
+    '
+  - '1
+
+    1
+
+    15
+
+    532271405
+
+    626409609
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    222967010
+
+    300858994
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    178300906
+
+    192710359
+
+    713939942
+
+    '
+  - '44049810
+
+    0
+
+    222967010
+
+    487073205
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    178300906
+
+    796331518
+
+    0
+
+    '
+  - '3
+
+    7
+
+    15
+
+    178300906
+
+    109672030
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    2972335
+
+    769546065
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    15
+
+    178300906
+
+    796331518
+
+    8727616
+
+    '
+  - '0
+
+    0
+
+    153240740
+
+    769546065
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    143090619
+
+    9999360
+
+    '
+  - '3
+
+    6
+
+    31
+
+    178300906
+
+    333162246
+
+    713939942
+
+    '
+  - '174626160
+
+    0
+
+    153240740
+
+    326768682
+
+    574034640
+
+    '
+  - '174626160
+
+    0
+
+    350656241
+
+    596273402
+
+    590187140
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    657829613
+
+    '
+  - '350759062
+
+    485561434
+
+    207606140
+
+    599286037
+
+    923189885
+
+    '
+  - '279412901
+
+    37810566
+
+    921308046
+
+    294263281
+
+    890982526
+
+    '
+  - '0
+
+    0
+
+    982362535
+
+    361743271
+
+    286338037
+
+    '
+  - '759534327
+
+    279467561
+
+    468115543
+
+    525057011
+
+    281294146
+
+    '
+  - '279412901
+
+    37810566
+
+    416087444
+
+    294263281
+
+    349280032
+
+    '
+  - '645939001
+
+    640747647
+
+    0
+
+    0
+
+    0
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    24322011
+
+    148269437
+
+    '
+  - '759534327
+
+    323113303
+
+    534607258
+
+    0
+
+    916353971
+
+    '
+  - '7
+
+    6
+
+    1
+
+    699496932
+
+    892852568
+
+    713939942
+
+    '
+  - '312934938
+
+    320119030
+
+    0
+
+    0
+
+    0
+
+    '
+  - '190068088
+
+    37810566
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '1
+
+    1
+
+    1
+
+    699496932
+
+    546314090
+
+    713939942
+
+    '
+  - '584032580
+
+    247130660
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '84415151
+
+    0
+
+    416087444
+
+    949967308
+
+    369598651
+
+    '
+  - '637065311
+
+    37810566
+
+    855576735
+
+    294263281
+
+    975015433
+
+    '
+  - '536060076
+
+    37810566
+
+    416087444
+
+    949967308
+
+    929352522
+
+    '
+  - '1
+
+    1
+
+    15
+
+    947590496
+
+    567971809
+
+    713939942
+
+    '
+  - '279412901
+
+    716365607
+
+    855576735
+
+    294263281
+
+    890982526
+
+    '
+  - '315274231
+
+    0
+
+    416087444
+
+    487073205
+
+    148269437
+
+    '
+  - '1
+
+    7
+
+    15
+
+    947590496
+
+    626409609
+
+    0
+
+    '
+  - '534537865
+
+    320119030
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '1
+
+    7
+
+    63
+
+    947590496
+
+    626409609
+
+    713939942
+
+    '
+  - '631867883
+
+    320119030
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    783098687
+
+    495961135
+
+    0
+
+    '
+  - '618341390
+
+    0
+
+    222967010
+
+    124127596
+
+    574034640
+
+    '
+  - '1
+
+    16003
+
+    15
+
+    532271405
+
+    626409609
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    273960395
+
+    300858994
+
+    574034640
+
+    '
+  - '1
+
+    1
+
+    15
+
+    178300906
+
+    796331518
+
+    0
+
+    '
+  - '618341390
+
+    0
+
+    222967010
+
+    769546065
+
+    959485774
+
+    '
+  - '7
+
+    7
+
+    15
+
+    178300906
+
+    109672030
+
+    713939942
+
+    '
+  - '618341390
+
+    0
+
+    2972335
+
+    831819963
+
+    574034640
+
+    '
+  - '1
+
+    7
+
+    15
+
+    178300906
+
+    796331518
+
+    8727616
+
+    '
+  - '766166704
+
+    0
+
+    153240740
+
+    769546065
+
+    574034640
+
+    '
+  - '0
+
+    0
+
+    153240740
+
+    326752662
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    830492482
+
+    9999360
+
+    '
+  - '618341390
+
+    102838263
+
+    153240740
+
+    736749962
+
+    574034640
+
+    '
+  - '131302081
+
+    0
+
+    153240740
+
+    274850910
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    624537726
+
+    333162246
+
+    16003
+
+    '
+  - '174626160
+
+    0
+
+    153240740
+
+    156743265
+
+    574034640
+
+    '
+  - '174626160
+
+    0
+
+    153240740
+
+    274850910
+
+    920131286
+
+    '
+  - '350759062
+
+    485561434
+
+    207606140
+
+    599286037
+
+    691161631
+
+    '
+  - '7
+
+    1
+
+    15
+
+    699496932
+
+    549894529
+
+    713939942
+
+    '
+  - '536060076
+
+    0
+
+    982362535
+
+    361743271
+
+    286338037
+
+    '
+  - '759534327
+
+    323113303
+
+    237584388
+
+    0
+
+    961264209
+
+    '
+  - '279412901
+
+    947503880
+
+    416087444
+
+    294263281
+
+    349280032
+
+    '
+  - '645939001
+
+    640747647
+
+    787624210
+
+    0
+
+    0
+
+    '
+  - '7
+
+    6
+
+    1
+
+    699496932
+
+    892852568
+
+    16002
+
+    '
+  - '1
+
+    1
+
+    1
+
+    243803083
+
+    546314090
+
+    713939942
+
+    '
+  - '331721122
+
+    0
+
+    986404170
+
+    949967308
+
+    148269437
+
+    '
+  - '536060076
+
+    0
+
+    416087444
+
+    487073205
+
+    281697691
+
+    '
+  - '279412901
+
+    716365607
+
+    855576735
+
+    708987161
+
+    890982526
+
+    '
+  - '1
+
+    1
+
+    1
+
+    947590496
+
+    626409609
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    947590496
+
+    626409609
+
+    66303100
+
+    '
+  - '536060076
+
+    0
+
+    222967010
+
+    487073205
+
+    82348127
+
+    '
+  - '902666152
+
+    0
+
+    222967010
+
+    124127596
+
+    574034640
+
+    '
+  - '1
+
+    16003
+
+    15
+
+    532271405
+
+    540017520
+
+    713939942
+
+    '
+  - '1
+
+    1
+
+    15
+
+    532271405
+
+    626409609
+
+    0
+
+    '
+  - '618341390
+
+    0
+
+    515500284
+
+    300858994
+
+    574034640
+
+    '
+  - '1
+
+    43
+
+    15
+
+    178300906
+
+    192710359
+
+    713939942
+
+    '
+  - '7
+
+    7
+
+    15
+
+    178300906
+
+    109672030
+
+    127
+
+    '
+  - '1
+
+    7
+
+    0
+
+    178300906
+
+    796331518
+
+    8727616
+
+    '
+  - '3
+
+    7
+
+    15
+
+    178300906
+
+    450964304
+
+    713939942
+
+    '
+  - '39895902
+
+    102838263
+
+    153240740
+
+    736749962
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    396521421
+
+    8727616
+
+    '
+  - '3
+
+    7
+
+    31
+
+    624537726
+
+    333162246
+
+    1045507
+
+    '
+  - '174626160
+
+    268151613
+
+    153240740
+
+    156743265
+
+    574034640
+
+    '
+  - '174626160
+
+    0
+
+    652323421
+
+    274850910
+
+    920131286
+
+    '
+  - '536060076
+
+    0
+
+    203397544
+
+    361743271
+
+    286338037
+
+    '
+  - '759534327
+
+    279467561
+
+    701435609
+
+    525057011
+
+    281294146
+
+    '
+  - '279412901
+
+    947503880
+
+    626544036
+
+    294263281
+
+    349280032
+
+    '
+  - '562409434
+
+    323113303
+
+    534607258
+
+    0
+
+    916353971
+
+    '
+  - '7
+
+    6
+
+    1
+
+    699496932
+
+    892852568
+
+    1984248
+
+    '
+  - '84415151
+
+    0
+
+    416087444
+
+    949967308
+
+    42074901
+
+    '
+  - '1
+
+    0
+
+    15
+
+    699496932
+
+    380651811
+
+    127
+
+    '
+  - '1
+
+    1
+
+    63
+
+    947590496
+
+    567971809
+
+    713939942
+
+    '
+  - '953247762
+
+    716365607
+
+    855576735
+
+    708987161
+
+    890982526
+
+    '
+  - '1
+
+    1
+
+    1
+
+    947590496
+
+    540173591
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    947590496
+
+    626409609
+
+    31487079
+
+    '
+  - '536060076
+
+    0
+
+    222967010
+
+    33484691
+
+    148269437
+
+    '
+  - '1
+
+    43
+
+    63
+
+    947590496
+
+    626409609
+
+    713939942
+
+    '
+  - '1
+
+    7
+
+    15
+
+    783098687
+
+    495961135
+
+    1
+
+    '
+  - '902666152
+
+    0
+
+    34178358
+
+    124127596
+
+    574034640
+
+    '
+  - '1
+
+    43
+
+    15
+
+    178300906
+
+    796450246
+
+    713939942
+
+    '
+  - '618341390
+
+    37810566
+
+    222967010
+
+    769546065
+
+    959485774
+
+    '
+  - '6
+
+    7
+
+    15
+
+    178300906
+
+    109672030
+
+    127
+
+    '
+  - '713201060
+
+    0
+
+    2972335
+
+    831819963
+
+    574034640
+
+    '
+  - '766166704
+
+    0
+
+    153240740
+
+    769546065
+
+    904839855
+
+    '
+  - '3
+
+    7
+
+    1
+
+    178300906
+
+    450964304
+
+    713939942
+
+    '
+  - '0
+
+    0
+
+    433570689
+
+    326752662
+
+    574034640
+
+    '
+  - '3
+
+    7
+
+    31
+
+    178300906
+
+    261078974
+
+    9999360
+
+    '
+  - '39895902
+
+    102838263
+
+    153240740
+
+    736749962
+
+    767541614
+
+    '
+  - '3
+
+    7
+
+    31
+
+    624537726
+
+    333162246
+
+    75399170
+
+    '
+  - '174626160
+
+    268151613
+
+    153240740
+
+    156743265
+
+    586693619
+
+    '
+  - '946471668
+
+    0
+
+    350656241
+
+    596273402
+
+    590187140
+
+    '
+  - '0
+
+    0
+
+    931169716
+
+    361743271
+
+    148269437
+
+    '
+  - '759534327
+
+    323113303
+
+    237584388
+
+    0
+
+    886580747
+
+    '
+  - '279412901
+
+    947503880
+
+    779971198
+
+    294263281
+
+    349280032
+
+    '
+  - '157224801
+
+    640747647
+
+    787624210
+
+    0
+
+    0
+
+    '
+  - '7
+
+    6
+
+    1
+
+    89669803
+
+    892852568
+
+    1984248
+
+    '
+  - '1
+
+    1
+
+    1
+
+    243803083
+
+    546314090
+
+    0
+
+    '
+  - '1
+
+    0
+
+    3
+
+    699496932
+
+    380651811
+
+    127
+
+    '
+  - '536060076
+
+    773762149
+
+    416087444
+
+    949967308
+
+    929352522
+
+    '
+  - '1
+
+    1
+
+    63
+
+    885729130
+
+    567971809
+
+    713939942
+
+    '
+  - '442091787
+
+    0
+
+    416087444
+
+    487073205
+
+    281697691
+
+    '
+  - '953247762
+
+    716365607
+
+    980166708
+
+    708987161
+
+    890982526
+
+    '
+  - '1
+
+    1
+
+    1
+
+    499481995
+
+    540173591
+
+    0
+
+    '
+  - '350759062
+
+    707096064
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '1
+
+    7
+
+    15
+
+    848128623
+
+    626409609
+
+    31487079
+
+    '
+  - '631867883
+
+    765415936
+
+    453735097
+
+    0
+
+    0
+
+    '
+  - '536060076
+
+    0
+
+    222967010
+
+    348093930
+
+    82348127
+
+    '
+  - '1
+
+    1
+
+    15
+
+    1
+
+    626409609
+
+    0
+
+    '
+  - '618341390
+
+    0
+
+    648314194
+
+    300858994
+
+    574034640
+
+    '
+  - '0
+
+    7
+
+    15
+
+    178300906
+
+    109672030
+
+    127
+
+    '
+  - '713201060
+
+    30992621
+
+    2972335
+
+    831819963
+
+    574034640
+
+    '
+  - '766166704
+
+    0
+
+    153240740
+
+    769546065
+
+    55973547
+
+    '
+  - '3
+
+    7
+
+    1
+
+    178300906
+
+    450964304
+
+    16002
+
+    '
+  - '7
+
+    7
+
+    31
+
+    178300906
+
+    261078974
+
+    9999360
+
+    '
+  - '3
+
+    6
+
+    31
+
+    624537726
+
+    333162246
+
+    75399170
+
+    '
+  - '174626160
+
+    268151613
+
+    153240740
+
+    486963220
+
+    586693619
+
+    '
+  - '946471668
+
+    0
+
+    350656241
+
+    596273402
+
+    867569095
+
+    '
+  - '562409434
+
+    323113303
+
+    649461828
+
+    0
+
+    916353971
+
+    '
+timeout: 4.0

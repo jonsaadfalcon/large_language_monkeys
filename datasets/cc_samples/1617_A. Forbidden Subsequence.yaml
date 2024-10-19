@@ -1,0 +1,9406 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nSergey Semyonovich\
+  \ is a mayor of a county city N and he used to spend his days and nights in thoughts\
+  \ of further improvements of Nkers' lives. Unfortunately for him, anything and everything\
+  \ has been done already, and there are no more possible improvements he can think\
+  \ of during the day (he now prefers to sleep at night). However, his assistants\
+  \ have found a solution and they now draw an imaginary city on a paper sheet and\
+  \ suggest the mayor can propose its improvements.\n\nRight now he has a map of some\
+  \ imaginary city with n subway stations. Some stations are directly connected with\
+  \ tunnels in such a way that the whole map is a tree (assistants were short on time\
+  \ and enthusiasm). It means that there exists exactly one simple path between each\
+  \ pair of station. We call a path simple if it uses each tunnel no more than once.\n\
+  \nOne of Sergey Semyonovich's favorite quality objectives is the sum of all pairwise\
+  \ distances between every pair of stations. The distance between two stations is\
+  \ the minimum possible number of tunnels on a path between them.\n\nSergey Semyonovich\
+  \ decided to add new tunnels to the subway map. In particular, he connected any\
+  \ two stations u and v that were not connected with a direct tunnel but share a\
+  \ common neighbor, i.e. there exists such a station w that the original map has\
+  \ a tunnel between u and w and a tunnel between w and v. You are given a task to\
+  \ compute the sum of pairwise distances between all pairs of stations in the new\
+  \ map.\n\nInput\n\nThe first line of the input contains a single integer n (2 \u2264\
+  \ n \u2264 200 000) \u2014 the number of subway stations in the imaginary city drawn\
+  \ by mayor's assistants. Each of the following n - 1 lines contains two integers\
+  \ u_i and v_i (1 \u2264 u_i, v_i \u2264 n, u_i \u2260 v_i), meaning the station\
+  \ with these indices are connected with a direct tunnel.\n\nIt is guaranteed that\
+  \ these n stations and n - 1 tunnels form a tree.\n\nOutput\n\nPrint one integer\
+  \ that is equal to the sum of distances between all pairs of stations after Sergey\
+  \ Semyonovich draws new tunnels between all pairs of stations that share a common\
+  \ neighbor in the original map.\n\nExamples\n\nInput\n\n4\n1 2\n1 3\n1 4\n\n\nOutput\n\
+  \n6\n\n\nInput\n\n4\n1 2\n2 3\n3 4\n\n\nOutput\n\n7\n\nNote\n\nIn the first sample,\
+  \ in the new map all pairs of stations share a direct connection, so the sum of\
+  \ distances is 6.\n\nIn the second sample, the new map has a direct tunnel between\
+  \ all pairs of stations except for the pair (1, 4). For these two stations the distance\
+  \ is 2.\nA: ```# by the authority of GOD   author: manhar singh sachdev #\n\nimport\
+  \ os,sys\nfrom io import BytesIO,IOBase\n\ndef main():\n    n = int(input())\n \
+  \   path = [[] for _ in range(n)]\n    for _ in range(n-1):\n        a1,b1 = map(lambda\
+  \ xx:int(xx)-1,input().split())\n        path[a1].append(b1)\n        path[b1].append(a1)\n\
+  \    st,poi,visi = [0],[0]*n,[1]+[0]*(n-1)\n    dp,su = [[1.0,0.0] for _ in range(n)],0.0\n\
+  \    # even ; odd\n    while len(st):\n        x,y = st[-1],path[st[-1]]\n     \
+  \   if poi[x] != len(y) and visi[y[poi[x]]]:\n            poi[x] += 1\n        if\
+  \ poi[x] == len(y):\n            su += dp[st.pop()][1]\n            if len(st):\n\
+  \                dp[st[-1]][0] += dp[x][1]\n                dp[st[-1]][1] += dp[x][0]\n\
+  \        else:\n            st.append(y[poi[x]])\n            visi[st[-1]] = 1\n\
+  \            poi[x] += 1\n    st,poi,visi,ans,xor = [0],[0]*n,[1]+[0]*(n-1),su,0\n\
+  \    dp1 = [su]*n\n    while len(st):\n        x,y = st[-1],path[st[-1]]\n     \
+  \   if poi[x] != len(y) and visi[y[poi[x]]]:\n            poi[x] += 1\n        if\
+  \ poi[x] == len(y):\n            st.pop()\n            xor ^= 1\n        else:\n\
+  \            i = y[poi[x]]\n            dp1[i] = dp1[x]-dp[i][0]+dp[0][xor]-dp[i][1]\n\
+  \            ans += dp1[i]\n            st.append(i)\n            visi[i] = 1\n\
+  \            poi[x] += 1\n            xor ^= 1\n    print(int(ans/2))\n\n# Fast\
+  \ IO Region\nBUFSIZE = 8192\nclass FastIO(IOBase):\n    newlines = 0\n    def __init__(self,file):\n\
+  \        self._fd = file.fileno()\n        self.buffer = BytesIO()\n        self.writable\
+  \ = \"x\" in file.mode or \"r\" not in file.mode\n        self.write = self.buffer.write\
+  \ if self.writable else None\n    def read(self):\n        while True:\n       \
+  \     b = os.read(self._fd,max(os.fstat(self._fd).st_size,BUFSIZE))\n          \
+  \  if not b:\n                break\n            ptr = self.buffer.tell()\n    \
+  \        self.buffer.seek(0,2),self.buffer.write(b),self.buffer.seek(ptr)\n    \
+  \    self.newlines = 0\n        return self.buffer.read()\n    def readline(self):\n\
+  \        while self.newlines == 0:\n            b = os.read(self._fd,max(os.fstat(self._fd).st_size,BUFSIZE))\n\
+  \            self.newlines = b.count(b\"\\n\")+(not b)\n            ptr = self.buffer.tell()\n\
+  \            self.buffer.seek(0,2),self.buffer.write(b),self.buffer.seek(ptr)\n\
+  \        self.newlines -= 1\n        return self.buffer.readline()\n    def flush(self):\n\
+  \        if self.writable:\n            os.write(self._fd,self.buffer.getvalue())\n\
+  \            self.buffer.truncate(0),self.buffer.seek(0)\nclass IOWrapper(IOBase):\n\
+  \    def __init__(self,file):\n        self.buffer = FastIO(file)\n        self.flush\
+  \ = self.buffer.flush\n        self.writable = self.buffer.writable\n        self.write\
+  \ = lambda s:self.buffer.write(s.encode(\"ascii\"))\n        self.read = lambda:self.buffer.read().decode(\"\
+  ascii\")\n        self.readline = lambda:self.buffer.readline().decode(\"ascii\"\
+  )\nsys.stdin,sys.stdout = IOWrapper(sys.stdin),IOWrapper(sys.stdout)\ninput = lambda:sys.stdin.readline().rstrip(\"\
+  \\r\\n\")\nif __name__ == \"__main__\":\n    main()```\nQ: Write python code to\
+  \ solve the following coding problem that obeys the constraints and passes the example\
+  \ test cases. The output code needs to read from and write to standard IO. Please\
+  \ wrap your code answer using ```:\nImagine you have an infinite 2D plane with Cartesian\
+  \ coordinate system. Some of the integral points are blocked, and others are not.\
+  \ Two integral points A and B on the plane are 4-connected if and only if:\n\n \
+  \ * the Euclidean distance between A and B is one unit and neither A nor B is blocked;\
+  \ \n  * or there is some integral point C, such that A is 4-connected with C, and\
+  \ C is 4-connected with B. \n\n\n\nLet's assume that the plane doesn't contain blocked\
+  \ points. Consider all the integral points of the plane whose Euclidean distance\
+  \ from the origin is no more than n, we'll name these points special. Chubby Yang\
+  \ wants to get the following property: no special point is 4-connected to some non-special\
+  \ point. To get the property she can pick some integral points of the plane and\
+  \ make them blocked. What is the minimum number of points she needs to pick?\n\n\
+  Input\n\nThe first line contains an integer n (0 \u2264 n \u2264 4\xB7107).\n\n\
+  Output\n\nPrint a single integer \u2014 the minimum number of points that should\
+  \ be blocked.\n\nExamples\n\nInput\n\n1\n\n\nOutput\n\n4\n\n\nInput\n\n2\n\n\nOutput\n\
+  \n8\n\n\nInput\n\n3\n\n\nOutput\n\n16\nA: ```from math import sqrt, floor\n\n\n\
+  def calc(n):\n    if n == 0:\n       return 1\n\n    # y = n\n    # x = 1\n    #\
+  \ c = 0\n    # while x - y < 0:\n    #     if x ** 2 + y ** 2 <= n ** 2:\n    #\
+  \         c += 1\n    #         x += 1\n    #         continue\n    #     if x **\
+  \ 2 + y ** 2 > n ** 2:\n    #         y -= 1\n    x = floor(sqrt(n**2/2))\n    y\
+  \ = floor(sqrt(n**2-x**2))\n    #print(x, y)\n    if x == y:\n        return x*8\n\
+  \    else:\n        return x * 8 +4\n\nn = int(input())\nprint(calc(n))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nYou are given strings S\
+  \ and T, consisting of lowercase English letters. It is guaranteed that T is a permutation\
+  \ of the string abc. \n\nFind string S', the lexicographically smallest permutation\
+  \ of S such that T is not a subsequence of S'.\n\nString a is a permutation of string\
+  \ b if the number of occurrences of each distinct character is the same in both\
+  \ strings.\n\nA string a is a subsequence of a string b if a can be obtained from\
+  \ b by deletion of several (possibly, zero or all) elements.\n\nA string a is lexicographically\
+  \ smaller than a string b if and only if one of the following holds:\n\n  * a is\
+  \ a prefix of b, but a \u2260 b;\n  * in the first position where a and b differ,\
+  \ the string a has a letter that appears earlier in the alphabet than the corresponding\
+  \ letter in b.\n\nInput\n\nEach test contains multiple test cases. The first line\
+  \ contains a single integer t (1 \u2264 t \u2264 1000) \u2014 the number of test\
+  \ cases. Description of the test cases follows.\n\nThe first line of each test case\
+  \ contains a string S (1 \u2264 |S| \u2264 100), consisting of lowercase English\
+  \ letters.\n\nThe second line of each test case contains a string T that is a permutation\
+  \ of the string abc. (Hence, |T| = 3).\n\nNote that there is no limit on the sum\
+  \ of |S| across all test cases.\n\nOutput\n\nFor each test case, output a single\
+  \ string S', the lexicographically smallest permutation of S such that T is not\
+  \ a subsequence of S'.\n\nExample\n\nInput\n\n\n7\nabacaba\nabc\ncccba\nacb\ndbsic\n\
+  bac\nabracadabra\nabc\ndddddddddddd\ncba\nbbc\nabc\nac\nabc\n\n\nOutput\n\n\naaaacbb\n\
+  abccc\nbcdis\naaaaacbbdrr\ndddddddddddd\nbbc\nac\n\nNote\n\nIn the first test case,\
+  \ both aaaabbc and aaaabcb are lexicographically smaller than aaaacbb, but they\
+  \ contain abc as a subsequence.\n\nIn the second test case, abccc is the smallest\
+  \ permutation of cccba and does not contain acb as a subsequence.\n\nIn the third\
+  \ test case, bcdis is the smallest permutation of dbsic and does not contain bac\
+  \ as a subsequence.\nA:"
+question: "You are given strings S and T, consisting of lowercase English letters.\
+  \ It is guaranteed that T is a permutation of the string abc. \n\nFind string S',\
+  \ the lexicographically smallest permutation of S such that T is not a subsequence\
+  \ of S'.\n\nString a is a permutation of string b if the number of occurrences of\
+  \ each distinct character is the same in both strings.\n\nA string a is a subsequence\
+  \ of a string b if a can be obtained from b by deletion of several (possibly, zero\
+  \ or all) elements.\n\nA string a is lexicographically smaller than a string b if\
+  \ and only if one of the following holds:\n\n  * a is a prefix of b, but a \u2260\
+  \ b;\n  * in the first position where a and b differ, the string a has a letter\
+  \ that appears earlier in the alphabet than the corresponding letter in b.\n\nInput\n\
+  \nEach test contains multiple test cases. The first line contains a single integer\
+  \ t (1 \u2264 t \u2264 1000) \u2014 the number of test cases. Description of the\
+  \ test cases follows.\n\nThe first line of each test case contains a string S (1\
+  \ \u2264 |S| \u2264 100), consisting of lowercase English letters.\n\nThe second\
+  \ line of each test case contains a string T that is a permutation of the string\
+  \ abc. (Hence, |T| = 3).\n\nNote that there is no limit on the sum of |S| across\
+  \ all test cases.\n\nOutput\n\nFor each test case, output a single string S', the\
+  \ lexicographically smallest permutation of S such that T is not a subsequence of\
+  \ S'.\n\nExample\n\nInput\n\n\n7\nabacaba\nabc\ncccba\nacb\ndbsic\nbac\nabracadabra\n\
+  abc\ndddddddddddd\ncba\nbbc\nabc\nac\nabc\n\n\nOutput\n\n\naaaacbb\nabccc\nbcdis\n\
+  aaaaacbbdrr\ndddddddddddd\nbbc\nac\n\nNote\n\nIn the first test case, both aaaabbc\
+  \ and aaaabcb are lexicographically smaller than aaaacbb, but they contain abc as\
+  \ a subsequence.\n\nIn the second test case, abccc is the smallest permutation of\
+  \ cccba and does not contain acb as a subsequence.\n\nIn the third test case, bcdis\
+  \ is the smallest permutation of dbsic and does not contain bac as a subsequence."
+samples:
+- " ```# by the authority of GOD   author: manhar singh sachdev #\n\nt = int(input())\n\
+  for _ in range(t):\n    s = input()\n    t = list(input())\n    t.sort()\n    res\
+  \ = ['a', 'b', 'c']\n    for i in s:\n        if i in res:\n            res.remove(i)\n\
+  \    res.sort()\n    print(''.join(res))```  Q:"
+- " ```# by the authority of GOD   author: manhar singh sachdev #\n\nt = int(input())\n\
+  for _ in range(t):\n    s = input()\n    t = list('abc')\n    res = ''\n    for\
+  \ c in s:\n        if c in t:\n            t.remove(c)\n        res += c\n    print(res)```\n\
+  Q:"
+test_cases:
+  input:
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dasic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddddcddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dasic
+
+    bac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaca
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dasic
+
+    cab
+
+    absacadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cbc
+
+    abc
+
+    ad
+
+    acb
+
+    '
+  - '7
+
+    abababb
+
+    caa
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    cba
+
+    eddddddddddd
+
+    cab
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    aaacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bac
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    ccbba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bac
+
+    bac
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababb
+
+    caa
+
+    ccabc
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    edddddddddcd
+
+    acb
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    arbadacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ibtdc
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddddeddd
+
+    abc
+
+    bbc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    ccc
+
+    abc
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cac
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccaa
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddcddddddddd
+
+    cba
+
+    dbc
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    acb
+
+    dddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    acb
+
+    dasic
+
+    cab
+
+    abascadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    easic
+
+    bac
+
+    cbraaadabra
+
+    cba
+
+    eddddddddddd
+
+    cab
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    arbadacarba
+
+    cba
+
+    edddddddddde
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    abccc
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabqa
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cac
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ecsib
+
+    bac
+
+    abbacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccaa
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddedddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccbb
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    bac
+
+    '
+  - '7
+
+    aaababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabqa
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    ccbba
+
+    cab
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbric
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bac
+
+    bac
+
+    cba
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaab
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    edddeddddddd
+
+    bac
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    ccbba
+
+    bca
+
+    cisbe
+
+    bac
+
+    arabdacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    cisbd
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abe
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccbb
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddeddddddddd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    bac
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    arbadacarba
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    acc
+
+    abc
+
+    ad
+
+    bca
+
+    '
+  - '7
+
+    abababb
+
+    cba
+
+    ccabc
+
+    bca
+
+    dcsic
+
+    aac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    eddddddddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abacaab
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    edddeddddddd
+
+    bac
+
+    bbb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    arbadacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    cbb
+
+    bca
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    eddddddddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dcsib
+
+    bac
+
+    abbacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abd
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    ababaaa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddcdddd
+
+    abc
+
+    bbb
+
+    abb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dasic
+
+    cab
+
+    abascadaara
+
+    abc
+
+    ddeddddddddd
+
+    acb
+
+    bbc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccca
+
+    cba
+
+    cisbd
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abf
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abaaaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    ddddddddeddd
+
+    abc
+
+    bbc
+
+    cab
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccbb
+
+    acb
+
+    chsbd
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddedd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    bac
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    abc
+
+    arbadacarba
+
+    cba
+
+    eddddddddded
+
+    dab
+
+    cbb
+
+    bca
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abaaaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    ddddddddeddd
+
+    abc
+
+    bbb
+
+    cab
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    cba
+
+    dcsia
+
+    bac
+
+    abbacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abd
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccca
+
+    abc
+
+    cisbd
+
+    bac
+
+    abracaeabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abf
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    cba
+
+    dbsia
+
+    bac
+
+    abbacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abd
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abaaabb
+
+    cab
+
+    ccabc
+
+    bca
+
+    discc
+
+    aac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbb
+
+    abd
+
+    ac
+
+    bca
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    cba
+
+    ebsic
+
+    bca
+
+    abracbdaarb
+
+    abc
+
+    eddddddddddd
+
+    `ca
+
+    bbc
+
+    bca
+
+    cc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    cba
+
+    ebsic
+
+    bca
+
+    abracbdbarb
+
+    abc
+
+    eddddddddddd
+
+    `ca
+
+    bcb
+
+    bca
+
+    cc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    abbcc
+
+    cba
+
+    ebsic
+
+    bca
+
+    brabdbcarba
+
+    abc
+
+    eddddddddddd
+
+    `ca
+
+    bcb
+
+    bca
+
+    cc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    abc
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dcsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    dbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    aaacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abbcaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadbbra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dasic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ab
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cdcba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebshc
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaca
+
+    abc
+
+    cccba
+
+    bca
+
+    fbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    bbb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    abracadabra
+
+    abc
+
+    ddcddddddddd
+
+    abc
+
+    cbc
+
+    abc
+
+    ad
+
+    acb
+
+    '
+  - '7
+
+    abababb
+
+    caa
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    abccc
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebric
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abrbcadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    cbb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    arbadadarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ecsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddcddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadbbra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaaa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abd
+
+    ac
+
+    bac
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbb
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    aaacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bac
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    acababa
+
+    abc
+
+    ccbba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    bccba
+
+    acb
+
+    dasic
+
+    cab
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cbd
+
+    abc
+
+    ad
+
+    bca
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abdcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    adb
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaab
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    cab
+
+    bca
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    cbraaadabra
+
+    cba
+
+    eddddddddddd
+
+    cab
+
+    acb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    aaaacba
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abadaba
+
+    abc
+
+    cccba
+
+    acb
+
+    cisbd
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abe
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddcddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    acb
+
+    ddddddddeddd
+
+    abc
+
+    bbc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaaa
+
+    abc
+
+    abccc
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddddddde
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abababb
+
+    cba
+
+    ccabc
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadaara
+
+    abc
+
+    ddddddddddcd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    bbc
+
+    bca
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    abccc
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    edddddddddcd
+
+    acb
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abcdc
+
+    bca
+
+    easic
+
+    bac
+
+    cbraaadabra
+
+    cba
+
+    eddddddddddd
+
+    cab
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    cisbe
+
+    bac
+
+    arabdacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebric
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccaa
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddedddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebshc
+
+    aac
+
+    abracadabra
+
+    abc
+
+    ddddddddcddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaca
+
+    cba
+
+    cccba
+
+    acb
+
+    dasic
+
+    cab
+
+    abascadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    acb
+
+    ebsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    ddddddddddde
+
+    bca
+
+    bbc
+
+    bca
+
+    ab
+
+    cba
+
+    '
+  - '7
+
+    abacaab
+
+    abc
+
+    abccc
+
+    bca
+
+    ebric
+
+    bac
+
+    abracadabra
+
+    abc
+
+    edddeddddddd
+
+    bac
+
+    bcb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cdbba
+
+    bca
+
+    cisbe
+
+    bac
+
+    arabdacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    cbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddddddddeddd
+
+    abc
+
+    bbc
+
+    cab
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    aac
+
+    arbadacarba
+
+    acb
+
+    ddddddddcddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    cab
+
+    dddddddddddd
+
+    bba
+
+    bbc
+
+    bca
+
+    ab
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    eddddddddddd
+
+    dab
+
+    cbb
+
+    bca
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    abccc
+
+    bca
+
+    aesic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccaa
+
+    bca
+
+    cisdb
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddededddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    cba
+
+    cisbd
+
+    bac
+
+    absacadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abf
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbdc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    eddddddddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bca
+
+    abracbdabra
+
+    abc
+
+    edddddeddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abaaaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    ddddddddedcd
+
+    abc
+
+    bbb
+
+    cab
+
+    ac
+
+    cba
+
+    '
+  - '7
+
+    bbbbaaa
+
+    abc
+
+    abccc
+
+    bca
+
+    besic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    bba
+
+    bc
+
+    cab
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    cba
+
+    dbsia
+
+    bac
+
+    abbacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abd
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    acccc
+
+    abc
+
+    cisad
+
+    bac
+
+    abracaeabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abf
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abbbaaa
+
+    abc
+
+    acbcc
+
+    bca
+
+    besic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bba
+
+    cbc
+
+    bba
+
+    ac
+
+    cab
+
+    '
+  - '7
+
+    abaaabb
+
+    cab
+
+    ccabc
+
+    bca
+
+    discc
+
+    aac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbb
+
+    abd
+
+    ac
+
+    bca
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    dbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abbcaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebtic
+
+    cab
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    bccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    acb
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    cba
+
+    dddddddddddd
+
+    bca
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    caa
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    ccbba
+
+    acb
+
+    dasic
+
+    cab
+
+    absacadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    aac
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ecsic
+
+    bac
+
+    abracaeabra
+
+    abc
+
+    ddddddcddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsid
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    acc
+
+    bbc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacbba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    acracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    cb
+
+    acb
+
+    '
+  - '7
+
+    acababa
+
+    acb
+
+    ccbba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    acb
+
+    cccba
+
+    acb
+
+    dasic
+
+    cab
+
+    abascadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    ababaca
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    abc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    acb
+
+    ddddddddeddd
+
+    abc
+
+    abc
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    cddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    bc
+
+    bca
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadacra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cac
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    bccba
+
+    bca
+
+    ecsib
+
+    bac
+
+    abaacrdabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cac
+
+    cba
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddcddddddddd
+
+    cba
+
+    dbc
+
+    acb
+
+    ab
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cba
+
+    abascadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsib
+
+    bac
+
+    arbadacarba
+
+    cba
+
+    edddddddddde
+
+    dab
+
+    bcb
+
+    acb
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cdcba
+
+    bca
+
+    cisbe
+
+    bac
+
+    arabdacarba
+
+    cba
+
+    eddddddddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebric
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    cba
+
+    bd
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccca
+
+    bca
+
+    ebsic
+
+    bac
+
+    aqbadacarba
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cac
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cdbba
+
+    bca
+
+    cisbe
+
+    bac
+
+    arabdacarba
+
+    cba
+
+    edddddeddddd
+
+    dab
+
+    bcb
+
+    bca
+
+    ca
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccca
+
+    acb
+
+    dbric
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bac
+
+    bac
+
+    cba
+
+    ca
+
+    bba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    abracadabra
+
+    abc
+
+    dddddddddddc
+
+    abc
+
+    acc
+
+    abc
+
+    ad
+
+    bca
+
+    '
+  - '7
+
+    abacaab
+
+    abc
+
+    bbccc
+
+    bca
+
+    ebsic
+
+    abc
+
+    abracadabra
+
+    abc
+
+    edddeddddddd
+
+    bac
+
+    bbb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    bbababa
+
+    abc
+
+    abccc
+
+    bca
+
+    aesic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    cbc
+
+    cba
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    ccdbb
+
+    acb
+
+    cisbd
+
+    bac
+
+    abracadabra
+
+    abc
+
+    ddeddddddddd
+
+    abc
+
+    bbb
+
+    dba
+
+    ac
+
+    bac
+
+    '
+  - '7
+
+    abababb
+
+    cba
+
+    cbacc
+
+    bca
+
+    ddsic
+
+    aac
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dasic
+
+    cab
+
+    acascadaara
+
+    abc
+
+    ddeddddddddd
+
+    acb
+
+    cbb
+
+    cba
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbdc
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracbdabra
+
+    abc
+
+    eddddddddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abaaaba
+
+    cba
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    arbadacarba
+
+    abc
+
+    dddddddeeddd
+
+    abc
+
+    bbc
+
+    cab
+
+    ca
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abbcc
+
+    bca
+
+    ebsic
+
+    bca
+
+    abracbdabra
+
+    cba
+
+    edddddeddddd
+
+    aca
+
+    bbc
+
+    bca
+
+    bc
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abd
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ca
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    cba
+
+    cccba
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    cb
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    abc
+
+    bc
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    cba
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    cba
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    ababaca
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abd
+
+    bc
+
+    cba
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    bbc
+
+    acb
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    dasic
+
+    cab
+
+    abracadaara
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    aac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    cbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    cccba
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bac
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    caa
+
+    cccba
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaca
+
+    abc
+
+    cccba
+
+    bca
+
+    ebsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    cbc
+
+    bca
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    cccba
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababa
+
+    abc
+
+    bccca
+
+    acb
+
+    dbsic
+
+    cab
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bac
+
+    bac
+
+    abc
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    acb
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abababb
+
+    caa
+
+    ccabc
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    abc
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abababb
+
+    caa
+
+    ccabc
+
+    bca
+
+    dbsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    dddddddddddd
+
+    cba
+
+    bbc
+
+    abc
+
+    ac
+
+    acb
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    bca
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    bbc
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  - '7
+
+    abacaba
+
+    abc
+
+    abccc
+
+    bca
+
+    ebsic
+
+    bac
+
+    abracadabra
+
+    abc
+
+    eddddddddddd
+
+    acb
+
+    cbb
+
+    bca
+
+    ac
+
+    abc
+
+    '
+  output:
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    acdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaaccb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ad
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaaacb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abbcc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cdddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdit
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    ccc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    aaccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcd
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    aceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdqr
+
+    dddddddddddd
+
+    acc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    aaccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    bbccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdqr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abbcc
+
+    bcdis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdir
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    bbccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acc
+
+    ad
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    ccdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bcdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrs
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    acccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    bbccc
+
+    bcdhs
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddee
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    acdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    acccc
+
+    bcdis
+
+    aaaaacbberr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    abdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    ccdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    cc
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaacbbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    cc
+
+    '
+  - 'aaaabbc
+
+    abbcc
+
+    bceis
+
+    aaacbbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    cc
+
+    '
+  - 'aaaacbb
+
+    acccb
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    ccdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcd
+
+    ac
+
+    '
+  - 'aaaaacb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaacbbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    acdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ab
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccd
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcehs
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaaccb
+
+    abccc
+
+    bcfis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcc
+
+    ad
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceir
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbddrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    cceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaaacb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaaacb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    acdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcd
+
+    ad
+
+    '
+  - 'aaaacbb
+
+    abccd
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    abc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    abc
+
+    ac
+
+    '
+  - 'aaaaabc
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbd
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaaacb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaaacbdrr
+
+    cddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abbcc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cdddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccd
+
+    aceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceir
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    aaccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcehs
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabcc
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ab
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceir
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcd
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bccis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    cddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bbc
+
+    ab
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    aceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    aaccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcd
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaacbbbdrr
+
+    ddddddddddee
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    cdddddddddde
+
+    bbb
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    abdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    acccc
+
+    acdis
+
+    aaaaacbberr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    ccdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbb
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcd
+
+    ac
+
+    '
+  - 'aaacbbb
+
+    abccc
+
+    bceis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceit
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abbcc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaabbcdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaacbbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    acdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    cceis
+
+    aaaaacbberr
+
+    cddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bddis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaacbbb
+
+    abccc
+
+    bceis
+
+    aaaaaccbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abbcc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    abc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    abc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaaccbdrr
+
+    dddddddddddd
+
+    acc
+
+    bc
+
+    '
+  - 'aaaabbc
+
+    abbcc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    bcd
+
+    ab
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bcdis
+
+    aaaaaacbdrs
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bbeis
+
+    aaaaabbcdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccd
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceir
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bd
+
+    '
+  - 'aaaabbc
+
+    acccc
+
+    bceis
+
+    aaaaacbbdqr
+
+    dddddddddddd
+
+    acc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abbcd
+
+    bceis
+
+    aaaaabbcdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    acccc
+
+    bcdir
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    abc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    cddddddddddd
+
+    acc
+
+    ad
+
+    '
+  - 'aaaacbb
+
+    bbccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbb
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    aceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    bbccd
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbb
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    cddis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    acdis
+
+    aaaaaaccdrs
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcd
+
+    bcdis
+
+    aaaacbbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaaabb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    ddddddddddee
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abbcc
+
+    bceis
+
+    aaaabbbcdrr
+
+    ddddddddddee
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbc
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    bc
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    bc
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    acdis
+
+    aaaaaacbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaaccb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bcc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaabbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    acb
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaabbbb
+
+    abccc
+
+    bcdis
+
+    aaaaacbbdrr
+
+    dddddddddddd
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+  - 'aaaacbb
+
+    abccc
+
+    bceis
+
+    aaaaacbbdrr
+
+    ddddddddddde
+
+    bbc
+
+    ac
+
+    '
+timeout: 1.0

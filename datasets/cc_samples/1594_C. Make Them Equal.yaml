@@ -1,0 +1,4915 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nYou are given\
+  \ an array a1, a2, ..., an consisting of n integers, and an integer k. You have\
+  \ to split the array into exactly k non-empty subsegments. You'll then compute the\
+  \ minimum integer on each subsegment, and take the maximum integer over the k obtained\
+  \ minimums. What is the maximum possible integer you can get?\n\nDefinitions of\
+  \ subsegment and array splitting are given in notes.\n\nInput\n\nThe first line\
+  \ contains two integers n and k (1 \u2264 k \u2264 n \u2264 105) \u2014 the size\
+  \ of the array a and the number of subsegments you have to split the array to.\n\
+  \nThe second line contains n integers a1, a2, ..., an ( - 109 \u2264 ai \u2264 109).\n\
+  \nOutput\n\nPrint single integer \u2014 the maximum possible integer you can get\
+  \ if you split the array into k non-empty subsegments and take maximum of minimums\
+  \ on the subsegments.\n\nExamples\n\nInput\n\n5 2\n1 2 3 4 5\n\n\nOutput\n\n5\n\n\
+  \nInput\n\n5 1\n-4 -5 -3 -2 -1\n\n\nOutput\n\n-5\n\nNote\n\nA subsegment [l, r]\
+  \ (l \u2264 r) of array a is the sequence al, al + 1, ..., ar.\n\nSplitting of array\
+  \ a of n elements into k subsegments [l1, r1], [l2, r2], ..., [lk, rk] (l1 = 1,\
+  \ rk = n, li = ri - 1 + 1 for all i > 1) is k sequences (al1, ..., ar1), ..., (alk,\
+  \ ..., ark).\n\nIn the first example you should split the array into subsegments\
+  \ [1, 4] and [5, 5] that results in sequences (1, 2, 3, 4) and (5). The minimums\
+  \ are min(1, 2, 3, 4) = 1 and min(5) = 5. The resulting maximum is max(1, 5) = 5.\
+  \ It is obvious that you can't reach greater result.\n\nIn the second example the\
+  \ only option you have is to split the array into one subsegment [1, 5], that results\
+  \ in one sequence ( - 4, - 5, - 3, - 2, - 1). The only minimum is min( - 4, - 5,\
+  \ - 3, - 2, - 1) = - 5. The resulting maximum is  - 5.\nA: ```I = lambda: map(int,\
+  \ input().split())\n\n_, k = I()\nA = list(I())\n\nprint(min(A) if k<2 else max(A)\
+  \ if k>2 else max(A[0], A[-1]))```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nPetya got interested in grammar on his third year in school.\
+  \ He invented his own language called Petya's. Petya wanted to create a maximally\
+  \ simple language that would be enough to chat with friends, that's why all the\
+  \ language's grammar can be described with the following set of rules:\n\n  * There\
+  \ are three parts of speech: the adjective, the noun, the verb. Each word in his\
+  \ language is an adjective, noun or verb. \n  * There are two genders: masculine\
+  \ and feminine. Each word in his language has gender either masculine or feminine.\
+  \ \n  * Masculine adjectives end with -lios, and feminine adjectives end with -liala.\
+  \ \n  * Masculine nouns end with -etr, and feminime nouns end with -etra. \n  *\
+  \ Masculine verbs end with -initis, and feminime verbs end with -inites. \n  * Thus,\
+  \ each word in the Petya's language has one of the six endings, given above. There\
+  \ are no other endings in Petya's language. \n  * It is accepted that the whole\
+  \ word consists of an ending. That is, words \"lios\", \"liala\", \"etr\" and so\
+  \ on belong to the Petya's language. \n  * There aren't any punctuation marks, grammatical\
+  \ tenses, singular/plural forms or other language complications. \n  * A sentence\
+  \ is either exactly one valid language word or exactly one statement. \n\n\n\nStatement\
+  \ is any sequence of the Petya's language, that satisfy both conditions:\n\n  *\
+  \ Words in statement follow in the following order (from the left to the right):\
+  \ zero or more adjectives followed by exactly one noun followed by zero or more\
+  \ verbs. \n  * All words in the statement should have the same gender.\n\n\n\nAfter\
+  \ Petya's friend Vasya wrote instant messenger (an instant messaging program) that\
+  \ supported the Petya's language, Petya wanted to add spelling and grammar checking\
+  \ to the program. As Vasya was in the country and Petya didn't feel like waiting,\
+  \ he asked you to help him with this problem. Your task is to define by a given\
+  \ sequence of words, whether it is true that the given text represents exactly one\
+  \ sentence in Petya's language.\n\nInput\n\nThe first line contains one or more\
+  \ words consisting of lowercase Latin letters. The overall number of characters\
+  \ (including letters and spaces) does not exceed 105.\n\nIt is guaranteed that any\
+  \ two consecutive words are separated by exactly one space and the input data do\
+  \ not contain any other spaces. It is possible that given words do not belong to\
+  \ the Petya's language.\n\nOutput\n\nIf some word of the given text does not belong\
+  \ to the Petya's language or if the text contains more that one sentence, print\
+  \ \"NO\" (without the quotes). Otherwise, print \"YES\" (without the quotes).\n\n\
+  Examples\n\nInput\n\npetr\n\n\nOutput\n\nYES\n\n\nInput\n\netis atis animatis etis\
+  \ atis amatis\n\n\nOutput\n\nNO\n\n\nInput\n\nnataliala kataliala vetra feinites\n\
+  \n\nOutput\n\nYES\nA: ```import re\ndef f(x):\n    if x.endswith(\"lios\"): return\
+  \ 1\n    elif x.endswith(\"liala\"): return -1\n    elif x.endswith(\"etr\"): return\
+  \ 2\n    elif x.endswith(\"etra\"): return -2\n    elif x.endswith(\"initis\"):return\
+  \ 3\n    elif x.endswith(\"inites\"): return -3\n    else: return 0\n \na,b=input().strip().split(),[]\n\
+  for s in a:b.append(f(s))\n\nif len(b)==1:\n    if b[0]!=0:print(\"YES\")\n    else:print(\"\
+  NO\")\nelse:\n    for x in b:\n        if b[0]*x <= 0:\n            print(\"NO\"\
+  )\n            exit()\n    c=\"\"\n    for x in b:c+=str(abs(x))\n    sbl=re.compile(r'^1*23*$')\n\
+  \    if sbl.match(c):\n        print(\"YES\")\n    else:\n        print(\"NO\")```\n\
+  Q: Write python code to solve the following coding problem that obeys the constraints\
+  \ and passes the example test cases. The output code needs to read from and write\
+  \ to standard IO. Please wrap your code answer using ```:\nTheofanis has a string\
+  \ s_1 s_2 ... s_n and a character c. He wants to make all characters of the string\
+  \ equal to c using the minimum number of operations.\n\nIn one operation he can\
+  \ choose a number x (1 \u2264 x \u2264 n) and for every position i, where i is not\
+  \ divisible by x, replace s_i with c. \n\nFind the minimum number of operations\
+  \ required to make all the characters equal to c and the x-s that he should use\
+  \ in his operations.\n\nInput\n\nThe first line contains a single integer t (1 \u2264\
+  \ t \u2264 10^4) \u2014 the number of test cases.\n\nThe first line of each test\
+  \ case contains the integer n (3 \u2264 n \u2264 3 \u22C5 10^5) and a lowercase\
+  \ Latin letter c \u2014 the length of the string s and the character the resulting\
+  \ string should consist of.\n\nThe second line of each test case contains a string\
+  \ s of lowercase Latin letters \u2014 the initial string.\n\nIt is guaranteed that\
+  \ the sum of n over all test cases does not exceed 3 \u22C5 10^5.\n\nOutput\n\n\
+  For each test case, firstly print one integer m \u2014 the minimum number of operations\
+  \ required to make all the characters equal to c.\n\nNext, print m integers x_1,\
+  \ x_2, ..., x_m (1 \u2264 x_j \u2264 n) \u2014 the x-s that should be used in the\
+  \ order they are given.\n\nIt can be proved that under given constraints, an answer\
+  \ always exists. If there are multiple answers, print any.\n\nExample\n\nInput\n\
+  \n\n3\n4 a\naaaa\n4 a\nbaaa\n4 b\nbzyx\n\n\nOutput\n\n\n0\n1\n2\n2 \n2 3\n\nNote\n\
+  \nLet's describe what happens in the third test case: \n\n  1. x_1 = 2: we choose\
+  \ all positions that are not divisible by 2 and replace them, i. e. bzyx \u2192\
+  \ bzbx; \n  2. x_2 = 3: we choose all positions that are not divisible by 3 and\
+  \ replace them, i. e. bzbx \u2192 bbbb. \nA:"
+question: "Theofanis has a string s_1 s_2 ... s_n and a character c. He wants to make\
+  \ all characters of the string equal to c using the minimum number of operations.\n\
+  \nIn one operation he can choose a number x (1 \u2264 x \u2264 n) and for every\
+  \ position i, where i is not divisible by x, replace s_i with c. \n\nFind the minimum\
+  \ number of operations required to make all the characters equal to c and the x-s\
+  \ that he should use in his operations.\n\nInput\n\nThe first line contains a single\
+  \ integer t (1 \u2264 t \u2264 10^4) \u2014 the number of test cases.\n\nThe first\
+  \ line of each test case contains the integer n (3 \u2264 n \u2264 3 \u22C5 10^5)\
+  \ and a lowercase Latin letter c \u2014 the length of the string s and the character\
+  \ the resulting string should consist of.\n\nThe second line of each test case contains\
+  \ a string s of lowercase Latin letters \u2014 the initial string.\n\nIt is guaranteed\
+  \ that the sum of n over all test cases does not exceed 3 \u22C5 10^5.\n\nOutput\n\
+  \nFor each test case, firstly print one integer m \u2014 the minimum number of operations\
+  \ required to make all the characters equal to c.\n\nNext, print m integers x_1,\
+  \ x_2, ..., x_m (1 \u2264 x_j \u2264 n) \u2014 the x-s that should be used in the\
+  \ order they are given.\n\nIt can be proved that under given constraints, an answer\
+  \ always exists. If there are multiple answers, print any.\n\nExample\n\nInput\n\
+  \n\n3\n4 a\naaaa\n4 a\nbaaa\n4 b\nbzyx\n\n\nOutput\n\n\n0\n1\n2\n2 \n2 3\n\nNote\n\
+  \nLet's describe what happens in the third test case: \n\n  1. x_1 = 2: we choose\
+  \ all positions that are not divisible by 2 and replace them, i. e. bzyx \u2192\
+  \ bzbx; \n  2. x_2 = 3: we choose all positions that are not divisible by 3 and\
+  \ replace them, i. e. bzbx \u2192 bbbb. "
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    n, c = map(str, input().split())\n\
+  \    n = int(n)\n    s = input()\n    m = 0\n    x = []\n    for i in range(2, n\
+  \ + 1):\n        count = 0\n        for j in range(i):\n            if s[j] != c:\n\
+  \                count += 1\n        if count == 0:\n            m += 1\n      \
+  \      x.append(i)\n            s = c * n\n            break\n    if m == 0:\n \
+  \       m = 1\n        x.append(1)\n        s = c * n\n    print(m)\n    print(*x)```\
+  \ Q:"
+- " ```t = int(input())\nfor _ in range(t):\n    n, c = map(str, input().split())\n\
+  \    n = int(n)\n    s = input().strip()\n    m = 0\n    x = []\n    for i in range(2,\
+  \ n+1):\n        if all(s[j] == c for j in range(i) if j % i):\n            m +=\
+  \ 1\n            x.append(i)\n    print(m)\n    print(*x, sep=' ')\n```\nQ:"
+test_cases:
+  input:
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '1
+
+    3 a
+
+    aba
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaab
+
+    4 b
+
+    bzyx
+
+    '
+  - '1
+
+    3 `
+
+    aba
+
+    '
+  - '1
+
+    3 a
+
+    aaa
+
+    '
+  - '1
+
+    3 a
+
+    aab
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    baaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 b
+
+    baaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 a
+
+    `ba
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 a
+
+    baaa
+
+    4 c
+
+    yzbx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    abab
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 b
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    x{cx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 b
+
+    xyyb
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 b
+
+    {xbx
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaab
+
+    4 c
+
+    xyzb
+
+    '
+  - '3
+
+    4 b
+
+    aaba
+
+    4 a
+
+    aaab
+
+    4 c
+
+    xyzb
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 a
+
+    caaa
+
+    4 b
+
+    {xbx
+
+    '
+  - '3
+
+    4 `
+
+    `aaa
+
+    4 c
+
+    baaa
+
+    4 c
+
+    x{cx
+
+    '
+  - '3
+
+    4 `
+
+    aa`a
+
+    4 a
+
+    bbaa
+
+    4 b
+
+    xyyb
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 b
+
+    x{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    baaa
+
+    4 b
+
+    yzbx
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 a
+
+    aaac
+
+    4 b
+
+    {xbx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    x{xc
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbab
+
+    4 b
+
+    xyyb
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaba
+
+    4 b
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    aa`a
+
+    4 a
+
+    bbab
+
+    4 b
+
+    xyyb
+
+    '
+  - '3
+
+    4 a
+
+    `aa`
+
+    4 b
+
+    baaa
+
+    4 b
+
+    x{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    aaba
+
+    4 b
+
+    xyzb
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    yzbx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baba
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '1
+
+    3 `
+
+    aaa
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    xb{x
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    xb{y
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '1
+
+    3 _
+
+    aba
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    aaaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    z{bx
+
+    '
+  - '1
+
+    3 a
+
+    aa`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    azyx
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 a
+
+    aaab
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 a
+
+    ab`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '1
+
+    3 _
+
+    `ba
+
+    '
+  - '1
+
+    3 a
+
+    a`a
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 a
+
+    bb`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 b
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '1
+
+    3 _
+
+    `ab
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 c
+
+    xb{x
+
+    '
+  - '1
+
+    3 `
+
+    bb`
+
+    '
+  - '1
+
+    3 _
+
+    ba`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 d
+
+    xb{x
+
+    '
+  - '1
+
+    3 `
+
+    ba`
+
+    '
+  - '1
+
+    3 _
+
+    baa
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 e
+
+    xb{x
+
+    '
+  - '1
+
+    3 `
+
+    aa`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 f
+
+    xb{x
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 a
+
+    xyzb
+
+    '
+  - '1
+
+    3 `
+
+    `ba
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    bzzx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaab
+
+    4 c
+
+    yzbx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 b
+
+    byyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    aaab
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    y{bx
+
+    '
+  - '1
+
+    3 `
+
+    baa
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 c
+
+    x{bx
+
+    '
+  - '1
+
+    3 a
+
+    bab
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 a
+
+    caaa
+
+    4 c
+
+    z{bx
+
+    '
+  - '1
+
+    3 _
+
+    aa`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    aaca
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 b
+
+    azyx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    y{ax
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 b
+
+    {xbx
+
+    '
+  - '3
+
+    4 b
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 e
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 `
+
+    aaab
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 `
+
+    ab`
+
+    '
+  - '3
+
+    4 `
+
+    aaa`
+
+    4 b
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 `
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    caab
+
+    4 c
+
+    x{bx
+
+    '
+  - '3
+
+    4 c
+
+    aaaa
+
+    4 b
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '1
+
+    3 ^
+
+    `ab
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baac
+
+    4 c
+
+    xb{x
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 c
+
+    baaa
+
+    4 c
+
+    x{cx
+
+    '
+  - '1
+
+    3 `
+
+    b`b
+
+    '
+  - '1
+
+    3 _
+
+    b`a
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 f
+
+    x{bx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    caab
+
+    4 e
+
+    xb{x
+
+    '
+  - '1
+
+    3 `
+
+    b`a
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    czzx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    aaab
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 a
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 `
+
+    caa
+
+    '
+  - '1
+
+    3 a
+
+    bac
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaaa
+
+    4 c
+
+    xyzb
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 b
+
+    caaa
+
+    4 c
+
+    z{bx
+
+    '
+  - '1
+
+    3 ^
+
+    aa`
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    aaca
+
+    4 c
+
+    b{xx
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 b
+
+    azzx
+
+    '
+  - '3
+
+    4 `
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    y{ax
+
+    '
+  - '3
+
+    4 `
+
+    aaca
+
+    4 `
+
+    aaab
+
+    4 d
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    aaa`
+
+    4 b
+
+    baaa
+
+    4 `
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    caab
+
+    4 b
+
+    x{bx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    caab
+
+    4 d
+
+    xb{x
+
+    '
+  - '1
+
+    3 _
+
+    b`b
+
+    '
+  - '3
+
+    4 `
+
+    baaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    czzx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 c
+
+    xyyb
+
+    '
+  - '1
+
+    3 _
+
+    caa
+
+    '
+  - '1
+
+    3 a
+
+    bbc
+
+    '
+  - '3
+
+    4 a
+
+    aaa`
+
+    4 b
+
+    aaac
+
+    4 c
+
+    z{bx
+
+    '
+  - '1
+
+    3 ^
+
+    `aa
+
+    '
+  - '3
+
+    4 `
+
+    aac`
+
+    4 `
+
+    aaab
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 ^
+
+    b`b
+
+    '
+  - '3
+
+    4 `
+
+    baaa
+
+    4 a
+
+    aaab
+
+    4 b
+
+    czzx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 c
+
+    yyyb
+
+    '
+  - '1
+
+    3 ]
+
+    b`b
+
+    '
+  - '3
+
+    4 `
+
+    baaa
+
+    4 a
+
+    aaab
+
+    4 b
+
+    cz{x
+
+    '
+  - '1
+
+    3 ]
+
+    b_b
+
+    '
+  - '1
+
+    3 \
+
+    b_b
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 `
+
+    bzyx
+
+    '
+  - '1
+
+    3 b
+
+    aba
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    aaba
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bbaa
+
+    4 b
+
+    czyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baca
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    abab
+
+    4 b
+
+    bzyx
+
+    '
+  - '1
+
+    3 a
+
+    bba
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 e
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    xb{y
+
+    '
+  - '1
+
+    3 _
+
+    aaa
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 a
+
+    bzyx
+
+    '
+  - '1
+
+    3 a
+
+    a`b
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    bba`
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    baaa
+
+    4 d
+
+    byyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 d
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 b
+
+    aaaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaba
+
+    4 a
+
+    aaa`
+
+    4 d
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    abaa
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    aaaa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    z{bx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 b
+
+    x{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    abab
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    b`aa
+
+    4 c
+
+    y{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    caaa
+
+    4 a
+
+    x{bx
+
+    '
+  - '3
+
+    4 b
+
+    baaa
+
+    4 a
+
+    aaaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    abaa
+
+    4 a
+
+    aaab
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 b
+
+    ab`
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    aaab
+
+    4 c
+
+    byzx
+
+    '
+  - '1
+
+    3 `
+
+    a`a
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    caab
+
+    4 c
+
+    xzbx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    b{xx
+
+    '
+  - '1
+
+    3 `
+
+    bba
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 b
+
+    aaab
+
+    4 c
+
+    bzxx
+
+    '
+  - '1
+
+    3 ^
+
+    ba`
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 a
+
+    caab
+
+    4 d
+
+    xb{x
+
+    '
+  - '1
+
+    3 b
+
+    aca
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 `
+
+    xyzb
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 a
+
+    cbaa
+
+    4 b
+
+    byyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    baaa
+
+    4 c
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baba
+
+    4 b
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    `aaa
+
+    4 b
+
+    baaa
+
+    4 d
+
+    bzyx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 b
+
+    yzbx
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    baaa
+
+    4 c
+
+    xyzb
+
+    '
+  - '1
+
+    3 _
+
+    a``
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 `
+
+    aaba
+
+    4 d
+
+    xyzb
+
+    '
+  - '1
+
+    3 _
+
+    ab`
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 `
+
+    aaab
+
+    4 c
+
+    bxyz
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baac
+
+    4 c
+
+    xb{x
+
+    '
+  - '3
+
+    4 `
+
+    aaaa
+
+    4 b
+
+    caab
+
+    4 f
+
+    x{bx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 `
+
+    aaab
+
+    4 a
+
+    bzyx
+
+    '
+  - '3
+
+    4 `
+
+    aaba
+
+    4 a
+
+    baaa
+
+    4 a
+
+    bzxx
+
+    '
+  - '3
+
+    4 a
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 d
+
+    xyzb
+
+    '
+  - '3
+
+    4 b
+
+    aaaa
+
+    4 a
+
+    baaa
+
+    4 c
+
+    y{bx
+
+    '
+  output:
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '0
+
+    '
+  - '1
+
+    2
+
+    '
+  - '1
+
+    4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '1
+
+    3
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    1
+
+    4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '0
+
+    1
+
+    3
+
+    1
+
+    3
+
+    '
+  - '1
+
+    4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    1
+
+    3
+
+    '
+  - '1
+
+    3
+
+    1
+
+    4
+
+    1
+
+    4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    1
+
+    3
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    1
+
+    3
+
+    '
+  - '1
+
+    3
+
+    1
+
+    3
+
+    1
+
+    3
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    1
+
+    4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    1
+
+    4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    1
+
+    4
+
+    '
+  - '1
+
+    3
+
+    1
+
+    3
+
+    1
+
+    4
+
+    '
+  - '1
+
+    3
+
+    2
+
+    3 4
+
+    1
+
+    3
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    1
+
+    4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '1
+
+    4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '1
+
+    3
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    1
+
+    3
+
+    '
+  - '1
+
+    2
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '1
+
+    2
+
+    '
+  - '1
+
+    4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '1
+
+    3
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    1
+
+    4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    3
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    0
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    2
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '1
+
+    4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    1
+
+    3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    2 3
+
+    '
+  - '2
+
+    3 4
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    3
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    2
+
+    3 4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '0
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+  - '2
+
+    3 4
+
+    1
+
+    4
+
+    2
+
+    3 4
+
+    '
+timeout: 2.0

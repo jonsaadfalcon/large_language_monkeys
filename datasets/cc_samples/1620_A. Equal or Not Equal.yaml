@@ -1,0 +1,1928 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nThis is an\
+  \ interactive problem.\n\nNatasha is going to fly to Mars. Finally, Natasha sat\
+  \ in the rocket. She flies, flies... but gets bored. She wishes to arrive to Mars\
+  \ already! So she decides to find something to occupy herself. She couldn't think\
+  \ of anything better to do than to calculate the distance to the red planet.\n\n\
+  Let's define x as the distance to Mars. Unfortunately, Natasha does not know x.\
+  \ But it is known that 1 \u2264 x \u2264 m, where Natasha knows the number m. Besides,\
+  \ x and m are positive integers.\n\nNatasha can ask the rocket questions. Every\
+  \ question is an integer y (1 \u2264 y \u2264 m). The correct answer to the question\
+  \ is -1, if x<y, 0, if x=y, and 1, if x>y. But the rocket is broken \u2014 it does\
+  \ not always answer correctly. Precisely: let the correct answer to the current\
+  \ question be equal to t, then, if the rocket answers this question correctly, then\
+  \ it will answer t, otherwise it will answer -t.\n\nIn addition, the rocket has\
+  \ a sequence p of length n. Each element of the sequence is either 0 or 1. The rocket\
+  \ processes this sequence in the cyclic order, that is 1-st element, 2-nd, 3-rd,\
+  \ \u2026, (n-1)-th, n-th, 1-st, 2-nd, 3-rd, \u2026, (n-1)-th, n-th, \u2026. If the\
+  \ current element is 1, the rocket answers correctly, if 0 \u2014 lies. Natasha\
+  \ doesn't know the sequence p, but she knows its length \u2014 n.\n\nYou can ask\
+  \ the rocket no more than 60 questions.\n\nHelp Natasha find the distance to Mars.\
+  \ Assume, that the distance to Mars does not change while Natasha is asking questions.\n\
+  \nYour solution will not be accepted, if it does not receive an answer 0 from the\
+  \ rocket (even if the distance to Mars is uniquely determined by the already received\
+  \ rocket's answers).\n\nInput\n\nThe first line contains two integers m and n (1\
+  \ \u2264 m \u2264 10^9, 1 \u2264 n \u2264 30) \u2014 the maximum distance to Mars\
+  \ and the number of elements in the sequence p.\n\nInteraction\n\nYou can ask the\
+  \ rocket no more than 60 questions.\n\nTo ask a question, print a number y (1\u2264\
+  \ y\u2264 m) and an end-of-line character, then do the operation flush and read\
+  \ the answer to the question.\n\nIf the program reads 0, then the distance is correct\
+  \ and you must immediately terminate the program (for example, by calling exit(0)).\
+  \ If you ignore this, you can get any verdict, since your program will continue\
+  \ to read from the closed input stream.\n\nIf at some point your program reads -2\
+  \ as an answer, it must immediately end (for example, by calling exit(0)). You will\
+  \ receive the \"Wrong answer\" verdict, and this will mean that the request is incorrect\
+  \ or the number of requests exceeds 60. If you ignore this, you can get any verdict,\
+  \ since your program will continue to read from the closed input stream.\n\nIf your\
+  \ program's request is not a valid integer between -2^{31} and 2^{31}-1 (inclusive)\
+  \ without leading zeros, then you can get any verdict.\n\nYou can get \"Idleness\
+  \ limit exceeded\" if you don't print anything or if you forget to flush the output.\n\
+  \nTo flush the output buffer you can use (after printing a query and end-of-line):\n\
+  \n  * fflush(stdout) in C++;\n  * System.out.flush() in Java;\n  * stdout.flush()\
+  \ in Python;\n  * flush(output) in Pascal;\n  * See the documentation for other\
+  \ languages.\n\n\n\nHacking\n\nUse the following format for hacking:\n\nIn the first\
+  \ line, print 3 integers m,n,x (1\u2264 x\u2264 m\u2264 10^9, 1\u2264 n\u2264 30)\
+  \ \u2014 the maximum distance to Mars, the number of elements in the sequence p\
+  \ and the current distance to Mars.\n\nIn the second line, enter n numbers, each\
+  \ of which is equal to 0 or 1 \u2014 sequence p.\n\nThe hacked solution will not\
+  \ have access to the number x and sequence p.\n\nExample\n\nInput\n\n5 2\n1\n-1\n\
+  -1\n1\n0\n\n\nOutput\n\n1\n2\n4\n5\n3\n\nNote\n\nIn the example, hacking would look\
+  \ like this:\n\n5 2 3\n\n1 0\n\nThis means that the current distance to Mars is\
+  \ equal to 3, Natasha knows that it does not exceed 5, and the rocket answers in\
+  \ order: correctly, incorrectly, correctly, incorrectly ...\n\nReally:\n\non the\
+  \ first query (1) the correct answer is 1, the rocket answered correctly: 1;\n\n\
+  on the second query (2) the correct answer is 1, the rocket answered incorrectly:\
+  \ -1;\n\non the third query (4) the correct answer is -1, the rocket answered correctly:\
+  \ -1;\n\non the fourth query (5) the correct answer is -1, the rocket answered incorrectly:\
+  \ 1;\n\non the fifth query (3) the correct and incorrect answer is 0.\nA: ```from\
+  \ sys import stdin\nfrom math import *\nfrom sys import stdout\n\nline = stdin.readline().rstrip().split()\n\
+  m = int(line[0])\nn = int(line[1])\n\nbits = []\nfor i in range(n):\n    print(m)\n\
+  \    stdout.flush()\n    line = stdin.readline().rstrip().split()\n    res = int(line[0])\n\
+  \    if res == 0:\n        exit(0)\n    if res == 1:\n        bits.append(-1)\n\
+  \    else:\n        bits.append(1)\n\nminN = 1\nmaxN = m\ni = 0\nwhile True:\n \
+  \   current = int((minN + maxN) / 2)\n    print(current)\n    stdout.flush()\n \
+  \   line = stdin.readline().rstrip().split()\n    res = int(line[0])\n    if res\
+  \ == 0:\n        exit(0)\n    res *= bits[i]\n    i = (i+1) % n\n    if res == 1:\n\
+  \        minN = current + 1\n    else:\n        maxN = current - 1```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nSnuke is making sugar water\
+  \ in a beaker. Initially, the beaker is empty. Snuke can perform the following four\
+  \ types of operations any number of times. He may choose not to perform some types\
+  \ of operations.\n\n* Operation 1: Pour 100A grams of water into the beaker.\n*\
+  \ Operation 2: Pour 100B grams of water into the beaker.\n* Operation 3: Put C grams\
+  \ of sugar into the beaker.\n* Operation 4: Put D grams of sugar into the beaker.\n\
+  \n\n\nIn our experimental environment, E grams of sugar can dissolve into 100 grams\
+  \ of water.\n\nSnuke will make sugar water with the highest possible density.\n\n\
+  The beaker can contain at most F grams of substances (water and sugar combined),\
+  \ and there must not be any undissolved sugar in the beaker. Find the mass of the\
+  \ sugar water Snuke will make, and the mass of sugar dissolved in it. If there is\
+  \ more than one candidate, any of them will be accepted.\n\nWe remind you that the\
+  \ sugar water that contains a grams of water and b grams of sugar is \\frac{100b}{a\
+  \ + b} percent. Also, in this problem, pure water that does not contain any sugar\
+  \ is regarded as 0 percent density sugar water.\n\nConstraints\n\n* 1 \\leq A <\
+  \ B \\leq 30\n* 1 \\leq C < D \\leq 30\n* 1 \\leq E \\leq 100\n* 100A \\leq F \\\
+  leq 3 000\n* A, B, C, D, E and F are all integers.\n\nInputs\n\nInput is given from\
+  \ Standard Input in the following format:\n\n\nA B C D E F\n\n\nOutputs\n\nPrint\
+  \ two integers separated by a space. The first integer should be the mass of the\
+  \ desired sugar water, and the second should be the mass of the sugar dissolved\
+  \ in it.\n\nExamples\n\nInput\n\n1 2 10 20 15 200\n\n\nOutput\n\n110 10\n\n\nInput\n\
+  \n1 2 1 2 100 1000\n\n\nOutput\n\n200 100\n\n\nInput\n\n17 19 22 26 55 2802\n\n\n\
+  Output\n\n2634 934\nA: ```a, b, c, d, e, f = map(int, input().split())\ns = set()\n\
+  for i in range(30 // a + 1):\n    for j in range(30 // b + 1):\n        if 0 < (a\
+  \ * i + b * j) * 100 <= f:\n            s = s | {a * i + b * j}\ns2 = set()\nfor\
+  \ i in range(3000 // c + 1):\n    for j in range(3000 // d + 1):\n        if c *\
+  \ i + d * j <= f:\n            s2 = s2 | {c * i + d * j}\nans = []\nfor i in s:\n\
+  \    for j in s2:\n        if i * 100 + j <= f and j <= i * e:\n            ans.append([j\
+  \ / i * -1, i * 100 + j, j])\nans.sort()\nprint(ans[0][1], ans[0][2])```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nYou had n positive integers\
+  \ a_1, a_2, ..., a_n arranged in a circle. For each pair of neighboring numbers\
+  \ (a_1 and a_2, a_2 and a_3, ..., a_{n - 1} and a_n, and a_n and a_1), you wrote\
+  \ down: are the numbers in the pair equal or not.\n\nUnfortunately, you've lost\
+  \ a piece of paper with the array a. Moreover, you are afraid that even information\
+  \ about equality of neighboring elements may be inconsistent. So, you are wondering:\
+  \ is there any array a which is consistent with information you have about equality\
+  \ or non-equality of corresponding pairs?\n\nInput\n\nThe first line contains a\
+  \ single integer t (1 \u2264 t \u2264 1000) \u2014 the number of test cases. Next\
+  \ t cases follow.\n\nThe first and only line of each test case contains a non-empty\
+  \ string s consisting of characters E and/or N. The length of s is equal to the\
+  \ size of array n and 2 \u2264 n \u2264 50. For each i from 1 to n: \n\n  * if s_i\
+  \ = E then a_i is equal to a_{i + 1} (a_n = a_1 for i = n); \n  * if s_i = N then\
+  \ a_i is not equal to a_{i + 1} (a_n \u2260 a_1 for i = n). \n\nOutput\n\nFor each\
+  \ test case, print YES if it's possible to choose array a that are consistent with\
+  \ information from s you know. Otherwise, print NO.\n\nIt can be proved, that if\
+  \ there exists some array a, then there exists an array a of positive integers with\
+  \ values less or equal to 10^9.\n\nExample\n\nInput\n\n\n4\nEEE\nEN\nENNEENE\nNENN\n\
+  \n\nOutput\n\n\nYES\nNO\nYES\nYES\n\nNote\n\nIn the first test case, you can choose,\
+  \ for example, a_1 = a_2 = a_3 = 5.\n\nIn the second test case, there is no array\
+  \ a, since, according to s_1, a_1 is equal to a_2, but, according to s_2, a_2 is\
+  \ not equal to a_1.\n\nIn the third test case, you can, for example, choose array\
+  \ a = [20, 20, 4, 50, 50, 50, 20].\n\nIn the fourth test case, you can, for example,\
+  \ choose a = [1, 3, 3, 7].\nA:"
+question: "You had n positive integers a_1, a_2, ..., a_n arranged in a circle. For\
+  \ each pair of neighboring numbers (a_1 and a_2, a_2 and a_3, ..., a_{n - 1} and\
+  \ a_n, and a_n and a_1), you wrote down: are the numbers in the pair equal or not.\n\
+  \nUnfortunately, you've lost a piece of paper with the array a. Moreover, you are\
+  \ afraid that even information about equality of neighboring elements may be inconsistent.\
+  \ So, you are wondering: is there any array a which is consistent with information\
+  \ you have about equality or non-equality of corresponding pairs?\n\nInput\n\nThe\
+  \ first line contains a single integer t (1 \u2264 t \u2264 1000) \u2014 the number\
+  \ of test cases. Next t cases follow.\n\nThe first and only line of each test case\
+  \ contains a non-empty string s consisting of characters E and/or N. The length\
+  \ of s is equal to the size of array n and 2 \u2264 n \u2264 50. For each i from\
+  \ 1 to n: \n\n  * if s_i = E then a_i is equal to a_{i + 1} (a_n = a_1 for i = n);\
+  \ \n  * if s_i = N then a_i is not equal to a_{i + 1} (a_n \u2260 a_1 for i = n).\
+  \ \n\nOutput\n\nFor each test case, print YES if it's possible to choose array a\
+  \ that are consistent with information from s you know. Otherwise, print NO.\n\n\
+  It can be proved, that if there exists some array a, then there exists an array\
+  \ a of positive integers with values less or equal to 10^9.\n\nExample\n\nInput\n\
+  \n\n4\nEEE\nEN\nENNEENE\nNENN\n\n\nOutput\n\n\nYES\nNO\nYES\nYES\n\nNote\n\nIn the\
+  \ first test case, you can choose, for example, a_1 = a_2 = a_3 = 5.\n\nIn the second\
+  \ test case, there is no array a, since, according to s_1, a_1 is equal to a_2,\
+  \ but, according to s_2, a_2 is not equal to a_1.\n\nIn the third test case, you\
+  \ can, for example, choose array a = [20, 20, 4, 50, 50, 50, 20].\n\nIn the fourth\
+  \ test case, you can, for example, choose a = [1, 3, 3, 7]."
+samples:
+- " ```t = int(input())\nfor _ in range(t):\n    s = input()\n    n = len(s)\n   \
+  \ if n % 2 == 1:\n        print(\"NO\")\n        continue\n    n //= 2\n    for\
+  \ i in range(n):\n        if s[i] == 'N' and s[i+n] == 'E':\n            print(\"\
+  NO\")\n            break\n    else:\n        print(\"YES\")```\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n```\n\n\n\n```python\n\
+  ```\n\n\n\n```python\n```\n\n\n\n```python\n```"
+- " ```t = int(input())\nfor _ in range(t):\n    s = input()\n    n = len(s)\n   \
+  \ for i in range(n):\n        if s[i] == 'E':\n            if i > 0 and s[i-1] ==\
+  \ 'N':\n                print('NO')\n                break\n            if i < n-1\
+  \ and s[i+1] == 'N':\n                print('NO')\n                break\n    else:\n\
+  \        print('YES')````\nQ:"
+test_cases:
+  input:
+  - '4
+
+    EEE
+
+    EN
+
+    ENNEENE
+
+    NENN
+
+    '
+  - '1
+
+    NEEEEEEEEEEEEEEEEEEEEEEEEEEEEENNNNEENNE
+
+    '
+  - '2
+
+    EEEEEEN
+
+    EEEEEEEN
+
+    '
+  - '2
+
+    EEEEEN
+
+    EEEEEN
+
+    '
+  - '2
+
+    EEEEEN
+
+    EE
+
+    '
+  - '1
+
+    NEEEEEEEFEEEEEEEEEEEEEEEEEEEEENNNNEENNE
+
+    '
+  - '2
+
+    NEEEEEE
+
+    EEEEEEEN
+
+    '
+  - '2
+
+    EENEEE
+
+    EE
+
+    '
+  - '4
+
+    EEE
+
+    NE
+
+    ENNEENE
+
+    NENN
+
+    '
+  - '2
+
+    NEEEEE
+
+    EEEEEN
+
+    '
+  - '1
+
+    NEEFEEEEFEEEEEEEEEEEEEEEEEEEEENNNNEENNE
+
+    '
+  - '2
+
+    NEEEEEE
+
+    NEEEEEEE
+
+    '
+  - '1
+
+    ENNEENNNNEEEEEEEEEEEEEEEEEEEEEFEEEEFEEN
+
+    '
+  - '2
+
+    EEEEENE
+
+    NEEEEEEE
+
+    '
+  - '1
+
+    ENNEENNNNEEEEEEEEEEEFEEEEEEEEEFEEEEFEEN
+
+    '
+  - '2
+
+    EEEEENE
+
+    EEEEEEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEEEEEEEFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '2
+
+    ENEEEEE
+
+    EEEEEEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEEEEEFEFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    NEEFEEENFEEEEEEEEEFEFEEEEEEEEEENNNEENNE
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEEEEEFFFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    NEEFEEENFEEEEEEEEEFFFEEEEEEEEEENNNEENNE
+
+    '
+  - '1
+
+    NEEFEEENFEEEEEEEEEFFFEEEFEEEEEENNNEENNE
+
+    '
+  - '1
+
+    NEDFEEENFEEEEEEEEEFFFEEEFEEEEEENNNEENNE
+
+    '
+  - '1
+
+    NEDFEEENFEEEEEEEEEFFFEEEFEEFEEENNNEENNE
+
+    '
+  - '1
+
+    NEDFEEFNEEEEEEEEEEFFFEEEFEEFEEENNNEENNE
+
+    '
+  - '1
+
+    ENNEENNNEEEFEEFEEEFFFEEEEEEEEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENNNEEEFEEFEEEFFFEEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENNNEEEFEEFEEEFFFDEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENNNEEEFFEFEEEFFFDEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    ENOEENNNEEEFFEFEEEFFFDEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    NEDFEEFNEEEFEEEEEDFFFEEEFEFFEEENNNEEONE
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEDFFFEEFFEFFEEENNNEEONE
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEFFFFEEDFEFFEEENNNEEONE
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEFFFFEEDFEFFEEENNNDEONE
+
+    '
+  - '1
+
+    ENOEDNNNEEEFFEFDEEFFFFEEEEEFEEENEEEFDEN
+
+    '
+  - '1
+
+    ENPEDNNNEEEFFEFDEEFFFFEEEEEFEEENEEEFDEN
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEFFFFEEDFEFFEEENNNDEPNE
+
+    '
+  - '1
+
+    NEDFEEEDEEEFEEEEEFFFFEENFEFFEEENNNDEPNE
+
+    '
+  - '1
+
+    NEDFEEEDEEEFEEEEEFFFFEENFEFFEEEONNDEPNE
+
+    '
+  - '1
+
+    NEDFEEEDEEEFEEEEEFFFFEENFEEFEEEONNDEPNE
+
+    '
+  - '1
+
+    NFDFEEEDEEEFEEEEEFEFFEENFEEFEEEONNDEPNE
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEEEEFEEEDEEEFDFN
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEDEEFEEEDEEEFDFN
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEDEEFEEEDEEEFDFM
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEDEEFEEEDEEDFEFM
+
+    '
+  - '1
+
+    ENPEDNNOEFEFEEFNEEFFEFEEDEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEFEFFEENFEEFEFEONNDEPNE
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEFEFFEENFEEFEGEONNDEPNE
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEGEFFEENFEEFEGEONNDEPNE
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEGEFFEENFEEFEGEONNDEPNF
+
+    '
+  - '1
+
+    FNPEDNNOEGEFEEFNEEFFEGEEDEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    FNPEDNNOEFEFEEFNEEFFEGEEDEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEGEFFEENFEEFEFEONNDEPNF
+
+    '
+  - '1
+
+    FNPEDNNOEFEFEEFOEEFFEGEEDEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEGEFFEEOFEEFEFEONNDEPNF
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEGEFFEEOFEEFEFDONNDEPNF
+
+    '
+  - '1
+
+    MGEFDEEDEEEEEEDEEGEFFEEOFEEFEFDONNDEPNF
+
+    '
+  - '1
+
+    FNPEDNNODFEFEEFOEEFFEGEEDEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    FNPDDNNODFEFEEFOEEFFEGEEEEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    FMPDDNNODFEFEEFOEEFFEGEEEEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    MGEFDEEDEEEEEEEEEGEFFEEOFEEFEFDONNDDPMF
+
+    '
+  - '1
+
+    MGEFDEEDEEEEEEEFEGEFFEEOFEEFEFDONNDDPME
+
+    '
+  - '1
+
+    EMPDDNNODFEFEEFOEEFFEGEFEEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    EMPDDNEODFNFEEFOEEFFEGEFEEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    EMPDDNEODFNFEEFOEEFFEGEFEEEDEEEDEEDFEGM
+
+    '
+  - '1
+
+    MGEFDEEDEEEDEEEFEGEFFEEOFEEFNFDOENDDPME
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFEGEFFEEOFEEFNFDOENDDPME
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFDGEFFEEOFEEFNFDOENEDPME
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFDGEFFEEOFEEFNFEOENEDPME
+
+    '
+  - '1
+
+    EMPDENEOEFNFEEFOEEFFEGDFEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEOEFNFEEFOEFFFEGDFEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFDGEFFFEOFEEFNFEOENEDPME
+
+    '
+  - '1
+
+    EMPDENEPEFNFEEFOEFFFEGDFEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEPEDNFEEFOEFFFEGFFEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEPEDNFEEFOEFFFEGFFEEDDEEEDEEEFEGM
+
+    '
+  - '1
+
+    EMEDENEPEDNFEEFOEFFFEGFFEEDDEEPDEEEFEGM
+
+    '
+  - '1
+
+    EMEDENEPEDNEEEFOEFFFEGFFEEDDEEPDEEEFEGM
+
+    '
+  - '1
+
+    EMEDENEPEDNEEEFOEEFFEGFFEEDDEFPDEEEFEGM
+
+    '
+  - '1
+
+    EMDDENEPEDNEEEFOEEFFEGFFEEDEEFPDEEEFEGM
+
+    '
+  - '1
+
+    EMDDENEPEDNEEEFOFEFFEGFFEEDEEFPDEEEFEGM
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDEEFFGEFFEFOFEEENDEPENEDDME
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDEEFFGEFFEFOFEEENDEPENFDDME
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDEEFFGEFFEFOFEEENDEPENFDDLE
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDEEFFGEFFEFOFEEENDEPENFDCLE
+
+    '
+  - '1
+
+    MGEFEEEDPEEEDEEFFGEFFEFOFEEENDEPENFDCLF
+
+    '
+  - '1
+
+    MGECEEEDPEEEDEEFFGEFFEFOFEEENDEPENFDFLF
+
+    '
+  - '1
+
+    MGECEEEDPEEEDEEFFGEFFEFOFEEENDEPENFDFKF
+
+    '
+  - '1
+
+    MGECEEEDPEEEDEEFFGEFFEFOFEFENDEPENFDFKF
+
+    '
+  - '1
+
+    MGECEEEDPEEEDEEFFGEFFEFOFEFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEDEDPEEEDEEFFGEFFEFOFEFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEDEDPEEEDEEFFGEFFEFOFDFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEDECPEEEDEEFFGEFFEFOFDFENDEPENDFFKF
+
+    '
+  - '1
+
+    FKFFDNEPEDNEFDFOFEFFEGFFEEDEEEPCEDECEGM
+
+    '
+  - '1
+
+    FKFFDNEPEDNEFDFOFEFFEGFGEEDEEEPCEDECEGM
+
+    '
+  - '1
+
+    MGECEDECPEEEDEEGFGEFFEFOFDFENDEPENDFFKF
+
+    '
+  - '1
+
+    FKFFDNEPDDNEFDFOFEFFEGFGEEDEEEPCEEECEGM
+
+    '
+  - '1
+
+    FKFFDNEPDDNEFDFOFEFFEGFGEEDEEEPCEEFCEGM
+
+    '
+  - '1
+
+    FKFFDNEFDDNEPDFOFEFFEGFGEEDEEEPCEEFCEGM
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEGFGEFFEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEGFGEFEEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEFFGEFEEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    MGECFEECQEEEDEEFFGEFEEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    ENNEENNNNEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN
+
+    '
+  - '4
+
+    EEE
+
+    EN
+
+    ENNEENE
+
+    NNEN
+
+    '
+  - '1
+
+    NEEEEEEEFEEEEEEDEEEEEEEEEEEEEENNNNEENNE
+
+    '
+  - '1
+
+    NEEFEEEEFEEEEEEEEEEEEEEEEEEEENENNNEENNE
+
+    '
+  - '2
+
+    EEEEEEN
+
+    NEEEEEEE
+
+    '
+  - '1
+
+    EEEFEEEEFEEEEEEEEEEEEEEEEENEEENNNNEENNE
+
+    '
+  - '1
+
+    ENOEENNNNEEEEEEEEEEEFEEEEEEEEEFEEEEFEEN
+
+    '
+  - '1
+
+    EONEENNNEEEEEEEEEEEEFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEEEEEFEFEEEEEEEEEFNEEEFEEM
+
+    '
+  - '1
+
+    ENNEENMNEEEEEEEEEEFEFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEDEEEEFFFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    ENOEENNNEEEEEEEEEEFFFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEFEEEFFFEEEEEEEEEFNEEEFDEN
+
+    '
+  - '1
+
+    ENNEENONEEEEEEFEEEFFFEEEEEEEEEFNEEEFDEN
+
+    '
+  - '1
+
+    NEDEEEENFEEEEEEEEEFFFEEEFEEFEEENNNEENNE
+
+    '
+  - '1
+
+    ENNEENNNEEEFEEEEEFFFFEEEEEEEEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENNNEEEFEEFFEEFFFEEEEEEEEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENNNEFEFEEFEEEFFFEEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    ENNEENONEEEFEEFEEEFFFDEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    NEDFEEFNEEEFEEEEEDFFFEEEFEFFEEENNNEENNE
+
+    '
+  - '1
+
+    ENOEFNNNEEEFFEFEEEFFFDEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    NEDFEEFNEEEFEEEEEDFFFEEEFEFFEEENNNEEOME
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEDFFFEEFFEFFEEENNNEEPNE
+
+    '
+  - '1
+
+    NEDFEDENEEEFEEEEEFFFFEEDFEFFEEENNNEEONE
+
+    '
+  - '1
+
+    NEDFEEENEEEFEEEEEEFFFEEDFEFFEEENNNDEONE
+
+    '
+  - '1
+
+    ENOEDNNNEEEGFEFDEEFFFFEEEEEFEEENEEEFDEN
+
+    '
+  - '1
+
+    ENPEDNNNEEEFFEFDEEEFFFEEEEEFEEENFEEFDEN
+
+    '
+  - '1
+
+    NEDFFEENEEEFEEEEEFFFFEEDFEFFEEENNNDEPNE
+
+    '
+  - '1
+
+    NEDGEEEDEEEFEEEEEFFFFEENFEFFEEENNNDEPNE
+
+    '
+  - '1
+
+    NEDFEEEDEEEFEEEEEFFFFEENFEFFEEEOMNDEPNE
+
+    '
+  - '1
+
+    NEDFEEEDEEEFEEEEEGFFFEENFEEFEEEONNDEPNE
+
+    '
+  - '1
+
+    NFDFEEEDEEEFEEEEEFEFFEENFEFFEEEONNDEPNE
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEEEEFEEEDFEEFDFN
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNDEFFEFEEDEEFEEEDEEEFDFN
+
+    '
+  - '1
+
+    ENPEDNNOEEEFEEFNEEFFEFEEDEEFEEDDEEEFDFM
+
+    '
+  - '1
+
+    ENPEDNMOEEEFEEFNEEFFEFEEDEEFEEEDEEDFEFM
+
+    '
+  - '1
+
+    ENPEDNNOEFEFEEFNEEFFEFFEDEEEEEEDEEDFEEM
+
+    '
+  - '1
+
+    MFEFDEEDEFEEEEDEEFEEFEENFEEFEFEONNDEPNE
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDFEFEFFEENFEEFEGEONNDEPNE
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEEEEGEFFEENFEEFEGEONNDEPNE
+
+    '
+  - '1
+
+    FNPEDNNOEGEFEEFNEEFFEGEEDEEEEEEDEECFEFM
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEDEEFEFFEENFEEFEGEONNDEPNF
+
+    '
+  - '1
+
+    FNPEDNNOEFEFEEFNEEFFEGEEDEEEEEDDEEDFEFM
+
+    '
+  - '1
+
+    MFEFEEEDEEEEEEDEEGEFFEENFEEFEFEONNDEPNF
+
+    '
+  - '1
+
+    FNPEDNNOEFEDEEFOEEFFEGEEFEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    FNPEDNNOEFEFEDFOEEFFEGEEDEEEEEEDEEDFEFM
+
+    '
+  - '1
+
+    MFEFDEFDEEEEEEDEEGEFFEEOFEEFEFDONNDEPNF
+
+    '
+  - '1
+
+    MGEFDEEDEEEEEFDEEGEFFEEOFEEFEFDONNDEPNF
+
+    '
+  - '1
+
+    MHEFDEEDEEEEEEDEEGEFFEEOFEEFEFDONNDEPNF
+
+    '
+  - '1
+
+    FNPDDENODFEFEEFOEEFFEGNEEEEEEEEDEEDFEGM
+
+    '
+  - '1
+
+    FMPDDNNODFEFEEFOEEFFEGEEEEDEEEEDEEDFEGM
+
+    '
+  - '1
+
+    MFEFDEEDEEEEEEEEEGEFFEEOFEEFEFDONNDDPMF
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFEGEFFEEOFEEFEFDONNDDPME
+
+    '
+  - '1
+
+    EMPDDNNODFEFEFFOEEFFEGEFEEEEEEEDEEDEEGM
+
+    '
+  - '1
+
+    EMQDDNEODFNFEEFOEEFFEGEFEEEDEEEDEEDFEGM
+
+    '
+  - '1
+
+    MGEFDEEDEEEDEEEFEGEFFEEOFEEFNEDOENDDPME
+
+    '
+  - '1
+
+    MFEFEEEDEEEDEEEFEGEFFEEOFEEFNGDOENDDPME
+
+    '
+  - '1
+
+    MGEFFEEDEEEDEEEFDGEFFEEOEEEFNFDOENEDPME
+
+    '
+  - '1
+
+    MGEFEEEDEEEDEEEFDGEFFEEOFEFFNFEOENEDPME
+
+    '
+  - '1
+
+    EMPDENEOEFNFEEFOEEFFEGDFEEEEEEDDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEOEFNFEEFOEFFFEGDGEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    MGEFEEEEEEDDEEEFDGEFFFEOFEEFNFEOENEDPME
+
+    '
+  - '1
+
+    EMPDENEPEFNFEEFOEFFFEGDFEEEDDEEDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEPEDNFDEFOEFFFEGFFEEEDEEEDEEEFEGM
+
+    '
+  - '1
+
+    EMPDENEPEDNFEEFOEFFFEGFFEEDDEEEDEFEFEGM
+
+    '
+  - '1
+
+    MGEFEEEDPEEDDEEFFGEFFFEOFEEFNDEPENEDEME
+
+    '
+  - '1
+
+    EMEDENEPEDNEEEFOEFFFEHFFEEDDEEPDEEEFEGM
+
+    '
+  - '1
+
+    MGEFEEEDPFEDDEEFFGEFFEEOFEEENDEPENEDEME
+
+    '
+  - '1
+
+    EMDDENEPDDNEEEFOEEFFEGFFEEDEEFPEEEEFEGM
+
+    '
+  - '1
+
+    EMEDENDPEDNEEEFOFEFFEGFFEEDEEFPDEEEFEGM
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDDEFFGEFFEFOFEEENDEPENEDDME
+
+    '
+  - '1
+
+    MGEFEEEDPFEEDEEFFGEFFDFOFEEENDEPENFDDME
+
+    '
+  - '1
+
+    MHEFEEEDPFEEDEEFFGEFFEFOFEEENDEPENFDDLE
+
+    '
+  - '1
+
+    MGEFEEEEPFEEDEEFFGEFFEFOFEEENDEPENFDCLE
+
+    '
+  - '1
+
+    FLCDFNEPEDNEEEFOFEFFEGFFEEDEEEPDEEEFEGM
+
+    '
+  - '1
+
+    FKFDFNEPEDNEEEFOFEFFEGFFEEDEEEPDEEECEGM
+
+    '
+  - '1
+
+    MGECEEEEPEEEDEEFFGEFFEFOFEEENDEPENFDFKF
+
+    '
+  - '1
+
+    MFECEEEDPEEEDEEFFGEFFEFOFEFENDEPENFDFKF
+
+    '
+  - '1
+
+    MGECEEEDOEEEDEEFFGEFFEFOFEFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEDEDPEEEDEEEFGEFFEFOFEFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEDEDPEEEDEEFFGEFGEFOFDFENDEPENDFFKF
+
+    '
+  - '1
+
+    FKFFDNEPEDNEFDFNFEFFEGFFEEDEEEPCEDECEGM
+
+    '
+  - '1
+
+    FKFEDNEPEDNEFDFOFEFFEGFFEEDEEEPCEDECEGM
+
+    '
+  - '1
+
+    MGECEDECPEEEDEEGFGEFFEEOFDFENDEPENDFFKF
+
+    '
+  - '1
+
+    MGECEEECPEEEDEEGFGEFFEFOFDFENDDPENDFFKF
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEGFGEFFEFOFDFENDDPENDFFKF
+
+    '
+  - '1
+
+    FKFFDNEFDDNEPDFOFEFFEGFGEEDEEEOCEEFCEGM
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEGFGEEFEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    MGECFEECPEEEDEENFGEFEEFOFDPENDDFEGDFFKF
+
+    '
+  - '1
+
+    MGECFEECPEEEDEEFFGEFEEFOFDPENDCFENDFFKF
+
+    '
+  - '1
+
+    MGECFEECQEEEDEEFGGEFEEFOFDPENDDFENDFFKF
+
+    '
+  - '1
+
+    NEEEEEEEEEEEEEEEEEEEEEEEEEEEEENNNNDENNE
+
+    '
+  - '1
+
+    ENNEENNNNEEEEEEEEEEEEEEDEEEEEEFEEEEEEEN
+
+    '
+  - '1
+
+    NEEFEEEEFEEEEEEEEEFEEEEEEEEEENENNNEENNE
+
+    '
+  - '1
+
+    EEEFEEEEFEEEEEEEEEEEEEEEEENEEENNMNEENNE
+
+    '
+  - '1
+
+    ENOEENNNNEEEEEEEEEEEFEEEEEEEEEGEEEEFEEN
+
+    '
+  - '1
+
+    EONEENNNEEEEEEEEEEEEFEEEEEEEEFFNEEEFEEN
+
+    '
+  - '1
+
+    MEEFEEENFEEEEEEEEEFEFEEEEEEEEEENNNEENNE
+
+    '
+  - '1
+
+    ENNEEMMNEEEEEEEEEEFEFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    NEEFEEENFEEEEEEEEEFFFEEEEDEEEEENNNEENNE
+
+    '
+  - '1
+
+    ENOEENNNEEEEEEEEFEFFFEEEEEEEEEFNEEEFEEN
+
+    '
+  - '1
+
+    ENNEENNNEEEEEEFEEDFFFEEEEEEEEEFNEEEFDEN
+
+    '
+  output:
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'NO
+
+    YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    NO
+
+    YES
+
+    YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'NO
+
+    NO
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+  - 'YES
+
+    '
+timeout: 2.0

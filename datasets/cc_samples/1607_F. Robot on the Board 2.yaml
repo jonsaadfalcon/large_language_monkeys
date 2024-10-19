@@ -1,0 +1,14443 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nIvan has an\
+  \ array consisting of n different integers. He decided to reorder all elements in\
+  \ increasing order. Ivan loves merge sort so he decided to represent his array with\
+  \ one or several increasing sequences which he then plans to merge into one sorted\
+  \ array.\n\nIvan represent his array with increasing sequences with help of the\
+  \ following algorithm.\n\nWhile there is at least one unused number in array Ivan\
+  \ repeats the following procedure:\n\n  * iterate through array from the left to\
+  \ the right; \n  * Ivan only looks at unused numbers on current iteration; \n  *\
+  \ if current number is the first unused number on this iteration or this number\
+  \ is greater than previous unused number on current iteration, then Ivan marks the\
+  \ number as used and writes it down. \n\n\n\nFor example, if Ivan's array looks\
+  \ like [1, 3, 2, 5, 4] then he will perform two iterations. On first iteration Ivan\
+  \ will use and write numbers [1, 3, 5], and on second one \u2014 [2, 4].\n\nWrite\
+  \ a program which helps Ivan and finds representation of the given array with one\
+  \ or several increasing sequences in accordance with algorithm described above.\n\
+  \nInput\n\nThe first line contains a single integer n (1 \u2264 n \u2264 2\xB7105)\
+  \ \u2014 the number of elements in Ivan's array.\n\nThe second line contains a sequence\
+  \ consisting of distinct integers a1, a2, ..., an (1 \u2264 ai \u2264 109) \u2014\
+  \ Ivan's array.\n\nOutput\n\nPrint representation of the given array in the form\
+  \ of one or more increasing sequences in accordance with the algorithm described\
+  \ above. Each sequence must be printed on a new line.\n\nExamples\n\nInput\n\n5\n\
+  1 3 2 5 4\n\n\nOutput\n\n1 3 5 \n2 4 \n\n\nInput\n\n4\n4 3 2 1\n\n\nOutput\n\n4\
+  \ \n3 \n2 \n1 \n\n\nInput\n\n4\n10 30 50 101\n\n\nOutput\n\n10 30 50 101 \nA: ```from\
+  \ sys import stdin\nfrom collections import deque\nfrom bisect import bisect_right\
+  \  as br\nn=int(stdin.readline().strip())\ns=list(map(int,stdin.readline().strip().split()))\n\
+  arr=deque([s[0]])\nans=deque([[s[0]]])\nfor i in range(1,n):\n    x=br(arr,s[i])\n\
+  \    if x==0:\n        arr.appendleft(s[i])\n        ans.appendleft([s[i]])\n  \
+  \  else:\n        arr[x-1]=s[i]\n        ans[x-1].append(s[i])\nans.reverse()\n\
+  for i in ans:\n    print(*i)```\nQ: Write python code to solve the following coding\
+  \ problem that obeys the constraints and passes the example test cases. The output\
+  \ code needs to read from and write to standard IO. Please wrap your code answer\
+  \ using ```:\nGiven are 1-digit positive integers a and b. Consider these two strings:\
+  \ the concatenation of b copies of the digit a, and the concatenation of a copies\
+  \ of the digit b. Which of these is lexicographically smaller?\n\nConstraints\n\n\
+  * 1 \\leq a \\leq 9\n* 1 \\leq b \\leq 9\n* a and b are integers.\n\nInput\n\nInput\
+  \ is given from Standard Input in the following format:\n\n\na b\n\n\nOutput\n\n\
+  Print the lexicographically smaller of the two strings. (If the two strings are\
+  \ equal, print one of them.)\n\nExamples\n\nInput\n\n4 3\n\n\nOutput\n\n3333\n\n\
+  \nInput\n\n7 7\n\n\nOutput\n\n7777777\nA: ```N = list(map(int, input().split()))\n\
+  \na = N.sort()\n\nprint(str(N[0])*N[1])```\nQ: Write python code to solve the following\
+  \ coding problem that obeys the constraints and passes the example test cases. The\
+  \ output code needs to read from and write to standard IO. Please wrap your code\
+  \ answer using ```:\nThe robot is located on a checkered rectangular board of size\
+  \ n \xD7 m (n rows, m columns). The rows in the board are numbered from 1 to n from\
+  \ top to bottom, and the columns \u2014 from 1 to m from left to right.\n\nThe robot\
+  \ is able to move from the current cell to one of the four cells adjacent by side.\n\
+  \nEach cell has one of the symbols 'L', 'R', 'D' or 'U' written on it, indicating\
+  \ the direction in which the robot will move when it gets in that cell \u2014 left,\
+  \ right, down or up, respectively.\n\nThe robot can start its movement in any cell.\
+  \ He then moves to the adjacent square in the direction indicated on the current\
+  \ square in one move. \n\n  * If the robot moves beyond the edge of the board, it\
+  \ falls and breaks. \n  * If the robot appears in the cell it already visited before,\
+  \ it breaks (it stops and doesn't move anymore). \n\n\n\nRobot can choose any cell\
+  \ as the starting cell. Its goal is to make the maximum number of steps before it\
+  \ breaks or stops.\n\nDetermine from which square the robot should start its movement\
+  \ in order to execute as many commands as possible. A command is considered successfully\
+  \ completed if the robot has moved from the square on which that command was written\
+  \ (it does not matter whether to another square or beyond the edge of the board).\n\
+  \nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 10000) \u2014\
+  \ the number of test cases in the test.\n\nEach test case's description is preceded\
+  \ by a blank line. Next is a line that contains integers n and m (1 \u2264 n \u2264\
+  \ 2000; 1 \u2264 m \u2264 2000) \u2014 the height and width of the board. This line\
+  \ followed by n lines, the i-th of which describes the i-th line of the board. Each\
+  \ of them is exactly m letters long and consists of symbols 'L', 'R', 'D' and 'U'.\n\
+  \nIt is guaranteed that the sum of sizes of all boards in the input does not exceed\
+  \ 4\u22C510^6.\n\nOutput\n\nFor each test case, output three integers r, c and d\
+  \ (1 \u2264 r \u2264 n; 1 \u2264 c \u2264 m; d \u2265 0), which denote that the\
+  \ robot should start moving from cell (r, c) to make the maximum number of moves\
+  \ d. If there are several answers, output any of them.\n\nExample\n\nInput\n\n\n\
+  7\n\n1 1\nR\n\n1 3\nRRL\n\n2 2\nDL\nRU\n\n2 2\nUD\nRU\n\n3 2\nDL\nUL\nRU\n\n4 4\n\
+  RRRD\nRUUD\nURUD\nULLR\n\n4 4\nDDLU\nRDDU\nUUUU\nRDLD\n\n\nOutput\n\n\n1 1 1\n1\
+  \ 1 3\n1 1 4\n2 1 3\n3 1 5\n4 3 12\n1 1 4\nA:"
+question: "The robot is located on a checkered rectangular board of size n \xD7 m\
+  \ (n rows, m columns). The rows in the board are numbered from 1 to n from top to\
+  \ bottom, and the columns \u2014 from 1 to m from left to right.\n\nThe robot is\
+  \ able to move from the current cell to one of the four cells adjacent by side.\n\
+  \nEach cell has one of the symbols 'L', 'R', 'D' or 'U' written on it, indicating\
+  \ the direction in which the robot will move when it gets in that cell \u2014 left,\
+  \ right, down or up, respectively.\n\nThe robot can start its movement in any cell.\
+  \ He then moves to the adjacent square in the direction indicated on the current\
+  \ square in one move. \n\n  * If the robot moves beyond the edge of the board, it\
+  \ falls and breaks. \n  * If the robot appears in the cell it already visited before,\
+  \ it breaks (it stops and doesn't move anymore). \n\n\n\nRobot can choose any cell\
+  \ as the starting cell. Its goal is to make the maximum number of steps before it\
+  \ breaks or stops.\n\nDetermine from which square the robot should start its movement\
+  \ in order to execute as many commands as possible. A command is considered successfully\
+  \ completed if the robot has moved from the square on which that command was written\
+  \ (it does not matter whether to another square or beyond the edge of the board).\n\
+  \nInput\n\nThe first line contains an integer t (1 \u2264 t \u2264 10000) \u2014\
+  \ the number of test cases in the test.\n\nEach test case's description is preceded\
+  \ by a blank line. Next is a line that contains integers n and m (1 \u2264 n \u2264\
+  \ 2000; 1 \u2264 m \u2264 2000) \u2014 the height and width of the board. This line\
+  \ followed by n lines, the i-th of which describes the i-th line of the board. Each\
+  \ of them is exactly m letters long and consists of symbols 'L', 'R', 'D' and 'U'.\n\
+  \nIt is guaranteed that the sum of sizes of all boards in the input does not exceed\
+  \ 4\u22C510^6.\n\nOutput\n\nFor each test case, output three integers r, c and d\
+  \ (1 \u2264 r \u2264 n; 1 \u2264 c \u2264 m; d \u2265 0), which denote that the\
+  \ robot should start moving from cell (r, c) to make the maximum number of moves\
+  \ d. If there are several answers, output any of them.\n\nExample\n\nInput\n\n\n\
+  7\n\n1 1\nR\n\n1 3\nRRL\n\n2 2\nDL\nRU\n\n2 2\nUD\nRU\n\n3 2\nDL\nUL\nRU\n\n4 4\n\
+  RRRD\nRUUD\nURUD\nULLR\n\n4 4\nDDLU\nRDDU\nUUUU\nRDLD\n\n\nOutput\n\n\n1 1 1\n1\
+  \ 1 3\n1 1 4\n2 1 3\n3 1 5\n4 3 12\n1 1 4"
+samples:
+- " ```from collections import defaultdict\n\nfor _ in range(int(input())):\n    n,\
+  \ m = map(int, input().split())\n    board = [list(input()) for _ in range(n)]\n\
+  \    visited = [[False]*m for _ in range(n)]\n    r, c = 0, 0\n    max_moves = 0\n\
+  \    for i in range(n):\n        for j in range(m):\n            if not visited[i][j]:\n\
+  \                r, c = i, j\n                moves = 0\n                for _ in\
+  \ range(n*m):\n                    if 0 <= r < n and 0 <= c < m and not visited[r][c]:\n\
+  \                        visited[r][c] = True\n                        moves +=\
+  \ 1\n                        if board[r][c] == 'L':\n                          \
+  \  c -= 1\n                        elif board[r][c] == 'R':\n                  \
+  \          c += 1\n                        elif board[r][c] == 'D':\n          \
+  \                  r += 1\n                        elif board[r][c] == 'U':\n  \
+  \                          r -= 1\n                    else:\n                 \
+  \       break\n                max_moves = max(max_moves, moves)\n    print(r+1,\
+  \ c+1, max_moves)````\nQ:"
+- " ```from collections import deque\nfrom sys import stdin\n\ndef solve(n, m, board):\n\
+  \    visited = [[False]*m for _ in range(n)]\n    queue = deque([(0, 0, 0, 0)])\n\
+  \    max_steps = 0\n    start_r, start_c = 0, 0\n\n    for i in range(n):\n    \
+  \    for j in range(m):\n            if board[i][j] == 'R':\n                if\
+  \ i > 0:\n                    queue.append((i-1, j, 1, 0))\n                if j\
+  \ > 0:\n                    queue.append((i, j-1, 1, 0))\n                if i <\
+  \ n-1:\n                    queue.append((i+1, j, 1, 0))\n                if j <\
+  \ m-1:\n                    queue.append((i, j+1, 1, 0))\n            elif board[i][j]\
+  \ == 'L':\n                if i > 0:\n                    queue.append((i-1, j,\
+  \ -1, 0))\n                if j > 0:\n                    queue.append((i, j-1,\
+  \ -1, 0))\n                if i < n-1:\n                    queue.append((i+1, j,\
+  \ -1, 0))\n                if j < m-1:\n                    queue.append((i, j+1,\
+  \ -1, 0))\n            elif board[i][j] == 'D':\n                if i < n-1:\n \
+  \                   queue.append((i+1, j, 0, 1))\n                if j > 0:\n  \
+  \                  queue.append((i, j-1, 0, 1))\n                if i > 0:\n   \
+  \                 queue.append((i-1, j, 0, 1))\n                if j < m-1:\n  \
+  \                  queue.append((i, j+1, 0, 1))\n            elif board[i][j] ==\
+  \ 'U':\n                if i > 0:\n                    queue.append((i-1, j, 0,\
+  \ -1))\n                if j > 0:\n                    queue.append((i, j-1, 0,\
+  \ -1))\n                if i < n-1:\n                    queue.append((i+1, j, 0,\
+  \ -1))\n                if j < m-1:\n                    queue.append((i, j+1, 0,\
+  \ -1))\n\n    while queue:\n        r, c, dr, dc = queue.popleft()\n        if not\
+  \ visited[r][c]:\n            visited[r][c] = True\n            if dr == 0 and dc\
+  \ == 0:\n                max_steps = max(max_steps, queue[0][2])\n             \
+  \   if max_steps == queue[0][2]:\n                    start_r, start_c = r, c\n\
+  \            else:\n                if dr > 0:\n                    if r < n-1:\n\
+  \                        queue.append((r+1, c, dr, dc))\n                    if\
+  \ c > 0:\n                        queue.append((r, c-1, dr, dc))\n             \
+  \       if r > 0:\n                        queue.append((r-1, c, dr, dc))\n    \
+  \                if c < m-1:\n                        queue.append((r, c+1, dr,\
+  \ dc))\n                elif dr < 0:\n                    if r > 0:\n          \
+  \              queue.append((r-1, c, dr, dc))\n                    if c > 0:\n \
+  \                       queue.append((r, c-1, dr, dc))\n                    if r\
+  \ < n-1:\n                        queue.append((r+1, c, dr, dc))\n             \
+  \       if c < m-1:\n                        queue.append((r, c+1, dr, dc))\n  \
+  \              elif dc > 0:\n                    if c < m-1:\n                 \
+  \       queue.append((r, c+1, dr, dc))\n                    if r > 0:\n        \
+  \                queue.append((r-1, c, dr, dc))\n                    if r < n-1:\n\
+  \                        queue.append((r+1, c, dr, dc))\n                    if\
+  \ c > 0:\n                        queue.append((r, c-1, dr, dc))\n             \
+  \   elif dc < 0:\n                    if c > 0:\n                        queue.append((r,\
+  \ c-1, dr, dc))\n                    if r > 0:\n                        queue.append((r-1,\
+  \ c, dr, dc))\n                    if r < n-1:\n                        queue.append((r+1,\
+  \ c, dr, dc))\n                    if c < m-1:\n                        queue.append((r,\
+  \ c+1, dr, dc))\n\n    print(start_r+1, start_c+1, max_steps)\n\nfor _ in range(int(input())):\n\
+  \    n, m = map(int, input().split())\n    board = [list(input().strip()) for _\
+  \ in range(n)]\n    solve(n, m, board)```\nQ:"
+test_cases:
+  input:
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    UDUR
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    RUDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    RUDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RDRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DUDR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    UDRU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULRL
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDUD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    URLL
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    LLUR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDRU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    UUDR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DRUU
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DRUU
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDUR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DULD
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDRU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    URLL
+
+
+    4 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    UURD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    LLUR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DRUU
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    DRLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DRUU
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    LLUR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    DDUR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DUDR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    UDDL
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDUR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DDLR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    LLUR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    UURD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    DRLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    UDLD
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    DDUR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    DRLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RDUU
+
+    DURU
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    DDUR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDRU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    UDRU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    DRUU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDDL
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    LRR
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RLR
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    2 4
+
+    ULDD
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    LLUR
+
+
+    1 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDRU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    DRRR
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    LU
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    URLL
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    DU
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDDL
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    3 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DDRU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DLDU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    UDRU
+
+    ULRL
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    UURD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    LD
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    UDDR
+
+    UUUU
+
+    DDLR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    DRUU
+
+    URUD
+
+    RLLU
+
+
+    4 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    LU
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    DRLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRDR
+
+    RUUD
+
+    URDU
+
+    ULRL
+
+
+    4 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    UR
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    1 4
+
+    DDLU
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    URDD
+
+    UUUU
+
+    RDLD
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUDU
+
+    DURU
+
+    ULLR
+
+
+    4 4
+
+    DDLU
+
+    DRDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    UR
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    DL
+
+    UL
+
+    RU
+
+
+    4 4
+
+    RRRD
+
+    DUUR
+
+    URUD
+
+    ULLR
+
+
+    4 4
+
+    ULDD
+
+    RDDU
+
+    UUUU
+
+    DLDR
+
+    '
+  - '7
+
+
+    1 1
+
+    R
+
+
+    1 3
+
+    RRL
+
+
+    2 2
+
+    DL
+
+    RU
+
+
+    2 2
+
+    UD
+
+    RU
+
+
+    3 2
+
+    LD
+
+    UL
+
+    UR
+
+
+    4 4
+
+    RRRD
+
+    RUUD
+
+    URUD
+
+    ULLR
+
+
+    2 4
+
+    DDLU
+
+    RUDD
+
+    UUUU
+
+    RDLD
+
+    '
+  output:
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4
+
+    '
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 6
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 2 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    2 1 7
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 2
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 7
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 2 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 5
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 6
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 1 9
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    2 2 4
+
+    4 3 10
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    2 2 4
+
+    4 3 10
+
+    1 1 3'
+  - '1 1 1
+
+    1 2 2
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    2 1 6
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    3 2 6
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    2 1 7
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 5
+
+    4 3 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 6
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    1 2 3
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 2 8
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    3 3 6'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    2 2 4
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    3 1 9
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    3 2 6
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 1 12
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 9
+
+    1 2 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 1 9
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    2 1 6
+
+    3 2 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 6
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 10
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 2 2
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 9
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    2 1 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 2
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    3 2 5
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 9
+
+    3 3 6'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 5
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    1 2 3
+
+    4 3 12
+
+    3 2 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 6
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    1 2 2
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    2 1 7
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    1 1 6
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 2 2
+
+    1 1 4
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 5
+
+    2 1 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 2
+
+    1 2 3
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    1 2 4
+
+    3 2 5
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 9
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    1 2 2
+
+    3 1 4
+
+    3 1 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    2 2 4
+
+    2 1 7
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 2 2
+
+    1 2 3
+
+    1 1 6
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    2 2 4
+
+    2 1 7
+
+    2 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 2 2
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 5
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 2 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    2 2 4
+
+    4 3 10
+
+    1 1 3'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    1 2 3
+
+    2 1 6
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 4 6'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    3 3 6'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    1 1 4
+
+    3 1 4
+
+    2 1 7
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    2 2 4
+
+    4 3 10
+
+    1 2 2'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 1 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 2 2
+
+    1 2 3
+
+    3 1 9
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    1 2 2
+
+    1 2 3
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 6
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 6
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 13
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 2
+
+    1 1 4
+
+    2 1 3
+
+    3 1 6
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 2 2
+
+    1 2 3
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 6
+
+    3 2 6
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    2 2 4
+
+    2 1 7
+
+    2 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 9
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 9
+
+    1 3 5'
+  - '1 1 1
+
+    1 2 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 4
+
+    2 1 7
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    1 2 3
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    2 2 4
+
+    1 1 5
+
+    2 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    1 2 2
+
+    1 2 3
+
+    3 2 13
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 6
+
+    4 3 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 4
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    2 2 4
+
+    4 3 10
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    2 1 7
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    1 2 3
+
+    3 1 7
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 4
+
+    3 2 6
+
+    3 1 5'
+  - '1 1 1
+
+    1 2 2
+
+    1 1 4
+
+    1 1 4
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 2
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 2
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    3 1 9
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    2 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 1 9
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 2
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 1 4
+
+    3 1 4
+
+    4 3 9
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    2 2 4
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    1 2 3
+
+    4 1 8
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 1 4
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 11
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    1 2 2
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 2
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    3 2 6
+
+    3 1 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 9
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 10
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    2 1 3
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 1 9
+
+    1 3 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    3 2 6
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    3 1 4
+
+    4 3 12
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 3 12
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    4 2 8
+
+    1 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    1 2 2
+
+    3 1 5
+
+    4 3 12
+
+    1 3 2'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    3 2 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    4 3 12
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 3
+
+    2 1 6
+
+    1 3 5'
+  - '1 1 1
+
+    1 1 3
+
+    1 2 3
+
+    2 1 3
+
+    3 1 5
+
+    3 2 6
+
+    3 1 4'
+  - '1 1 1
+
+    1 1 3
+
+    1 1 4
+
+    2 1 3
+
+    1 2 4
+
+    4 3 12
+
+    1 1 4'
+timeout: 2.0

@@ -1,0 +1,1841 @@
+prompt: "Q: Write python code to solve the following coding problem that obeys the\
+  \ constraints and passes the example test cases. The output code needs to read from\
+  \ and write to standard IO. Please wrap your code answer using ```:\nI'm traveling\
+  \ to a country with a rabbit. There are n cities in this country numbered from 1\
+  \ to n, and the rabbit is now in city 1. City i is a point on the coordinate plane\
+  \ (xi, yi) ).\n\nRabbits travel to meet the following conditions.\n\n* The travel\
+  \ path is a polygonal line, each part of which must be a line segment connecting\
+  \ two different cities.\n* The total length of the travel route must be r or less.\
+  \ The overlapping part of the route is also counted for the number of times it has\
+  \ passed.\n* When the direction of movement changes, the bending angle must be less\
+  \ than or equal to \u03B8. There is no limit to the initial direction of movement.\n\
+  \n\n\nIf you move from one city to another, you will get one carrot in the destination\
+  \ city. You can visit the same city multiple times, and you will get a carrot each\
+  \ time you visit. Find the maximum number of carrots you can put in.\n\n\n\nInput\n\
+  \nOne integer n is given on the first line of the input, and two real numbers r\
+  \ and \u03B8 are given on the second line, separated by a space.\n\n1 \u2264 n \u2264\
+  \ 20\n0 <r <104\n0 \xB0 <\u03B8 <180 \xB0\n\n\nThe following n lines are given the\
+  \ integers xi and yi separated by spaces.\n\n-10 000 \u2264 xi, yi \u2264 10 000\n\
+  \nThe answer does not change even if r and \u03B8 are changed within \xB1 10-3.\n\
+  The locations of both cities are different.\n\nOutput\n\nOutput the maximum number\
+  \ of carrots that the rabbit can get on this trip in one line.\n\nExample\n\nInput\n\
+  \n5\n100.1 90.1\n0 0\n0 10\n5 5\n10 0\n10 10\n\n\nOutput\n\n10\nA: ```import math,string,itertools,fractions,heapq,collections,re,array,bisect,sys,random,time,copy,functools\n\
+  \nsys.setrecursionlimit(10**7)\ninf = 10**20\neps = 1.0 / 10**13\nmod = 10**9+7\n\
+  dd = [(-1,0),(0,1),(1,0),(0,-1)]\nddn = [(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1)]\n\
+  \ndef LI(): return [int(x) for x in sys.stdin.readline().split()]\ndef LI_(): return\
+  \ [int(x)-1 for x in sys.stdin.readline().split()]\ndef LF(): return [float(x) for\
+  \ x in sys.stdin.readline().split()]\ndef LS(): return sys.stdin.readline().split()\n\
+  def I(): return int(sys.stdin.readline())\ndef F(): return float(sys.stdin.readline())\n\
+  def S(): return input()\ndef pf(s): return print(s, flush=True)\n\ndef main():\n\
+  \    rr = []\n\n    def f():\n        n = I()\n        r,t = LF()\n        a = [LI()\
+  \ for _ in range(n)]\n        d = {}\n        M = 32\n        for i in range(n):\n\
+  \            ax,ay = a[i]\n            for j in range(n):\n                if i\
+  \ == j:\n                    continue\n                bx,by = a[j]\n          \
+  \      d[i*M+j] = math.atan2(bx-ax,by-ay) / math.pi * 180\n        ky = {}\n   \
+  \     for i in range(n):\n            ax,ay = a[i]\n            for j in range(n):\n\
+  \                bx,by = a[j]\n                ky[i*M+j] = pow(pow(ax-bx, 2) + pow(ay-by,\
+  \ 2), 0.5)\n        e = collections.defaultdict(list)\n        for i in range(n):\n\
+  \            for j in range(n):\n                if i == j:\n                  \
+  \  continue\n                ij = i*M+j\n                dij = d[ij]\n         \
+  \       for k in range(n):\n                    if k == j:\n                   \
+  \     continue\n                    jk = j*M+k\n                    djk = d[jk]\n\
+  \                    if abs(dij-djk) <= t or 360 - abs(dij-djk) <= t:\n        \
+  \                e[(i,j)].append(((j,k), ky[jk]))\n\n        def search():\n   \
+  \         res = 0\n            dp = [[None]*n for _ in range(n)]\n            for\
+  \ j in range(1, n):\n                k = ky[j]\n                if k > r:\n    \
+  \                continue\n                s = (j,1)\n                res = 1\n\
+  \                dp[0][j] = k\n            if res == 0:\n                return\
+  \ 0\n            while True:\n                wf = False\n                nd = [[None]*n\
+  \ for _ in range(n)]\n                for i in range(n):\n                    for\
+  \ j in range(n):\n                        if dp[i][j] is None:\n               \
+  \             continue\n                        dij = dp[i][j]\n               \
+  \         for nn,k in e[(i,j)]:\n                            nk = dij + k\n    \
+  \                        if nk > r or (not nd[j][nn[1]] is None and nd[j][nn[1]]\
+  \ < nk):\n                                continue\n                           \
+  \ nd[j][nn[1]] = nk\n                            wf = True\n                if wf:\n\
+  \                    res += 1\n                    dp = nd\n                else:\n\
+  \                    break\n            return res\n\n        return search()\n\n\
+  \    while True:\n        rr.append(f())\n        break\n\n    return '\\n'.join(map(str,rr))\n\
+  \n\nprint(main())```\nQ: Write python code to solve the following coding problem\
+  \ that obeys the constraints and passes the example test cases. The output code\
+  \ needs to read from and write to standard IO. Please wrap your code answer using\
+  \ ```:\nVasya has been playing Plane of Tanks with his friends the whole year. Now\
+  \ it is time to divide the participants into several categories depending on their\
+  \ results. \n\nA player is given a non-negative integer number of points in each\
+  \ round of the Plane of Tanks. Vasya wrote results for each round of the last year.\
+  \ He has n records in total.\n\nIn order to determine a player's category consider\
+  \ the best result obtained by the player and the best results of other players.\
+  \ The player belongs to category: \n\n  * \"noob\" \u2014 if more than 50% of players\
+  \ have better results; \n  * \"random\" \u2014 if his result is not worse than the\
+  \ result that 50% of players have, but more than 20% of players have better results;\
+  \ \n  * \"average\" \u2014 if his result is not worse than the result that 80% of\
+  \ players have, but more than 10% of players have better results; \n  * \"hardcore\"\
+  \ \u2014 if his result is not worse than the result that 90% of players have, but\
+  \ more than 1% of players have better results; \n  * \"pro\" \u2014 if his result\
+  \ is not worse than the result that 99% of players have. \n\n\n\nWhen the percentage\
+  \ is calculated the player himself is taken into account. That means that if two\
+  \ players played the game and the first one gained 100 points and the second one\
+  \ 1000 points, then the first player's result is not worse than the result that\
+  \ 50% of players have, and the second one is not worse than the result that 100%\
+  \ of players have.\n\nVasya gave you the last year Plane of Tanks results. Help\
+  \ Vasya determine each player's category.\n\nInput\n\nThe first line contains the\
+  \ only integer number n (1 \u2264 n \u2264 1000) \u2014 a number of records with\
+  \ the players' results.\n\nEach of the next n lines contains a player's name and\
+  \ the amount of points, obtained by the player for the round, separated with a space.\
+  \ The name contains not less than 1 and no more than 10 characters. The name consists\
+  \ of lowercase Latin letters only. It is guaranteed that any two different players\
+  \ have different names. The amount of points, obtained by the player for the round,\
+  \ is a non-negative integer number and does not exceed 1000.\n\nOutput\n\nPrint\
+  \ on the first line the number m \u2014 the number of players, who participated\
+  \ in one round at least.\n\nEach one of the next m lines should contain a player\
+  \ name and a category he belongs to, separated with space. Category can be one of\
+  \ the following: \"noob\", \"random\", \"average\", \"hardcore\" or \"pro\" (without\
+  \ quotes). The name of each player should be printed only once. Player names with\
+  \ respective categories can be printed in an arbitrary order.\n\nExamples\n\nInput\n\
+  \n5\nvasya 100\nvasya 200\nartem 100\nkolya 200\nigor 250\n\n\nOutput\n\n4\nartem\
+  \ noob\nigor pro\nkolya random\nvasya random\n\n\nInput\n\n3\nvasya 200\nkolya 1000\n\
+  vasya 1000\n\n\nOutput\n\n2\nkolya pro\nvasya pro\n\nNote\n\nIn the first example\
+  \ the best result, obtained by artem is not worse than the result that 25% of players\
+  \ have (his own result), so he belongs to category \"noob\". vasya and kolya have\
+  \ best results not worse than the results that 75% players have (both of them and\
+  \ artem), so they belong to category \"random\". igor has best result not worse\
+  \ than the result that 100% of players have (all other players and himself), so\
+  \ he belongs to category \"pro\".\n\nIn the second example both players have the\
+  \ same amount of points, so they have results not worse than 100% players have,\
+  \ so they belong to category \"pro\".\nA: ```from collections import defaultdict\n\
+  from bisect import bisect_left\np, n = defaultdict(int), int(input())\nfor i in\
+  \ range(n):\n    a, b = input().split()\n    p[a] = max(p[a], int(b))\np, n = sorted((b,\
+  \ a) for a, b in p.items()), len(p)\nt = [0] + [bisect_left(p, (p[n - 1 - n // k][0],\
+  \ '')) for k in [2, 5, 10, 100]] + [n]\ns = ['noob', 'random', 'average', 'hardcore',\
+  \ 'pro']\nfor i in range(1, len(t)):\n    d = s[i - 1]\n    for j in range(t[i -\
+  \ 1], t[i]): p[j] = p[j][1] + ' ' + d\nprint(n)\nprint('\\n'.join(p))```\nQ: Write\
+  \ python code to solve the following coding problem that obeys the constraints and\
+  \ passes the example test cases. The output code needs to read from and write to\
+  \ standard IO. Please wrap your code answer using ```:\nAlice has an integer sequence\
+  \ a of length n and all elements are different. She will choose a subsequence of\
+  \ a of length m, and defines the value of a subsequence a_{b_1},a_{b_2},\u2026,a_{b_m}\
+  \ as $$$\u2211_{i = 1}^m (m \u22C5 a_{b_i}) - \u2211_{i = 1}^m \u2211_{j = 1}^m\
+  \ f(min(b_i, b_j), max(b_i, b_j)), where f(i, j) denotes \\min(a_i, a_{i + 1}, \\\
+  ldots, a_j)$$$.\n\nAlice wants you to help her to maximize the value of the subsequence\
+  \ she choose.\n\nA sequence s is a subsequence of a sequence t if s can be obtained\
+  \ from t by deletion of several (possibly, zero or all) elements.\n\nInput\n\nThe\
+  \ first line contains two integers n and m (1 \u2264 m \u2264 n \u2264 4000).\n\n\
+  The second line contains n distinct integers a_1, a_2, \u2026, a_n (1 \u2264 a_i\
+  \ < 2^{31}).\n\nOutput\n\nPrint the maximal value Alice can get.\n\nExamples\n\n\
+  Input\n\n\n6 4\n15 2 18 12 13 4\n\n\nOutput\n\n\n100\n\n\nInput\n\n\n11 5\n9 3 7\
+  \ 1 8 12 10 20 15 18 5\n\n\nOutput\n\n\n176\n\n\nInput\n\n\n1 1\n114514\n\n\nOutput\n\
+  \n\n0\n\n\nInput\n\n\n2 1\n666 888\n\n\nOutput\n\n\n0\n\nNote\n\nIn the first example,\
+  \ Alice can choose the subsequence [15, 2, 18, 13], which has the value 4 \u22C5\
+  \ (15 + 2 + 18 + 13) - (15 + 2 + 2 + 2) - (2 + 2 + 2 + 2) - (2 + 2 + 18 + 12) -\
+  \ (2 + 2 + 12 + 13) = 100. In the second example, there are a variety of subsequences\
+  \ with value 176, and one of them is [9, 7, 12, 20, 18].\nA:"
+question: "Alice has an integer sequence a of length n and all elements are different.\
+  \ She will choose a subsequence of a of length m, and defines the value of a subsequence\
+  \ a_{b_1},a_{b_2},\u2026,a_{b_m} as $$$\u2211_{i = 1}^m (m \u22C5 a_{b_i}) - \u2211\
+  _{i = 1}^m \u2211_{j = 1}^m f(min(b_i, b_j), max(b_i, b_j)), where f(i, j) denotes\
+  \ \\min(a_i, a_{i + 1}, \\ldots, a_j)$$$.\n\nAlice wants you to help her to maximize\
+  \ the value of the subsequence she choose.\n\nA sequence s is a subsequence of a\
+  \ sequence t if s can be obtained from t by deletion of several (possibly, zero\
+  \ or all) elements.\n\nInput\n\nThe first line contains two integers n and m (1\
+  \ \u2264 m \u2264 n \u2264 4000).\n\nThe second line contains n distinct integers\
+  \ a_1, a_2, \u2026, a_n (1 \u2264 a_i < 2^{31}).\n\nOutput\n\nPrint the maximal\
+  \ value Alice can get.\n\nExamples\n\nInput\n\n\n6 4\n15 2 18 12 13 4\n\n\nOutput\n\
+  \n\n100\n\n\nInput\n\n\n11 5\n9 3 7 1 8 12 10 20 15 18 5\n\n\nOutput\n\n\n176\n\n\
+  \nInput\n\n\n1 1\n114514\n\n\nOutput\n\n\n0\n\n\nInput\n\n\n2 1\n666 888\n\n\nOutput\n\
+  \n\n0\n\nNote\n\nIn the first example, Alice can choose the subsequence [15, 2,\
+  \ 18, 13], which has the value 4 \u22C5 (15 + 2 + 18 + 13) - (15 + 2 + 2 + 2) -\
+  \ (2 + 2 + 2 + 2) - (2 + 2 + 18 + 12) - (2 + 2 + 12 + 13) = 100. In the second example,\
+  \ there are a variety of subsequences with value 176, and one of them is [9, 7,\
+  \ 12, 20, 18]."
+samples:
+- " ```import heapq\nn, m = map(int, input().split())\na = list(map(int, input().split()))\n\
+  a.sort()\npq = []\nfor i in range(n):\n    heapq.heappush(pq, (a[i], i))\ns = 0\n\
+  for _ in range(m):\n    x, i = heapq.heappop(pq)\n    s += x\n    if i + 1 < n:\n\
+  \        heapq.heappush(pq, (a[i + 1], i + 1))\nprint(s * m - sum(bisect_left(a,\
+  \ a[i]) for i in range(m)))```\nQ:"
+- " ```import heapq\nn,m=map(int,input().split())\na=sorted(map(int,input().split()))\n\
+  s=a[:m]\nfor i in range(m-1):\n    s[i+1]=min(s[i+1],s[i])\nfor i in range(m-1):\n\
+  \    s[i+1]=min(s[i+1],s[m-1])\ns[-1]=0\nprint(sum(i*a[i] for i in range(m)) - sum(s[i+1]-s[i]\
+  \ for i in range(m-1)))```\nQ:"
+test_cases:
+  input:
+  - '6 4
+
+    15 2 18 12 13 4
+
+    '
+  - '1 1
+
+    114514
+
+    '
+  - '2 1
+
+    666 888
+
+    '
+  - '11 5
+
+    9 3 7 1 8 12 10 20 15 18 5
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 1810649302 546050039 1119095648 793917425 690286369
+    113135373 1777353416
+
+    '
+  - '4 2
+
+    1503703198 1592420633 1937648355 1163333781
+
+    '
+  - '7 3
+
+    2 10 7 3 6 8 4
+
+    '
+  - '10 10
+
+    8 10 4 7 3 9 6 1 5 2
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1248976576 1369337134
+
+    '
+  - '4 3
+
+    1503703198 1592420633 1937648355 1163333781
+
+    '
+  - '7 3
+
+    0 10 7 3 6 8 4
+
+    '
+  - '10 10
+
+    8 10 4 13 3 9 6 1 5 2
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1248976576 605716761
+
+    '
+  - '6 4
+
+    15 2 18 12 1 4
+
+    '
+  - '1 1
+
+    191282
+
+    '
+  - '11 5
+
+    9 3 7 0 8 12 10 20 15 18 5
+
+    '
+  - '4 3
+
+    1503703198 1592420633 1937648355 1062718094
+
+    '
+  - '6 6
+
+    15 2 18 12 1 4
+
+    '
+  - '4 2
+
+    1503703198 1592420633 1937648355 1062718094
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1962366591 1191833267
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 1810649302 546050039 1452219000 793917425 690286369
+    113135373 1777353416
+
+    '
+  - '3 2
+
+    1503703198 1592420633 1937648355 1163333781
+
+    '
+  - '7 5
+
+    2 10 7 3 6 8 4
+
+    '
+  - '6 4
+
+    15 2 18 6 13 4
+
+    '
+  - '3 3
+
+    1503703198 1592420633 1937648355 1163333781
+
+    '
+  - '10 10
+
+    8 10 4 13 0 9 6 1 5 2
+
+    '
+  - '5 3
+
+    1407237913 540438792 1539383618 1248976576 605716761
+
+    '
+  - '2 2
+
+    666 1425
+
+    '
+  - '11 5
+
+    9 6 7 0 8 12 10 20 15 18 5
+
+    '
+  - '6 6
+
+    15 2 9 12 1 4
+
+    '
+  - '6 6
+
+    15 2 18 19 1 0
+
+    '
+  - '3 2
+
+    1503703198 1232954195 1937648355 1163333781
+
+    '
+  - '7 5
+
+    2 10 7 0 6 8 4
+
+    '
+  - '3 3
+
+    1181699175 1592420633 1937648355 1163333781
+
+    '
+  - '5 3
+
+    1407237913 540438792 292718372 1248976576 605716761
+
+    '
+  - '2 2
+
+    666 1648
+
+    '
+  - '3 2
+
+    1503703198 1232954195 1341199022 1163333781
+
+    '
+  - '5 2
+
+    727908733 540438792 1186826553 1962366591 898727019
+
+    '
+  - '3 2
+
+    1503703198 1232954195 1147422227 1163333781
+
+    '
+  - '5 2
+
+    727908733 540438792 1186826553 1234898393 898727019
+
+    '
+  - '3 2
+
+    1503703198 1232954195 397913400 1163333781
+
+    '
+  - '5 2
+
+    727908733 540438792 1186826553 2028237552 898727019
+
+    '
+  - '3 2
+
+    1503703198 1232954195 105399621 1163333781
+
+    '
+  - '2 2
+
+    727908733 540438792 1186826553 2028237552 898727019
+
+    '
+  - '4 2
+
+    727908733 540438792 1186826553 1360298635 898727019
+
+    '
+  - '5 2
+
+    1407237913 465425380 1894537561 543364991 1369337134
+
+    '
+  - '4 3
+
+    727908733 540438792 1186826553 1360298635 898727019
+
+    '
+  - '4 3
+
+    727908733 540438792 214891002 1360298635 898727019
+
+    '
+  - '5 2
+
+    1138365749 465425380 1894537561 543364991 419767329
+
+    '
+  - '4 3
+
+    263495869 540438792 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 569448847 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 538017659 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 538017659 214891002 135467918 898727019
+
+    '
+  - '4 3
+
+    555952768 538017659 214891002 135467918 898727019
+
+    '
+  - '4 3
+
+    555952768 33522765 214891002 135467918 898727019
+
+    '
+  - '4 3
+
+    555952768 33522765 226348875 68073946 825066423
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 1810649302 546050039 1119095648 793917425 690286369
+    166598936 1777353416
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1248976576 1669213333
+
+    '
+  - '6 4
+
+    15 2 18 12 13 7
+
+    '
+  - '11 5
+
+    9 3 7 1 8 12 10 20 15 27 5
+
+    '
+  - '10 10
+
+    12 10 4 13 3 9 6 1 5 2
+
+    '
+  - '6 4
+
+    3 2 18 12 1 4
+
+    '
+  - '2 2
+
+    1503703198 1592420633 1937648355 1062718094
+
+    '
+  - '3 3
+
+    1089527545 1592420633 1937648355 1163333781
+
+    '
+  - '7 5
+
+    2 10 14 3 6 8 4
+
+    '
+  - '6 4
+
+    15 2 18 11 13 4
+
+    '
+  - '5 3
+
+    1407237913 744513163 1539383618 1248976576 605716761
+
+    '
+  - '8 5
+
+    9 6 7 0 8 12 10 20 15 18 5
+
+    '
+  - '6 6
+
+    23 2 9 12 1 4
+
+    '
+  - '5 2
+
+    1637630642 540438792 1539383618 1962366591 898727019
+
+    '
+  - '3 2
+
+    1670130509 1232954195 1937648355 1163333781
+
+    '
+  - '6 4
+
+    15 2 36 6 13 7
+
+    '
+  - '3 3
+
+    1503703198 1232954195 1341199022 1163333781
+
+    '
+  - '5 2
+
+    727908733 805135562 1186826553 1962366591 898727019
+
+    '
+  - '5 2
+
+    727908733 540438792 1186826553 1982863139 898727019
+
+    '
+  - '5 2
+
+    727908733 783018005 1186826553 2028237552 898727019
+
+    '
+  - '4 2
+
+    37811525 540438792 1186826553 2028237552 898727019
+
+    '
+  - '4 2
+
+    591714606 540438792 1186826553 1360298635 898727019
+
+    '
+  - '5 2
+
+    1407237913 187410372 1894537561 543364991 1369337134
+
+    '
+  - '5 2
+
+    1407237913 433301385 1894537561 543364991 419767329
+
+    '
+  - '4 3
+
+    885516074 540438792 214891002 1360298635 898727019
+
+    '
+  - '5 2
+
+    599498911 465425380 1894537561 543364991 419767329
+
+    '
+  - '4 3
+
+    263495869 540438792 214891002 659233274 898727019
+
+    '
+  - '3 3
+
+    299375947 540438792 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 1001267396 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 538017659 214891002 263144656 898727019
+
+    '
+  - '4 3
+
+    610190261 33522765 214891002 135467918 898727019
+
+    '
+  - '4 3
+
+    555952768 57531821 226348875 68073946 825066423
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 1810649302 546050039 1119095648 793917425 690286369
+    166598936 1093649441
+
+    '
+  - '6 4
+
+    15 2 33 12 13 7
+
+    '
+  - '11 2
+
+    9 3 7 1 8 12 10 20 15 27 5
+
+    '
+  - '6 4
+
+    3 2 8 12 1 4
+
+    '
+  - '2 2
+
+    666 930
+
+    '
+  - '4 3
+
+    1074300537 1592420633 2852504 1062718094
+
+    '
+  - '7 5
+
+    2 10 14 3 7 8 4
+
+    '
+  - '3 3
+
+    1910876004 1592420633 1937648355 2151782019
+
+    '
+  - '6 4
+
+    15 2 54 6 13 7
+
+    '
+  - '5 2
+
+    727908733 805135562 1186826553 1962366591 364664847
+
+    '
+  - '5 2
+
+    727908733 603358798 1186826553 2028237552 898727019
+
+    '
+  - '5 4
+
+    1407237913 187410372 1894537561 543364991 1369337134
+
+    '
+  - '5 2
+
+    599498911 465425380 1894537561 543364991 305660254
+
+    '
+  - '4 3
+
+    263495869 540438792 135777707 659233274 898727019
+
+    '
+  - '5 2
+
+    628751430 465425380 1894537561 125778642 419767329
+
+    '
+  - '4 2
+
+    299375947 1001267396 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    299375947 327913415 214891002 263144656 898727019
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 372804952 546050039 1119095648 793917425 690286369
+    166598936 1093649441
+
+    '
+  - '6 4
+
+    15 2 33 22 13 7
+
+    '
+  - '6 4
+
+    3 2 8 5 1 4
+
+    '
+  - '2 2
+
+    666 803
+
+    '
+  - '4 3
+
+    1737675370 1592420633 2852504 1062718094
+
+    '
+  - '3 2
+
+    1503703198 1592420633 981792769 1062718094
+
+    '
+  - '7 5
+
+    2 10 14 3 12 8 4
+
+    '
+  - '6 4
+
+    15 2 54 12 13 7
+
+    '
+  - '3 2
+
+    1503703198 1467780051 235552759 2150777057
+
+    '
+  - '5 3
+
+    727908733 603358798 1186826553 2028237552 898727019
+
+    '
+  - '5 4
+
+    1407237913 187410372 1894537561 769376164 1369337134
+
+    '
+  - '4 3
+
+    885516074 540438792 220824694 1360298635 1158469384
+
+    '
+  - '5 2
+
+    599498911 465425380 1894537561 543364991 276188184
+
+    '
+  - '4 3
+
+    263495869 724553809 135777707 659233274 898727019
+
+    '
+  - '5 4
+
+    628751430 465425380 1894537561 125778642 419767329
+
+    '
+  - '4 2
+
+    299375947 1230326512 214891002 1360298635 898727019
+
+    '
+  - '10 4
+
+    1487140772 1794287649 13129572 372804952 546050039 1119095648 793917425 1169188220
+    166598936 1093649441
+
+    '
+  - '6 4
+
+    3 2 8 5 0 4
+
+    '
+  - '2 2
+
+    731 803
+
+    '
+  - '4 3
+
+    1737675370 1592420633 4133660 1062718094
+
+    '
+  - '4 3
+
+    1910876004 1592420633 1937648355 1310821610
+
+    '
+  - '5 2
+
+    172836230 805135562 1186826553 1962366591 364664847
+
+    '
+  - '4 2
+
+    28840035 540438792 1908319607 2028237552 898727019
+
+    '
+  - '2 1
+
+    666 1425
+
+    '
+  - '7 0
+
+    0 10 7 3 6 8 4
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1248976576 1191833267
+
+    '
+  - '1 1
+
+    317144
+
+    '
+  - '2 0
+
+    666 1425
+
+    '
+  - '7 0
+
+    0 10 7 1 6 8 4
+
+    '
+  - '6 6
+
+    15 2 18 12 1 0
+
+    '
+  - '2 0
+
+    666 2098
+
+    '
+  - '6 0
+
+    15 2 18 12 1 0
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 539778010 1369337134
+
+    '
+  - '1 1
+
+    219323
+
+    '
+  - '1 1
+
+    96934
+
+    '
+  - '4 1
+
+    1503703198 1592420633 1937648355 1062718094
+
+    '
+  - '7 0
+
+    0 10 7 3 6 13 4
+
+    '
+  - '5 0
+
+    1407237913 540438792 1539383618 1248976576 1191833267
+
+    '
+  - '1 1
+
+    400750
+
+    '
+  - '2 0
+
+    666 1005
+
+    '
+  - '4 0
+
+    1503703198 1592420633 1937648355 1062718094
+
+    '
+  - '5 0
+
+    0 10 7 1 6 8 4
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1962366591 898727019
+
+    '
+  - '2 0
+
+    756 2098
+
+    '
+  - '5 1
+
+    1407237913 540438792 1539383618 539778010 1369337134
+
+    '
+  - '6 4
+
+    15 2 18 6 13 7
+
+    '
+  - '1 1
+
+    298030
+
+    '
+  - '4 0
+
+    1503703198 1592420633 1937648355 234732785
+
+    '
+  - '3 0
+
+    0 10 7 3 6 13 4
+
+    '
+  - '6 0
+
+    15 2 9 12 1 4
+
+    '
+  - '1 0
+
+    400750
+
+    '
+  - '2 0
+
+    868 1005
+
+    '
+  - '4 0
+
+    1503703198 1271590979 1937648355 1062718094
+
+    '
+  - '5 2
+
+    1407237913 540438792 1186826553 1962366591 898727019
+
+    '
+  - '5 1
+
+    1407237913 540438792 1539383618 455160833 1369337134
+
+    '
+  - '3 3
+
+    1181699175 1513071694 1937648355 1163333781
+
+    '
+  - '5 0
+
+    1407237913 540438792 292718372 1248976576 605716761
+
+    '
+  - '3 0
+
+    1 10 7 3 6 13 4
+
+    '
+  - '6 0
+
+    15 2 6 12 1 4
+
+    '
+  - '4 1
+
+    1503703198 1271590979 1937648355 1062718094
+
+    '
+  - '5 1
+
+    1407237913 540438792 1539383618 790171268 1369337134
+
+    '
+  - '5 0
+
+    1407237913 263116244 292718372 1248976576 605716761
+
+    '
+  - '3 0
+
+    1 10 7 3 6 0 4
+
+    '
+  - '6 0
+
+    15 2 0 12 1 4
+
+    '
+  - '4 1
+
+    1503703198 1508898747 1937648355 1062718094
+
+    '
+  - '5 1
+
+    1407237913 540438792 1539383618 543364991 1369337134
+
+    '
+  - '3 0
+
+    2 10 7 3 6 0 4
+
+    '
+  - '4 1
+
+    1503703198 1508898747 1937648355 1130718435
+
+    '
+  - '5 1
+
+    1407237913 921135768 1539383618 543364991 1369337134
+
+    '
+  - '3 0
+
+    2 10 7 3 6 0 2
+
+    '
+  - '4 1
+
+    1503703198 918133333 1937648355 1130718435
+
+    '
+  - '5 1
+
+    1407237913 465425380 1539383618 543364991 1369337134
+
+    '
+  - '3 0
+
+    2 10 7 3 6 -1 2
+
+    '
+  - '4 2
+
+    727908733 540438792 1186826553 2028237552 898727019
+
+    '
+  - '5 1
+
+    1407237913 465425380 1894537561 543364991 1369337134
+
+    '
+  - '3 0
+
+    2 9 7 3 6 -1 2
+
+    '
+  - '2 0
+
+    2 9 7 3 6 -1 2
+
+    '
+  - '5 2
+
+    1407237913 465425380 1894537561 543364991 419767329
+
+    '
+  - '2 0
+
+    2 9 7 3 10 -1 2
+
+    '
+  - '2 0
+
+    2 9 10 3 10 -1 2
+
+    '
+  - '5 2
+
+    1138365749 465425380 1894537561 841230151 419767329
+
+    '
+  - '4 3
+
+    299375947 540438792 214891002 1360298635 898727019
+
+    '
+  - '4 3
+
+    555952768 33522765 214891002 135467918 825066423
+
+    '
+  - '4 3
+
+    555952768 33522765 214891002 68073946 825066423
+
+    '
+  - '1 1
+
+    126654
+
+    '
+  - '2 1
+
+    666 25
+
+    '
+  - '7 3
+
+    0 10 7 3 6 8 2
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 1248976576 544176402
+
+    '
+  - '1 1
+
+    225928
+
+    '
+  - '2 1
+
+    666 930
+
+    '
+  - '4 3
+
+    1074300537 1592420633 1937648355 1062718094
+
+    '
+  - '7 0
+
+    0 10 7 3 5 8 4
+
+    '
+  - '5 2
+
+    1407237913 540438792 1539383618 607576621 1191833267
+
+    '
+  - '1 1
+
+    551203
+
+    '
+  - '5 0
+
+    1407237913 540438792 1539383618 1962366591 1191833267
+
+    '
+  - '2 0
+
+    512 2098
+
+    '
+  - '6 0
+
+    15 2 18 4 1 0
+
+    '
+  - '3 3
+
+    1503703198 1592420633 1937648355 2151782019
+
+    '
+  - '1 1
+
+    79714
+
+    '
+  - '7 0
+
+    0 10 9 3 6 13 4
+
+    '
+  - '5 0
+
+    1407237913 525172395 1539383618 1248976576 1191833267
+
+    '
+  - '1 1
+
+    282953
+
+    '
+  - '4 0
+
+    1503703198 1592420633 988218684 1062718094
+
+    '
+  - '5 0
+
+    0 3 7 1 6 8 4
+
+    '
+  output:
+  - '100
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '176
+
+    '
+  - '17880739043
+
+    '
+  - '774314574
+
+    '
+  - '26
+
+    '
+  - '293
+
+    '
+  - '1865743947
+
+    '
+  - '1548629148
+
+    '
+  - '30
+
+    '
+  - '347
+
+    '
+  - '1865743947
+
+    '
+  - '109
+
+    '
+  - '0
+
+    '
+  - '188
+
+    '
+  - '1749860522
+
+    '
+  - '198
+
+    '
+  - '874930261
+
+    '
+  - '2288726920
+
+    '
+  - '18880109099
+
+    '
+  - '433945157
+
+    '
+  - '66
+
+    '
+  - '112
+
+    '
+  - '867890314
+
+    '
+  - '434
+
+    '
+  - '3731487894
+
+    '
+  - '759
+
+    '
+  - '182
+
+    '
+  - '159
+
+    '
+  - '211
+
+    '
+  - '975443163
+
+    '
+  - '98
+
+    '
+  - '1511898360
+
+    '
+  - '4141555490
+
+    '
+  - '982
+
+    '
+  - '378993830
+
+    '
+  - '1609397740
+
+    '
+  - '356280971
+
+    '
+  - '881929542
+
+    '
+  - '1105789798
+
+    '
+  - '1675268701
+
+    '
+  - '1398303577
+
+    '
+  - '187469941
+
+    '
+  - '1007329784
+
+    '
+  - '2370924714
+
+    '
+  - '2014659568
+
+    '
+  - '3316850728
+
+    '
+  - '2102052550
+
+    '
+  - '2941910846
+
+    '
+  - '2999930956
+
+    '
+  - '2937068580
+
+    '
+  - '805099482
+
+    '
+  - '840969700
+
+    '
+  - '1407596480
+
+    '
+  - '1430512226
+
+    '
+  - '17666884791
+
+    '
+  - '1995573662
+
+    '
+  - '100
+
+    '
+  - '212
+
+    '
+  - '379
+
+    '
+  - '73
+
+    '
+  - '88717435
+
+    '
+  - '1696241620
+
+    '
+  - '88
+
+    '
+  - '102
+
+    '
+  - '3192783214
+
+    '
+  - '160
+
+    '
+  - '199
+
+    '
+  - '2519119649
+
+    '
+  - '1141870474
+
+    '
+  - '166
+
+    '
+  - '757987660
+
+    '
+  - '1234457858
+
+    '
+  - '1629894288
+
+    '
+  - '1300328819
+
+    '
+  - '1990426027
+
+    '
+  - '871135657
+
+    '
+  - '2926954730
+
+    '
+  - '2435172704
+
+    '
+  - '3632065410
+
+    '
+  - '1563185712
+
+    '
+  - '1539780124
+
+    '
+  - '651095580
+
+    '
+  - '3863568054
+
+    '
+  - '742760622
+
+    '
+  - '1516071466
+
+    '
+  - '1334476002
+
+    '
+  - '15615772866
+
+    '
+  - '145
+
+    '
+  - '34
+
+    '
+  - '51
+
+    '
+  - '264
+
+    '
+  - '5298867438
+
+    '
+  - '90
+
+    '
+  - '1327366186
+
+    '
+  - '220
+
+    '
+  - '1597701744
+
+    '
+  - '1549428689
+
+    '
+  - '11614735238
+
+    '
+  - '1588877307
+
+    '
+  - '1856233304
+
+    '
+  - '2062747606
+
+    '
+  - '1931784027
+
+    '
+  - '322552134
+
+    '
+  - '13070004538
+
+    '
+  - '152
+
+    '
+  - '36
+
+    '
+  - '137
+
+    '
+  - '5589376912
+
+    '
+  - '610627864
+
+    '
+  - '108
+
+    '
+  - '208
+
+    '
+  - '1268150439
+
+    '
+  - '3098857378
+
+    '
+  - '11162712892
+
+    '
+  - '3608330642
+
+    '
+  - '1618349377
+
+    '
+  - '2224463338
+
+    '
+  - '7017867706
+
+    '
+  - '2160843143
+
+    '
+  - '13220282254
+
+    '
+  - '42
+
+    '
+  - '72
+
+    '
+  - '5584252288
+
+    '
+  - '1890564232
+
+    '
+  - '1789530361
+
+    '
+  - '1999397517
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1865743947
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '188
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1865743947
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2288726920
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '112
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2288726920
+
+    '
+  - '0
+
+    '
+  - '1511898360
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1675268701
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2370924714
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '2102052550
+
+    '
+  - '2941910846
+
+    '
+  - '1407596480
+
+    '
+  - '1407596480
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '30
+
+    '
+  - '1865743947
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '1749860522
+
+    '
+  - '0
+
+    '
+  - '1865743947
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '867890314
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+  - '0
+
+    '
+timeout: 1.0
