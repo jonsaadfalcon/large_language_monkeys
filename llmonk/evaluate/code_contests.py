@@ -81,8 +81,9 @@ def solution_is_correct_and_unit_test_passed_count(
                     time.sleep(RETRY_BACKOFF**i)
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
+    total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
     #return is_correct
-    return is_correct, total_unit_tests_passed_count
+    return is_correct, total_unit_tests_passed_count_percent
 
 def solution_is_correct(
     code: str | None,
@@ -136,12 +137,15 @@ def grade_problems(
         breakpoint()
 
         is_corrects = []
+        unit_tests_passed = []
         for i, future in enumerate(is_corrects_futures):
             if i % 100 == 0:
                 print("Progress being made...")
-            is_corrects.append(future.result())
+            is_corrects.append(future.result()[0])
+            unit_tests_passed.append(future.result()[0])
 
     solutions_data["is_corrects"] = is_corrects
+    solutions_data["unit_tests_passed"] = unit_tests_passed
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
