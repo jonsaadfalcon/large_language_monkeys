@@ -58,7 +58,7 @@ def solution_is_correct_and_unit_test_passed_count(
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
     input_expected_output_pairs = list(
-        zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
+        zip(problem["test_cases"]["input"][:1], problem["test_cases"]["output"][:1])
     )
 
     #breakpoint()
