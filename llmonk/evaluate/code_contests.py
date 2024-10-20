@@ -13,7 +13,7 @@ from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
 MAX_CONCURRENT_REQUESTS = 64
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
-NUM_RETRIES = 5
+NUM_RETRIES = 3
 RETRY_BACKOFF = 3
 
 
