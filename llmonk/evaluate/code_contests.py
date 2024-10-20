@@ -131,6 +131,7 @@ def grade_problems(
         for i, future in enumerate(zip(is_corrects_futures)):
             if i % 100 == 0:
                 print("Progress being made...")
+            breakpoint()
             is_corrects.append(future.result())
 
     solutions_data["is_corrects"] = is_corrects
