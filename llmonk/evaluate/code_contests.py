@@ -142,7 +142,6 @@ def grade_problems(
                 problem=solutions_data,
                 client=client,
             )
-            breakpoint()
             is_corrects_futures.append(is_correct)
             unit_test_passed_counts_futures.append(unit_test_passed)
 
