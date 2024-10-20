@@ -63,19 +63,20 @@ def solution_is_correct_and_unit_test_passed_count(
     input_expected_output_pairs = input_expected_output_pairs[:1]
 
     with semaphore:
-        for i in range(NUM_RETRIES):
-            try:
-                is_correct = client.execute_code(
-                    extract_first_code(code),
-                    input_expected_output_pairs,
-                    timeout=problem["timeout"] + 10,  # buffer for 10
-                    memory_limit_bytes=2_000_000_000_000,  # double max limit
-                )
-                break
-            except:
-                if i == NUM_RETRIES - 1:
-                    raise
-                time.sleep(RETRY_BACKOFF**i)
+        for input_expected_output_pair in input_expected_output_pairs:
+            for i in range(NUM_RETRIES):
+                try:
+                    is_correct = client.execute_code(
+                        extract_first_code(code),
+                        [input_expected_output_pair],
+                        timeout=problem["timeout"] + 10,  # buffer for 10
+                        memory_limit_bytes=2_000_000_000_000,  # double max limit
+                    )
+                    break
+                except:
+                    if i == NUM_RETRIES - 1:
+                        raise
+                    time.sleep(RETRY_BACKOFF**i)
 
     return is_correct
 
