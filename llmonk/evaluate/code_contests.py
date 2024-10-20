@@ -141,11 +141,9 @@ def grade_problems(
             is_corrects.append(future.result()[0])
             unit_tests_passed.append(future.result()[1])
 
-    breakpoint()
-
-    #solutions_data["is_corrects"] = is_corrects
-    #solutions_data["unit_tests_passed"] = unit_tests_passed
-    solutions_data["is_corrects"] = unit_tests_passed
+    solutions_data["is_corrects"] = is_corrects
+    solutions_data["unit_tests_passed"] = unit_tests_passed
+    #solutions_data["is_corrects"] = unit_tests_passed
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
