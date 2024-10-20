@@ -54,14 +54,14 @@ def solution_is_correct_and_unit_test_passed_count(
 ):
     if code is None:
         return False
+    
+    breakpoint()
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"][:1], problem["test_cases"]["output"][:1])
     )
-
-    breakpoint()
 
     with semaphore:
         number_of_tests_passed = 0
