@@ -61,13 +61,12 @@ def solution_is_correct_and_unit_test_passed_count(
 
     input_expected_output_pairs = list(zip(problem["test_cases"]["input"][:1], problem["test_cases"]["output"][:1]))
 
-    breakpoint()
-
     with semaphore:
         number_of_tests_passed = 0
         for i in range(NUM_RETRIES):
             for j in range(len(input_expected_output_pairs)):
                 #try:
+                    breakpoint()
                     is_correct = client.execute_code(
                         extract_first_code(code),
                         [input_expected_output_pairs[j]],
