@@ -119,16 +119,16 @@ def grade_problems(
     with concurrent.futures.ThreadPoolExecutor(
         max_workers=MAX_CONCURRENT_REQUESTS // 2
     ) as executor:
-        """ is_corrects_futures = [
+        is_corrects_futures = [
             executor.submit(
-                solution_is_correct,
+                solution_is_correct_and_unit_test_passed_count,
                 code=code,
                 problem=solutions_data,
                 client=client,
             )
             for code in solutions_data["solutions"]
-        ] """
-        is_corrects_futures = []
+        ]
+        """is_corrects_futures = []
         unit_test_passed_counts_futures = []
         for code in solutions_data["solutions"]:
             result_tuple = executor.submit(
@@ -138,7 +138,7 @@ def grade_problems(
                 client=client,
             )
             is_corrects_futures.append(is_correct)
-            unit_test_passed_counts_futures.append(unit_test_passed)
+            unit_test_passed_counts_futures.append(unit_test_passed)"""
 
         is_corrects = []
         unit_test_passed_counts = []
