@@ -10,7 +10,7 @@ from docker.errors import DockerException, ImageNotFound
 
 from llmonk.evaluate.code_contests_utils.schema import ExecuteCodeResult
 
-STARTUP_TIMEOUT_SECONDS = 30.0
+STARTUP_TIMEOUT_SECONDS = 20.0
 PING_TIMEOUT_SECONDS = 1.0
 WAIT_FOR_SERVER_BACKOFF_SECONDS = 1.0
 IMAGE_NAME = "code-contests-python-execution-server"
@@ -24,7 +24,7 @@ class ExecutionError(Exception):
 class ExecutionServerClient:
     container: docker.models.containers.Container | None
 
-    def __init__(self, port: int = 8010):
+    def __init__(self, port: int = 8004):
         """Initialize the ExecutionServerClient.
 
         Args:
