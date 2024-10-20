@@ -65,7 +65,7 @@ def solution_is_correct_and_unit_test_passed_count(
         number_of_tests_passed = 0
         for i in range(NUM_RETRIES):
             for unit_test_input_output_pair in input_expected_output_pairs:
-                try:
+                #try:
                     is_correct = client.execute_code(
                         extract_first_code(code),
                         [unit_test_input_output_pair],
@@ -74,10 +74,10 @@ def solution_is_correct_and_unit_test_passed_count(
                     )
                     if is_correct:
                         number_of_tests_passed += 1
-                except:
-                    if i == NUM_RETRIES - 1:
-                        raise
-                    time.sleep(RETRY_BACKOFF**i)
+                #except:
+                #    if i == NUM_RETRIES - 1:
+                #        raise
+                #    time.sleep(RETRY_BACKOFF**i)
 
     breakpoint()
     return number_of_tests_passed
