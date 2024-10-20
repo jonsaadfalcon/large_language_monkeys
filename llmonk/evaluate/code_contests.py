@@ -61,7 +61,7 @@ def solution_is_correct_and_unit_test_passed_count(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
 
-    breakpoint()
+    #breakpoint()
 
     with semaphore:
         number_of_tests_passed = 0
