@@ -98,8 +98,6 @@ def solution_is_correct(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
 
-    breakpoint()
-
     with semaphore:
         for i in range(NUM_RETRIES):
             try:
@@ -114,6 +112,8 @@ def solution_is_correct(
                 if i == NUM_RETRIES - 1:
                     raise
                 time.sleep(RETRY_BACKOFF**i)
+
+    breakpoint()
 
     return is_correct
 
