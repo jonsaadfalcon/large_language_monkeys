@@ -142,7 +142,7 @@ def grade_problems(
             if i % 100 == 0:
                 print("Progress being made...")
             is_corrects.append(future.result()[0])
-            unit_tests_passed.append(future.result()[0])
+            unit_tests_passed.append(future.result()[1])
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
