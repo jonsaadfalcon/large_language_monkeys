@@ -81,8 +81,11 @@ def solution_is_correct_and_unit_test_passed_count(
                         raise
                     time.sleep(RETRY_BACKOFF**i)
 
-    is_correct = number_of_tests_passed == len(input_expected_output_pairs)
-    return is_correct, number_of_tests_passed
+    breakpoint()
+    return number_of_tests_passed
+
+    #is_correct = number_of_tests_passed == len(input_expected_output_pairs)
+    #return is_correct, number_of_tests_passed
 
 def solution_is_correct(
     code: str | None,
