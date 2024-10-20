@@ -113,8 +113,6 @@ def solution_is_correct(
                     raise
                 time.sleep(RETRY_BACKOFF**i)
 
-    breakpoint()
-
     return is_correct
 
 
