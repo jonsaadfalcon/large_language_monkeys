@@ -24,7 +24,7 @@ class ExecutionError(Exception):
 class ExecutionServerClient:
     container: docker.models.containers.Container | None
 
-    def __init__(self, port: int = 8010):
+    def __init__(self, port: int = 8004):
         """Initialize the ExecutionServerClient.
 
         Args:

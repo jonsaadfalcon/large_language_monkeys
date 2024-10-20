@@ -102,7 +102,7 @@ def execute_python_code(request: ExecuteCodeRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-def main(port: int = 8010):
+def main(port: int = 8004):
     global SEMAPHORE
 
     logging_level = os.environ.get("LOGGING_LEVEL", "WARNING")
