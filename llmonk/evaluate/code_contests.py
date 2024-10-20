@@ -11,9 +11,9 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 512
+MAX_CONCURRENT_REQUESTS = 64
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
-NUM_RETRIES = 3
+NUM_RETRIES = 5
 RETRY_BACKOFF = 3
 
 
@@ -61,7 +61,7 @@ def solution_is_correct(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
 
-    breakpoint()
+    #breakpoint()
 
     with semaphore:
         for i in range(NUM_RETRIES):
