@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 256
+MAX_CONCURRENT_REQUESTS = 1
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -59,9 +59,7 @@ def solution_is_correct_and_unit_test_passed_count(
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
-    input_expected_output_pairs = list(
-        zip(problem["test_cases"]["input"][:1], problem["test_cases"]["output"][:1])
-    )
+    input_expected_output_pairs = list(zip(problem["test_cases"]["input"][:1], problem["test_cases"]["output"][:1]))
 
     with semaphore:
         number_of_tests_passed = 0
