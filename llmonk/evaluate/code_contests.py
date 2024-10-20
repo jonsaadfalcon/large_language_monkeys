@@ -47,43 +47,6 @@ def extract_first_code(output_string: str):
 
     return None
 
-def solution_is_correct_and_unit_test_passed_count(
-    code: str | None,
-    problem: dict,
-    client: execution_server_client.ExecutionServerClient,
-):
-    if code is None:
-        return False
-
-    assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
-
-    input_expected_output_pairs = list(
-        zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
-    )
-    input_expected_output_pairs = input_expected_output_pairs[:1]
-
-    total_unit_tests_passed_count = 0
-    with semaphore:
-        for input_expected_output_pair in input_expected_output_pairs:
-            for i in range(NUM_RETRIES):
-                try:
-                    is_correct = client.execute_code(
-                        extract_first_code(code),
-                        [input_expected_output_pair],
-                        timeout=problem["timeout"] + 10,  # buffer for 10
-                        memory_limit_bytes=2_000_000_000_000,  # double max limit
-                    )
-                    total_unit_tests_passed_count += 1 if is_correct else 0
-                    break
-                except:
-                    if i == NUM_RETRIES - 1:
-                        raise
-                    time.sleep(RETRY_BACKOFF**i)
-
-    #is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
-    #return is_correct
-    return total_unit_tests_passed_count
-
 def solution_is_correct(
     code: str | None,
     problem: dict,
@@ -115,6 +78,7 @@ def solution_is_correct(
 
     return is_correct
 
+
 def grade_problems(
     solutions_data: dict,
     output_dir: Path,
@@ -134,7 +98,7 @@ def grade_problems(
         ]
 
         is_corrects = []
-        for i, future in enumerate(zip(is_corrects_futures)):
+        for i, future in enumerate(is_corrects_futures):
             if i % 100 == 0:
                 print("Progress being made...")
             is_corrects.append(future.result())
