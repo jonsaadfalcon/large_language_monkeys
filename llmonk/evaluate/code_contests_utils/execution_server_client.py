@@ -53,7 +53,7 @@ class ExecutionServerClient:
         #except:
         #    self.stop_container()
         #    raise
-        pass
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
     #    """Stop the Docker container."""
