@@ -11,9 +11,9 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 64
+MAX_CONCURRENT_REQUESTS = 256
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
-NUM_RETRIES = 5
+NUM_RETRIES = 3
 RETRY_BACKOFF = 3
 
 
@@ -47,7 +47,7 @@ def extract_first_code(output_string: str):
 
     return None
 
-def solution_is_correct(
+def solution_is_correct_and_unit_test_passed_count(
     code: str | None,
     problem: dict,
     client: execution_server_client.ExecutionServerClient,
@@ -61,7 +61,42 @@ def solution_is_correct(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
 
-    #breakpoint()
+    breakpoint()
+
+    with semaphore:
+        number_of_tests_passed = 0
+        for i in range(NUM_RETRIES):
+            for unit_test_input_output_pair in input_expected_output_pairs:
+                try:
+                    is_correct = client.execute_code(
+                        extract_first_code(code),
+                        [unit_test_input_output_pair],
+                        timeout=problem["timeout"] + 10,  # buffer for 10
+                        memory_limit_bytes=2_000_000_000_000,  # double max limit
+                    )
+                    if is_correct:
+                        number_of_tests_passed += 1
+                except:
+                    if i == NUM_RETRIES - 1:
+                        raise
+                    time.sleep(RETRY_BACKOFF**i)
+
+    is_correct = number_of_tests_passed == len(input_expected_output_pairs)
+    return is_correct,number_of_tests_passed
+
+def solution_is_correct(
+    code: str | None,
+    problem: dict,
+    client: execution_server_client.ExecutionServerClient,
+):
+    if code is None:
+        return False
+
+    assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
+
+    input_expected_output_pairs = list(
+        zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
+    )
 
     with semaphore:
         for i in range(NUM_RETRIES):
@@ -79,7 +114,6 @@ def solution_is_correct(
                 time.sleep(RETRY_BACKOFF**i)
 
     return is_correct
-
 
 def grade_problems(
     solutions_data: dict,
