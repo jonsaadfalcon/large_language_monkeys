@@ -13,7 +13,7 @@ from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
 MAX_CONCURRENT_REQUESTS = 64
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
-NUM_RETRIES = 10
+NUM_RETRIES = 5
 RETRY_BACKOFF = 3
 
 
@@ -97,6 +97,8 @@ def solution_is_correct(
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
+
+    breakpoint()
 
     with semaphore:
         for i in range(NUM_RETRIES):
