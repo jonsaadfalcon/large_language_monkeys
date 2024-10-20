@@ -80,9 +80,9 @@ def solution_is_correct_and_unit_test_passed_count(
                         raise
                     time.sleep(RETRY_BACKOFF**i)
 
-    #is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
+    is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     #return is_correct
-    return total_unit_tests_passed_count
+    return is_correct, total_unit_tests_passed_count
 
 def solution_is_correct(
     code: str | None,
@@ -126,13 +126,14 @@ def grade_problems(
     ) as executor:
         is_corrects_futures = [
             executor.submit(
-                solution_is_correct,
+                solution_is_correct_and_unit_test_passed_count,
                 code=code,
                 problem=solutions_data,
                 client=client,
             )
             for code in solutions_data["solutions"]
         ]
+        breakpoint()
 
         is_corrects = []
         for i, future in enumerate(is_corrects_futures):
