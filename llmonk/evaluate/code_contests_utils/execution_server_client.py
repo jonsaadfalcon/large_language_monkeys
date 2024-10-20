@@ -10,9 +10,7 @@ from docker.errors import DockerException, ImageNotFound
 
 from llmonk.evaluate.code_contests_utils.schema import ExecuteCodeResult
 
-STARTUP_TIMEOUT_SECONDS = 300
-
-.0
+STARTUP_TIMEOUT_SECONDS = 30.0
 PING_TIMEOUT_SECONDS = 1.0
 WAIT_FOR_SERVER_BACKOFF_SECONDS = 1.0
 IMAGE_NAME = "code-contests-python-execution-server"
