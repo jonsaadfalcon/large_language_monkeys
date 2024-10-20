@@ -62,6 +62,7 @@ def solution_is_correct_and_unit_test_passed_count(
     )
     input_expected_output_pairs = input_expected_output_pairs[:1]
 
+    total_count = 0
     with semaphore:
         for input_expected_output_pair in input_expected_output_pairs:
             for i in range(NUM_RETRIES):
@@ -78,6 +79,7 @@ def solution_is_correct_and_unit_test_passed_count(
                         raise
                     time.sleep(RETRY_BACKOFF**i)
 
+    is_correct = total_count == len(input_expected_output_pairs)
     return is_correct
 
 def solution_is_correct(
