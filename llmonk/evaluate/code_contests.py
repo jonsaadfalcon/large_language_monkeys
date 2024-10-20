@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 2
+MAX_CONCURRENT_REQUESTS = 128
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -128,28 +128,14 @@ def grade_problems(
             )
             for code in solutions_data["solutions"]
         ]
-        """is_corrects_futures = []
-        unit_test_passed_counts_futures = []
-        for code in solutions_data["solutions"]:
-            result_tuple = executor.submit(
-                solution_is_correct_and_unit_test_passed_count,
-                code=code,
-                problem=solutions_data,
-                client=client,
-            )
-            is_corrects_futures.append(is_correct)
-            unit_test_passed_counts_futures.append(unit_test_passed)"""
 
         is_corrects = []
-        unit_test_passed_counts = []
-        for i, future, unit_test_passed_count in enumerate(zip(is_corrects_futures, unit_test_passed_counts_futures)):
+        for i, future in enumerate(zip(is_corrects_futures)):
             if i % 100 == 0:
                 print("Progress being made...")
             is_corrects.append(future.result())
-            unit_test_passed_counts.append(unit_test_passed_count.result())
 
     solutions_data["is_corrects"] = is_corrects
-    solutions_data["unit_test_passed_counts"] = unit_test_passed_counts
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
