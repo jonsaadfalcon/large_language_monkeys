@@ -60,7 +60,6 @@ def solution_is_correct_and_unit_test_passed_count(
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
-    input_expected_output_pairs = input_expected_output_pairs[:1]
 
     total_unit_tests_passed_count = 0
     with semaphore:
@@ -82,7 +81,6 @@ def solution_is_correct_and_unit_test_passed_count(
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
-    #return is_correct
     return is_correct, total_unit_tests_passed_count_percent
 
 def solution_is_correct(
