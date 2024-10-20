@@ -125,7 +125,7 @@ def grade_problems(
     ) as executor:
         is_corrects_futures = [
             executor.submit(
-                solution_is_correct_and_unit_test_passed_count,
+                solution_is_correct,
                 code=code,
                 problem=solutions_data,
                 client=client,
