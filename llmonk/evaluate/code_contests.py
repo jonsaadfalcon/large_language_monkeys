@@ -61,6 +61,8 @@ def solution_is_correct(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
 
+    breakpoint()
+
     with semaphore:
         for i in range(NUM_RETRIES):
             try:
