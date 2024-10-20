@@ -87,7 +87,7 @@ class GenerateScriptConfig(Config):
     num_workers = None
     gpus = None
     vllm_args = None
-    vllm_port = 8000
+    vllm_port = 8010
 
     seed = 0
     limit = None
