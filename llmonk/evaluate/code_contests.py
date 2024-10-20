@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 32
+MAX_CONCURRENT_REQUESTS = 256
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -82,7 +82,7 @@ def solution_is_correct_and_unit_test_passed_count(
                     time.sleep(RETRY_BACKOFF**i)
 
     is_correct = number_of_tests_passed == len(input_expected_output_pairs)
-    return is_correct,number_of_tests_passed
+    return is_correct, number_of_tests_passed
 
 def solution_is_correct(
     code: str | None,
@@ -90,7 +90,7 @@ def solution_is_correct(
     client: execution_server_client.ExecutionServerClient,
 ):
     if code is None:
-        return False, 0
+        return False
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
@@ -108,11 +108,9 @@ def solution_is_correct(
                     memory_limit_bytes=2_000_000_000_000,  # double max limit
                 )
                 break
-            except Exception as e:
-                print(f"Unexpected error on attempt {i+1}: {str(e)}")
+            except:
                 if i == NUM_RETRIES - 1:
-                    print(f"All {NUM_RETRIES} attempts failed. Last error: {str(e)}")
-                    return False, 0
+                    raise
                 time.sleep(RETRY_BACKOFF**i)
 
     return is_correct
@@ -125,7 +123,7 @@ def grade_problems(
     with concurrent.futures.ThreadPoolExecutor(
         max_workers=MAX_CONCURRENT_REQUESTS // 2
     ) as executor:
-        is_corrects_futures = [
+        """ is_corrects_futures = [
             executor.submit(
                 solution_is_correct,
                 code=code,
@@ -133,15 +131,29 @@ def grade_problems(
                 client=client,
             )
             for code in solutions_data["solutions"]
-        ]
+        ] """
+        is_corrects_futures = []
+        unit_test_passed_counts_futures = []
+        for code in solutions_data["solutions"]:
+            is_correct, unit_test_passed = executor.submit(
+                solution_is_correct_and_unit_test_passed_count,
+                code=code,
+                problem=solutions_data,
+                client=client,
+            )
+            is_corrects_futures.append(is_correct)
+            unit_test_passed_counts_futures.append(unit_test_passed)
 
         is_corrects = []
-        for i, future in enumerate(is_corrects_futures):
+        unit_test_passed_counts = []
+        for i, future, unit_test_passed_count in enumerate(zip(is_corrects_futures, unit_test_passed_counts_futures)):
             if i % 100 == 0:
                 print("Progress being made...")
             is_corrects.append(future.result())
+            unit_test_passed_counts.append(unit_test_passed_count.result())
 
     solutions_data["is_corrects"] = is_corrects
+    solutions_data["unit_test_passed_counts"] = unit_test_passed_counts
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
