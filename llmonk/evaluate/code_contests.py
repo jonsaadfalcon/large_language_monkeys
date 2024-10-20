@@ -64,11 +64,11 @@ def solution_is_correct_and_unit_test_passed_count(
     with semaphore:
         number_of_tests_passed = 0
         for i in range(NUM_RETRIES):
-            for unit_test_input_output_pair in input_expected_output_pairs:
+            for j in range(len(input_expected_output_pairs)):
                 #try:
                     is_correct = client.execute_code(
                         extract_first_code(code),
-                        [unit_test_input_output_pair],
+                        [input_expected_output_pairs[j]],
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
                     )
