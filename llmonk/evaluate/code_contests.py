@@ -54,41 +54,31 @@ def solution_is_correct_and_unit_test_passed_count(
 ):
     if code is None:
         return False
-    
-    #breakpoint()
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
-    #input_expected_output_pairs = input_expected_output_pairs[:1]
-    #breakpoint()
 
     with semaphore:
-        number_of_tests_passed = 0
         for i in range(NUM_RETRIES):
-            #for j in range(len(input_expected_output_pairs)):
-                try:
-                    is_correct = client.execute_code(
-                        extract_first_code(code),
-                        #[input_expected_output_pairs[j]],
-                        input_expected_output_pairs,
-                        timeout=problem["timeout"] + 10,  # buffer for 10
-                        memory_limit_bytes=2_000_000_000_000,  # double max limit
-                    )
-                    if is_correct:
-                        number_of_tests_passed += 1
-                except:
-                    if i == NUM_RETRIES - 1:
-                        raise
-                    time.sleep(RETRY_BACKOFF**i)
+            try:
+                is_correct = client.execute_code(
+                    extract_first_code(code),
+                    input_expected_output_pairs,
+                    timeout=problem["timeout"] + 10,  # buffer for 10
+                    memory_limit_bytes=2_000_000_000_000,  # double max limit
+                )
+                break
+            except:
+                if i == NUM_RETRIES - 1:
+                    raise
+                time.sleep(RETRY_BACKOFF**i)
 
     breakpoint()
-    return number_of_tests_passed
 
-    #is_correct = number_of_tests_passed == len(input_expected_output_pairs)
-    #return is_correct, number_of_tests_passed
+    return is_correct
 
 def solution_is_correct(
     code: str | None,
