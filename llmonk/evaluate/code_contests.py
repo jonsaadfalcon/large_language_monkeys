@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 256
+MAX_CONCURRENT_REQUESTS = 32
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -90,7 +90,7 @@ def solution_is_correct(
     client: execution_server_client.ExecutionServerClient,
 ):
     if code is None:
-        return False
+        return False, 0
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
 
@@ -108,9 +108,11 @@ def solution_is_correct(
                     memory_limit_bytes=2_000_000_000_000,  # double max limit
                 )
                 break
-            except:
+            except Exception as e:
+                print(f"Unexpected error on attempt {i+1}: {str(e)}")
                 if i == NUM_RETRIES - 1:
-                    raise
+                    print(f"All {NUM_RETRIES} attempts failed. Last error: {str(e)}")
+                    return False, 0
                 time.sleep(RETRY_BACKOFF**i)
 
     return is_correct
