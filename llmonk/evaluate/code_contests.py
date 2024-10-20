@@ -135,12 +135,13 @@ def grade_problems(
         is_corrects_futures = []
         unit_test_passed_counts_futures = []
         for code in solutions_data["solutions"]:
-            is_correct, unit_test_passed = executor.submit(
+            result_tuple = executor.submit(
                 solution_is_correct_and_unit_test_passed_count,
                 code=code,
                 problem=solutions_data,
                 client=client,
             )
+            breakpoint()
             is_corrects_futures.append(is_correct)
             unit_test_passed_counts_futures.append(unit_test_passed)
 
