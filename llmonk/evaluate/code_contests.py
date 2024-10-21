@@ -65,21 +65,21 @@ def solution_is_correct_and_unit_test_passed_count(
     with semaphore:
         for input_expected_output_pair in input_expected_output_pairs:
             for i in range(NUM_RETRIES):
-                #try:
+                try:
                     is_correct = client.execute_code(
                         extract_first_code(code),
                         [input_expected_output_pair],
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
                     ) 
-                    breakpoint()
                     if "true" in str(is_correct).lower():
+                        print("Found a true!")
                         total_unit_tests_passed_count += 1
                     break
-                #except:
-                #    if i == NUM_RETRIES - 1:
-                #        raise
-                #    time.sleep(RETRY_BACKOFF**i)
+                except:
+                    if i == NUM_RETRIES - 1:
+                        raise
+                    time.sleep(RETRY_BACKOFF**i)
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
