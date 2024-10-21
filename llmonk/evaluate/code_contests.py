@@ -74,7 +74,7 @@ def solution_is_correct_and_unit_test_passed_count(
                     ) 
                     #if "true" in str(is_correct).lower():
                     if is_correct == "True":
-                        print("Found a true!")
+                        #print("Found a true!")
                         total_unit_tests_passed_count += 1
                     break
                 except:
