@@ -71,7 +71,9 @@ def solution_is_correct_and_unit_test_passed_count(
                         [input_expected_output_pair],
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
-                    )
+                    ) 
+                    print(f"is_correct: {is_correct}")
+                    print(type(is_correct))
                     total_unit_tests_passed_count += 1 if is_correct else 0
                     break
                 except:
