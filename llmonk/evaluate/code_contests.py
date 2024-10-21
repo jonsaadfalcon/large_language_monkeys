@@ -74,7 +74,7 @@ def solution_is_correct_and_unit_test_passed_count(
                     ) 
                     #if "true" in str(is_correct).lower():
                     if is_correct == True:
-                        print("Found a true!")
+                        #print("Found a true!")
                         total_unit_tests_passed_count += 1
                     break
                 except:
@@ -84,6 +84,8 @@ def solution_is_correct_and_unit_test_passed_count(
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
+    print(f"is_correct: {is_correct}")
+    print(f"total_unit_tests_passed_count_percent: {total_unit_tests_passed_count_percent}")
     return is_correct, total_unit_tests_passed_count_percent
 
 def solution_is_correct(
