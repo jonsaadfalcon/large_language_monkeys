@@ -34,6 +34,7 @@ def process_directory(directory_path):
     xml_files = [f for f in os.listdir(directory_path) if f.endswith('.xml')]
     
     for filename in tqdm(xml_files, desc="Processing XML files"):
+        breakpoint()
         file_path = os.path.join(directory_path, filename)
         with open(file_path, 'r', encoding='utf-8') as file:
             xml_content = file.read()
