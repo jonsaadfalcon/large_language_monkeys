@@ -31,20 +31,19 @@ def process_directory(directory_path):
     data = []
     
     logging.info(f"Processing files in directory: {directory_path}")
-    xml_files = [f for f in os.listdir(directory_path) if f.endswith('.xml')]
+    xml_files = [f for f in os.listdir(directory_path)]
     
     for filename in tqdm(xml_files, desc="Processing XML files"):
-        breakpoint()
         file_path = os.path.join(directory_path, filename)
         with open(file_path, 'r', encoding='utf-8') as file:
             xml_content = file.read()
         
-        try:
-            result = extract_data(xml_content)
-            result['filename'] = filename
-            data.append(result)
-        except Exception as e:
-            logging.error(f"Error processing {filename}: {str(e)}")
+        #try:
+        result = extract_data(xml_content)
+        result['filename'] = filename
+        data.append(result)
+        #except Exception as e:
+        #    logging.error(f"Error processing {filename}: {str(e)}")
     
     logging.info(f"Processed {len(data)} files successfully")
     return data
