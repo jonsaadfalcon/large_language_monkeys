@@ -24,10 +24,12 @@ def extract_data(content):
         unit_tests = [float(x) for x in unit_tests]
     else:
         unit_tests = []
+
+    breakpoint()
     
     return {
         'is_corrects': is_corrects,
-        'num_unit_tests_passed': len(unit_tests)
+        'num_unit_tests_passed': sum(unit_tests)
     }
 
 def process_directory(directory_path):
