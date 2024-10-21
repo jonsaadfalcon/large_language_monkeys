@@ -9,6 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def extract_data(xml_string):
+    breakpoint()
     root = ET.fromstring(xml_string)
     
     for document in root.findall('.//document'):
