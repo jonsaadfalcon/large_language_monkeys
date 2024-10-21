@@ -72,7 +72,8 @@ def solution_is_correct_and_unit_test_passed_count(
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
                     ) 
-                    if "true" in str(is_correct).lower():
+                    #if "true" in str(is_correct).lower():
+                    if is_correct == "True":
                         print("Found a true!")
                         total_unit_tests_passed_count += 1
                     break
