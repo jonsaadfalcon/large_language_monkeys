@@ -8,32 +8,27 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def extract_data(xml_string):
-    root = ET.fromstring(xml_string)
+def extract_data(content):
+    # Extract is_corrects
+    is_corrects_match = re.search(r'is_corrects:\n((?:- (?:true|false)\n)+)', content)
+    if is_corrects_match:
+        is_corrects = re.findall(r'- (true|false)', is_corrects_match.group(1))
+        is_corrects = [x == 'true' for x in is_corrects]
+    else:
+        is_corrects = []
     
-    for document in root.findall('.//document'):
-        content = document.find('document_content').text
-        
-        # Extract is_corrects
-        is_corrects_match = re.search(r'is_corrects:\n((?:- (?:true|false)\n)+)', content)
-        if is_corrects_match:
-            is_corrects = re.findall(r'- (true|false)', is_corrects_match.group(1))
-            is_corrects = [x == 'true' for x in is_corrects]
-        else:
-            is_corrects = []
-        
-        # Extract unit_tests_passed
-        unit_tests_match = re.search(r'unit_tests_passed:\n((?:- \d+\.\d+\n)+)', content)
-        if unit_tests_match:
-            unit_tests = re.findall(r'- (\d+\.\d+)', unit_tests_match.group(1))
-            unit_tests = [float(x) for x in unit_tests]
-        else:
-            unit_tests = []
-        
-        return {
-            'is_corrects': is_corrects,
-            'num_unit_tests_passed': len(unit_tests)
-        }
+    # Extract unit_tests_passed
+    unit_tests_match = re.search(r'unit_tests_passed:\n((?:- \d+\.\d+\n)+)', content)
+    if unit_tests_match:
+        unit_tests = re.findall(r'- (\d+\.\d+)', unit_tests_match.group(1))
+        unit_tests = [float(x) for x in unit_tests]
+    else:
+        unit_tests = []
+    
+    return {
+        'is_corrects': is_corrects,
+        'num_unit_tests_passed': len(unit_tests)
+    }
 
 def process_directory(directory_path):
     data = []
