@@ -98,9 +98,9 @@ class GenerateScriptConfig(Config):
     max_tokens = 1024
     stop_strings = []
     num_samples = 1000
-    batch_size = 8
+    batch_size = 2
     top_p = 0.95
-    temperature = 0.6
+    temperature = 0.7
 
     def finalize(self):
         self.save_dir = Path(self.save_dir)
