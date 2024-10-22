@@ -25,11 +25,11 @@ def extract_data(content):
     else:
         unit_tests = []
 
-    #breakpoint()
+    breakpoint()
     
     return {
         'is_corrects': is_corrects,
-        'num_unit_tests_passed': sum(unit_tests)
+        'num_unit_tests_passed': unit_tests
     }
 
 def process_directory(directory_path):
