@@ -98,7 +98,7 @@ class GenerateScriptConfig(Config):
     max_tokens = 1024
     stop_strings = []
     num_samples = 1000
-    batch_size = 2
+    batch_size = 8
     top_p = 0.95
     temperature = 0.6
 
