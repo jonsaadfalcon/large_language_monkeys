@@ -25,7 +25,7 @@ def extract_data(content):
     else:
         unit_tests = []
 
-    breakpoint()
+    assert len(unit_tests) == 100
     
     return {
         'is_corrects': is_corrects,
