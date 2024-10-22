@@ -60,7 +60,7 @@ def solution_is_correct_and_unit_test_passed_count(
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
-    input_expected_output_pairs = input_expected_output_pairs[:1]
+    input_expected_output_pairs = input_expected_output_pairs[:20]
 
     total_unit_tests_passed_count = 0
     with semaphore:
