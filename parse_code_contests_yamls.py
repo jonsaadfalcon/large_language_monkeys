@@ -70,7 +70,7 @@ def main(input_directory, output_filepath):
     
     logging.info(f"Dataset saved successfully. Total samples processed: {len(dataset)}")
 
-    breakpoint()
+    #breakpoint()
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
