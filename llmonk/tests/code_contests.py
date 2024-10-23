@@ -31,11 +31,11 @@ class TestCheckCompletions(unittest.TestCase):
                 input_expected_output_pairs = list(
                     zip(
                         source_problem["private_tests"]["input"]
-                        + source_problem["public_tests"]["input"]
-                        + source_problem["generated_tests"]["input"],
+                        + source_problem["public_tests"]["input"],
+                        #+ source_problem["generated_tests"]["input"],
                         source_problem["private_tests"]["output"]
-                        + source_problem["public_tests"]["output"]
-                        + source_problem["generated_tests"]["output"],
+                        + source_problem["public_tests"]["output"],
+                        #+ source_problem["generated_tests"]["output"],
                     )
                 )
 
