@@ -40,25 +40,25 @@ class ExecutionServerClient:
 
     def __enter__(self):
         """Start the Docker container and wait for the server to be ready."""
-        try:
-            image = self._get_image()
-            self.container = self.docker_client.containers.run(
-                image=image,
-                detach=True,
-                ports={f"{self.port}/tcp": self.port},
-                auto_remove=True,
-            )
-            self._wait_for_server(STARTUP_TIMEOUT_SECONDS)
-            return self
-        except:
-            self.stop_container()
-            raise
-        #return self
+        #try:
+        #    image = self._get_image()
+        #    self.container = self.docker_client.containers.run(
+        #        image=image,
+        #        detach=True,
+        #        ports={f"{self.port}/tcp": self.port},
+        #        auto_remove=True,
+        #    )
+        #    self._wait_for_server(STARTUP_TIMEOUT_SECONDS)
+        #    return self
+        #except:
+        #    self.stop_container()
+        #    raise
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Stop the Docker container."""
-        self.stop_container()
-    #    pass
+        #self.stop_container()
+        pass
 
     def stop_container(self):
         if self.container is not None:
