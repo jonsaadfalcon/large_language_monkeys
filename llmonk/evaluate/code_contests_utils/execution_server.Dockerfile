@@ -1,7 +1,7 @@
 # from this directory:
 # docker build -t code-contests-python-execution-server -f execution_server.Dockerfile .
 
-# docker run -p 8004:8004 code-contests-python-execution-server
+# docker run -p 8010:8010 code-contests-python-execution-server
 
 # Use an official Python runtime as the parent image
 FROM python:3.11-slim
@@ -18,7 +18,7 @@ COPY execution_server.py /app
 COPY schema.py /app
 COPY compare_results.py /app
 
-# Make port 8004 available to the world outside this container
+# Make port 8010 available to the world outside this container
 EXPOSE 8010
 
 # Run the FastAPI server when the container launches
