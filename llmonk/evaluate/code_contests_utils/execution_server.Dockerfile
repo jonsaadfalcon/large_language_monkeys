@@ -19,7 +19,7 @@ COPY schema.py /app
 COPY compare_results.py /app
 
 # Make port 8004 available to the world outside this container
-EXPOSE 8004
+EXPOSE 8010
 
 # Run the FastAPI server when the container launches
 
