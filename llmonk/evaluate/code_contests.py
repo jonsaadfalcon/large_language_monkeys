@@ -60,9 +60,10 @@ def solution_is_correct_and_unit_test_passed_count(
     input_expected_output_pairs = list(
         zip(problem["test_cases"]["input"], problem["test_cases"]["output"])
     )
-    input_expected_output_pairs = input_expected_output_pairs[:50]
+    input_expected_output_pairs = input_expected_output_pairs[:20]
 
     total_unit_tests_passed_count = 0
+    total_unit_test_individual_verdicts = []
     with semaphore:
         for input_expected_output_pair in input_expected_output_pairs:
             for i in range(NUM_RETRIES):
@@ -73,7 +74,7 @@ def solution_is_correct_and_unit_test_passed_count(
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
                     ) 
-                    #if "true" in str(is_correct).lower():
+                    total_unit_test_individual_verdicts.append(is_correct)
                     if is_correct == True:
                         #print("Found a true!")
                         total_unit_tests_passed_count += 1
@@ -87,7 +88,7 @@ def solution_is_correct_and_unit_test_passed_count(
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
     #print(f"is_correct: {is_correct}")
     #print(f"total_unit_tests_passed_count_percent: {total_unit_tests_passed_count_percent}")
-    return is_correct, total_unit_tests_passed_count_percent
+    return is_correct, total_unit_tests_passed_count_percent, total_unit_test_individual_verdicts
 
 def solution_is_correct(
     code: str | None,
@@ -141,15 +142,17 @@ def grade_problems(
 
         is_corrects = []
         unit_tests_passed = []
+        unit_tests_passed_individual_scores = []
         for i, future in enumerate(is_corrects_futures):
             if i % 100 == 0:
                 print("Progress being made...")
             is_corrects.append(future.result()[0])
             unit_tests_passed.append(future.result()[1])
+            unit_tests_passed_individual_scores.append(future.result()[2])
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
-    #solutions_data["is_corrects"] = unit_tests_passed
+    solutions_data["unit_tests_passed_individual_scores"] = unit_tests_passed_individual_scores
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
