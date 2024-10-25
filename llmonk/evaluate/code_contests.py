@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 16
+MAX_CONCURRENT_REQUESTS = 64
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -130,36 +130,45 @@ def grade_problems(
     with concurrent.futures.ThreadPoolExecutor(
         max_workers=MAX_CONCURRENT_REQUESTS // 2
     ) as executor:
-        is_corrects_futures = [
-            executor.submit(
-                solution_is_correct_and_unit_test_passed_count,
-                code=code,
-                problem=solutions_data,
-                client=client,
-            )
-            for code in solutions_data["solutions"]
-        ]
+        
+        try:
 
-        is_corrects = []
-        unit_tests_passed = []
-        unit_tests_passed_individual_scores = []
-        for i, future in enumerate(is_corrects_futures):
-            if i % 100 == 0:
-                print("Progress being made...")
+            is_corrects_futures = [
+                executor.submit(
+                    solution_is_correct_and_unit_test_passed_count,
+                    code=code,
+                    problem=solutions_data,
+                    client=client,
+                )
+                for code in solutions_data["solutions"]
+            ]
 
-            #breakpoint()
+            is_corrects = []
+            unit_tests_passed = []
+            unit_tests_passed_individual_scores = []
+            for i, future in enumerate(is_corrects_futures):
+                if i % 100 == 0:
+                    print("Progress being made...")
 
-            print(f"Future: {future.result()}")
-            try:
-                is_corrects.append(future.result()[0])
-                unit_tests_passed.append(future.result()[1])
-                unit_tests_passed_individual_scores.append(future.result()[2])
-            except:
-                print("Error with future processing")
+                #breakpoint()
 
-    solutions_data["is_corrects"] = is_corrects
-    solutions_data["unit_tests_passed"] = unit_tests_passed
-    solutions_data["unit_tests_passed_individual_scores"] = unit_tests_passed_individual_scores
+                print(f"Future: {future.result()}")
+                try:
+                    is_corrects.append(future.result()[0])
+                    unit_tests_passed.append(future.result()[1])
+                    unit_tests_passed_individual_scores.append(future.result()[2])
+                except:
+                    print("Error with future processing")
+
+            solutions_data["is_corrects"] = is_corrects
+            solutions_data["unit_tests_passed"] = unit_tests_passed
+            solutions_data["unit_tests_passed_individual_scores"] = unit_tests_passed_individual_scores
+
+        except:
+            print("Error with processing thread...")
+            solutions_data["is_corrects"] = None
+            solutions_data["unit_tests_passed"] = None
+            solutions_data["unit_tests_passed_individual_scores"] = None
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
