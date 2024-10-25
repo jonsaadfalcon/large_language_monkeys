@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 16
+MAX_CONCURRENT_REQUESTS = 8
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
