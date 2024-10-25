@@ -133,39 +133,29 @@ def grade_problems(
     output_dir: Path,
     client: execution_server_client.ExecutionServerClient,
 ):
-    with concurrent.futures.ThreadPoolExecutor(
-        max_workers=MAX_CONCURRENT_REQUESTS // 2
-    ) as executor:
-        
-        is_corrects_futures = [
-            executor.submit(
-                solution_is_correct_and_unit_test_passed_count,
+    is_corrects = []
+    unit_tests_passed = []
+    unit_tests_passed_individual_scores = []
+
+    for i, code in enumerate(solutions_data["solutions"]):
+        if i % 100 == 0:
+            print("Progress being made...")
+
+        try:
+            result = solution_is_correct_and_unit_test_passed_count(
                 code=code,
                 problem=solutions_data,
-                client=client,
+                client=client
             )
-            for code in solutions_data["solutions"]
-        ]
-
-        is_corrects = []
-        unit_tests_passed = []
-        unit_tests_passed_individual_scores = []
-        for i, future in enumerate(is_corrects_futures):
-            if i % 100 == 0:
-                print("Progress being made...")
-
-            #breakpoint()
-
-            print(f"Future: {future.result()}")
-            try:
-                is_corrects.append(future.result()[0])
-                unit_tests_passed.append(future.result()[1])
-                unit_tests_passed_individual_scores.append(future.result()[2])
-            except:
-                print("Error with future processing")
-                is_corrects.append(None)
-                unit_tests_passed.append(None)
-                unit_tests_passed_individual_scores.append(None)
+            print(f"Result: {result}")
+            is_corrects.append(result[0])
+            unit_tests_passed.append(result[1])
+            unit_tests_passed_individual_scores.append(result[2])
+        except Exception as e:
+            print(f"Error processing solution: {e}")
+            is_corrects.append(None)
+            unit_tests_passed.append(None)
+            unit_tests_passed_individual_scores.append(None)
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
