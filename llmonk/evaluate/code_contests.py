@@ -83,12 +83,13 @@ def solution_is_correct_and_unit_test_passed_count(
                     if i == NUM_RETRIES - 1:
                         raise
                     time.sleep(RETRY_BACKOFF**i)
+                    breakpoint()
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
     #print(f"is_correct: {is_correct}")
     #print(f"total_unit_tests_passed_count_percent: {total_unit_tests_passed_count_percent}")
-    return is_correct, total_unit_tests_passed_count_percent, total_unit_test_individual_verdicts
+    return [is_correct, total_unit_tests_passed_count_percent, total_unit_test_individual_verdicts]
 
 def solution_is_correct(
     code: str | None,
