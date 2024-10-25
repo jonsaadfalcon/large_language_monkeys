@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 64
+MAX_CONCURRENT_REQUESTS = 16
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 3
 RETRY_BACKOFF = 3
@@ -88,7 +88,7 @@ def solution_is_correct_and_unit_test_passed_count(
                     print(f"Input-Output pair: {input_expected_output_pair}")
                     print(f"Timeout: {problem['timeout'] + 10}")
                     print("-"*50)
-                    breakpoint()
+                    #breakpoint()
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
@@ -133,29 +133,39 @@ def grade_problems(
     output_dir: Path,
     client: execution_server_client.ExecutionServerClient,
 ):
-    is_corrects = []
-    unit_tests_passed = []
-    unit_tests_passed_individual_scores = []
-
-    for i, code in enumerate(solutions_data["solutions"]):
-        if i % 100 == 0:
-            print("Progress being made...")
-
-        try:
-            result = solution_is_correct_and_unit_test_passed_count(
+    with concurrent.futures.ThreadPoolExecutor(
+        max_workers=MAX_CONCURRENT_REQUESTS // 2
+    ) as executor:
+        
+        is_corrects_futures = [
+            executor.submit(
+                solution_is_correct_and_unit_test_passed_count,
                 code=code,
                 problem=solutions_data,
-                client=client
+                client=client,
             )
-            print(f"Result: {result}")
-            is_corrects.append(result[0])
-            unit_tests_passed.append(result[1])
-            unit_tests_passed_individual_scores.append(result[2])
-        except Exception as e:
-            print(f"Error processing solution: {e}")
-            is_corrects.append(None)
-            unit_tests_passed.append(None)
-            unit_tests_passed_individual_scores.append(None)
+            for code in solutions_data["solutions"]
+        ]
+
+        is_corrects = []
+        unit_tests_passed = []
+        unit_tests_passed_individual_scores = []
+        for i, future in enumerate(is_corrects_futures):
+            if i % 100 == 0:
+                print("Progress being made...")
+
+            #breakpoint()
+
+            print(f"Future: {future.result()}")
+            try:
+                is_corrects.append(future.result()[0])
+                unit_tests_passed.append(future.result()[1])
+                unit_tests_passed_individual_scores.append(future.result()[2])
+            except:
+                print("Error with future processing")
+                is_corrects.append(None)
+                unit_tests_passed.append(None)
+                unit_tests_passed_individual_scores.append(None)
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
@@ -200,28 +210,21 @@ def main(config):
     # multiprocessing pool is used to load data
     with execution_server_client.ExecutionServerClient(port=8011) as client:
         # threads are used to run code in parallel
-        #with concurrent.futures.ThreadPoolExecutor(
-        #    max_workers=config.num_workers
-        #) as executor:
-        #    futures = [
-        #        executor.submit(
-        #            grade_problems,
-        #            solutions_data=solution_data,
-        #            output_dir=config.save_dir,
-        #            client=client,
-        #        )
-        #        for solution_data in solutions_data
-        #    ]
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=config.num_workers
+        ) as executor:
+            futures = [
+                executor.submit(
+                    grade_problems,
+                    solutions_data=solution_data,
+                    output_dir=config.save_dir,
+                    client=client,
+                )
+                for solution_data in solutions_data
+            ]
 
-        #    for future in tqdm(futures, desc="Running tests on problem"):
-        #        future.result()
-
-        futures = []
-        for solution_data in solutions_data:
-            futures.append(grade_problems(solution_data, config.save_dir, client))
-
-        #for future in tqdm(futures, desc="Running tests on problem"):
-        #    future.result()
+            for future in tqdm(futures, desc="Running tests on problem"):
+                future.result()
 
 
 if __name__ == "__main__":
