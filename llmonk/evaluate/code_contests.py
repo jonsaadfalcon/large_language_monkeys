@@ -150,9 +150,12 @@ def grade_problems(
             #breakpoint()
 
             print(f"Future: {future.result()}")
-            is_corrects.append(future.result()[0])
-            unit_tests_passed.append(future.result()[1])
-            unit_tests_passed_individual_scores.append(future.result()[2])
+            try:
+                is_corrects.append(future.result()[0])
+                unit_tests_passed.append(future.result()[1])
+                unit_tests_passed_individual_scores.append(future.result()[2])
+            except:
+                print("Error with future processing")
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
