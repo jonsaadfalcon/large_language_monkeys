@@ -147,8 +147,9 @@ def grade_problems(
             if i % 100 == 0:
                 print("Progress being made...")
 
-            breakpoint()
+            #breakpoint()
 
+            print(f"Future: {future.result()}")
             is_corrects.append(future.result()[0])
             unit_tests_passed.append(future.result()[1])
             unit_tests_passed_individual_scores.append(future.result()[2])
