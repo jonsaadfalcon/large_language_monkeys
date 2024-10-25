@@ -11,7 +11,7 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 64
+MAX_CONCURRENT_REQUESTS = 256
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
 NUM_RETRIES = 5
 RETRY_BACKOFF = 5
@@ -85,7 +85,7 @@ def solution_is_correct_and_unit_test_passed_count(
                         print("-"*50)
                     else:
                         time.sleep(RETRY_BACKOFF**i)
-                        print(f"Error with execution server (attempt {i+1}): {e}")
+                        #print(f"Error with execution server (attempt {i+1}): {e}")
             
             total_unit_test_individual_verdicts.append(is_correct)
             if is_correct:
@@ -157,7 +157,7 @@ def grade_problems(
 
             #breakpoint()
 
-            print(f"Future: {future.result()}")
+            #print(f"Future: {future.result()}")
             try:
                 is_corrects.append(future.result()[0])
                 unit_tests_passed.append(future.result()[1])
