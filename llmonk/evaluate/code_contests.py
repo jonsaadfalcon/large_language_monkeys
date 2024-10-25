@@ -131,44 +131,36 @@ def grade_problems(
         max_workers=MAX_CONCURRENT_REQUESTS // 2
     ) as executor:
         
-        try:
+        is_corrects_futures = [
+            executor.submit(
+                solution_is_correct_and_unit_test_passed_count,
+                code=code,
+                problem=solutions_data,
+                client=client,
+            )
+            for code in solutions_data["solutions"]
+        ]
 
-            is_corrects_futures = [
-                executor.submit(
-                    solution_is_correct_and_unit_test_passed_count,
-                    code=code,
-                    problem=solutions_data,
-                    client=client,
-                )
-                for code in solutions_data["solutions"]
-            ]
+        is_corrects = []
+        unit_tests_passed = []
+        unit_tests_passed_individual_scores = []
+        for i, future in enumerate(is_corrects_futures):
+            if i % 100 == 0:
+                print("Progress being made...")
 
-            is_corrects = []
-            unit_tests_passed = []
-            unit_tests_passed_individual_scores = []
-            for i, future in enumerate(is_corrects_futures):
-                if i % 100 == 0:
-                    print("Progress being made...")
+            #breakpoint()
 
-                #breakpoint()
+            print(f"Future: {future.result()}")
+            try:
+                is_corrects.append(future.result()[0])
+                unit_tests_passed.append(future.result()[1])
+                unit_tests_passed_individual_scores.append(future.result()[2])
+            except:
+                print("Error with future processing")
 
-                print(f"Future: {future.result()}")
-                try:
-                    is_corrects.append(future.result()[0])
-                    unit_tests_passed.append(future.result()[1])
-                    unit_tests_passed_individual_scores.append(future.result()[2])
-                except:
-                    print("Error with future processing")
-
-            solutions_data["is_corrects"] = is_corrects
-            solutions_data["unit_tests_passed"] = unit_tests_passed
-            solutions_data["unit_tests_passed_individual_scores"] = unit_tests_passed_individual_scores
-
-        except:
-            print("Error with processing thread...")
-            solutions_data["is_corrects"] = None
-            solutions_data["unit_tests_passed"] = None
-            solutions_data["unit_tests_passed_individual_scores"] = None
+    solutions_data["is_corrects"] = is_corrects
+    solutions_data["unit_tests_passed"] = unit_tests_passed
+    solutions_data["unit_tests_passed_individual_scores"] = unit_tests_passed_individual_scores
 
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / solutions_data["name"], "w") as f:
