@@ -77,15 +77,15 @@ def solution_is_correct_and_unit_test_passed_count(
                     ) 
                     break  # Exit loop if execution is successful
                 except Exception as e:
-                    if i == NUM_RETRIES - 1:
+                    if not i == NUM_RETRIES - 1:
+                        time.sleep(RETRY_BACKOFF**i)
+                        print(f"Error with execution server (attempt {i+1}): {e}")
+                    else:
                         print(f"Error with execution server after all retries: {e}")
                         print(f"Code: {code}")
                         print(f"Input-Output pair: {input_expected_output_pair}")
                         print(f"Timeout: {problem['timeout'] + 10}")
                         print("-"*50)
-                    else:
-                        time.sleep(RETRY_BACKOFF**i)
-                        #print(f"Error with execution server (attempt {i+1}): {e}")
             
             total_unit_test_individual_verdicts.append(is_correct)
             if is_correct:
