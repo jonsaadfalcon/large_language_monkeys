@@ -157,6 +157,9 @@ def grade_problems(
                 unit_tests_passed_individual_scores.append(future.result()[2])
             except:
                 print("Error with future processing")
+                is_corrects.append(None)
+                unit_tests_passed.append(None)
+                unit_tests_passed_individual_scores.append(None)
 
     solutions_data["is_corrects"] = is_corrects
     solutions_data["unit_tests_passed"] = unit_tests_passed
