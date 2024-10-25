@@ -79,11 +79,15 @@ def solution_is_correct_and_unit_test_passed_count(
                         #print("Found a true!")
                         total_unit_tests_passed_count += 1
                     break
-                except:
+                except Exception as e:
                     if i == NUM_RETRIES - 1:
                         raise
                     time.sleep(RETRY_BACKOFF**i)
-                    breakpoint()
+                    print(f"Error with execution server: {e}")
+                    print(f"Code: {code}")
+                    print(f"Input-Output pair: {input_expected_output_pair}")
+                    print("-"*50)
+                    #breakpoint()
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
