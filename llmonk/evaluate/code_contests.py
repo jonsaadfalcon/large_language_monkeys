@@ -86,8 +86,9 @@ def solution_is_correct_and_unit_test_passed_count(
                     print(f"Error with execution server: {e}")
                     print(f"Code: {code}")
                     print(f"Input-Output pair: {input_expected_output_pair}")
+                    print(f"Timeout: {problem['timeout'] + 10}")
                     print("-"*50)
-                    #breakpoint()
+                    breakpoint()
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
@@ -209,21 +210,28 @@ def main(config):
     # multiprocessing pool is used to load data
     with execution_server_client.ExecutionServerClient(port=8011) as client:
         # threads are used to run code in parallel
-        with concurrent.futures.ThreadPoolExecutor(
-            max_workers=config.num_workers
-        ) as executor:
-            futures = [
-                executor.submit(
-                    grade_problems,
-                    solutions_data=solution_data,
-                    output_dir=config.save_dir,
-                    client=client,
-                )
-                for solution_data in solutions_data
-            ]
+        #with concurrent.futures.ThreadPoolExecutor(
+        #    max_workers=config.num_workers
+        #) as executor:
+        #    futures = [
+        #        executor.submit(
+        #            grade_problems,
+        #            solutions_data=solution_data,
+        #            output_dir=config.save_dir,
+        #            client=client,
+        #        )
+        #        for solution_data in solutions_data
+        #    ]
 
-            for future in tqdm(futures, desc="Running tests on problem"):
-                future.result()
+        #    for future in tqdm(futures, desc="Running tests on problem"):
+        #        future.result()
+
+        futures = []
+        for solution_data in solutions_data:
+            futures.append(grade_problems(solution_data, config.save_dir, client))
+
+        #for future in tqdm(futures, desc="Running tests on problem"):
+        #    future.result()
 
 
 if __name__ == "__main__":
