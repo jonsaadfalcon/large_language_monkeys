@@ -66,6 +66,7 @@ def solution_is_correct_and_unit_test_passed_count(
     total_unit_test_individual_verdicts = []
     with semaphore:
         for input_expected_output_pair in input_expected_output_pairs:
+            is_correct = False  # Default to False if no successful execution
             for i in range(NUM_RETRIES):
                 try:
                     is_correct = client.execute_code(
@@ -74,24 +75,21 @@ def solution_is_correct_and_unit_test_passed_count(
                         timeout=problem["timeout"] + 10,  # buffer for 10
                         memory_limit_bytes=2_000_000_000_000,  # double max limit
                     ) 
-                    total_unit_test_individual_verdicts.append(is_correct)
-                    if is_correct == True:
-                        #print("Found a true!")
-                        total_unit_tests_passed_count += 1
-                    break
+                    break  # Exit loop if execution is successful
                 except Exception as e:
-                    #if i == NUM_RETRIES - 1:
-                    #    raise
-                    #time.sleep(RETRY_BACKOFF**i)
-                    print(f"Error with execution server: {e}")
-                    print(f"Code: {code}")
-                    print(f"Input-Output pair: {input_expected_output_pair}")
-                    print(f"Timeout: {problem['timeout'] + 10}")
-                    print("-"*50)
-                    is_correct = False
-                    total_unit_test_individual_verdicts.append(is_correct)
-                    break
-                    #breakpoint()
+                    if i == NUM_RETRIES - 1:
+                        print(f"Error with execution server after all retries: {e}")
+                        print(f"Code: {code}")
+                        print(f"Input-Output pair: {input_expected_output_pair}")
+                        print(f"Timeout: {problem['timeout'] + 10}")
+                        print("-"*50)
+                    else:
+                        time.sleep(RETRY_BACKOFF**i)
+                        print(f"Error with execution server (attempt {i+1}): {e}")
+            
+            total_unit_test_individual_verdicts.append(is_correct)
+            if is_correct:
+                total_unit_tests_passed_count += 1
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
     total_unit_tests_passed_count_percent = total_unit_tests_passed_count / len(input_expected_output_pairs)
@@ -211,7 +209,7 @@ def main(config):
     print("Done loading yaml files.")
 
     # multiprocessing pool is used to load data
-    with execution_server_client.ExecutionServerClient(port=8011) as client:
+    with execution_server_client.ExecutionServerClient(port=8004) as client:
         # threads are used to run code in parallel
         with concurrent.futures.ThreadPoolExecutor(
             max_workers=config.num_workers
