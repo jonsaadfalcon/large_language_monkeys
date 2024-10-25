@@ -11,10 +11,10 @@ import re
 from llmonk.evaluate.code_contests_utils import execution_server_client
 from llmonk.utils import load_yaml, extract_first_code, EvaluateScriptConfig
 
-MAX_CONCURRENT_REQUESTS = 8
+MAX_CONCURRENT_REQUESTS = 64
 semaphore = threading.Semaphore(value=MAX_CONCURRENT_REQUESTS)
-NUM_RETRIES = 3
-RETRY_BACKOFF = 3
+NUM_RETRIES = 5
+RETRY_BACKOFF = 5
 
 
 def is_valid_python(snippet):
@@ -80,14 +80,17 @@ def solution_is_correct_and_unit_test_passed_count(
                         total_unit_tests_passed_count += 1
                     break
                 except Exception as e:
-                    if i == NUM_RETRIES - 1:
-                        raise
-                    time.sleep(RETRY_BACKOFF**i)
+                    #if i == NUM_RETRIES - 1:
+                    #    raise
+                    #time.sleep(RETRY_BACKOFF**i)
                     print(f"Error with execution server: {e}")
                     print(f"Code: {code}")
                     print(f"Input-Output pair: {input_expected_output_pair}")
                     print(f"Timeout: {problem['timeout'] + 10}")
                     print("-"*50)
+                    is_correct = False
+                    total_unit_test_individual_verdicts.append(is_correct)
+                    break
                     #breakpoint()
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
