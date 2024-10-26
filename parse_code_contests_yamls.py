@@ -59,22 +59,35 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     # Add the last row if exists
     if current_row is not None:
         raw_matrix.append(current_row)
+
+    # Get the number of samples from the first valid row
+    num_samples = 0
+    for row in raw_matrix:
+        if row is not None:
+            num_samples = len(row)
+            break
+
+    if num_samples == 0:
+        raise ValueError("No valid data found in the file")
+
+    # Get the number of tests (non-None rows)
+    num_tests = sum(1 for row in raw_matrix if row is not None)
     
-    # Transform the matrix to get a list of test results for each sample
-    num_samples = 1000
-    num_tests = 20
+    logging.info(f"Found {num_samples} samples and {num_tests} tests")
+    
+    # Initialize result matrix
     result_matrix = []
-    
-    # Initialize the result matrix with empty lists
     for _ in range(num_samples):
         result_matrix.append([False] * num_tests)
     
     # Fill in the results
-    for test_idx, test_row in enumerate(raw_matrix):
-        if test_row is not None:
-            for sample_idx, result in enumerate(test_row):
+    test_idx = 0
+    for row in raw_matrix:
+        if row is not None:  # Skip None rows
+            for sample_idx, result in enumerate(row):
                 if sample_idx < num_samples:
                     result_matrix[sample_idx][test_idx] = result
+            test_idx += 1
     
     return result_matrix
 
@@ -114,6 +127,7 @@ def process_directory(directory_path: str) -> Dataset:
             
             logging.info(f"\nProcessed file: {filename}")
             logging.info(f"Number of samples: {len(test_results)}")
+            logging.info(f"Tests per sample: {len(test_results[0])}")
             
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
