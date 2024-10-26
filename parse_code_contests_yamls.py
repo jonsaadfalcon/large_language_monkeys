@@ -78,8 +78,14 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
 
 def process_file(file_path: str) -> List[List[bool]]:
     """Process a single file and return the test results matrix."""
+    logging.info(f"Processing file: {file_path}")
+    
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
+        
+    if not content:
+        raise ValueError(f"File is empty: {file_path}")
+        
     return parse_test_matrix(content)
 
 def process_directory(directory_path: str) -> Dataset:
@@ -90,30 +96,26 @@ def process_directory(directory_path: str) -> Dataset:
     logging.info(f"Processing files in directory: {directory_path}")
     
     # List all files in directory
-    try:
-        all_files = os.listdir(directory_path)
-        logging.info(f"Found {len(all_files)} files in directory")
-    except Exception as e:
-        logging.error(f"Error reading directory {directory_path}: {str(e)}")
-        raise e
+    all_files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
+    logging.info(f"Found {len(all_files)} files in directory")
+    
+    for filename in all_files:
+        logging.info(f"Found file: {filename}")
 
     # Process each file
     all_results = None
+    processed_files = 0
+    
     for filename in tqdm(all_files, desc="Processing files"):
-        if not filename.endswith('.txt'):
-            continue
-            
         file_path = os.path.join(directory_path, filename)
+        logging.info(f"Attempting to process: {file_path}")
         
-        # Skip if not a file
-        if not os.path.isfile(file_path):
-            continue
-            
         try:
             test_results = process_file(file_path)
-            all_results = test_results  # We only expect one file
+            all_results = test_results
+            processed_files += 1
             
-            logging.info(f"\nProcessed file: {filename}")
+            logging.info(f"Successfully processed file: {filename}")
             logging.info(f"Number of samples: {len(test_results)}")
             logging.info(f"Tests per sample: {len(test_results[0])}")
             
@@ -123,7 +125,10 @@ def process_directory(directory_path: str) -> Dataset:
                 
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
-            raise e
+            continue  # Try next file instead of failing completely
+
+    if processed_files == 0:
+        raise ValueError(f"No files were processed successfully! Examined files: {all_files}")
 
     if all_results is None:
         raise ValueError("No data was processed successfully!")
