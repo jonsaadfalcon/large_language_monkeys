@@ -4,7 +4,6 @@ from tqdm import tqdm
 import logging
 from typing import List, Optional
 
-# Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def parse_test_matrix(content: str) -> List[List[bool]]:
@@ -12,71 +11,83 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     Parse the unit_tests_passed_individual_scores matrix from the content.
     Returns a list of lists, where each inner list contains 20 boolean values.
     """
-
-    breakpoint()
-
-    lines = content.split('\n')
-    matrix = []
-    current_row = []
-    parsing_started = False
-    found_marker = False
-    row_count = 0
+    # Split on the marker
+    splits = content.split("unit_tests_passed_individual_scores:")
+    if len(splits) != 2:
+        raise ValueError(f"Expected 1 occurrence of 'unit_tests_passed_individual_scores:', found {len(splits)-1}")
+    
+    # Get the relevant section
+    test_content = splits[1].strip()
+    
+    # Initialize containers
+    matrix = []  # Will hold all samples
+    current_sample = []  # Will hold current sample's test results
     true_count = 0
     false_count = 0
     
-    # Find the start marker and begin parsing
+    # Process each line
+    lines = test_content.split('\n')
     for line in lines:
         line = line.strip()
-        
-        if 'unit_tests_passed_individual_scores:' in line:
-            found_marker = True
-            parsing_started = True
+        if not line:
             continue
             
-        if not parsing_started:
+        # Start of a new sample
+        if line.startswith('- - '):
+            if current_sample:  # Store previous sample if it exists
+                if len(current_sample) != 20:
+                    logging.warning(f"Sample has {len(current_sample)} tests instead of 20")
+                matrix.append(current_sample)
+            current_sample = []  # Start new sample
+            value = line[4:].strip()  # Remove '- - ' prefix
+            
+        # Continuation of current sample
+        elif line.startswith('  - '):
+            value = line[4:].strip()  # Remove '  - ' prefix
+            
+        # Skip null lines
+        elif line == '- null':
             continue
             
-        if line.startswith('- - ') or line.startswith('  - '):
-            value = line.split('-')[-1].strip()
+        else:
+            continue
             
-            if value == 'true':
-                current_row.append(True)
-                true_count += 1
-            elif value == 'false':
-                current_row.append(False)
-                false_count += 1
+        # Process the value
+        if value == 'true':
+            current_sample.append(True)
+            true_count += 1
+        elif value == 'false':
+            current_sample.append(False)
+            false_count += 1
             
-            # Check if we've collected 20 values for this row
-            if len(current_row) == 20:
-                matrix.append(current_row)
-                row_count += 1
-                current_row = []
-
-    # Validation checks
-    if not found_marker:
-        raise ValueError("Could not find 'unit_tests_passed_individual_scores:' marker in the file!")
-        
-    if row_count == 0:
-        raise ValueError("No complete rows were parsed from the file!")
+    # Add the last sample if it exists
+    if current_sample:
+        if len(current_sample) != 20:
+            logging.warning(f"Last sample has {len(current_sample)} tests instead of 20")
+        matrix.append(current_sample)
+    
+    # Validation
+    if not matrix:
+        raise ValueError("No samples were parsed!")
         
     if true_count == 0:
-        logging.warning("No TRUE values were found in the parsing process!")
+        raise ValueError("No TRUE values found in parsing!")
         
     if false_count == 0:
-        logging.warning("No FALSE values were found in the parsing process!")
-
-    # Log parsing statistics
+        raise ValueError("No FALSE values found in parsing!")
+    
+    # Verify all samples have 20 tests
+    for i, sample in enumerate(matrix):
+        if len(sample) != 20:
+            raise ValueError(f"Sample {i} has {len(sample)} tests instead of 20")
+    
+    # Log statistics
     logging.info(f"Parsing complete:")
-    logging.info(f"  - Total rows parsed: {row_count}")
+    logging.info(f"  - Total samples parsed: {len(matrix)}")
     logging.info(f"  - Total TRUE values: {true_count}")
     logging.info(f"  - Total FALSE values: {false_count}")
-    logging.info(f"  - First row length: {len(matrix[0]) if matrix else 0}")
+    logging.info(f"  - Tests per sample: {len(matrix[0])}")
     
-    # Additional validation
-    for i, row in enumerate(matrix):
-        if len(row) != 20:
-            raise ValueError(f"Row {i} has {len(row)} values instead of expected 20!")
-            
     return matrix
 
 def process_file(file_path: str) -> List[List[bool]]:
@@ -122,13 +133,9 @@ def process_directory(directory_path: str) -> Dataset:
             logging.info(f"Number of samples: {len(test_results)}")
             logging.info(f"Tests per sample: {len(test_results[0])}")
             
-            # Validate sample dimensions
-            if len(test_results[0]) != 20:
-                raise ValueError(f"Expected 20 tests per sample, but found {len(test_results[0])}")
-                
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
-            continue  # Try next file instead of failing completely
+            continue
 
     if processed_files == 0:
         raise ValueError(f"No files were processed successfully! Examined files: {all_files}")
@@ -138,7 +145,7 @@ def process_directory(directory_path: str) -> Dataset:
     
     # Create dataset with a single row containing all results
     dataset = Dataset.from_dict({
-        'unit_tests_passed': [all_results]  # Wrap in list to create single row
+        'unit_tests_passed': [all_results]
     })
     
     # Final validation
