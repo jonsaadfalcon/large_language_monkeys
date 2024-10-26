@@ -12,6 +12,9 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     Parse the unit_tests_passed_individual_scores matrix from the content.
     Returns a list of lists, where each inner list contains 20 boolean values.
     """
+
+    breakpoint()
+
     lines = content.split('\n')
     matrix = []
     current_row = []
