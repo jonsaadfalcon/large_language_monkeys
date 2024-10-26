@@ -16,8 +16,9 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     if len(splits) != 2:
         raise ValueError(f"Expected 1 occurrence of 'unit_tests_passed_individual_scores:', found {len(splits)-1}")
     
-    # Get the relevant section
+    # Get the relevant section and split into lines
     test_content = splits[1].strip()
+    lines = [line.strip() for line in test_content.split('\n') if line.strip()]
     
     # Initialize containers
     matrix = []  # Will hold all samples
@@ -26,20 +27,14 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     false_count = 0
     
     # Process each line
-    lines = test_content.split('\n')
-    chunks = [lines[i:i + 20] for i in range(0, len(lines), 20)]
-    breakpoint()
     for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-            
         # Start of a new sample
         if line.startswith('- - '):
             if current_sample:  # Store previous sample if it exists
                 if len(current_sample) != 20:
                     logging.warning(f"Sample has {len(current_sample)} tests instead of 20")
-                matrix.append(current_sample)
+                else:
+                    matrix.append(current_sample)
             current_sample = []  # Start new sample
             value = line[4:].strip()  # Remove '- - ' prefix
             
@@ -62,10 +57,8 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
             current_sample.append(False)
             false_count += 1
             
-    # Add the last sample if it exists
-    if current_sample:
-        if len(current_sample) != 20:
-            logging.warning(f"Last sample has {len(current_sample)} tests instead of 20")
+    # Add the last sample if it exists and is complete
+    if current_sample and len(current_sample) == 20:
         matrix.append(current_sample)
     
     # Validation
