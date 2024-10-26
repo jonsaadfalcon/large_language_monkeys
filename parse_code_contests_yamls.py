@@ -7,13 +7,17 @@ from typing import Dict, List, Any, Optional, Tuple
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
-    """Parse the unit_tests_passed_individual_scores matrix from the content."""
+def parse_test_matrix(content: str) -> Tuple[List[List[Optional[bool]]], List[float]]:
+    """
+    Parse the unit_tests_passed_individual_scores matrix from the content.
+    Returns the matrix and scores for each sample.
+    """
     lines = content.split('\n')
     matrix = []
     current_row = None
     parsing_unit_tests = False
     
+    # First, collect all rows
     for line in lines:
         line = line.strip()
         if not line:
@@ -26,7 +30,7 @@ def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
         if not parsing_unit_tests:
             continue
             
-        # Start of a new row for a test case
+        # Start of a new row
         if line.startswith('- - '):
             if current_row is not None:
                 matrix.append(current_row)
@@ -57,43 +61,31 @@ def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
     # Add the last row if exists
     if current_row is not None:
         matrix.append(current_row)
-        
-    return matrix
-
-def calculate_sample_scores(matrix: List[List[Optional[bool]]]) -> List[float]:
-    """Calculate score for each of the 1000 samples across their unit tests."""
-    scores = []
-    # Each column represents one unit test for a single sample
-    num_samples = 20  # Each sample has 20 unit tests
     
-    # Group the tests by sample (every 20 rows is for one sample)
-    for i in range(0, len(matrix), num_samples):
-        sample_rows = matrix[i:i+num_samples]
-        if any(row is None for row in sample_rows):
-            scores.append(0.0)  # Skip samples with null rows
-            continue
-            
-        # Count true values for this sample
+    # Calculate scores for each sample (each row in the matrix is one test case)
+    sample_scores = []
+    num_samples = len(matrix[0]) if matrix and matrix[0] else 0
+    
+    for sample_idx in range(num_samples):
         total_true = 0
         total_valid = 0
-        for row in sample_rows:
-            if row is not None:
-                for value in row:
-                    if value is not None:
-                        if value:
-                            total_true += 1
-                        total_valid += 1
+        
+        # Look at each test case for this sample
+        for row in matrix:
+            if row is not None and sample_idx < len(row):
+                if row[sample_idx] is not None:
+                    if row[sample_idx]:
+                        total_true += 1
+                    total_valid += 1
         
         score = total_true / total_valid if total_valid > 0 else 0.0
-        scores.append(score)
+        sample_scores.append(score)
     
-    return scores
+    return matrix, sample_scores
 
 def extract_data(content: str) -> Dict[str, Any]:
     """Extract data from text content."""
-    matrix = parse_test_matrix(content)
-    
-    sample_scores = calculate_sample_scores(matrix)
+    matrix, sample_scores = parse_test_matrix(content)
     overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
     
     return {
@@ -129,6 +121,11 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
             
             result = extract_data(content)
             result['filename'] = filename
+            
+            # Verify we got 1000 samples
+            if len(result['sample_scores']) != 1000:
+                logging.warning(f"Expected 1000 samples, got {len(result['sample_scores'])} in {filename}")
+            
             data.append(result)
             
             # Log detailed scores for this file
