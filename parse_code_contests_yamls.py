@@ -16,6 +16,9 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     raw_matrix = []
     current_row = None
     parsing_unit_tests = False
+
+    true_found = "true" in content.lower()
+    print("True Found:", true_found)
     
     # First, collect all rows
     for line in lines:
