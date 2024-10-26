@@ -16,6 +16,8 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     raw_matrix = []
     current_row = None
     parsing_unit_tests = False
+
+    breakpoint()
     
     # First, collect all rows
     for line in lines:
