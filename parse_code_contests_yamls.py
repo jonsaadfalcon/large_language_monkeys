@@ -160,6 +160,8 @@ def main(input_directory: str, output_filepath: str):
         raise ValueError("No data was processed successfully!")
     
     dataset = create_dataset(data)
+
+    breakpoint()
     
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
