@@ -2,18 +2,18 @@ import os
 from datasets import Dataset
 from tqdm import tqdm
 import logging
-from typing import Dict, List, Any, Optional, Tuple
+from typing import List, Optional
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def parse_test_matrix(content: str) -> Tuple[List[List[Optional[bool]]], List[float]]:
+def parse_test_matrix(content: str) -> List[List[bool]]:
     """
     Parse the unit_tests_passed_individual_scores matrix from the content.
-    Returns the matrix and scores for each sample.
+    Returns a list of 1000 lists, where each inner list contains 20 boolean values.
     """
     lines = content.split('\n')
-    matrix = []
+    raw_matrix = []
     current_row = None
     parsing_unit_tests = False
     
@@ -33,7 +33,7 @@ def parse_test_matrix(content: str) -> Tuple[List[List[Optional[bool]]], List[fl
         # Start of a new row
         if line.startswith('- - '):
             if current_row is not None:
-                matrix.append(current_row)
+                raw_matrix.append(current_row)
             current_row = []
             value = line[4:].strip()
             if value == 'true':
@@ -50,53 +50,45 @@ def parse_test_matrix(content: str) -> Tuple[List[List[Optional[bool]]], List[fl
                     current_row.append(True)
                 elif value == 'false':
                     current_row.append(False)
-                elif value == 'null':
-                    current_row.append(None)
         elif line == '- null':
             if current_row is not None:
-                matrix.append(current_row)
-            matrix.append(None)
+                raw_matrix.append(current_row)
+            raw_matrix.append(None)
             current_row = None
             
     # Add the last row if exists
     if current_row is not None:
-        matrix.append(current_row)
+        raw_matrix.append(current_row)
     
-    # Calculate scores for each sample (each row in the matrix is one test case)
-    sample_scores = []
-    num_samples = len(matrix[0]) if matrix and matrix[0] else 0
+    # Transform the matrix to get a list of test results for each sample
+    num_samples = 1000
+    num_tests = 20
+    result_matrix = []
     
-    for sample_idx in range(num_samples):
-        total_true = 0
-        total_valid = 0
-        
-        # Look at each test case for this sample
-        for row in matrix:
-            if row is not None and sample_idx < len(row):
-                if row[sample_idx] is not None:
-                    if row[sample_idx]:
-                        total_true += 1
-                    total_valid += 1
-        
-        score = total_true / total_valid if total_valid > 0 else 0.0
-        sample_scores.append(score)
+    # Initialize the result matrix with empty lists
+    for _ in range(num_samples):
+        result_matrix.append([False] * num_tests)
     
-    return matrix, sample_scores
+    # Fill in the results
+    for test_idx, test_row in enumerate(raw_matrix):
+        if test_row is not None:
+            for sample_idx, result in enumerate(test_row):
+                if sample_idx < num_samples:
+                    result_matrix[sample_idx][test_idx] = result
+    
+    return result_matrix
 
-def extract_data(content: str) -> Dict[str, Any]:
-    """Extract data from text content."""
-    matrix, sample_scores = parse_test_matrix(content)
-    overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
-    
-    return {
-        'unit_tests_passed': overall_score,
-        'sample_scores': sample_scores,
-        'tests_matrix': matrix
-    }
+def process_file(file_path: str) -> List[List[bool]]:
+    """Process a single file and return the test results matrix."""
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+    return parse_test_matrix(content)
 
-def process_directory(directory_path: str) -> List[Dict[str, Any]]:
-    data = []
-    
+def process_directory(directory_path: str) -> Dataset:
+    """
+    Process all files in directory and create a dataset with unit test results.
+    Returns a dataset with a single column 'unit_tests_passed' containing the test matrices.
+    """
     logging.info(f"Processing files in directory: {directory_path}")
     
     # List all files in directory
@@ -105,9 +97,10 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
         logging.info(f"Found {len(all_files)} files in directory")
     except Exception as e:
         logging.error(f"Error reading directory {directory_path}: {str(e)}")
-        return data
+        raise e
 
     # Process each file
+    all_test_results = []
     for filename in tqdm(all_files, desc="Processing files"):
         file_path = os.path.join(directory_path, filename)
         
@@ -116,67 +109,37 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
             continue
             
         try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                content = file.read()
+            test_results = process_file(file_path)
+            all_test_results.extend(test_results)
             
-            result = extract_data(content)
-            result['filename'] = filename
+            logging.info(f"\nProcessed file: {filename}")
+            logging.info(f"Number of samples: {len(test_results)}")
             
-            # Verify we got 1000 samples
-            if len(result['sample_scores']) != 1000:
-                logging.warning(f"Expected 1000 samples, got {len(result['sample_scores'])} in {filename}")
-            
-            data.append(result)
-            
-            # Log detailed scores for this file
-            logging.info(f"\nFile: {filename}")
-            logging.info(f"Overall score: {result['unit_tests_passed']:.3f}")
-            logging.info(f"Number of samples processed: {len(result['sample_scores'])}")
-            logging.info("First 5 sample scores:")
-            for i, score in enumerate(result['sample_scores'][:5]):
-                logging.info(f"Sample {i}: {score:.3f}")
-                
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
-            raise e  # Re-raise to see full traceback during development
-    
-    if not data:
-        logging.error("No valid files were processed!")
-    else:
-        logging.info(f"Successfully processed {len(data)} files")
-        
-    # Log average scores across all files
-    if data:
-        overall_scores = [d['unit_tests_passed'] for d in data]
-        avg_score = sum(overall_scores) / len(overall_scores)
-        logging.info(f"\nAverage score across all files: {avg_score:.3f}")
-    
-    return data
+            raise e
 
-def create_dataset(data: List[Dict[str, Any]]) -> Dataset:
-    logging.info("Creating Hugging Face dataset")
-    if not data:
-        raise ValueError("No data to create dataset from!")
-    return Dataset.from_list(data)
+    if not all_test_results:
+        raise ValueError("No data was processed successfully!")
+    
+    # Create dataset with single column
+    dataset = Dataset.from_dict({
+        'unit_tests_passed': all_test_results
+    })
+    
+    logging.info(f"Created dataset with {len(dataset)} samples")
+    return dataset
 
 def main(input_directory: str, output_filepath: str):
     logging.info(f"Starting processing with input directory: {input_directory}")
     logging.info(f"Output will be saved to: {output_filepath}")
 
-    data = process_directory(input_directory)
-    
-    if not data:
-        raise ValueError("No data was processed successfully!")
-    
-    dataset = create_dataset(data)
+    dataset = process_directory(input_directory)
     
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
     
-    logging.info(f"Dataset saved successfully. Total samples processed: {len(dataset)}")
-    
-    # Debugging information
-    breakpoint()
+    logging.info(f"Dataset saved successfully. Total samples: {len(dataset)}")
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
