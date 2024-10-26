@@ -16,9 +16,6 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     raw_matrix = []
     current_row = None
     parsing_unit_tests = False
-
-    true_found = "true" in content.lower()
-    print("True Found:", true_found)
     
     # First, collect all rows
     for line in lines:
@@ -158,6 +155,9 @@ def main(input_directory: str, output_filepath: str):
     
     logging.info(f"Dataset saved successfully. Total samples: {len(dataset)}")
     breakpoint()
+
+    true_found = "true" in str(dataset["unit_tests_passed"]).lower()
+    print("True Found:", true_found)
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
