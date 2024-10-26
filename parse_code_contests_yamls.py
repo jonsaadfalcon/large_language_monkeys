@@ -7,79 +7,90 @@ from typing import Dict, List, Any, Optional, Tuple
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def process_test_scores(tests_matrix: List[List[Optional[bool]]]) -> Dict[str, float]:
-    """
-    Calculate scores for the test matrix.
-    Returns dict with overall score and per-sample scores.
-    """
-    if not tests_matrix:
-        return {'overall_score': 0.0, 'sample_scores': []}
-        
-    sample_scores = []
-    for i in range(len(tests_matrix[0]) if tests_matrix[0] else 0):
-        # Get the i-th element from each valid row
-        valid_values = []
-        for row in tests_matrix:
-            if row is not None and i < len(row):
-                if row[i] is not None:
-                    valid_values.append(row[i])
-        
-        if valid_values:
-            score = sum(1 for v in valid_values if v) / len(valid_values)
-            sample_scores.append(score)
-        else:
-            sample_scores.append(0.0)
-    
-    overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
-    
-    return {
-        'overall_score': overall_score,
-        'sample_scores': sample_scores
-    }
-
-def extract_data(content: str) -> Dict[str, Any]:
-    """Extract data from the text content."""
-    # Split content into lines and process
-    lines = content.strip().split('\n')
-    
-    # Process each row
-    all_rows = []
-    current_row = []
+def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
+    """Parse the unit_tests_passed_individual_scores matrix from the content."""
+    lines = content.split('\n')
+    matrix = []
+    current_row = None
     
     for line in lines:
         line = line.strip()
-        if not line:
+        if 'unit_tests_passed_individual_scores:' in line:
             continue
             
-        if line == "- null":
-            if current_row:
-                all_rows.append(current_row)
-            all_rows.append(None)  # Add null row
+        # Start of a new row
+        if line.startswith('- - '):
+            if current_row is not None:
+                matrix.append(current_row)
             current_row = []
-        elif line.startswith('  - '):
-            # Values in a row
             value = line[4:].strip()
-            if value == "null":
-                current_row.append(None)
-            else:
-                current_row.append(value == 'true')
-        elif line.startswith('- -'):
-            # New row
-            if current_row:
-                all_rows.append(current_row)
-            current_row = []
+            if value == 'true':
+                current_row.append(True)
+            elif value == 'false':
+                current_row.append(False)
+            elif value == 'null':
+                current_row = None
+        # Continue current row
+        elif line.startswith('  - '):
+            if current_row is not None:
+                value = line[4:].strip()
+                if value == 'true':
+                    current_row.append(True)
+                elif value == 'false':
+                    current_row.append(False)
+                elif value == 'null':
+                    current_row.append(None)
+        elif line == '- null':
+            if current_row is not None:
+                matrix.append(current_row)
+            matrix.append(None)
+            current_row = None
+            
+    # Add the last row if exists
+    if current_row is not None:
+        matrix.append(current_row)
+        
+    return matrix
+
+def calculate_sample_scores(matrix: List[List[Optional[bool]]]) -> List[float]:
+    """Calculate score for each sample position across all test cases."""
+    if not matrix or all(row is None for row in matrix):
+        return []
+        
+    # Get the number of columns from the first non-None row
+    first_valid_row = next((row for row in matrix if row is not None), None)
+    if not first_valid_row:
+        return []
+        
+    num_samples = len(first_valid_row)
+    scores = []
     
-    # Add the last row if it exists
-    if current_row:
-        all_rows.append(current_row)
+    # Calculate score for each sample position
+    for i in range(num_samples):
+        total_true = 0
+        total_valid = 0
+        
+        for row in matrix:
+            if row is not None and i < len(row) and row[i] is not None:
+                if row[i]:
+                    total_true += 1
+                total_valid += 1
+        
+        score = total_true / total_valid if total_valid > 0 else 0.0
+        scores.append(score)
     
-    # Calculate scores
-    scores = process_test_scores(all_rows)
+    return scores
+
+def extract_data(content: str) -> Dict[str, Any]:
+    """Extract data from text content."""
+    matrix = parse_test_matrix(content)
+    sample_scores = calculate_sample_scores(matrix)
+    overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
     
     return {
-        'unit_tests_passed': scores['overall_score'],
-        'sample_scores': scores['sample_scores'],
-        'tests_matrix': all_rows
+        'unit_tests_passed': overall_score,
+        'sample_scores': sample_scores,
+        'tests_matrix': matrix
     }
 
 def process_directory(directory_path: str) -> List[Dict[str, Any]]:
@@ -120,6 +131,7 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
                 
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
+            raise e  # Re-raise to see full traceback during development
     
     if not data:
         logging.error("No valid files were processed!")
@@ -131,16 +143,6 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
         overall_scores = [d['unit_tests_passed'] for d in data]
         avg_score = sum(overall_scores) / len(overall_scores)
         logging.info(f"\nAverage score across all files: {avg_score:.3f}")
-        
-        # Calculate and log average score per sample position
-        num_samples = len(data[0]['sample_scores']) if data else 0
-        if num_samples:
-            logging.info("\nAverage scores by sample position:")
-            for i in range(num_samples):
-                sample_scores = [d['sample_scores'][i] for d in data if i < len(d['sample_scores'])]
-                if sample_scores:
-                    avg = sum(sample_scores) / len(sample_scores)
-                    logging.info(f"Sample {i}: {avg:.3f}")
     
     return data
 
@@ -160,13 +162,13 @@ def main(input_directory: str, output_filepath: str):
         raise ValueError("No data was processed successfully!")
     
     dataset = create_dataset(data)
-
-    breakpoint()
     
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
     
     logging.info(f"Dataset saved successfully. Total samples processed: {len(dataset)}")
+    
+    breakpoint()
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
