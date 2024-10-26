@@ -10,6 +10,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     """
     Parse the unit_tests_passed_individual_scores matrix from the content.
     Returns a list of lists, where each inner list contains 20 boolean values.
+    Treats null values as false.
     """
     # Split on the marker
     splits = content.split("unit_tests_passed_individual_scores:")
@@ -28,10 +29,6 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     
     # Process each line
     for line in lines:
-        # Skip null entries
-        if line == '- null':
-            continue
-            
         # Check if it's a new sample or continuation
         is_new_sample = line.startswith('- - ')
         
@@ -41,7 +38,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
                 matrix.append(current_sample)
             current_sample = []
             
-        # Extract the boolean value
+        # Extract the value
         if is_new_sample:
             value = line[4:].strip()  # Remove '- - ' prefix
         else:
@@ -51,7 +48,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
         if value == 'true':
             current_sample.append(True)
             true_count += 1
-        elif value == 'false':
+        else:  # Treat both 'false' and 'null' as False
             current_sample.append(False)
             false_count += 1
             
@@ -64,7 +61,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
         raise ValueError("No samples were parsed!")
         
     if true_count == 0 and false_count == 0:
-        raise ValueError("No valid boolean values found!")
+        raise ValueError("No valid values found!")
     
     # Verify all samples have 20 tests
     for i, sample in enumerate(matrix):
