@@ -12,13 +12,21 @@ def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
     lines = content.split('\n')
     matrix = []
     current_row = None
+    parsing_unit_tests = False
     
     for line in lines:
         line = line.strip()
-        if 'unit_tests_passed_individual_scores:' in line:
+        if not line:
             continue
             
-        # Start of a new row
+        if 'unit_tests_passed_individual_scores:' in line:
+            parsing_unit_tests = True
+            continue
+            
+        if not parsing_unit_tests:
+            continue
+            
+        # Start of a new row for a test case
         if line.startswith('- - '):
             if current_row is not None:
                 matrix.append(current_row)
@@ -53,28 +61,28 @@ def parse_test_matrix(content: str) -> List[List[Optional[bool]]]:
     return matrix
 
 def calculate_sample_scores(matrix: List[List[Optional[bool]]]) -> List[float]:
-    """Calculate score for each sample position across all test cases."""
-    if not matrix or all(row is None for row in matrix):
-        return []
-        
-    # Get the number of columns from the first non-None row
-    first_valid_row = next((row for row in matrix if row is not None), None)
-    if not first_valid_row:
-        return []
-        
-    num_samples = len(first_valid_row)
+    """Calculate score for each of the 1000 samples across their unit tests."""
     scores = []
+    # Each column represents one unit test for a single sample
+    num_samples = 20  # Each sample has 20 unit tests
     
-    # Calculate score for each sample position
-    for i in range(num_samples):
+    # Group the tests by sample (every 20 rows is for one sample)
+    for i in range(0, len(matrix), num_samples):
+        sample_rows = matrix[i:i+num_samples]
+        if any(row is None for row in sample_rows):
+            scores.append(0.0)  # Skip samples with null rows
+            continue
+            
+        # Count true values for this sample
         total_true = 0
         total_valid = 0
-        
-        for row in matrix:
-            if row is not None and i < len(row) and row[i] is not None:
-                if row[i]:
-                    total_true += 1
-                total_valid += 1
+        for row in sample_rows:
+            if row is not None:
+                for value in row:
+                    if value is not None:
+                        if value:
+                            total_true += 1
+                        total_valid += 1
         
         score = total_true / total_valid if total_valid > 0 else 0.0
         scores.append(score)
@@ -84,6 +92,7 @@ def calculate_sample_scores(matrix: List[List[Optional[bool]]]) -> List[float]:
 def extract_data(content: str) -> Dict[str, Any]:
     """Extract data from text content."""
     matrix = parse_test_matrix(content)
+    
     sample_scores = calculate_sample_scores(matrix)
     overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
     
@@ -125,8 +134,9 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
             # Log detailed scores for this file
             logging.info(f"\nFile: {filename}")
             logging.info(f"Overall score: {result['unit_tests_passed']:.3f}")
-            logging.info("Sample scores:")
-            for i, score in enumerate(result['sample_scores']):
+            logging.info(f"Number of samples processed: {len(result['sample_scores'])}")
+            logging.info("First 5 sample scores:")
+            for i, score in enumerate(result['sample_scores'][:5]):
                 logging.info(f"Sample {i}: {score:.3f}")
                 
         except Exception as e:
@@ -168,6 +178,7 @@ def main(input_directory: str, output_filepath: str):
     
     logging.info(f"Dataset saved successfully. Total samples processed: {len(dataset)}")
     
+    # Debugging information
     breakpoint()
 
 if __name__ == "__main__":
