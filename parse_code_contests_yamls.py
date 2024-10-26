@@ -99,8 +99,8 @@ def process_file(file_path: str) -> List[List[bool]]:
 
 def process_directory(directory_path: str) -> Dataset:
     """
-    Process all files in directory and create a dataset with unit test results.
-    Returns a dataset with a single column 'unit_tests_passed' containing the test matrices.
+    Process all files in directory and create a dataset.
+    Returns a dataset with a single row containing a list of 1000 lists of 20 boolean values each.
     """
     logging.info(f"Processing files in directory: {directory_path}")
     
@@ -113,7 +113,7 @@ def process_directory(directory_path: str) -> Dataset:
         raise e
 
     # Process each file
-    all_test_results = []
+    all_results = None
     for filename in tqdm(all_files, desc="Processing files"):
         file_path = os.path.join(directory_path, filename)
         
@@ -123,7 +123,7 @@ def process_directory(directory_path: str) -> Dataset:
             
         try:
             test_results = process_file(file_path)
-            all_test_results.extend(test_results)
+            all_results = test_results  # We only expect one file
             
             logging.info(f"\nProcessed file: {filename}")
             logging.info(f"Number of samples: {len(test_results)}")
@@ -133,15 +133,15 @@ def process_directory(directory_path: str) -> Dataset:
             logging.error(f"Error processing {filename}: {str(e)}")
             raise e
 
-    if not all_test_results:
+    if all_results is None:
         raise ValueError("No data was processed successfully!")
     
-    # Create dataset with single column
+    # Create dataset with a single row containing all results
     dataset = Dataset.from_dict({
-        'unit_tests_passed': all_test_results
+        'unit_tests_passed': [all_results]  # Wrap in list to create single row
     })
     
-    logging.info(f"Created dataset with {len(dataset)} samples")
+    logging.info(f"Created dataset with {len(dataset)} rows")
     return dataset
 
 def main(input_directory: str, output_filepath: str):
@@ -154,7 +154,6 @@ def main(input_directory: str, output_filepath: str):
     dataset.save_to_disk(output_filepath)
     
     logging.info(f"Dataset saved successfully. Total samples: {len(dataset)}")
-    breakpoint()
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
