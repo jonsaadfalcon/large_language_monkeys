@@ -3,11 +3,12 @@ import xml.etree.ElementTree as ET
 from datasets import Dataset
 from tqdm import tqdm
 import logging
+from typing import Dict, List, Any
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def parse_boolean_list(content_str):
+def parse_boolean_list(content_str: str) -> List[bool]:
     """Parse the boolean list from the content string."""
     # Split the string into lines and filter out empty lines
     lines = [line.strip() for line in content_str.split('\n') if line.strip()]
@@ -23,7 +24,7 @@ def parse_boolean_list(content_str):
     
     return bools
 
-def extract_data(xml_content):
+def extract_data(xml_content: str) -> Dict[str, Any]:
     """Extract data from XML content."""
     root = ET.fromstring(xml_content)
     
@@ -43,62 +44,92 @@ def extract_data(xml_content):
     
     for line in lines:
         line = line.strip()
-        if line.startswith('- '):
-            # Start of a new value
-            value = line[2:].strip()
+        if not line:
+            continue
+            
+        if line.startswith('  - '):
+            # Values in a row
+            value = line[4:].strip()
             current_row.append(value == 'true')
-        elif line == '-':
-            # Empty row marker
+        elif line.startswith('- '):
+            # New row
             if current_row:
-                all_rows.append(current_row)
+                if len(current_row) == 20:  # Only add complete rows
+                    all_rows.append(current_row)
                 current_row = []
-        elif line and line[0] == '-':
-            # Start of a new row
-            if current_row:
-                all_rows.append(current_row)
-            current_row = []
     
-    # Add the last row if it exists
-    if current_row:
+    # Add the last row if it exists and is complete
+    if current_row and len(current_row) == 20:
         all_rows.append(current_row)
     
-    # Filter out empty rows and rows that don't have exactly 20 elements
-    valid_rows = [row for row in all_rows if len(row) == 20]
+    if not all_rows:
+        raise ValueError("No valid rows found in the content")
     
     return {
-        'tests_matrix': valid_rows
+        'tests_matrix': all_rows,
+        'num_rows': len(all_rows),
+        'num_cols': 20  # We know this should always be 20
     }
 
-def process_directory(directory_path):
+def process_directory(directory_path: str) -> List[Dict[str, Any]]:
     data = []
     
     logging.info(f"Processing files in directory: {directory_path}")
-    xml_files = [f for f in os.listdir(directory_path) if f.endswith('.xml')]
     
-    for filename in tqdm(xml_files, desc="Processing XML files"):
+    # List all files in directory
+    try:
+        all_files = os.listdir(directory_path)
+        logging.info(f"Found {len(all_files)} files in directory")
+    except Exception as e:
+        logging.error(f"Error reading directory {directory_path}: {str(e)}")
+        return data
+
+    # Process each file
+    for filename in tqdm(all_files, desc="Processing files"):
         file_path = os.path.join(directory_path, filename)
+        
+        # Skip if not a file
+        if not os.path.isfile(file_path):
+            continue
+            
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
-                xml_content = file.read()
-            
-            result = extract_data(xml_content)
-            result['filename'] = filename
-            data.append(result)
+                content = file.read()
+                
+            # Check if content contains XML structure
+            if '<documents>' in content and '</documents>' in content:
+                result = extract_data(content)
+                result['filename'] = filename
+                data.append(result)
+            else:
+                logging.warning(f"Skipping {filename}: Not in expected XML format")
+                
+        except ET.ParseError as e:
+            logging.error(f"XML parsing error in {filename}: {str(e)}")
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
     
-    logging.info(f"Processed {len(data)} files successfully")
+    if not data:
+        logging.error("No valid files were processed!")
+    else:
+        logging.info(f"Successfully processed {len(data)} files")
+    
     return data
 
-def create_dataset(data):
+def create_dataset(data: List[Dict[str, Any]]) -> Dataset:
     logging.info("Creating Hugging Face dataset")
+    if not data:
+        raise ValueError("No data to create dataset from!")
     return Dataset.from_list(data)
 
-def main(input_directory, output_filepath):
+def main(input_directory: str, output_filepath: str):
     logging.info(f"Starting processing with input directory: {input_directory}")
     logging.info(f"Output will be saved to: {output_filepath}")
 
     data = process_directory(input_directory)
+    
+    if not data:
+        raise ValueError("No data was processed successfully!")
     
     dataset = create_dataset(data)
     
