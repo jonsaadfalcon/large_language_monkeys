@@ -25,6 +25,8 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     current_sample = []  # Will hold current sample's test results
     true_count = 0
     false_count = 0
+
+    breakpoint()
     
     # Process each line
     for line in lines:
