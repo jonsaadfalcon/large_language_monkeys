@@ -1,6 +1,5 @@
 import os
 import xml.etree.ElementTree as ET
-import re
 from datasets import Dataset
 from tqdm import tqdm
 import logging
@@ -8,47 +7,85 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def extract_data(content):
-    # Extract is_corrects
-    is_corrects_match = re.search(r'is_corrects:\n((?:- (?:true|false)\n)+)', content)
-    if is_corrects_match:
-        is_corrects = re.findall(r'- (true|false)', is_corrects_match.group(1))
-        is_corrects = [x == 'true' for x in is_corrects]
-    else:
-        is_corrects = []
+def parse_boolean_list(content_str):
+    """Parse the boolean list from the content string."""
+    # Split the string into lines and filter out empty lines
+    lines = [line.strip() for line in content_str.split('\n') if line.strip()]
     
-    # Extract unit_tests_passed
-    unit_tests_match = re.search(r'unit_tests_passed:\n((?:- \d+\.\d+\n)+)', content)
-    if unit_tests_match:
-        unit_tests = re.findall(r'- (\d+\.\d+)', unit_tests_match.group(1))
-        unit_tests = [float(x) for x in unit_tests]
-    else:
-        unit_tests = []
+    # Extract boolean values
+    bools = []
+    for line in lines:
+        if isinstance(line, str):
+            parts = line.strip().split('-')
+            if len(parts) > 1:
+                value = parts[-1].strip()
+                bools.append(value == 'true')
+    
+    return bools
 
-    assert len(unit_tests) == 20
+def extract_data(xml_content):
+    """Extract data from XML content."""
+    root = ET.fromstring(xml_content)
+    
+    # Find the document with the content
+    document = root.find(".//document_content")
+    if document is None:
+        raise ValueError("No document content found in XML")
+    
+    content = document.text.strip()
+    
+    # Split content into lines and process
+    lines = content.split('\n')
+    
+    # Process each row
+    all_rows = []
+    current_row = []
+    
+    for line in lines:
+        line = line.strip()
+        if line.startswith('- '):
+            # Start of a new value
+            value = line[2:].strip()
+            current_row.append(value == 'true')
+        elif line == '-':
+            # Empty row marker
+            if current_row:
+                all_rows.append(current_row)
+                current_row = []
+        elif line and line[0] == '-':
+            # Start of a new row
+            if current_row:
+                all_rows.append(current_row)
+            current_row = []
+    
+    # Add the last row if it exists
+    if current_row:
+        all_rows.append(current_row)
+    
+    # Filter out empty rows and rows that don't have exactly 20 elements
+    valid_rows = [row for row in all_rows if len(row) == 20]
     
     return {
-        'is_corrects': is_corrects,
-        'num_unit_tests_passed': unit_tests
+        'tests_matrix': valid_rows
     }
 
 def process_directory(directory_path):
     data = []
     
     logging.info(f"Processing files in directory: {directory_path}")
-    xml_files = [f for f in os.listdir(directory_path)]
+    xml_files = [f for f in os.listdir(directory_path) if f.endswith('.xml')]
     
     for filename in tqdm(xml_files, desc="Processing XML files"):
         file_path = os.path.join(directory_path, filename)
-        with open(file_path, 'r', encoding='utf-8') as file:
-            xml_content = file.read()
-        
-        #try:
-        result = extract_data(xml_content)
-        result['filename'] = filename
-        data.append(result)
-        #except Exception as e:
-        #    logging.error(f"Error processing {filename}: {str(e)}")
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                xml_content = file.read()
+            
+            result = extract_data(xml_content)
+            result['filename'] = filename
+            data.append(result)
+        except Exception as e:
+            logging.error(f"Error processing {filename}: {str(e)}")
     
     logging.info(f"Processed {len(data)} files successfully")
     return data
@@ -69,8 +106,6 @@ def main(input_directory, output_filepath):
     dataset.save_to_disk(output_filepath)
     
     logging.info(f"Dataset saved successfully. Total samples processed: {len(dataset)}")
-
-    #breakpoint()
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
