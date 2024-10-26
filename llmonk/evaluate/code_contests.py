@@ -66,7 +66,7 @@ def solution_is_correct_and_unit_test_passed_count(
     total_unit_test_individual_verdicts = []
     with semaphore:
         for input_expected_output_pair in input_expected_output_pairs:
-            is_correct = False  # Default to False if no successful execution
+            is_correct = None  # Default to False if no successful execution
             for i in range(NUM_RETRIES):
                 try:
                     is_correct = client.execute_code(
@@ -88,7 +88,7 @@ def solution_is_correct_and_unit_test_passed_count(
                         print("-"*50)
             
             total_unit_test_individual_verdicts.append(is_correct)
-            if is_correct:
+            if is_correct is True:
                 total_unit_tests_passed_count += 1
 
     is_correct = total_unit_tests_passed_count == len(input_expected_output_pairs)
