@@ -60,35 +60,35 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     if current_row is not None:
         raw_matrix.append(current_row)
 
-    # Get the number of samples from the first valid row
-    num_samples = 0
-    for row in raw_matrix:
+    # The raw matrix is 20 x 1000 (20 tests, 1000 samples)
+    # We need to transpose it to get 1000 x 20 (1000 samples, 20 tests each)
+    
+    num_tests = 20  # We expect 20 non-None test rows
+    num_samples = 1000  # We expect 1000 samples
+    
+    # Initialize the result matrix
+    result_matrix = [[False] * num_tests for _ in range(num_samples)]
+    
+    # Count valid test rows and their indices
+    valid_test_indices = []
+    for i, row in enumerate(raw_matrix):
         if row is not None:
-            num_samples = len(row)
-            break
-
-    if num_samples == 0:
-        raise ValueError("No valid data found in the file")
-
-    # Get the number of tests (non-None rows)
-    num_tests = sum(1 for row in raw_matrix if row is not None)
+            valid_test_indices.append(i)
     
-    logging.info(f"Found {num_samples} samples and {num_tests} tests")
+    if len(valid_test_indices) != num_tests:
+        logging.warning(f"Expected {num_tests} valid test rows, but found {len(valid_test_indices)}")
     
-    # Initialize result matrix
-    result_matrix = []
-    for _ in range(num_samples):
-        result_matrix.append([False] * num_tests)
+    # Fill in the results by transposing the valid rows
+    for test_idx, matrix_idx in enumerate(valid_test_indices[:num_tests]):
+        row = raw_matrix[matrix_idx]
+        if row is None:
+            continue
+            
+        # Handle each sample
+        for sample_idx in range(min(len(row), num_samples)):
+            result_matrix[sample_idx][test_idx] = row[sample_idx]
     
-    # Fill in the results
-    test_idx = 0
-    for row in raw_matrix:
-        if row is not None:  # Skip None rows
-            for sample_idx, result in enumerate(row):
-                if sample_idx < num_samples:
-                    result_matrix[sample_idx][test_idx] = result
-            test_idx += 1
-    
+    logging.info(f"Processed matrix with {len(result_matrix)} samples, {len(result_matrix[0])} tests per sample")
     return result_matrix
 
 def process_file(file_path: str) -> List[List[bool]]:
@@ -154,7 +154,6 @@ def main(input_directory: str, output_filepath: str):
     dataset.save_to_disk(output_filepath)
     
     logging.info(f"Dataset saved successfully. Total samples: {len(dataset)}")
-    breakpoint()
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
