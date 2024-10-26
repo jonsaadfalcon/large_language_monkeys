@@ -27,6 +27,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     
     # Process each line
     lines = test_content.split('\n')
+    chunks = [lines[i:i + 20] for i in range(0, len(lines), 20)]
     breakpoint()
     for line in lines:
         line = line.strip()
