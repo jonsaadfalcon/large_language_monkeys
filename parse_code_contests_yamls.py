@@ -21,37 +21,33 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     lines = [line.strip() for line in test_content.split('\n') if line.strip()]
     
     # Initialize containers
-    matrix = []  # Will hold all samples
-    current_sample = []  # Will hold current sample's test results
+    matrix = []
+    current_sample = []
     true_count = 0
     false_count = 0
-
-    breakpoint()
     
     # Process each line
     for line in lines:
-        # Start of a new sample
-        if line.startswith('- - '):
-            if current_sample:  # Store previous sample if it exists
-                if len(current_sample) != 20:
-                    logging.warning(f"Sample has {len(current_sample)} tests instead of 20")
-                else:
-                    matrix.append(current_sample)
-            current_sample = []  # Start new sample
+        # Skip null entries
+        if line == '- null':
+            continue
+            
+        # Check if it's a new sample or continuation
+        is_new_sample = line.startswith('- - ')
+        
+        # If it's a new sample and we have a complete previous sample
+        if is_new_sample and current_sample:
+            if len(current_sample) == 20:
+                matrix.append(current_sample)
+            current_sample = []
+            
+        # Extract the boolean value
+        if is_new_sample:
             value = line[4:].strip()  # Remove '- - ' prefix
-            
-        # Continuation of current sample
-        elif line.startswith('  - '):
-            value = line[4:].strip()  # Remove '  - ' prefix
-            
-        # Skip null lines
-        elif line == '- null':
-            continue
-            
         else:
-            continue
+            value = line[2:].strip()  # Remove '- ' prefix
             
-        # Process the value
+        # Convert to boolean and add to current sample
         if value == 'true':
             current_sample.append(True)
             true_count += 1
@@ -67,11 +63,8 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     if not matrix:
         raise ValueError("No samples were parsed!")
         
-    if true_count == 0:
-        raise ValueError("No TRUE values found in parsing!")
-        
-    if false_count == 0:
-        raise ValueError("No FALSE values found in parsing!")
+    if true_count == 0 and false_count == 0:
+        raise ValueError("No valid boolean values found!")
     
     # Verify all samples have 20 tests
     for i, sample in enumerate(matrix):
