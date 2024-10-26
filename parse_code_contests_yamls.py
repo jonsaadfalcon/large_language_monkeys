@@ -1,5 +1,4 @@
 import os
-import xml.etree.ElementTree as ET
 from datasets import Dataset
 from tqdm import tqdm
 import logging
@@ -30,19 +29,10 @@ def process_test_scores(tests_matrix: List[List[Optional[bool]]]) -> float:
     
     return total_true / total_cells if total_cells > 0 else 0.0
 
-def extract_data(xml_content: str) -> Dict[str, Any]:
-    """Extract data from XML content."""
-    root = ET.fromstring(xml_content)
-    
-    # Find the document with the content
-    document = root.find(".//document_content")
-    if document is None:
-        raise ValueError("No document content found in XML")
-    
-    content = document.text.strip()
-    
+def extract_data(content: str) -> Dict[str, Any]:
+    """Extract data from the text content."""
     # Split content into lines and process
-    lines = content.split('\n')
+    lines = content.strip().split('\n')
     
     # Process each row
     all_rows = []
@@ -53,7 +43,7 @@ def extract_data(xml_content: str) -> Dict[str, Any]:
         if not line:
             continue
             
-        if line == "null":
+        if line == "- null":
             if current_row:
                 all_rows.append(current_row)
             all_rows.append(None)  # Add null row
@@ -65,7 +55,7 @@ def extract_data(xml_content: str) -> Dict[str, Any]:
                 current_row.append(None)
             else:
                 current_row.append(value == 'true')
-        elif line.startswith('- '):
+        elif line.startswith('- -'):
             # New row
             if current_row:
                 all_rows.append(current_row)
@@ -107,16 +97,11 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 content = file.read()
+            
+            result = extract_data(content)
+            result['filename'] = filename
+            data.append(result)
                 
-            if '<documents>' in content and '</documents>' in content:
-                result = extract_data(content)
-                result['filename'] = filename
-                data.append(result)
-            else:
-                logging.warning(f"Skipping {filename}: Not in expected XML format")
-                
-        except ET.ParseError as e:
-            logging.error(f"XML parsing error in {filename}: {str(e)}")
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
     
@@ -124,6 +109,12 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
         logging.error("No valid files were processed!")
     else:
         logging.info(f"Successfully processed {len(data)} files")
+        
+    # Log some statistics about the data
+    total_scores = [d['unit_tests_passed'] for d in data]
+    if total_scores:
+        avg_score = sum(total_scores) / len(total_scores)
+        logging.info(f"Average score across all files: {avg_score:.3f}")
     
     return data
 
