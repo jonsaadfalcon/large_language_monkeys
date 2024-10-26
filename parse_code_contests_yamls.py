@@ -27,6 +27,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     
     # Process each line
     lines = test_content.split('\n')
+    breakpoint()
     for line in lines:
         line = line.strip()
         if not line:
