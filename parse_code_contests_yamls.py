@@ -7,27 +7,35 @@ from typing import Dict, List, Any, Optional, Tuple
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def process_test_scores(tests_matrix: List[List[Optional[bool]]]) -> float:
+def process_test_scores(tests_matrix: List[List[Optional[bool]]]) -> Dict[str, float]:
     """
-    Calculate average score from test matrix, ignoring null samples.
-    Returns the proportion of True values.
+    Calculate scores for the test matrix.
+    Returns dict with overall score and per-sample scores.
     """
     if not tests_matrix:
-        return 0.0
+        return {'overall_score': 0.0, 'sample_scores': []}
         
-    valid_rows = []
-    for row in tests_matrix:
-        if row is not None:  # Skip null rows
-            valid_rows.append(row)
-            
-    if not valid_rows:
-        return 0.0
+    sample_scores = []
+    for i in range(len(tests_matrix[0]) if tests_matrix[0] else 0):
+        # Get the i-th element from each valid row
+        valid_values = []
+        for row in tests_matrix:
+            if row is not None and i < len(row):
+                if row[i] is not None:
+                    valid_values.append(row[i])
         
-    # Sum True values across all valid rows
-    total_true = sum(sum(1 for cell in row if cell is True) for row in valid_rows)
-    total_cells = sum(len(row) for row in valid_rows)
+        if valid_values:
+            score = sum(1 for v in valid_values if v) / len(valid_values)
+            sample_scores.append(score)
+        else:
+            sample_scores.append(0.0)
     
-    return total_true / total_cells if total_cells > 0 else 0.0
+    overall_score = sum(sample_scores) / len(sample_scores) if sample_scores else 0.0
+    
+    return {
+        'overall_score': overall_score,
+        'sample_scores': sample_scores
+    }
 
 def extract_data(content: str) -> Dict[str, Any]:
     """Extract data from the text content."""
@@ -65,11 +73,12 @@ def extract_data(content: str) -> Dict[str, Any]:
     if current_row:
         all_rows.append(current_row)
     
-    # Calculate average score
-    score = process_test_scores(all_rows)
+    # Calculate scores
+    scores = process_test_scores(all_rows)
     
     return {
-        'unit_tests_passed': score,
+        'unit_tests_passed': scores['overall_score'],
+        'sample_scores': scores['sample_scores'],
         'tests_matrix': all_rows
     }
 
@@ -101,6 +110,13 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
             result = extract_data(content)
             result['filename'] = filename
             data.append(result)
+            
+            # Log detailed scores for this file
+            logging.info(f"\nFile: {filename}")
+            logging.info(f"Overall score: {result['unit_tests_passed']:.3f}")
+            logging.info("Sample scores:")
+            for i, score in enumerate(result['sample_scores']):
+                logging.info(f"Sample {i}: {score:.3f}")
                 
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
@@ -110,11 +126,21 @@ def process_directory(directory_path: str) -> List[Dict[str, Any]]:
     else:
         logging.info(f"Successfully processed {len(data)} files")
         
-    # Log some statistics about the data
-    total_scores = [d['unit_tests_passed'] for d in data]
-    if total_scores:
-        avg_score = sum(total_scores) / len(total_scores)
-        logging.info(f"Average score across all files: {avg_score:.3f}")
+    # Log average scores across all files
+    if data:
+        overall_scores = [d['unit_tests_passed'] for d in data]
+        avg_score = sum(overall_scores) / len(overall_scores)
+        logging.info(f"\nAverage score across all files: {avg_score:.3f}")
+        
+        # Calculate and log average score per sample position
+        num_samples = len(data[0]['sample_scores']) if data else 0
+        if num_samples:
+            logging.info("\nAverage scores by sample position:")
+            for i in range(num_samples):
+                sample_scores = [d['sample_scores'][i] for d in data if i < len(d['sample_scores'])]
+                if sample_scores:
+                    avg = sum(sample_scores) / len(sample_scores)
+                    logging.info(f"Sample {i}: {avg:.3f}")
     
     return data
 
@@ -134,8 +160,6 @@ def main(input_directory: str, output_filepath: str):
         raise ValueError("No data was processed successfully!")
     
     dataset = create_dataset(data)
-
-    breakpoint()
     
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
