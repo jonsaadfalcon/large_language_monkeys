@@ -77,8 +77,8 @@ if __name__ == "__main__":
     if not save_dir:
         raise ValueError("SAVE_DIR environment variable is not set")
 
-    input_directory = os.path.join(save_dir, "eval_results", "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX")
-    output_filepath = os.path.join(save_dir, "good_turing", "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX.hf")
+    input_directory = os.path.join(save_dir, "eval_results", "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_MIDWAY_v4")
+    output_filepath = os.path.join(save_dir, "good_turing", "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_MIDWAY_v4.hf")
 
     logging.info(f"SAVE_DIR is set to: {save_dir}")
     logging.info(f"Input directory: {input_directory}")
