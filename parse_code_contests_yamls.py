@@ -25,7 +25,7 @@ def extract_data(content):
     else:
         unit_tests = []
 
-    assert len(unit_tests) == 100
+    assert len(unit_tests) == 20
     
     return {
         'is_corrects': is_corrects,
