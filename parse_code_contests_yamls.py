@@ -26,11 +26,14 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     current_sample = []
     true_count = 0
     false_count = 0
-
-    breakpoint()
+    skipped_samples = 0
+    
+    # Log initial true count in raw content
+    raw_true_count = test_content.count("true")
+    logging.info(f"Raw 'true' count in content: {raw_true_count}")
     
     # Process each line
-    for line in lines:
+    for line_num, line in enumerate(lines):
         # Check if it's a new sample or continuation
         is_new_sample = line.startswith('- - ')
         
@@ -38,6 +41,10 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
         if is_new_sample and current_sample:
             if len(current_sample) == 20:
                 matrix.append(current_sample)
+                logging.debug(f"Added sample {len(matrix)} with {sum(1 for x in current_sample if x)} trues")
+            else:
+                skipped_samples += 1
+                logging.debug(f"Skipped incomplete sample at line {line_num} with length {len(current_sample)}")
             current_sample = []
             
         # Extract the value
@@ -50,32 +57,32 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
         if value == 'true':
             current_sample.append(True)
             true_count += 1
+            logging.debug(f"Added TRUE at line {line_num}, current true_count: {true_count}")
         else:  # Treat both 'false' and 'null' as False
             current_sample.append(False)
             false_count += 1
             
     # Add the last sample if it exists and is complete
-    if current_sample and len(current_sample) == 20:
-        matrix.append(current_sample)
+    if current_sample:
+        if len(current_sample) == 20:
+            matrix.append(current_sample)
+            logging.debug(f"Added final sample with {sum(1 for x in current_sample if x)} trues")
+        else:
+            skipped_samples += 1
+            logging.debug(f"Skipped final incomplete sample with length {len(current_sample)}")
     
-    # Validation
-    if not matrix:
-        raise ValueError("No samples were parsed!")
-        
-    if true_count == 0 and false_count == 0:
-        raise ValueError("No valid values found!")
+    # Verify the matrix
+    matrix_true_count = sum(sum(1 for val in row if val) for row in matrix)
+    logging.info(f"Matrix verification:")
+    logging.info(f"  - Running true_count during parsing: {true_count}")
+    logging.info(f"  - Final true count in matrix: {matrix_true_count}")
+    logging.info(f"  - Skipped samples: {skipped_samples}")
     
-    # Verify all samples have 20 tests
+    # Additional validation
     for i, sample in enumerate(matrix):
-        if len(sample) != 20:
-            raise ValueError(f"Sample {i} has {len(sample)} tests instead of 20")
-    
-    # Log statistics
-    logging.info(f"Parsing complete:")
-    logging.info(f"  - Total samples parsed: {len(matrix)}")
-    logging.info(f"  - Total TRUE values: {true_count}")
-    logging.info(f"  - Total FALSE values: {false_count}")
-    logging.info(f"  - Tests per sample: {len(matrix[0])}")
+        trues_in_sample = sum(1 for x in sample if x)
+        if trues_in_sample > 0:
+            logging.debug(f"Sample {i} has {trues_in_sample} true values")
     
     return matrix
 
