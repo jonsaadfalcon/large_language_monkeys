@@ -102,11 +102,8 @@ def process_directory(directory_path: str) -> Dataset:
     all_files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
     logging.info(f"Found {len(all_files)} files in directory")
     
-    for filename in all_files:
-        logging.info(f"Found file: {filename}")
-
     # Process each file
-    all_results = None
+    all_results = []  # Changed to list to accumulate results
     processed_files = 0
     
     for filename in tqdm(all_files, desc="Processing files"):
@@ -115,12 +112,18 @@ def process_directory(directory_path: str) -> Dataset:
         
         try:
             test_results = process_file(file_path)
-            all_results = test_results
+            
+            # Add debugging information
+            logging.info(f"File {filename} parsed results:")
+            logging.info(f"  - Number of samples: {len(test_results)}")
+            logging.info(f"  - True count in file: {sum(sum(1 for val in row if val) for row in test_results)}")
+            
+            all_results.extend(test_results)  # Extend instead of assign
             processed_files += 1
             
             logging.info(f"Successfully processed file: {filename}")
-            logging.info(f"Number of samples: {len(test_results)}")
-            logging.info(f"Tests per sample: {len(test_results[0])}")
+            logging.info(f"Cumulative samples so far: {len(all_results)}")
+            logging.info(f"Cumulative true count: {sum(sum(1 for val in row if val) for row in all_results)}")
             
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
@@ -129,23 +132,25 @@ def process_directory(directory_path: str) -> Dataset:
     if processed_files == 0:
         raise ValueError(f"No files were processed successfully! Examined files: {all_files}")
 
-    if all_results is None:
+    if not all_results:
         raise ValueError("No data was processed successfully!")
     
-    # Create dataset with a single row containing all results
+    # Create dataset with all accumulated results
     dataset = Dataset.from_dict({
         'unit_tests_passed': [all_results]
     })
     
-    # Final validation
+    # Final validation with detailed logging
     sample_data = dataset[0]['unit_tests_passed']
     true_count = sum(sum(1 for val in row if val) for row in sample_data)
     false_count = sum(sum(1 for val in row if not val) for row in sample_data)
     
     logging.info(f"Final dataset statistics:")
     logging.info(f"  - Number of rows in dataset: {len(dataset)}")
+    logging.info(f"  - Number of samples in test matrix: {len(sample_data)}")
     logging.info(f"  - Total TRUE values: {true_count}")
     logging.info(f"  - Total FALSE values: {false_count}")
+    logging.info(f"  - Tests per sample: {len(sample_data[0]) if sample_data else 0}")
     
     if true_count == 0:
         raise ValueError("No TRUE values found in final dataset!")
