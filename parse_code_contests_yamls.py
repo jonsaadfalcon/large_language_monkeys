@@ -185,6 +185,8 @@ def main(input_directory: str, output_filepath: str):
     
     logging.info(f"Dataset saved successfully. Total rows: {len(dataset)}")
 
+    breakpoint()
+
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
     if not save_dir:
