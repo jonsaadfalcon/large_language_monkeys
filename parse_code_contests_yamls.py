@@ -183,8 +183,9 @@ if __name__ == "__main__":
     if not save_dir:
         raise ValueError("SAVE_DIR environment variable is not set")
 
-    input_directory = os.path.join(save_dir, "eval_results", "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_MIDWAY_v4")
-    output_filepath = os.path.join(save_dir, "good_turing", "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_MIDWAY_v4.hf")
+    folder_name = "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_v1"
+    input_directory = os.path.join(save_dir, "eval_results", folder_name)
+    output_filepath = os.path.join(save_dir, "good_turing", f"{folder_name}.hf")
 
     # Ensure the output directory exists
     os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
