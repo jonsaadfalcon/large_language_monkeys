@@ -28,7 +28,7 @@ def parse_test_matrix(content: str) -> List[List[bool]]:
     complete_false_count = 0
     incomplete_true_count = 0
     incomplete_false_count = 0
-    incomplete_samples = []  # Store lengths of incomplete samples
+    incomplete_samples = []
     
     # Log initial true count in raw content
     raw_true_count = test_content.count("true")
@@ -104,7 +104,7 @@ def process_file(file_path: str) -> List[List[bool]]:
 def process_directory(directory_path: str) -> Dataset:
     """
     Process all files in directory and create a dataset.
-    Returns a dataset with the test results.
+    Returns a dataset with one row per file, each containing its test results.
     """
     logging.info(f"Processing files in directory: {directory_path}")
     
@@ -112,8 +112,9 @@ def process_directory(directory_path: str) -> Dataset:
     all_files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
     logging.info(f"Found {len(all_files)} files in directory")
     
-    # Process each file
-    all_results = []  # Changed to list to accumulate results
+    # Initialize lists to store data for dataset
+    all_results = []
+    file_names = []
     processed_files = 0
     
     for filename in tqdm(all_files, desc="Processing files"):
@@ -128,12 +129,12 @@ def process_directory(directory_path: str) -> Dataset:
             logging.info(f"  - Number of samples: {len(test_results)}")
             logging.info(f"  - True count in file: {sum(sum(1 for val in row if val) for row in test_results)}")
             
-            all_results.extend(test_results)  # Extend instead of assign
+            # Add this file's results as a single row
+            all_results.append(test_results)
+            file_names.append(filename)
             processed_files += 1
             
             logging.info(f"Successfully processed file: {filename}")
-            logging.info(f"Cumulative samples so far: {len(all_results)}")
-            logging.info(f"Cumulative true count: {sum(sum(1 for val in row if val) for row in all_results)}")
             
         except Exception as e:
             logging.error(f"Error processing {filename}: {str(e)}")
@@ -145,24 +146,30 @@ def process_directory(directory_path: str) -> Dataset:
     if not all_results:
         raise ValueError("No data was processed successfully!")
     
-    # Create dataset with all accumulated results
+    # Create dataset with one row per file
     dataset = Dataset.from_dict({
-        'unit_tests_passed': [all_results]
+        'file_name': file_names,
+        'unit_tests_passed': all_results
     })
     
     # Final validation with detailed logging
-    sample_data = dataset[0]['unit_tests_passed']
-    true_count = sum(sum(1 for val in row if val) for row in sample_data)
-    false_count = sum(sum(1 for val in row if not val) for row in sample_data)
+    total_true_count = sum(
+        sum(sum(1 for val in row if val) for row in file_results)
+        for file_results in dataset['unit_tests_passed']
+    )
+    total_false_count = sum(
+        sum(sum(1 for val in row if not val) for row in file_results)
+        for file_results in dataset['unit_tests_passed']
+    )
     
     logging.info(f"Final dataset statistics:")
     logging.info(f"  - Number of rows in dataset: {len(dataset)}")
-    logging.info(f"  - Number of samples in test matrix: {len(sample_data)}")
-    logging.info(f"  - Total TRUE values: {true_count}")
-    logging.info(f"  - Total FALSE values: {false_count}")
-    logging.info(f"  - Tests per sample: {len(sample_data[0]) if sample_data else 0}")
+    logging.info(f"  - Total files processed: {processed_files}")
+    logging.info(f"  - Total TRUE values: {total_true_count}")
+    logging.info(f"  - Total FALSE values: {total_false_count}")
+    logging.info(f"  - Average samples per file: {sum(len(x) for x in dataset['unit_tests_passed']) / len(dataset):.2f}")
     
-    if true_count == 0:
+    if total_true_count == 0:
         raise ValueError("No TRUE values found in final dataset!")
         
     return dataset
@@ -176,9 +183,7 @@ def main(input_directory: str, output_filepath: str):
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
     
-    logging.info(f"Dataset saved successfully. Total samples: {len(dataset)}")
-
-    breakpoint()
+    logging.info(f"Dataset saved successfully. Total rows: {len(dataset)}")
 
 if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
