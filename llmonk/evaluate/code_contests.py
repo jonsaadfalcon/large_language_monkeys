@@ -52,7 +52,7 @@ def solution_is_correct_and_unit_test_passed_count(
     problem: dict,
     client: execution_server_client.ExecutionServerClient,
 ):
-    if code is None:
+    if code is None or extract_first_code(code) is None:
         return False
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
@@ -102,7 +102,7 @@ def solution_is_correct(
     problem: dict,
     client: execution_server_client.ExecutionServerClient,
 ):
-    if code is None:
+    if code is None or extract_first_code(code) is None:
         return False
 
     assert len(problem["test_cases"]["input"]) == len(problem["test_cases"]["output"])
