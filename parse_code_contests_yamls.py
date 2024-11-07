@@ -222,19 +222,27 @@ if __name__ == "__main__":
     #    "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX",
     #    "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX_v2"
     #]
+    #folder_names = [
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v2",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3.1",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v4.1"
+    #]
     folder_names = [
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v2",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3.1",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v4.1"
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_50_unit_tests",
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_50_unit_tests_v1",
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_50_unit_tests_v2", 
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_50_unit_tests_v3",
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v10",
+        "cc_samples_CodeLlama-7b-Instruct-hf_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v1.1"
     ]
     
     # Convert folder names to full paths
     input_directories = [os.path.join(save_dir, "eval_results", folder_name) for folder_name in folder_names]
     #output_filepath = os.path.join(save_dir, "good_turing", "combined_llama_3.1_8b_instruct_1000_samples_public_and_private_unit_tests_only.hf")
-    output_filepath = os.path.join(save_dir, "good_turing", "combined_gemma_7b_it_1000_samples_50_unit_tests.hf")
-    
+    #output_filepath = os.path.join(save_dir, "good_turing", "combined_gemma_7b_it_1000_samples_50_unit_tests.hf")
+    output_filepath = os.path.join(save_dir, "good_turing", "combined_code_llama_7b_instruct_hf_1000_samples_public_and_private_unit_tests_only.hf")
     # Ensure the output directory exists
     os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
     
