@@ -210,25 +210,25 @@ if __name__ == "__main__":
         raise ValueError("SAVE_DIR environment variable is not set")
 
     # Example directory configuration
-    #folder_names = [
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v1",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v2",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v3",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v4",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v5",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v6.1",
-    #    "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v7.1",
-    #    "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX",
-    #    "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX_v2"
-    #]
     folder_names = [
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v2",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3.1",
-        "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v4.1"
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v1",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v2",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v3",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v4",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v5",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v6.1",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v7.1",
+        "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX",
+        "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX_v2"
     ]
+    #folder_names = [
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v2",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v3.1",
+    #    "cc_samples_gemma-7b-it_1000_samples_50_unit_tests_v4.1"
+    #]
     
     # Convert folder names to full paths
     input_directories = [os.path.join(save_dir, "eval_results", folder_name) for folder_name in folder_names]
