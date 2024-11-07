@@ -2,7 +2,7 @@ import os
 from datasets import Dataset
 from tqdm import tqdm
 import logging
-from typing import List, Optional
+from typing import List, Optional, Set
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -101,52 +101,68 @@ def process_file(file_path: str) -> List[List[bool]]:
         
     return parse_test_matrix(content)
 
-def process_directory(directory_path: str) -> Dataset:
+def process_directories(input_directories: List[str]) -> Dataset:
     """
-    Process all files in directory and create a dataset.
-    Returns a dataset with one row per file, each containing its test results.
+    Process all files in multiple directories and create a single dataset.
+    Returns a dataset with one row per unique file, containing its test results.
+    Skips files that have already been processed in previous directories.
     """
-    logging.info(f"Processing files in directory: {directory_path}")
-    
-    # List all files in directory
-    all_files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
-    logging.info(f"Found {len(all_files)} files in directory")
-    
     # Initialize lists to store data for dataset
     all_results = []
     file_names = []
     processed_files = 0
+    skipped_files = 0
+    total_files = 0
+    seen_files: Set[str] = set()  # Track unique filenames
     
-    for filename in tqdm(all_files, desc="Processing files"):
-        file_path = os.path.join(directory_path, filename)
-        logging.info(f"Attempting to process: {file_path}")
+    # Count total files across all directories
+    for directory in input_directories:
+        total_files += len([f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))])
+    
+    logging.info(f"Found total of {total_files} files across {len(input_directories)} directories")
+    
+    # Process all directories
+    for directory in input_directories:
+        logging.info(f"Processing directory: {directory}")
+        all_files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
         
-        try:
-            test_results = process_file(file_path)
+        for filename in tqdm(all_files, desc=f"Processing files in {os.path.basename(directory)}"):
+            # Skip if we've already seen this filename
+            if filename in seen_files:
+                logging.info(f"Skipping duplicate file: {filename}")
+                skipped_files += 1
+                continue
+                
+            file_path = os.path.join(directory, filename)
+            logging.info(f"Attempting to process: {file_path}")
             
-            # Add debugging information
-            logging.info(f"File {filename} parsed results:")
-            logging.info(f"  - Number of samples: {len(test_results)}")
-            logging.info(f"  - True count in file: {sum(sum(1 for val in row if val) for row in test_results)}")
-            
-            # Add this file's results as a single row
-            all_results.append(test_results)
-            file_names.append(filename)
-            processed_files += 1
-            
-            logging.info(f"Successfully processed file: {filename}")
-            
-        except Exception as e:
-            logging.error(f"Error processing {filename}: {str(e)}")
-            continue
+            try:
+                test_results = process_file(file_path)
+                
+                # Add debugging information
+                logging.info(f"File {filename} parsed results:")
+                logging.info(f"  - Number of samples: {len(test_results)}")
+                logging.info(f"  - True count in file: {sum(sum(1 for val in row if val) for row in test_results)}")
+                
+                # Add this file's results
+                all_results.append(test_results)
+                file_names.append(filename)
+                processed_files += 1
+                seen_files.add(filename)  # Mark this filename as seen
+                
+                logging.info(f"Successfully processed file: {filename}")
+                
+            except Exception as e:
+                logging.error(f"Error processing {filename}: {str(e)}")
+                continue
 
     if processed_files == 0:
-        raise ValueError(f"No files were processed successfully! Examined files: {all_files}")
+        raise ValueError("No files were processed successfully across any directories!")
 
     if not all_results:
         raise ValueError("No data was processed successfully!")
     
-    # Create dataset with one row per file
+    # Create dataset with all processed files
     dataset = Dataset.from_dict({
         'file_name': file_names,
         'unit_tests_passed': all_results
@@ -165,6 +181,7 @@ def process_directory(directory_path: str) -> Dataset:
     logging.info(f"Final dataset statistics:")
     logging.info(f"  - Number of rows in dataset: {len(dataset)}")
     logging.info(f"  - Total files processed: {processed_files}")
+    logging.info(f"  - Total files skipped (duplicates): {skipped_files}")
     logging.info(f"  - Total TRUE values: {total_true_count}")
     logging.info(f"  - Total FALSE values: {total_false_count}")
     logging.info(f"  - Average samples per file: {sum(len(x) for x in dataset['unit_tests_passed']) / len(dataset):.2f}")
@@ -174,11 +191,11 @@ def process_directory(directory_path: str) -> Dataset:
         
     return dataset
 
-def main(input_directory: str, output_filepath: str):
-    logging.info(f"Starting processing with input directory: {input_directory}")
+def main(input_directories: List[str], output_filepath: str):
+    logging.info(f"Starting processing with input directories: {input_directories}")
     logging.info(f"Output will be saved to: {output_filepath}")
 
-    dataset = process_directory(input_directory)
+    dataset = process_directories(input_directories)
     
     logging.info(f"Saving dataset to {output_filepath}")
     dataset.save_to_disk(output_filepath)
@@ -191,12 +208,26 @@ if __name__ == "__main__":
     save_dir = os.environ.get('SAVE_DIR')
     if not save_dir:
         raise ValueError("SAVE_DIR environment variable is not set")
-
-    folder_name = "cc_samples_Llama-3.1-8B-Instruct_1000_samples_50_unit_tests_v1"
-    input_directory = os.path.join(save_dir, "eval_results", folder_name)
-    output_filepath = os.path.join(save_dir, "good_turing", f"{folder_name}.hf")
+    
+    # Example directory configuration
+    folder_names = [
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v1",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v2",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v3",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v4",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v5",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v6.1",
+        "cc_samples_Llama-3.1-8B-Instruct_1000_samples_PUBLIC_AND_PRIVATE_UNIT_TESTS_ONLY_v7.1",
+        "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX",
+        "cc_samples_Llama-3.1-8B-Instruct_100_samples_v1.1_WITH_20_UNIT_TESTS_MAX_v2"
+    ]
+    
+    # Convert folder names to full paths
+    input_directories = [os.path.join(save_dir, "eval_results", folder_name) for folder_name in folder_names]
+    output_filepath = os.path.join(save_dir, "good_turing", "combined_llama_3.1_8b_instruct_1000_samples_public_and_private_unit_tests_only.hf")
 
     # Ensure the output directory exists
     os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
     
-    main(input_directory, output_filepath)
+    main(input_directories, output_filepath)
