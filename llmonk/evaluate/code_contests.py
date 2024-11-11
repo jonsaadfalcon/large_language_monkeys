@@ -209,7 +209,7 @@ def main(config):
     print("Done loading yaml files.")
 
     # multiprocessing pool is used to load data
-    with execution_server_client.ExecutionServerClient(port=8004) as client:
+    with execution_server_client.ExecutionServerClient(port=8010) as client:
         # threads are used to run code in parallel
         with concurrent.futures.ThreadPoolExecutor(
             max_workers=config.num_workers

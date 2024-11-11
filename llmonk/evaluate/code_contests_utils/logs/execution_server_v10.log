@@ -1,0 +1,5 @@
+nohup: ignoring input
+Setting logging level to WARNING
+Starting server with 64 max concurrent programs
+Starting server on port 8004
+ERROR:    [Errno 98] Address already in use
